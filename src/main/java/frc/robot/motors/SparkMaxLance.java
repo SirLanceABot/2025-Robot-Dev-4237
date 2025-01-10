@@ -138,7 +138,7 @@ public class SparkMaxLance extends MotorControllerLance
     {
         // setup(() -> motor.restoreFactoryDefaults(false), "Setup Factory Defaults");
         SparkMaxConfig motorConfig = new SparkMaxConfig();
-        setup(() -> motor.configure(motorConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters), "Setup Factory Defaults");
+        setup(() -> motor.configure(motorConfig, ResetMode.kResetSafeParameters, PersistMode.kNoPersistParameters), "Setup Factory Defaults");
     }
 
     public void setupRemoteCANCoder(int remoteSensorId)

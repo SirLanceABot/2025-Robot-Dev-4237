@@ -22,6 +22,7 @@ import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.FeedbackSensorSourceValue;
 import com.ctre.phoenix6.signals.ForwardLimitSourceValue;
 import com.ctre.phoenix6.signals.ForwardLimitTypeValue;
+import com.ctre.phoenix6.signals.InvertedValue;
 import com.ctre.phoenix6.signals.NeutralModeValue;
 import com.ctre.phoenix6.signals.ReverseLimitSourceValue;
 import com.ctre.phoenix6.signals.ReverseLimitTypeValue;
@@ -171,7 +172,16 @@ public class TalonFXLance extends MotorControllerLance
      */
     public void setupInverted(boolean isInverted)
     {
-        motor.setInverted(isInverted);
+        // motor.setInverted(isInverted);
+        MotorOutputConfigs motorOutputConfigs = new MotorOutputConfigs();
+        setup(() -> motor.getConfigurator().refresh(motorOutputConfigs), "Refresh Inverted");
+
+        if(isInverted)
+            motorOutputConfigs.Inverted = InvertedValue.Clockwise_Positive;
+        else
+            motorOutputConfigs.Inverted = InvertedValue.CounterClockwise_Positive;
+
+        setup(() -> motor.getConfigurator().apply(motorOutputConfigs), "Setup Inverted");
     }
 
     /**
@@ -665,7 +675,9 @@ public class TalonFXLance extends MotorControllerLance
     @Override
     public boolean getInverted()
     {
-        return motor.getInverted();
+        // return motor.getInverted();
+        MotorOutputConfigs motorOutputConfigs = new MotorOutputConfigs();
+        return motorOutputConfigs.Inverted == InvertedValue.Clockwise_Positive;
     }
 
     @Override

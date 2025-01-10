@@ -20,6 +20,7 @@ public class Robot extends TimedRobot
 
     private final static RobotContainer robotContainer = new RobotContainer();
     private Command autonomousCommand = null;
+    private TestMode testMode = null;
 
 
     /** 
@@ -131,6 +132,11 @@ public class Robot extends TimedRobot
     public void testInit() 
     {
         CommandScheduler.getInstance().cancelAll();
+
+        // Create a TestMode object to test one team members code.
+        testMode = new TestMode(robotContainer);
+
+        testMode.init();
     }
 
     /**
@@ -138,12 +144,19 @@ public class Robot extends TimedRobot
      */
     @Override
     public void testPeriodic() 
-    {}
+    {
+        testMode.periodic();
+    }
     
     /**
      * This method runs one time when the robot exits test mode.
      */
     @Override
     public void testExit() 
-    {}
+    {
+        testMode.exit();
+
+        // Set the TestMode object to null so that garbage collection will remove the object.
+        testMode = null;
+    }
 }
