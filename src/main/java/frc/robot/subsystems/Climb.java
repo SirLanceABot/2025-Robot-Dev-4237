@@ -3,8 +3,8 @@ package frc.robot.subsystems;
 import java.lang.invoke.MethodHandles;
 import java.nio.channels.GatheringByteChannel;
 
-import com.revrobotics.spark.SparkLimitSwitch;
-
+import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.Commands;
 import frc.robot.Constants;
 import frc.robot.motors.TalonFXLance;
 
@@ -37,6 +37,9 @@ public class Climb extends SubsystemLance
     private final PeriodicData periodicData = new PeriodicData();
     private final TalonFXLance motor = new TalonFXLance(Constants.Climb.MOTOR_PORT, Constants.Climb.MOTOR_CAN_BUS, "Climb Motor");
 
+    private final double FORWARD_SOFT_LIMIT = 1000.0;
+    private final double REVERSE_SOFT_LIMIT = 0.0;
+
 
     // *** CLASS CONSTRUCTORS ***
     // Put all class constructors here
@@ -66,6 +69,11 @@ public class Climb extends SubsystemLance
     {
         motor.setupFactoryDefaults();
         motor.setupBrakeMode();
+
+        motor.setupForwardSoftLimit(FORWARD_SOFT_LIMIT, true);
+        motor.setupReverseSoftLimit(REVERSE_SOFT_LIMIT, true);
+        motor.setupForwardHardLimitSwitch(true, true);
+        motor.setupReverseHardLimitSwitch(true, true);
     }
 
     public double getPosition()
