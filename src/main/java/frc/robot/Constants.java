@@ -28,4 +28,71 @@ public final class Constants
     // These are the names of the CAN bus set on the roboRIO and CANivore
     public static final String CANIVORE = "CANivore";
     public static final String ROBORIO  = "rio";
+
+    public static class Elevator
+    {
+        public static final int LEFT_MOTOR_PORT                         = 0;
+        public static final int RIGHT_MOTOR_PORT                        = 0;
+        public static final String LEFT_MOTOR_CAN_BUS                   = CANIVORE;
+        public static final String RIGHT_MOTOR_CAN_BUS                  = CANIVORE;
+    }
+
+    public static class Intake
+    {
+        public static final int TOP_MOTOR_PORT                          = 0;
+        public static final int BOTTOM_MOTOR_PORT                       = 0;
+        public static final String TOP_MOTOR_CAN_BUS                    = CANIVORE;
+        public static final String BOTTOM_MOTOR_CAN_BUS                 = CANIVORE;
+    }
+    
+    public static class Climb
+    {
+        public static final int MOTOR_PORT                              = 0;
+        public static final String MOTOR_CAN_BUS                        = CANIVORE;
+    }
+
+    public static class Shoulder
+    {
+        public static final int MOTOR_PORT                              = 0;
+        public static final String MOTOR_CAN_BUS                        = CANIVORE;
+    }
+
+    public static class Claw
+    {
+        public static final int TOP_MOTOR_PORT                          = 0;
+        public static final int BOTTOM_MOTOR_PORT                       = 0;
+        public static final String TOP_MOTOR_CAN_BUS                    = ROBORIO;
+        public static final String BOTTOM_MOTOR_CAN_BUS                 = ROBORIO;
+    }
+
+    public static class Drivetrain
+    {
+        public static int FRONT_LEFT_DRIVE_PORT                         = 0;
+        public static int FRONT_LEFT_TURN_PORT                          = 0;
+        public static int FRONT_LEFT_ENCODER_PORT                       = 0;
+
+        public static int FRONT_RIGHT_DRIVE_PORT                        = 0;
+        public static int FRONT_RIGHT_TURN_PORT                         = 0;
+        public static int FRONT_RIGHT_ENCODER_PORT                      = 0;
+
+        public static int BACK_LEFT_DRIVE_PORT                          = 0;
+        public static int BACK_LEFT_TURN_PORT                           = 0;
+        public static int BACK_LEFT_ENCODER_PORT                        = 0;
+
+        public static int BACK_RIGHT_DRIVE_PORT                         = 0;
+        public static int BACK_RIGHT_TURN_PORT                          = 0;
+        public static int BACK_RIGHT_ENCODER_PORT                       = 0;
+    }
+
+    public static class IntakeWrist
+    {
+        public static int MOTOR_PORT                                    = 0;
+        public static String MOTOR_CAN_BUS                              = CANIVORE;
+    }
+
+    public static class Shuttle
+    {
+        public static int MOTOR_PORT                                    = 0;
+        public static String MOTOR_CAN_BUS                              = ROBORIO;
+    }
 }
