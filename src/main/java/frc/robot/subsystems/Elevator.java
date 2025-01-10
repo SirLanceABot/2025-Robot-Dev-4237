@@ -34,12 +34,11 @@ public class Elevator extends SubsystemLance
         
     }
 
-
     // *** CLASS VARIABLES & INSTANCE VARIABLES ***
     // Put all class variables and instance variables here
     private final PeriodicData periodicData = new PeriodicData();
-    private final TalonFXLance leftMotor = new TalonFXLance(4, Constants.ROBORIO, "Left Motor");
-    private final TalonFXLance rightMotor = new TalonFXLance(12, Constants.ROBORIO, "Right Motor");
+    private final TalonFXLance leftMotor = new TalonFXLance(Constants.Elevator.LEFT_MOTOR_PORT, Constants.Elevator.LEFT_MOTOR_CAN_BUS, "Left Motor");
+    private final TalonFXLance rightMotor = new TalonFXLance(Constants.Elevator.RIGHT_MOTOR_PORT, Constants.Elevator.RIGHT_MOTOR_CAN_BUS, "Right Motor");
 
     
 
@@ -75,7 +74,23 @@ public class Elevator extends SubsystemLance
         rightMotor.setupBrakeMode();
         leftMotor.setPosition(0.0);
         rightMotor.setPosition(0.0);
-        rightMotor.setupFollower(0, true);
+
+        rightMotor.setupFollower(Constants.Elevator.LEFT_MOTOR_PORT, true);
+
+        leftMotor.setupForwardSoftLimit(0.0, true);
+        leftMotor.setupReverseSoftLimit(0.0, true);
+        leftMotor.setupForwardHardLimitSwitch(true, true);
+        leftMotor.setupReverseHardLimitSwitch(true, true);
+    }
+
+    public double getLeftPosition()
+    {
+        return periodicData.leftMotorEncoderPosition;
+    }
+
+    public double getRightPosition()
+    {
+        return periodicData.rightMotorEncoderPosition;
     }
 
     /**
