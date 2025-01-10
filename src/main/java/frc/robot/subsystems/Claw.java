@@ -1,7 +1,9 @@
-package main.java.frc.robot.subsystems;
+package frc.robot.subsystems;
 
 import java.lang.invoke.MethodHandles;
 
+import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.Commands;
 import frc.robot.Constants;
 import frc.robot.motors.SparkMaxLance;
 import frc.robot.motors.TalonFXLance;
@@ -37,8 +39,8 @@ public class Claw extends SubsystemLance
     // *** CLASS VARIABLES & INSTANCE VARIABLES ***
     // Put all class variables and instance variables here
     private final PeriodicData periodicData = new PeriodicData();
-    private final SparkMaxLance topMotor = new SparkMaxLance(Constants.Claw.TOP_MOTOR_PORT, Constants.TopClaw.MOTOR_CAN_BUS, "Top Claw Motor");
-    private final SparkMaxLance lowerMotor = new SparkMaxLance(Constants.Claw.LOWER_MOTOR_PORT, Constants.LowerClaw.MOTOR_CAN_BUS, "Lower Claw Motor2");
+    private final SparkMaxLance topMotor = new SparkMaxLance(Constants.Claw.TOP_MOTOR_PORT, Constants.Claw.TOP_MOTOR_CAN_BUS, "Top Claw Motor");
+    private final SparkMaxLance lowerMotor = new SparkMaxLance(Constants.Claw.BOTTOM_MOTOR_PORT, Constants.Claw.BOTTOM_MOTOR_CAN_BUS, "Lower Claw Motor2");
 
     // private final TalonFXLance motor1 = new TalonFXLance(4, Constants.ROBORIO, "Motor 1");
     // private final TalonFXLance motor2 = new TalonFXLance(12, Constants.ROBORIO, "Motor 2");
@@ -95,8 +97,8 @@ public class Claw extends SubsystemLance
 
     public void placeCoral()
     {
-        topMotor.set(speed);
-        lowerMotor.set(speed);
+        // topMotor.set(speed);
+        // lowerMotor.set(speed);
     }
 
     /* 
@@ -116,7 +118,7 @@ public class Claw extends SubsystemLance
 
     public Command ejectCoralCommand()
     {
-        return Commands.run(() -> ejectCoral(), this).withName("Place Coral");
+        return Commands.run(() -> ejectCoral(0.5), this).withName("Place Coral");
     }    
     // *** OVERRIDEN METHODS ***
     // Put all methods that are Overridden here
