@@ -95,14 +95,14 @@ public class Claw extends SubsystemLance
      */
     // * different speed and function for L4?
 
-    public void placeCoral()
+    public void placeCoral(double speed)
     {
-        // topMotor.set(speed);
-        // lowerMotor.set(speed);
+        topMotor.set(speed);
+        lowerMotor.set(speed);
     }
 
     /* 
-     * Turns on motors to set speed to realse coral from the claw
+     * Turns on motors to set speed to release coral from the claw
      * redundant with place coral
      */
     public void ejectCoral(double speed)
@@ -118,7 +118,7 @@ public class Claw extends SubsystemLance
 
     public Command ejectCoralCommand()
     {
-        return Commands.run(() -> ejectCoral(0.5), this).withName("Place Coral");
+        return Commands.run(() -> ejectCoral(0.5), this).withName("Eject Coral");
     }    
     // *** OVERRIDEN METHODS ***
     // Put all methods that are Overridden here
