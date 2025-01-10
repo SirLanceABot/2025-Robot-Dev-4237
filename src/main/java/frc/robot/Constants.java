@@ -35,6 +35,13 @@ public final class Constants
         public static final int RIGHT_MOTOR_PORT                        = 0;
         public static final String LEFT_MOTOR_CAN_BUS                   = CANIVORE;
         public static final String RIGHT_MOTOR_CAN_BUS                  = CANIVORE;
+
+        public static final double L4                                   = 0.0;
+        public static final double L3                                   = 0.0;
+        public static final double L2                                   = 0.0;
+        public static final double L1                                   = 0.0;
+        public static final double STARTING_POSITION                     = 0.0;
+        public static final double GRAB_CORAL_POSITION                  = 0.0;
     }
 
     public static class Intake
@@ -58,6 +65,13 @@ public final class Constants
     {
         public static final int MOTOR_PORT                              = 0;
         public static final String MOTOR_CAN_BUS                        = CANIVORE;
+
+        public static final double L4                                   = 0.0;
+        public static final double L3                                   = 0.0;
+        public static final double L2                                   = 0.0;
+        public static final double L1                                   = 0.0;
+        public static final double STARTING_POSITION                    = 0.0;
+        public static final double GRAB_CORAL_POSITION                  = 0.0;
     }
 
     public static class Claw
@@ -98,4 +112,16 @@ public final class Constants
         public static int MOTOR_PORT                                    = 0;
         public static String MOTOR_CAN_BUS                              = ROBORIO;
     }
+
+    // public enum TargetPosition
+    // {
+    //     // kL4(Constants.Elevator.L4, Constants.Shoulder.L4),
+    //     // kL3(Constants.Elevator.L3, Constants.Shoulder.L3),
+    //     // kL2(Constants.Elevator.L2, Constants.Shoulder.L2),
+    //     // kL1(Constants.Elevator.L1, Constants.Shoulder.L1),
+    //     // kStartingPosition(Constants.Elevator.STARTING_POSITION, Constants.Shoulder.STARTING_POSITION),
+    //     // kGrabCoralPosition(Constants.Elevator.GRAB_CORAL_POSITION, Constants.Shoulder.GRAB_CORAL_POSITION),
+    //     // kOverride(-4237, -4237);
+
+    // }
 }
