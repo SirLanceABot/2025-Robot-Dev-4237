@@ -3,6 +3,8 @@ package frc.robot.subsystems;
 import java.lang.invoke.MethodHandles;
 import java.nio.channels.GatheringByteChannel;
 
+import com.revrobotics.spark.SparkLimitSwitch;
+
 import frc.robot.Constants;
 import frc.robot.motors.TalonFXLance;
 
@@ -33,7 +35,7 @@ public class Climb extends SubsystemLance
     // *** CLASS VARIABLES & INSTANCE VARIABLES ***
     // Put all class variables and instance variables here
     private final PeriodicData periodicData = new PeriodicData();
-    private final TalonFXLance motor = new TalonFXLance(0, Constants.ROBORIO, "Climb Motor");
+    private final TalonFXLance motor = new TalonFXLance(Constants.Climb.MOTOR_PORT, Constants.Climb.MOTOR_CAN_BUS, "Climb Motor");
 
 
     // *** CLASS CONSTRUCTORS ***
@@ -94,12 +96,34 @@ public class Climb extends SubsystemLance
 
     public void moveToUpPosition()
     {
-        
+        if(periodicData.position < Constants.Climb.CLIMB_UP_POSITION)
+        {
+            climbUp();
+        }
+        else if(periodicData.position > Constants.Climb.CLIMB_UP_POSITION)
+        {
+            climbDown();
+        }
+        else
+        {
+            stop();
+        }
     }
 
     public void moveToDownPosition()
     {
-
+        if(periodicData.position < Constants.Climb.CLIMB_DOWN_POSITION)
+        {
+            climbUp();
+        }
+        else if(periodicData.position < Constants.Climb.CLIMB_DOWN_POSITION)
+        {
+            climbDown();
+        }
+        else
+        {
+            stop();
+        }
     }
 
     public void stop()

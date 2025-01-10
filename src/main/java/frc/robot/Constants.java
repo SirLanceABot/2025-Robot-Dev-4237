@@ -49,6 +49,9 @@ public final class Constants
     {
         public static final int MOTOR_PORT                              = 0;
         public static final String MOTOR_CAN_BUS                        = CANIVORE;
+
+        public static final double CLIMB_UP_POSITION                    = 1000.0;   // Check value once we have robot
+        public static final double CLIMB_DOWN_POSITION                  = 0.0;      // Check value once we have robot
     }
 
     public static class Shoulder
