@@ -15,6 +15,9 @@ public final class Constants
     // This string gets the full name of the class, including the package name
     private static final String fullClassName = MethodHandles.lookup().lookupClass().getCanonicalName();
 
+    public static final double MAX_BATTERY_VOLTAGE          = 12.0;
+    public static final double END_OF_MATCH_BATTERY_VOLTAGE = 11.5; // This is the estimated voltage at the end of each match, used in subsystems with setVoltage()
+    
     // *** STATIC INITIALIZATION BLOCK ***
     // This block of code is run first when the class is loaded
     static
