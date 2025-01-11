@@ -33,7 +33,7 @@ public class RobotContainer
 
     private boolean useClaw                 = false;
     private boolean useClimb                = false;
-    private boolean useDrivetrain           = false;
+    // private boolean useDrivetrain           = false;
     private boolean useElevator             = false;
     private boolean useIntake               = false;
     private boolean useIntakeWrist          = false;
@@ -44,7 +44,7 @@ public class RobotContainer
 
     public final Claw claw;
     public final Climb climb;
-    public final Drivetrain drivetrain;
+    // public final Drivetrain drivetrain;
     public final Elevator elevator;
     public final Intake intake;
     public final IntakeWrist intakeWrist;
@@ -62,7 +62,7 @@ public class RobotContainer
         
         claw               = (useFullRobot || useClaw)             ? new Claw()                                         : null;
         climb              = (useFullRobot || useClimb)            ? new Climb()                                        : null;
-        drivetrain         = (useFullRobot || useDrivetrain)       ? new Drivetrain()                                   : null;
+        // drivetrain         = (useFullRobot || useDrivetrain)       ? new Drivetrain()                                   : null;
         elevator           = (useFullRobot || useElevator)         ? new Elevator()                                     : null;
         intake             = (useFullRobot || useIntake)           ? new Intake()                                       : null;
         intakeWrist        = (useFullRobot || useIntakeWrist)      ? new IntakeWrist()                                  : null;
