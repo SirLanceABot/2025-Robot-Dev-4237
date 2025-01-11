@@ -85,6 +85,8 @@ public class BradyWTest implements Test
         {
             elevator.stop();
         }
+
+        System.out.println("Elevator Position: " + elevator.getLeftPosition());
     }
 
     
