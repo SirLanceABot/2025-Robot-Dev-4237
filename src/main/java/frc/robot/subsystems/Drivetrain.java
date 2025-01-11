@@ -11,10 +11,8 @@ import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.kinematics.SwerveDriveOdometry;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants;
-import frc.robot.motors.TalonFXLance;
 import frc.robot.sensors.GyroLance;
 
 public class Drivetrain extends SubsystemLance
@@ -140,6 +138,28 @@ public class Drivetrain extends SubsystemLance
     }
 
 
+
+    private void lockWheels()
+    {
+        inputSwerveModuleStates = new SwerveModuleState[4];
+                
+        inputSwerveModuleStates[0] = new SwerveModuleState(0.0, Rotation2d.fromDegrees(45));
+        inputSwerveModuleStates[1] = new SwerveModuleState(0.0, Rotation2d.fromDegrees(135));
+        inputSwerveModuleStates[2] = new SwerveModuleState(0.0, Rotation2d.fromDegrees(135));
+        inputSwerveModuleStates[3] = new SwerveModuleState(0.0, Rotation2d.fromDegrees(45));
+
+        setSwerveModuleStates(inputSwerveModuleStates);
+    }
+
+    private void setSwerveModuleStates(SwerveModuleState[] states)
+    {
+        frontLeft.setDesiredState(states[0]);
+        frontRight.setDesiredState(states[1]);
+        backLeft.setDesiredState(states[2]);
+        backRight.setDesiredState(states[3]);
+    }
+
+
     public void driveRobotRelative(ChassisSpeeds chassisSpeeds)
     {
         driveMode = DriveMode.kDrive;
@@ -148,24 +168,34 @@ public class Drivetrain extends SubsystemLance
         SwerveDriveKinematics.desaturateWheelSpeeds(inputSwerveModuleStates, 10.0);
     }
 
-    public void drive(double xSpeed, double ySpeed, double turnSpeed, boolean fieldRelative, boolean useSlewRateLimiter)
+    private void drive(double xSpeed, double ySpeed, double turnSpeed, boolean fieldRelative, boolean useSlewRateLimiter)
     {
-        driveMode = DriveMode.kDrive;
-
         if(Math.abs(xSpeed) < 0.04)
             xSpeed = 0.0;
         if(Math.abs(ySpeed) < 0.04)
             ySpeed = 0.0;
         if(Math.abs(turnSpeed) < 0.04)
             turnSpeed = 0.0;    
-        
-        
-        this.xSpeed = xSpeed;
-        this.ySpeed = ySpeed;
 
-        this.turnSpeed = turnSpeed;
-        this.fieldRelative = fieldRelative;
+        if(useSlewRateLimiter)
+        {
+            // xSpeed = adaptiveXRateLimiter.calculate(xSpeed);
+            // ySpeed = adaptiveYRateLimiter.calculate(ySpeed);
+        }
     
+
+        if(fieldRelative)
+            chassisSpeeds = ChassisSpeeds.fromFieldRelativeSpeeds(xSpeed, ySpeed, turnSpeed, gyro.getRotation2d());
+        else
+            chassisSpeeds = new ChassisSpeeds(xSpeed, ySpeed, turnSpeed);
+
+        //Using Chassis speeds
+        inputSwerveModuleStates = kinematics.toSwerveModuleStates(chassisSpeeds);
+
+        //Makes sure wheel speeds aren't too high
+        SwerveDriveKinematics.desaturateWheelSpeeds(inputSwerveModuleStates, 10.0);
+
+        setSwerveModuleStates(inputSwerveModuleStates);
     }
 
 
@@ -181,6 +211,20 @@ public class Drivetrain extends SubsystemLance
         
         return kinematics.toChassisSpeeds(moduleStates);
     }
+
+    public Command driveCommand(DoubleSupplier xSpeed, DoubleSupplier ySpeed, DoubleSupplier turn, DoubleSupplier scale)
+    {
+        return
+        this.runOnce(
+                () -> drive(
+                    xSpeed.getAsDouble() * scale.getAsDouble(),
+                    ySpeed.getAsDouble() * scale.getAsDouble(),
+                    turn.getAsDouble() * scale.getAsDouble(), 
+                    true,
+                    true)
+                )
+                .withName("driveCommand()");
+            }
 
      @Override
     public void readPeriodicInputs() 
