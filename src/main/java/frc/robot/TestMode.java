@@ -57,23 +57,23 @@ public class TestMode
         // Uncomment one of these statements
 
         // myTest = new ExampleTest(robotContainer);
-        myTest = new JWoodTest(robotContainer);
-        myTest = new AdityaYTest(robotContainer);
-        myTest = new BradyWTest(robotContainer);
-        myTest = new GretaHTest(robotContainer);
-        myTest = new JacksonDTest(robotContainer);
-        myTest = new LoganBTest(robotContainer);
-        myTest = new MasonBTest(robotContainer);
-        myTest = new MatthewFTest(robotContainer);
-        myTest = new NiyatiPTest(robotContainer);
-        myTest = new OwenDTest(robotContainer);
-        myTest = new PoishaBTest(robotContainer);
-        myTest = new RickTTest(robotContainer);
-        myTest = new RobbieFTest(robotContainer);
-        myTest = new RobbieJTest(robotContainer);  
-        myTest = new TanishkaJTest(robotContainer);
-        myTest = new YalinGTest(robotContainer);
-        myTest = new YamanGTest(robotContainer);     
+        // myTest = new JWoodTest(robotContainer);
+        // myTest = new AdityaYTest(robotContainer);
+        // myTest = new BradyWTest(robotContainer);
+        // myTest = new GretaHTest(robotContainer);
+        // myTest = new JacksonDTest(robotContainer);
+        // myTest = new LoganBTest(robotContainer);
+        // myTest = new MasonBTest(robotContainer);
+        // myTest = new MatthewFTest(robotContainer);
+        // myTest = new NiyatiPTest(robotContainer);
+        // myTest = new OwenDTest(robotContainer);
+        // myTest = new PoishaBTest(robotContainer);
+        // myTest = new RickTTest(robotContainer);
+        // myTest = new RobbieFTest(robotContainer);
+        // myTest = new RobbieJTest(robotContainer);  
+        // myTest = new TanishkaJTest(robotContainer);
+        // myTest = new YalinGTest(robotContainer);
+        // myTest = new YamanGTest(robotContainer);     
     }
 
     /**
