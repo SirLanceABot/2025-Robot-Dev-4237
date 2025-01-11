@@ -2,7 +2,9 @@ package frc.robot.tests;
 
 import java.lang.invoke.MethodHandles;
 
+import edu.wpi.first.wpilibj.Joystick;
 import frc.robot.RobotContainer;
+import frc.robot.subsystems.Climb;
 
 public class LoganBTest implements Test
 {
@@ -25,6 +27,8 @@ public class LoganBTest implements Test
     // *** CLASS & INSTANCE VARIABLES ***
     // Put all class and instance variables here.
     private final RobotContainer robotContainer;
+    private final Climb climb;
+    private final Joystick joystick = new Joystick(0);
     // private final ExampleSubsystem exampleSubsystem;
 
 
@@ -41,7 +45,7 @@ public class LoganBTest implements Test
 
         this.robotContainer = robotContainer;
         // this.exampleSubsystem = robotContainer.exampleSubsystem;
-
+        climb = robotContainer.climb;
         System.out.println("  Constructor Finished: " + fullClassName);
     }
 
@@ -64,7 +68,24 @@ public class LoganBTest implements Test
      * This method runs periodically (every 20ms).
      */
     public void periodic()
-    {}
+    {
+        if(joystick.getRawButton(1)) // A button
+        {
+            climb.climbUp();
+        }
+        else if(joystick.getRawButton(2)) // B button
+        {
+            climb.climbDown();
+        }
+        else if(joystick.getRawButton(3)) // X button
+        {
+            climb.climbUpCommand().schedule();
+        }
+        else if(joystick.getRawButton(4)) // Y button
+        {
+            climb.climbDownCommand().schedule();
+        }
+    }
     
     /**
      * This method runs one time after the periodic() method.
