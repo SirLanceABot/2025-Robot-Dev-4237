@@ -29,21 +29,9 @@ public class Elevator extends SubsystemLance
 
     // *** INNER ENUMS and INNER CLASSES ***
     // Put all inner enums and inner classes here
-    private class PeriodicData
-    {
-        // INPUTS
-        private double leftMotorEncoderPosition;
-        private double rightMotorEncoderPosition;
-
-        // OUTPUTS
-        private double speed;
-        private DoubleLogEntry elevatorPositionEntry;
-        
-    }
 
     // *** CLASS VARIABLES & INSTANCE VARIABLES ***
     // Put all class variables and instance variables here
-    private final PeriodicData periodicData = new PeriodicData();
     private final TalonFXLance leftMotor = new TalonFXLance(Constants.Elevator.LEFT_MOTOR_PORT, Constants.Elevator.LEFT_MOTOR_CAN_BUS, "Left Motor");
     private final TalonFXLance rightMotor = new TalonFXLance(Constants.Elevator.RIGHT_MOTOR_PORT, Constants.Elevator.RIGHT_MOTOR_CAN_BUS, "Right Motor");
     private SparkLimitSwitch forwardLimitSwitch;
@@ -51,6 +39,11 @@ public class Elevator extends SubsystemLance
     private RelativeEncoder encoder;
     private Constants.TargetPosition targetPosition = Constants.TargetPosition.kOverride;
     private final double threshold = 0.01;
+
+    private double leftMotorEncoderPosition = 0.0;
+    private double rightMotorEncoderPosition = 0.0;
+    private double speed = 0.0;
+    private DoubleLogEntry elevatorPositionEntry;
 
     // PID Values
     private final double kP = 0.0;
@@ -105,12 +98,12 @@ public class Elevator extends SubsystemLance
 
     public double getLeftPosition()
     {
-        return periodicData.leftMotorEncoderPosition;
+        return leftMotorEncoderPosition;
     }
 
     public double getRightPosition()
     {
-        return periodicData.rightMotorEncoderPosition;
+        return rightMotorEncoderPosition;
     }
 
     // public void moveToPosition(Constants.TargetPosition targetPosition)
@@ -160,20 +153,20 @@ public class Elevator extends SubsystemLance
         }
         else
         {
-            turnOff();
+            stop();
         }
     }
 
-    public void manualMove(double speed)
+    private void manualMove(double speed)
     {
         targetPosition = Constants.TargetPosition.kOverride;
-        periodicData.speed = speed;
+        leftMotor.set(speed);
     }
 
-    public void turnOff()
+    public void stop()
     {
         targetPosition = Constants.TargetPosition.kOverride;
-        periodicData.speed = 0.0;
+        leftMotor.set(0.0);
     }
 
     public Command manualMoveCommand(double speed)
@@ -181,14 +174,14 @@ public class Elevator extends SubsystemLance
         return Commands.run(() -> manualMove(speed), this).withName("Manual Move Elevator");
     }
 
-    public Command turnOffCommand()
+    public Command stopCommand()
     {
-        return Commands.run(() -> turnOff(), this).withName("Turn Off Elevator");
+        return Commands.run(() -> stop(), this).withName("Stop Elevator");
     }
 
     public Command moveToSetPositionCommand(Constants.TargetPosition targetPosition)
     {
-        return Commands.run(() -> moveToSetPosition(targetPosition), this).withName("Turn Off Elevator");
+        return Commands.run(() -> moveToSetPosition(targetPosition), this).withName("Move To Set Position Elevator");
     }
 
     
@@ -209,8 +202,7 @@ public class Elevator extends SubsystemLance
     @Override
     public void writePeriodicOutputs()
     {
-        leftMotor.set(periodicData.speed);
-        rightMotor.set(periodicData.speed);
+        
     }
 
     @Override
@@ -228,6 +220,6 @@ public class Elevator extends SubsystemLance
     @Override
     public String toString()
     {
-        return "";
+        return "Elevator Position: " + getLeftPosition();
     }
 }
