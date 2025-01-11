@@ -1,7 +1,6 @@
 package frc.robot.subsystems;
 
 import java.lang.invoke.MethodHandles;
-import java.nio.channels.GatheringByteChannel;
 
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
@@ -23,23 +22,17 @@ public class Climb extends SubsystemLance
 
     // *** INNER ENUMS and INNER CLASSES ***
     // Put all inner enums and inner classes here
-    private class PeriodicData
-    {
-        // INPUTS
-        private double position = 0.0;
-        // OUTPUTS
-        private double speed = 0.0;
-    }
 
 
     // *** CLASS VARIABLES & INSTANCE VARIABLES ***
     // Put all class variables and instance variables here
-    private final PeriodicData periodicData = new PeriodicData();
     private final TalonFXLance motor = new TalonFXLance(Constants.Climb.MOTOR_PORT, Constants.Climb.MOTOR_CAN_BUS, "Climb Motor");
+    private double position = 0.0;
+
 
     private final double FORWARD_SOFT_LIMIT = 1000.0;
     private final double REVERSE_SOFT_LIMIT = 0.0;
-
+    private final double POSITION_TOLERANCE = 1.0;
 
     // *** CLASS CONSTRUCTORS ***
     // Put all class constructors here
@@ -70,6 +63,9 @@ public class Climb extends SubsystemLance
         motor.setupFactoryDefaults();
         motor.setupBrakeMode();
 
+        motor.setupInverted(false);
+        motor.setPosition(0.0);
+
         motor.setupForwardSoftLimit(FORWARD_SOFT_LIMIT, true);
         motor.setupReverseSoftLimit(REVERSE_SOFT_LIMIT, true);
         motor.setupForwardHardLimitSwitch(true, true);
@@ -78,37 +74,33 @@ public class Climb extends SubsystemLance
 
     public double getPosition()
     {
-        return periodicData.position;
+        return position;
     }
 
-    /**
-     * Returns the value of the sensor
-    * @return The value of periodData.sensorValue
-    */
-    public void set(double speed)
+    private void set(double speed)
     {
-        periodicData.speed = speed;
+        motor.set(speed);
     }
 
     // Moves the climb so the robot will climb up the cage
     public void climbUp()
     {
-        periodicData.speed = 0.1;
+        motor.set(0.1);
     }
 
     // Moves the climb so the robot will climb down the cage
     public void climbDown()
     {
-        periodicData.speed = -0.1;
+        motor.set(-0.1);
     }
 
     public void moveToUpPosition()
     {
-        if(periodicData.position < Constants.Climb.CLIMB_UP_POSITION)
+        if(position < Constants.Climb.CLIMB_UP_POSITION - POSITION_TOLERANCE)
         {
             climbUp();
         }
-        else if(periodicData.position > Constants.Climb.CLIMB_UP_POSITION)
+        else if(position > Constants.Climb.CLIMB_UP_POSITION + POSITION_TOLERANCE)
         {
             climbDown();
         }
@@ -120,11 +112,11 @@ public class Climb extends SubsystemLance
 
     public void moveToDownPosition()
     {
-        if(periodicData.position < Constants.Climb.CLIMB_DOWN_POSITION)
+        if(position < Constants.Climb.CLIMB_DOWN_POSITION)
         {
             climbUp();
         }
-        else if(periodicData.position < Constants.Climb.CLIMB_DOWN_POSITION)
+        else if(position < Constants.Climb.CLIMB_DOWN_POSITION)
         {
             climbDown();
         }
@@ -136,39 +128,62 @@ public class Climb extends SubsystemLance
 
     public void stop()
     {
-        periodicData.speed = 0.0;
+        motor.set(0.0);
     }
 
+    public Command setCommand(double speed)
+    {
+        return Commands.run(() -> set(speed), this).withName("Set Climb Speed");
+    }
 
+    public Command climbUpCommand()
+    {
+        return Commands.run(() -> climbUp(), this).withName("Climb Up");
+    }
+
+    public Command climbDownCommand()
+    {
+        return Commands.run(() -> climbDown(), this).withName("Climb Down");
+    }
+
+    public Command moveToUpPositionCommand()
+    {
+        return Commands.run(() -> moveToUpPositionCommand(), this).withName("Move To Up Position");
+    }
+
+    public Command moveToDownPositionCommand()
+    {
+        return Commands.run(() -> moveToDownPositionCommand(), this).withName("Move To Down Position");
+    }
+
+    public Command stopCommand()
+    {
+        return Commands.runOnce(() -> stopCommand(), this).withName("Stops Climb");
+    }
     // *** OVERRIDEN METHODS ***
     // Put all methods that are Overridden here
     @Override
     public void readPeriodicInputs()
     {
-        periodicData.position = motor.getPosition();
+
     }
 
     @Override
     public void writePeriodicOutputs()
     {
-        motor.set(periodicData.speed);
+
     }
 
     @Override
     public void periodic()
     {
         // This method will be called once per scheduler run
-    }
-
-    @Override
-    public void simulationPeriodic()
-    {
-        // This method will be called once per scheduler run during simulation
+        position = motor.getPosition();
     }
 
     @Override
     public String toString()
     {
-        return "";
+        return "Climb position = " + position;
     }
 }
