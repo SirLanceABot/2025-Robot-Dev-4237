@@ -100,17 +100,17 @@ public class ExampleSubsystem extends SubsystemLance
 
     // *** OVERRIDEN METHODS ***
     // Put all methods that are Overridden here
-    @Override
-    public void readPeriodicInputs()
-    {
-        // REMOVE ALL CODE FROM HERE
-    }
+    // @Override
+    // public void readPeriodicInputs()
+    // {
+    //     // REMOVE ALL CODE FROM HERE
+    // }
 
-    @Override
-    public void writePeriodicOutputs()
-    {
-        // REMOVE ALL CODE FROM HERE
-    }
+    // @Override
+    // public void writePeriodicOutputs()
+    // {
+    //     // REMOVE ALL CODE FROM HERE
+    // }
 
     @Override
     public void periodic()
