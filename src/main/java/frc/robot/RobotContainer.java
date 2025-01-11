@@ -5,6 +5,18 @@ import java.lang.invoke.MethodHandles;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 
+import frc.robot.subsystems.Claw;
+import frc.robot.subsystems.Climb;
+import frc.robot.subsystems.Drivetrain;
+import frc.robot.subsystems.Elevator;
+import frc.robot.subsystems.Intake;
+import frc.robot.subsystems.IntakeWrist;
+import frc.robot.subsystems.Shoulder;
+import frc.robot.subsystems.Shuttle;
+
+
+
+
 public class RobotContainer 
 {
     // This string gets the full name of the class, including the package name
@@ -16,6 +28,18 @@ public class RobotContainer
     {
         System.out.println("Loading: " + fullClassName);
     }
+
+    private boolean useFullRobot            = false;
+
+    private boolean useClaw                 = false;
+    private boolean useClimb                = false;
+    private boolean useDrivetrain           = false;
+    private boolean useElevator             = false;
+    private boolean useIntake               = false;
+    private boolean useIntakeWrist          = false;
+    private boolean useShoulder             = false;
+    private boolean useShuttle              = false;
+    
 
     /** 
      * The container for the robot. Contains subsystems, OI devices, and commands.

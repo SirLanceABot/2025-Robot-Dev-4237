@@ -2,6 +2,8 @@ package frc.robot.subsystems;
 
 import java.lang.invoke.MethodHandles;
 
+import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.Commands;
 import frc.robot.Constants;
 import frc.robot.motors.TalonFXLance;
 
@@ -49,7 +51,9 @@ public class IntakeWrist extends SubsystemLance
     private static final double INTAKE_ALGAE_POSITION = 0.0;
     private static final double SHOOTING_POSITION = 0.0;
 
-    // private final double tolerance
+    private final double tolerance = 5.0;
+    
+    
 
 
 
@@ -105,8 +109,26 @@ public class IntakeWrist extends SubsystemLance
 
     private void moveToPosition(TargetPosition targetPosition)
     {
-        // if
+        if(getPosition() > (targetPosition.value + tolerance))
+        {
+            set(-0.2);
+        }
+        else if(getPosition() < (targetPosition.value - tolerance))
+        {
+            set(0.2);
+        }
+        else
+        {
+            stop();
+        }
     }
+
+    public Command moveToSetPositionCommand(TargetPosition targetPosition)
+    {
+        return Commands.run(() -> moveToPosition(targetPosition), this).withName("Move To Set Position Intake Wrist");
+    }
+
+ 
 
 
     // *** OVERRIDEN METHODS ***
@@ -138,6 +160,6 @@ public class IntakeWrist extends SubsystemLance
     @Override
     public String toString()
     {
-        return "";
+        return "Intake Wrist Position: " + getPosition();
     }
 }
