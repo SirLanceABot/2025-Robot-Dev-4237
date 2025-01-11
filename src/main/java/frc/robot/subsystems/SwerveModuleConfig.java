@@ -45,6 +45,20 @@ public class SwerveModuleConfig {
 
     public String toString()
     {
-        return " ";
+        StringBuilder sb = new StringBuilder(400);
+        
+        sb.append("   Name       DriveMotor     Turn Encoder  Turn Motor\n");
+        sb.append("           Channel Inverted Channel Offset   Channel\n");
+
+        sb.append(String.format("%10s  %3d     %5b    %3d    %6.1f    %3d\n",
+            moduleName,
+            driveMotorChannel,
+            driveMotorInverted,
+            turnEncoderChannel,
+            turnEncoderOffset,
+            turnMotorChannel));
+
+        return sb.toString();
     }
+
 }
