@@ -39,6 +39,17 @@ public class RobotContainer
     private boolean useIntakeWrist          = false;
     private boolean useShoulder             = false;
     private boolean useShuttle              = false;
+
+    public final boolean fullRobot;
+
+    public final Claw claw;
+    public final Climb climb;
+    public final Drivetrain drivetrain;
+    public final Elevator elevator;
+    public final Intake intake;
+    public final IntakeWrist intakeWrist;
+    public final Shoulder shoulder;
+    public final Shuttle shuttle;
     
 
     /** 
@@ -47,6 +58,17 @@ public class RobotContainer
      */
     RobotContainer()
     {
+        fullRobot          = (useFullRobot);
+        
+        claw               = (useFullRobot || useClaw)             ? new Claw()                                         : null;
+        climb              = (useFullRobot || useClimb)            ? new Climb()                                        : null;
+        drivetrain         = (useFullRobot || useDrivetrain)       ? new Drivetrain()                                   : null;
+        elevator           = (useFullRobot || useElevator)         ? new Elevator()                                     : null;
+        intake             = (useFullRobot || useIntake)           ? new Intake()                                       : null;
+        intakeWrist        = (useFullRobot || useIntakeWrist)      ? new IntakeWrist()                                  : null;
+        shoulder           = (useFullRobot || useShoulder)         ? new Shoulder()                                     : null;
+        shuttle            = (useFullRobot || useShuttle)          ? new Shuttle()                                      : null;
+
         configureBindings();
     }
 
