@@ -369,6 +369,7 @@ public class TalonFXLance extends MotorControllerLance
 
     /**
      * Set the PID controls for the motor.
+     * @param slotID The PID slot (0-2)
      * @param kP The Proportional constant
      * @param kI The Integral constant
      * @param kD The Derivative constant
