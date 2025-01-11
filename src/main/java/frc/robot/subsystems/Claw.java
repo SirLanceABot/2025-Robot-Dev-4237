@@ -6,7 +6,6 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import frc.robot.Constants;
 import frc.robot.motors.SparkMaxLance;
-import frc.robot.motors.TalonFXLance;
 
 /**
  * Use this class as a template to create other subsystems.
@@ -26,25 +25,12 @@ public class Claw extends SubsystemLance
 
     // *** INNER ENUMS and INNER CLASSES ***
     // Put all inner enums and inner classes here
-    private class PeriodicData
-    {
-        // INPUTS
-        // private double motorSpeed = 0.0;
-
-        // OUTPUTS
-        private double speed;
-    }
-
 
     // *** CLASS VARIABLES & INSTANCE VARIABLES ***
     // Put all class variables and instance variables here
-    private final PeriodicData periodicData = new PeriodicData();
+
     private final SparkMaxLance topMotor = new SparkMaxLance(Constants.Claw.TOP_MOTOR_PORT, Constants.Claw.TOP_MOTOR_CAN_BUS, "Top Claw Motor");
     private final SparkMaxLance lowerMotor = new SparkMaxLance(Constants.Claw.BOTTOM_MOTOR_PORT, Constants.Claw.BOTTOM_MOTOR_CAN_BUS, "Lower Claw Motor2");
-
-    // private final TalonFXLance motor1 = new TalonFXLance(4, Constants.ROBORIO, "Motor 1");
-    // private final TalonFXLance motor2 = new TalonFXLance(12, Constants.ROBORIO, "Motor 2");
-
 
     // *** CLASS CONSTRUCTORS ***
     // Put all class constructors here
@@ -80,14 +66,15 @@ public class Claw extends SubsystemLance
      * Returns the value of the sensor
     * @return The value of periodData.sensorValue
     */
-    public void set(double speed)
+    private void setSpeed(double speed)
     {
-        periodicData.speed = speed;
+        topMotor.set(speed);
+        lowerMotor.set(speed);
     }
 
     public void stop()
     {
-        periodicData.speed = 0.0;
+        setSpeed(0.0);
     }
 
     /* 
@@ -131,25 +118,19 @@ public class Claw extends SubsystemLance
     @Override
     public void writePeriodicOutputs()
     {
-        topMotor.set(periodicData.speed);
-        lowerMotor.set(periodicData.speed);
+
     }
 
     @Override
     public void periodic()
     {
         // This method will be called once per scheduler run
-    }
-
-    @Override
-    public void simulationPeriodic()
-    {
-        // This method will be called once per scheduler run during simulation
+        // use for sensors and data log
     }
 
     @Override
     public String toString()
     {
-        return "";
+        return "Claw Top Motor Speed: " + topMotor.get() + "Claw Lower Motor Speed: " + lowerMotor.get();
     }
 }
