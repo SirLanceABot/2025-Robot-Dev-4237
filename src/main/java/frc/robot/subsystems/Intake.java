@@ -46,9 +46,9 @@ public class Intake extends SubsystemLance
   private class PeriodicData 
   {
     // INPUTS
-    private double topRollerPosition = 0.0;
+    private double rollerPosition = 0.0;
     private double bottomRollerPosition = 0.0;
-    private double topRollerVelocity;
+    private double rollerVelocity;
     private double bottomRollerVelocity;
 
     // OUTPUTS
@@ -59,8 +59,8 @@ public class Intake extends SubsystemLance
   // *** CLASS VARIABLES & INSTANCE VARIABLES ***
   // Put all class variables and instance variables here
   private final PeriodicData periodicData = new PeriodicData();
-  private final TalonFXLance topMotor = new TalonFXLance(4, Constants.ROBORIO, "Top Motor");
-  private final TalonFXLance bottomMotor = new TalonFXLance(12, Constants.ROBORIO, "Bottom Motor");
+  private final TalonFXLance Motor = new TalonFXLance(4, Constants.ROBORIO, "Motor");
+ //private final TalonFXLance bottomMotor = new TalonFXLance(12, Constants.ROBORIO, "Bottom Motor");
 
   private final double GEAR_RATIO = 1.0 / 5.0; // previously 1.0 / 25.0
   private final double WHEEL_DIAMETER_FEET = 2.25 / 12.0;
@@ -97,94 +97,94 @@ public class Intake extends SubsystemLance
   private void configMotors() 
   {
     // Factory Defaults
-    topMotor.setupFactoryDefaults();
-    bottomMotor.setupFactoryDefaults();
+    Motor.setupFactoryDefaults();
+    //bottomMotor.setupFactoryDefaults();
     // Do Not Invert Motor Direction
-    topMotor.setupInverted(false); // test later
-    bottomMotor.setupInverted(true); // test later
+    Motor.setupInverted(false); // test later
+    //bottomMotor.setupInverted(true); // test later
     // Set Coast Mode
-    topMotor.setupCoastMode();
-    bottomMotor.setupCoastMode();
+    Motor.setupCoastMode();
+    //bottomMotor.setupCoastMode();
     // topMotor.setupPIDController(0, periodicData.kP, periodicData.kI, periodicData.kD);
     // bottomMotor.setupPIDController(0, 17.0, 0.0, 0.0);
 
-    topMotor.setupVelocityConversionFactor(RPM_TO_FPS);
+    Motor.setupVelocityConversionFactor(RPM_TO_FPS);
 
-    topMotor.setupCurrentLimit(30.0, 35.0, 0.5);
-    topMotor.setSafetyEnabled(false);
-    bottomMotor.setSafetyEnabled(false);
+    Motor.setupCurrentLimit(30.0, 35.0, 0.5);
+    Motor.setSafetyEnabled(false);
+    //bottomMotor.setSafetyEnabled(false);
   }
 
   /**
    * Returns the value of the sensor
    * @return The value of periodData.sensorValue
    */
-  public void on(double speed) 
+  public void in(double speed) 
   {
-    topSetVoltage(speed * Constants.END_OF_MATCH_BATTERY_VOLTAGE);
-    bottomSetVoltage(speed * Constants.END_OF_MATCH_BATTERY_VOLTAGE);
+    setVoltage(speed * Constants.END_OF_MATCH_BATTERY_VOLTAGE);
+    //bottomSetVoltage(speed * Constants.END_OF_MATCH_BATTERY_VOLTAGE);
   }
 
   public void stop() 
   {
     // periodicData.speed = 0.0;
-    topSetVoltage(0.0 * Constants.END_OF_MATCH_BATTERY_VOLTAGE);
-    bottomSetVoltage(0.0 * Constants.END_OF_MATCH_BATTERY_VOLTAGE);
+    setVoltage(0.0 * Constants.END_OF_MATCH_BATTERY_VOLTAGE);
+    //bottomSetVoltage(0.0 * Constants.END_OF_MATCH_BATTERY_VOLTAGE);
   }
 
-  public double getTopPosition() 
+  public double getPosition() 
   {
-    return periodicData.topRollerPosition;
+    return periodicData.rollerPosition;
   }
 
-  public double getBottomPosition() 
-  {
-    return periodicData.bottomRollerPosition;
-  }
+//   public double getBottomPosition() 
+//   {
+//     return periodicData.bottomRollerPosition;
+//   }
 
   public void pickup() 
   {
-    topSetVoltage(1.0 * Constants.END_OF_MATCH_BATTERY_VOLTAGE);
-    bottomSetVoltage(1.0 * Constants.END_OF_MATCH_BATTERY_VOLTAGE);
+    setVoltage(1.0 * Constants.END_OF_MATCH_BATTERY_VOLTAGE);
+    //bottomSetVoltage(1.0 * Constants.END_OF_MATCH_BATTERY_VOLTAGE);
   }
 
   public void eject() 
   {
-    topSetVoltage(-1.0 * Constants.END_OF_MATCH_BATTERY_VOLTAGE);
-    bottomSetVoltage(-1.0 * Constants.END_OF_MATCH_BATTERY_VOLTAGE);
+    setVoltage(-1.0 * Constants.END_OF_MATCH_BATTERY_VOLTAGE);
+    //bottomSetVoltage(-1.0 * Constants.END_OF_MATCH_BATTERY_VOLTAGE);
   }
 
-  private void topSetVoltage(double voltage) 
+  private void setVoltage(double voltage) 
   {
-    topMotor.setVoltage(voltage);
+    Motor.setVoltage(voltage);
   }
 
-  private void bottomSetVoltage(double voltage) 
+//   private void bottomSetVoltage(double voltage) 
+//   {
+//     bottomMotor.setVoltage(voltage);
+//   }
+
+  private void set(double speed) 
   {
-    bottomMotor.setVoltage(voltage);
+    Motor.set(speed);
   }
 
-  private void topSet(double speed) 
+//   private void bottomSet(double speed) 
+//   {
+//     bottomMotor.set(speed);
+//   }
+
+  public double getVelocity() 
   {
-    topMotor.set(speed);
+    return periodicData.rollerVelocity;
   }
 
-  private void bottomSet(double speed) 
-  {
-    bottomMotor.set(speed);
-  }
+//   public double getBottomVelocity() 
+//   {
+//     return periodicData.bottomRollerVelocity;
+//   }
 
-  public double getTopVelocity() 
-  {
-    return periodicData.topRollerVelocity;
-  }
-
-  public double getBottomVelocity() 
-  {
-    return periodicData.bottomRollerVelocity;
-  }
-
-  public Command pickupFrontCommand() 
+  public Command pickupCommand() 
   {
     return Commands.run(() -> pickup(), this).withName("Pickup");
   }
@@ -210,12 +210,12 @@ public class Intake extends SubsystemLance
   public void periodic() 
   {
     // This method will be called once per scheduler run
-    periodicData.topRollerPosition = topMotor.getPosition();
-    periodicData.bottomRollerPosition = bottomMotor.getPosition();
-    periodicData.topRollerVelocity = topMotor.getVelocity();
-    periodicData.bottomRollerVelocity = bottomMotor.getVelocity();
+    periodicData.rollerPosition = Motor.getPosition();
+    //periodicData.bottomRollerPosition = bottomMotor.getPosition();
+    periodicData.rollerVelocity = Motor.getVelocity();
+    //periodicDatopRollerVelocityta.bottomRollerVelocity = bottomMotor.getVelocity();
   }
-
+ 
   @Override
   public void simulationPeriodic() 
   {
@@ -225,6 +225,6 @@ public class Intake extends SubsystemLance
   @Override
   public String toString() 
   {
-    return "";
+    return "Current Intake Position: " + periodicData.rollerPosition;
   }
 }
