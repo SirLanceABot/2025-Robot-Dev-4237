@@ -40,7 +40,7 @@ public final class Constants
         public static final double L3                                   = 0.0;
         public static final double L2                                   = 0.0;
         public static final double L1                                   = 0.0;
-        public static final double STARTING_POSITION                     = 0.0;
+        public static final double STARTING_POSITION                    = 0.0;
         public static final double GRAB_CORAL_POSITION                  = 0.0;
     }
 
@@ -57,8 +57,8 @@ public final class Constants
         public static final int MOTOR_PORT                              = 0;
         public static final String MOTOR_CAN_BUS                        = CANIVORE;
 
-        public static final double CLIMB_UP_POSITION                    = 1000.0;   // Check value once we have robot
-        public static final double CLIMB_DOWN_POSITION                  = 0.0;      // Check value once we have robot
+        public static final double CLIMB_UP_POSITION                    = 100.0;   // Check value once we have robot
+        public static final double CLIMB_DOWN_POSITION                  = 1.0;      // Check value once we have robot
     }
 
     public static class Shoulder

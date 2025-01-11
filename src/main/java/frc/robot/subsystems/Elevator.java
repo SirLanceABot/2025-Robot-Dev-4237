@@ -98,12 +98,12 @@ public class Elevator extends SubsystemLance
 
     public double getLeftPosition()
     {
-        return leftMotorEncoderPosition;
+        return leftMotor.getPosition();
     }
 
     public double getRightPosition()
     {
-        return rightMotorEncoderPosition;
+        return rightMotor.getPosition();
     }
 
     // public void moveToPosition(Constants.TargetPosition targetPosition)

@@ -23,20 +23,34 @@ public class IntakeWrist extends SubsystemLance
 
     // *** INNER ENUMS and INNER CLASSES ***
     // Put all inner enums and inner classes here
-    private class PeriodicData
+    private enum TargetPosition
     {
-        // INPUTS
+        kStartingPosition(IntakeWrist.STARTING_POSITION),
+        kIntakeCoralPosition(IntakeWrist.INTAKE_CORAL_POSITION),
+        kIntakeAlgaePosition(IntakeWrist.INTAKE_ALGAE_POSITION),
+        kShootingPosition(IntakeWrist.SHOOTING_POSITION);
 
-        // OUTPUTS
-        private double speed;
+        double value;
+
+        private TargetPosition(double value)
+        {
+            this.value = value;
+        }
+
     }
-
+    
 
     // *** CLASS VARIABLES & INSTANCE VARIABLES ***
     // Put all class variables and instance variables here
-    private final PeriodicData periodicData = new PeriodicData();
     private final TalonFXLance motor = new TalonFXLance(Constants.IntakeWrist.MOTOR_PORT, Constants.IntakeWrist.MOTOR_CAN_BUS, "Intake Wrist Motor");
-    
+    private double speed;
+    private static final double STARTING_POSITION = 0.0;
+    private static final double INTAKE_CORAL_POSITION = 0.0;
+    private static final double INTAKE_ALGAE_POSITION = 0.0;
+    private static final double SHOOTING_POSITION = 0.0;
+
+    // private final double tolerance
+
 
 
     // *** CLASS CONSTRUCTORS ***
@@ -70,18 +84,28 @@ public class IntakeWrist extends SubsystemLance
         motor.setPosition(0.0);
     }
 
+    public double getPosition()
+    {
+        return motor.getPosition();
+    }
+
     /**
      * Returns the value of the sensor
     * @return The value of periodData.sensorValue
     */
-    public void set(double speed)
+    private void set(double speed)
     {
-        periodicData.speed = speed;
+        motor.set(speed);
     }
 
-    public void stop()
+    private void stop()
     {
-        periodicData.speed = 0.0;
+        motor.set(0.0);
+    }
+
+    private void moveToPosition(TargetPosition targetPosition)
+    {
+        // if
     }
 
 
@@ -96,7 +120,7 @@ public class IntakeWrist extends SubsystemLance
     @Override
     public void writePeriodicOutputs()
     {
-        motor.set(periodicData.speed);
+        
     }
 
     @Override

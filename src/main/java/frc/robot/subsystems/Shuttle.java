@@ -25,19 +25,12 @@ public class Shuttle extends SubsystemLance
 
     // *** INNER ENUMS and INNER CLASSES ***
     // Put all inner enums and inner classes here
-    private class PeriodicData
-    {
-        // INPUTS
-
-        // OUTPUTS
-        private double speed;
-    }
 
 
     // *** CLASS VARIABLES & INSTANCE VARIABLES ***
     // Put all class variables and instance variables here
-    private final PeriodicData periodicData = new PeriodicData();
     private final TalonFXLance motor = new TalonFXLance(Constants.Shuttle.MOTOR_PORT, Constants.Shuttle.MOTOR_CAN_BUS, "Shuttle Motor");
+    private double speed;
     // private final TalonFXLance motor2 = new TalonFXLance(12, Constants.ROBORIO, "Motor 2");
 
 
@@ -71,19 +64,19 @@ public class Shuttle extends SubsystemLance
         motor.setupCoastMode();
     }
 
-    public void moveForward()
+    private void moveForward()
     {
-        periodicData.speed = 0.7;
+        motor.set(0.5);
     }
 
-    public void moveBackward()
+    private void moveBackward()
     {
-        periodicData.speed = -0.7;
+        motor.set(-0.5);
     }
    
-    public void stop()
+    private void stop()
     {
-        periodicData.speed = 0.0;
+       motor.set(0.0);
     }
 
     public Command moveForwardCommand()
@@ -116,7 +109,7 @@ public class Shuttle extends SubsystemLance
     @Override
     public void writePeriodicOutputs()
     {
-        motor.set(periodicData.speed);
+
     }
 
     @Override
@@ -134,7 +127,7 @@ public class Shuttle extends SubsystemLance
     @Override
     public String toString()
     {
-        return "";
+        return "Shuttle";
     }
 }
 
