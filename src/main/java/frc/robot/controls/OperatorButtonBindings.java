@@ -99,10 +99,6 @@ public class OperatorButtonBindings
             configDpadUp();
             configDpadLeft();
             configDpadRight();
-            configLeftTriggerAndDpadDown();
-            configLeftTriggerAndDpadUp();
-            configLeftTriggerAndXButton();
-            configLeftTriggerAndYButton();
             configRumble();
             configDefaultCommands();
         }
@@ -115,8 +111,6 @@ public class OperatorButtonBindings
         // A Button
         // BooleanSupplier aButton = robotContainer.operatorController.getButtonSupplier(Xbox.Button.kA);
         // Trigger aButtonTrigger = new Trigger(aButton);
-
-        // aButtonTrigger.onTrue(Commands4237.shootFromAnywhereCommand());
     }
 
     private void configBButton()
@@ -124,13 +118,6 @@ public class OperatorButtonBindings
         // B Button
         // BooleanSupplier bButton = robotContainer.operatorController.getButtonSupplier(Xbox.Button.kB);
         // Trigger bButtonTrigger = new Trigger(bButton);
-
-        // // if(robotContainer.intakePositioning != null)
-        // // {
-        // //     bButtonTrigger.onTrue(robotContainer.intakePositioning.moveUpCommand());
-        // // }
-
-        // bButtonTrigger.onTrue(Commands4237.passToAmpZoneCommand());
     }
 
     private void configXButton()
@@ -138,9 +125,6 @@ public class OperatorButtonBindings
         // X Button
         // BooleanSupplier xButton = robotContainer.operatorController.getButtonSupplier(Xbox.Button.kX);
         // Trigger xButtonTrigger = new Trigger(xButton);
-
-        // // xButtonTrigger.onTrue(Commands4237.ejectNote());
-        // xButtonTrigger.onTrue(Commands4237.getFlywheelToSpeedCommand(55.0));
     }
 
     private void configYButton()
@@ -148,8 +132,6 @@ public class OperatorButtonBindings
         // Y Button
         // BooleanSupplier yButton = robotContainer.operatorController.getButtonSupplier(Xbox.Button.kY);
         // Trigger yButtonTrigger = new Trigger(yButton);
-
-        // yButtonTrigger.onTrue(Commands4237.shootFromSubWooferCommand());
     }
 
     private void configLeftBumper()
@@ -157,8 +139,6 @@ public class OperatorButtonBindings
         //Left Bumper
         // BooleanSupplier leftBumper = robotContainer.operatorController.getButtonSupplier(Xbox.Button.kLeftBumper);
         // Trigger leftBumperTrigger = new Trigger(leftBumper);
-
-        // leftBumperTrigger.onTrue(Commands4237.moveAmpAssistCommand());
     }
 
     private void configRightBumper()
@@ -166,8 +146,6 @@ public class OperatorButtonBindings
         // Right Bumper
         // BooleanSupplier rightBumper = robotContainer.operatorController.getButtonSupplier(Xbox.Button.kRightBumper);
         // Trigger rightBumperTrigger = new Trigger(rightBumper);
-
-        // rightBumperTrigger.onTrue(Commands4237.shootToAmpCommand());
     }
 
     private void configBackButton()
@@ -175,10 +153,6 @@ public class OperatorButtonBindings
         // Back Button
         // BooleanSupplier backButton = robotContainer.operatorController.getButtonSupplier(Xbox.Button.kBack);
         // Trigger backButtonTrigger = new Trigger(backButton);
-
-        // backButtonTrigger.onTrue(Commands4237.resetPivotToCANCoderAngleCommand());
-
-        // backButtonTrigger.onTrue(Commands4237.ejectNote());
     }
 
     private void configStartButton()
@@ -186,8 +160,6 @@ public class OperatorButtonBindings
         // Start Button
         // BooleanSupplier startButton = robotContainer.operatorController.getButtonSupplier(Xbox.Button.kStart);
         // Trigger startButtonTrigger = new Trigger(startButton);
-
-        // startButtonTrigger.onTrue(Commands4237.burpNoteCommand());
     }
 
     private void configLeftStick()
@@ -195,9 +167,6 @@ public class OperatorButtonBindings
         // Left Stick Button
         // BooleanSupplier leftStickButton = robotContainer.operatorController.getButtonSupplier(Xbox.Button.kLeftStick);
         // Trigger leftStickButtonTrigger = new Trigger(leftStickButton);
-
-        if(true)
-        {}
     }
 
     private void configRightStick()
@@ -205,9 +174,6 @@ public class OperatorButtonBindings
         // Left Stick Button
         // BooleanSupplier rightStickButton = robotContainer.operatorController.getButtonSupplier(Xbox.Button.kRightStick);
         // Trigger rightStickButtonTrigger = new Trigger(rightStickButton);
-
-        if(true)
-        {}
     }
 
     private void configLeftTrigger()
@@ -215,8 +181,6 @@ public class OperatorButtonBindings
         //Left trigger 
         // BooleanSupplier leftTrigger = robotContainer.operatorController.getButtonSupplier(Xbox.Button.kLeftTrigger);
         // Trigger leftTriggerTrigger = new Trigger(leftTrigger);
-
-        // leftTriggerTrigger.onTrue(Commands4237.cancelCommands()); 
     }
 
     private void configRightTrigger()
@@ -224,8 +188,6 @@ public class OperatorButtonBindings
         //Right trigger 
         // BooleanSupplier rightTrigger = robotContainer.operatorController.getButtonSupplier(Xbox.Button.kRightTrigger);
         // Trigger rightTriggerTrigger = new Trigger(rightTrigger);
-
-        // rightTriggerTrigger.whileTrue(Commands4237.setCandleCommand(LEDColor.kWhite));
     }
 
     private void configDpadDown()
@@ -233,12 +195,6 @@ public class OperatorButtonBindings
         // Dpad down button
         // BooleanSupplier dPadDown = robotContainer.operatorController.getDpadSupplier(Xbox.Dpad.kDown);
         // Trigger dPadDownTrigger = new Trigger(dPadDown);
-
-        // if(robotContainer.climb != null)
-        // {
-        //     // dPadDownTrigger.whileTrue(robotContainer.climb.retractCommand(-0.2));
-        //     dPadDownTrigger.onTrue(robotContainer.climb.moveToRobotCommand());
-        // }
     }
 
     private void configDpadUp()
@@ -246,10 +202,6 @@ public class OperatorButtonBindings
         // Dpad down button
         // BooleanSupplier dPadUp = robotContainer.operatorController.getDpadSupplier(Xbox.Dpad.kUp);
         // Trigger dPadUpTrigger = new Trigger(dPadUp);
-
-        //     // dPadUpTrigger.whileTrue(robotContainer.climb.extendCommand(0.2));
-        //     // dPadUpTrigger.onTrue(robotContainer.climb.moveToChainCommand());
-        // dPadUpTrigger.onTrue(Commands4237.raiseClimbToChainCommand());
     }
 
     private void configDpadLeft()
@@ -257,8 +209,6 @@ public class OperatorButtonBindings
         // Dpad down button
         // BooleanSupplier dPadLeft = robotContainer.operatorController.getDpadSupplier(Xbox.Dpad.kLeft);
         // Trigger dPadLeftTrigger = new Trigger(dPadLeft);
-
-        // dPadLeftTrigger.onTrue(Commands4237.moveAmpAssistCommand());
     }
 
     private void configDpadRight()
@@ -266,82 +216,6 @@ public class OperatorButtonBindings
         // Dpad down button
         // BooleanSupplier dPadRight = robotContainer.operatorController.getDpadSupplier(Xbox.Dpad.kRight);
         // Trigger dPadRightTrigger = new Trigger(dPadRight);
-
-        // if(robotContainer.ampAssist != null)
-        // {
-        //     dPadRightTrigger.onTrue(robotContainer.ampAssist.ampAssistCommand(AmpAssistPosition.kOut));
-        // }
-    }
-
-    private void configLeftTriggerAndDpadDown()
-    {
-        //Left trigger
-        // BooleanSupplier leftTrigger = robotContainer.operatorController.getButtonSupplier(Xbox.Button.kLeftTrigger);
-        // Trigger leftTriggerTrigger = new Trigger(leftTrigger);
-
-        // // Dpad down button
-        // BooleanSupplier dPadDown = robotContainer.operatorController.getDpadSupplier(Xbox.Dpad.kDown);
-        // Trigger dPadDownTrigger = new Trigger(dPadDown);
-
-        // // Left trigger and Dpad down button combination
-        // Trigger leftTriggerAndDpadDownTrigger = leftTriggerTrigger.and(dPadDownTrigger);
-
-        // if(robotContainer.climb != null)
-        // {
-        //     leftTriggerAndDpadDownTrigger.whileTrue(robotContainer.climb.lowerCommand());
-        // }
-    }
-
-    private void configLeftTriggerAndDpadUp()
-    {
-        //Left trigger
-        // BooleanSupplier leftTrigger = robotContainer.operatorController.getButtonSupplier(Xbox.Button.kLeftTrigger);
-        // Trigger leftTriggerTrigger = new Trigger(leftTrigger);
-
-        // // Dpad up button
-        // BooleanSupplier dPadUp = robotContainer.operatorController.getDpadSupplier(Xbox.Dpad.kUp);
-        // Trigger dPadUpTrigger = new Trigger(dPadUp);
-
-        // // Left trigger and Dpad up button combination
-        // Trigger leftTriggerAndDpadUpTrigger = leftTriggerTrigger.and(dPadUpTrigger);
-
-        // if(robotContainer.climb != null)
-        // {
-        //     leftTriggerAndDpadUpTrigger.whileTrue(robotContainer.climb.raiseCommand());
-        // }
-    }
-
-    private void configLeftTriggerAndXButton()
-    {
-        // Left Trigger
-        // BooleanSupplier leftTrigger = robotContainer.operatorController.getButtonSupplier(Xbox.Button.kLeftTrigger);
-        // Trigger leftTriggerTrigger = new Trigger(leftTrigger);
-
-        // BooleanSupplier xButton = robotContainer.operatorController.getButtonSupplier(Xbox.Button.kX);
-        // Trigger xButtonTrigger = new Trigger(xButton);
-
-        // Trigger leftTriggerAndXButtonTrigger = leftTriggerTrigger.and(xButtonTrigger);
-
-        // if(robotContainer.flywheel != null)
-        // {
-        //     leftTriggerAndXButtonTrigger.onTrue(robotContainer.flywheel.stopCommand().andThen(Commands4237.setCandleCommand(LEDColor.kRed)));
-        // }
-    }
-
-    private void configLeftTriggerAndYButton()
-    {
-        // Y Button
-        // BooleanSupplier yButton = robotContainer.operatorController.getButtonSupplier(Xbox.Button.kY);
-        // Trigger yButtonTrigger = new Trigger(yButton);
-
-        // //Left trigger 
-        // BooleanSupplier leftTrigger = robotContainer.operatorController.getButtonSupplier(Xbox.Button.kLeftTrigger);
-        // Trigger leftTriggerTrigger = new Trigger(leftTrigger);  
-        
-        //Left trigger and Y button combination
-        // Trigger leftTriggerAndYButtonTrigger = leftTriggerTrigger.and(yButtonTrigger);
-
-        // leftTriggerAndYButtonTrigger.onTrue(robotContainer.intakePositioning.moveUpCommand());
     }
 
     private void configRumble()
