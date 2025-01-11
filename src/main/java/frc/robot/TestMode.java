@@ -2,11 +2,6 @@ package frc.robot;
 
 import java.lang.invoke.MethodHandles;
 import frc.robot.tests.Test;
-import frc.robot.tests.YalinGTest;
-import frc.robot.tests.YamanGTest;
-import frc.robot.tests.AdityaYTest;
-import frc.robot.tests.BradyWTest;
-import frc.robot.tests.GretaHTest;
 
 // *** IMPORTANT - PLEASE READ ***
 // 1. Put your test code in your own frc.robot.tests.[yourname]Test.java file
@@ -21,6 +16,11 @@ import frc.robot.tests.GretaHTest;
 // Uncomment one of these statements
 
 // import frc.robot.tests.ExampleTest;
+import frc.robot.tests.YalinGTest;
+import frc.robot.tests.YamanGTest;
+import frc.robot.tests.AdityaYTest;
+import frc.robot.tests.BradyWTest;
+import frc.robot.tests.GretaHTest;
 import frc.robot.tests.JWoodTest;
 import frc.robot.tests.JacksonDTest;
 import frc.robot.tests.LoganBTest;

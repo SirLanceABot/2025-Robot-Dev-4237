@@ -2,6 +2,9 @@ package frc.robot.tests;
 
 import java.lang.invoke.MethodHandles;
 
+import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj2.command.Commands;
+import frc.robot.Constants.Claw;
 import frc.robot.RobotContainer;
 
 public class RobbieFTest implements Test
@@ -25,6 +28,9 @@ public class RobbieFTest implements Test
     // *** CLASS & INSTANCE VARIABLES ***
     // Put all class and instance variables here.
     private final RobotContainer robotContainer;
+    // private final Claw claw;
+
+    private final Joystick joystick = new Joystick(0);
     // private final ExampleSubsystem exampleSubsystem;
 
 
@@ -60,11 +66,19 @@ public class RobbieFTest implements Test
     public void init()
     {}
 
-    /**
-     * This method runs periodically (every 20ms).
-     */
+    // /**
+    //  * This method runs periodically (every 20ms).
+    //  */
     public void periodic()
-    {}
+    {
+        if (joystick.getRawButton(0))
+        ;
+        
+        if (joystick.getRawButton(1))
+        ;
+        
+        
+    }
     
     /**
      * This method runs one time after the periodic() method.
