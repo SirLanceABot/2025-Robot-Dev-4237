@@ -6,6 +6,7 @@ import com.revrobotics.RelativeEncoder;
 import com.revrobotics.spark.SparkLimitSwitch;
 
 import frc.robot.Constants;
+import frc.robot.Constants.TargetPosition;
 import frc.robot.motors.TalonFXLance;
 
 /**
@@ -26,48 +27,41 @@ public class Shoulder extends SubsystemLance
     // *** INNER ENUMS and INNER CLASSES ***
     // Put all inner enums and inner classes here
 
-
-
     private class PeriodicData
     {
-        // INPUTS
-        private double currentPosition;
-        private double currentAngle;
-        private double currentVelocity;
+        // Remove all code from here
 
-        // OUTPUTS
-        private double motorSpeed;
     }
 
 
     // *** CLASS VARIABLES & INSTANCE VARIABLES ***
     // Put all class variables and instance variables here
-    private final PeriodicData periodicData = new PeriodicData();
-    
+       
+    // inputs
+    private double currentPosition;
+    // private double currentAngle;
+    // private double currentVelocity;
+
+    // output
+    private double motorSpeed = 0.0;
+
     private SparkLimitSwitch forwardLimitSwitch;
     private SparkLimitSwitch reverseLimitSwitch;
     
-    private final TalonFXLance motor1 = new TalonFXLance(4, Constants.ROBORIO, "Motor 1");
-    private final TalonFXLance motor2 = new TalonFXLance(12, Constants.ROBORIO, "Motor 2");
+    private final PeriodicData periodicData = new PeriodicData();
+    private final TalonFXLance leadMotor = new TalonFXLance(Constants.Shoulder.RIGHT_MOTOR_PORT, Constants.Shoulder.MOTOR_CAN_BUS, "RightShoulderMotor");
+    private final TalonFXLance followMotor = new TalonFXLance(Constants.Shoulder.LEFT_MOTOR_PORT, Constants.Shoulder.MOTOR_CAN_BUS, "LeftShoulderMotor");
 
+    private TargetPosition targetPosition = TargetPosition.kOverride;
 
     // *** CLASS CONSTRUCTORS ***
     // Put all class constructors here
-
-    /** 
-     * Creates a new ExampleSubsystem. 
-     */
+    
     public Shoulder()
     {
-        super("Example Subsystem");
+        super("Shoulder");
         System.out.println("  Constructor Started:  " + fullClassName);
-
-        configMotors();
-        // relativeEncoder.setPosition(Constants.Shoulder.STARTING_POSITION);
-
-        // SendableRegistry.addLW(this, "Example Subsystem", "MY Subsystem");
-        // addChild("Motor 1", motor1);
-        // addChild("Motor 2", motor2);
+        configShoulderMotors();
 
         System.out.println("  Constructor Finished: " + fullClassName);
     }
@@ -76,26 +70,44 @@ public class Shoulder extends SubsystemLance
     // *** CLASS METHODS & INSTANCE METHODS ***
     // Put all class methods and instance methods here
 
-    private void configMotors()
-    {
-        motor1.setupFactoryDefaults();
-        motor2.setupFactoryDefaults();
+    // private void configCANcoder()
+    // {
+    //     canCoderConfig = new CANcoderConfiguration();
+    //     // values go here once decided
+    //     setup(() -> cancoder.getConfigurator().apply(canCoderCOnfig), "Setup CANcoder"); //sends all values to the device
+    // }
 
-        //add limit switch here
+    private void configShoulderMotors()
+    {
+        // Factory Defaults
+        leadMotor.setupFactoryDefaults();
+        followMotor.setupFactoryDefaults();
+        leadMotor.setupBrakeMode();
+        followMotor.setupBrakeMode();
+        leadMotor.setupInverted(true);
+        followMotor.setupInverted(true);
+        leadMotor.setPosition(0.0);
+        followMotor.setPosition(0.0);
+        followMotor.setupFollower(Constants.Shoulder.RIGHT_MOTOR_PORT, true);
+
+        // Hard Limits
+        leadMotor.setupForwardHardLimitSwitch(true, true);
+        leadMotor.setupReverseHardLimitSwitch(true, true);
+        
     }
 
     /**
      * Returns the value of the sensor
     * @return The value of periodData.sensorValue
     */
-    public void set(double speed)
+    public void on(double motorSpeed)
     {
-        periodicData.motorSpeed = speed;
+        leadMotor.set(0.2);
     }
 
-    public void stop()
+    public void hold()
     {
-        periodicData.motorSpeed = 0.0;
+        leadMotor.set(0.0);
     }
 
     // public void resetEncoder()
@@ -115,72 +127,66 @@ public class Shoulder extends SubsystemLance
     //     return periodicIO.currentAngle;
     // }
 
-    // /** move the shoulder to Level 1 */
-    // public void L1()
-    // {
-    //     targetPosition = TargetPosition.kL1;
-    // }
+    /** move the shoulder to Level 1 */
+    public void L1()
+    {
+        targetPosition = TargetPosition.kL1;
+    }
 
-    // /** move the shoulder to Level 2*/
-    // public void L2()
-    // {
-    //     targetPosition = TargetPosition.kL2;
-    // }
+    /** move the shoulder to Level 2*/
+    public void L2()
+    {
+        targetPosition = TargetPosition.kL2;
+    }
 
-    // /** move the shoulder to Level 3 */
-    // private void L3()
-    // {
-    //     targetPosition = TargetPosition.kL3;
-    // }
+    /** move the shoulder to Level 3 */
+    public void L3()
+    {
+        targetPosition = TargetPosition.kL3;
+    }
 
-    // /** move the shoulder to Level 4 */
-    // private void L4()
-    // {
-    //     targetPosition = TargetPosition.kL4;
-    // }
+    /** move the shoulder to Level 4 */
+    public void L4()
+    {
+        targetPosition = TargetPosition.kL4;
+    }
 
-    // /** move the shoulder to Starting Position */
-    // private void StartingPosition()
-    // {
-    //     targetPosition = TargetPosition.kStartingPosition;
-    // }
+    /** move the shoulder to Starting Position */
+    public void StartingPosition()
+    {
+        targetPosition = TargetPosition.kStartingPosition;
+    }
 
-    // /** move the shoulder to Grab Coral Position */
-    // private void GrabCoralPosition()
-    // {
-    //     targetPosition = TargetPosition.kGrabCoralPosition;
-    // }
+    /** move the shoulder to Grab Coral Position */
+    public void GrabCoralPosition()
+    {
+        targetPosition = TargetPosition.kGrabCoralPosition;
+    }
 
     // *** OVERRIDEN METHODS ***
     // Put all methods that are Overridden here
     @Override
     public void readPeriodicInputs()
     {
-        
+        // Remove all code from here
     }
 
     @Override
     public void writePeriodicOutputs()
     {
-        motor1.set(periodicData.motorSpeed);
-        motor2.set(periodicData.motorSpeed);
+        // Remove all code from here
     }
 
     @Override
     public void periodic()
     {
         // This method will be called once per scheduler run
+
     }
 
-    @Override
-    public void simulationPeriodic()
-    {
-        // This method will be called once per scheduler run during simulation
-    }
-
-    @Override
-    public String toString()
-    {
-        return "";
-    }
+    // @Override
+    // public String toString()
+    // {
+    //     return "Shoulder position: \n";
+    // }
 }
