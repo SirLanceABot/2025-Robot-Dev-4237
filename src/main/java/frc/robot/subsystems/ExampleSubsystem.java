@@ -2,6 +2,7 @@ package frc.robot.subsystems;
 
 import java.lang.invoke.MethodHandles;
 
+import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants;
 import frc.robot.motors.TalonFXLance;
 
@@ -25,10 +26,7 @@ public class ExampleSubsystem extends SubsystemLance
     // Put all inner enums and inner classes here
     private class PeriodicData
     {
-        // INPUTS
-
-        // OUTPUTS
-        private double speed;
+        // REMOVE ALL CODE FROM HERE
     }
 
 
@@ -52,10 +50,6 @@ public class ExampleSubsystem extends SubsystemLance
 
         configMotors();
 
-        // SendableRegistry.addLW(this, "Example Subsystem", "MY Subsystem");
-        // addChild("Motor 1", motor1);
-        // addChild("Motor 2", motor2);
-
         System.out.println("  Constructor Finished: " + fullClassName);
     }
 
@@ -73,15 +67,28 @@ public class ExampleSubsystem extends SubsystemLance
      * Returns the value of the sensor
     * @return The value of periodData.sensorValue
     */
-    public void set(double speed)
+    private void set(double speed)
     {
-        periodicData.speed = speed;
+        motor1.set(speed);
+        motor2.set(speed);
     }
 
     public void stop()
     {
-        periodicData.speed = 0.0;
+        motor1.set(0.0);
+        motor2.set(0.0);
     }
+
+    public Command onCommand(double speed)
+    {
+        return run( () -> set(speed) );
+    }
+
+    // Use a method reference instead of this method
+    // public Command stopCommand()
+    // {
+    //     return run( () -> stop() );
+    // }
 
 
     // *** OVERRIDEN METHODS ***
@@ -89,26 +96,21 @@ public class ExampleSubsystem extends SubsystemLance
     @Override
     public void readPeriodicInputs()
     {
-
+        // REMOVE ALL CODE FROM HERE
     }
 
     @Override
     public void writePeriodicOutputs()
     {
-        motor1.set(periodicData.speed);
-        motor2.set(periodicData.speed);
+        // REMOVE ALL CODE FROM HERE
     }
 
     @Override
     public void periodic()
     {
         // This method will be called once per scheduler run
-    }
-
-    @Override
-    public void simulationPeriodic()
-    {
-        // This method will be called once per scheduler run during simulation
+        // Use this for sensors sensors that need to be read periodically.
+        // Use this for data that needs to be logged.
     }
 
     @Override
