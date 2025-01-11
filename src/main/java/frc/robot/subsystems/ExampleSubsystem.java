@@ -1,7 +1,9 @@
 package frc.robot.subsystems;
 
 import java.lang.invoke.MethodHandles;
+import java.util.function.DoubleSupplier;
 
+import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants;
 import frc.robot.motors.TalonFXLance;
@@ -79,9 +81,14 @@ public class ExampleSubsystem extends SubsystemLance
         motor2.set(0.0);
     }
 
-    public Command onCommand(double speed)
+    public Command onCommand()
     {
-        return run( () -> set(speed) );
+        return run( () -> set(0.25) );
+    }
+
+    public Command setCommand(DoubleSupplier speed)
+    {
+        return run( () -> set(MathUtil.clamp(speed.getAsDouble(), 0.0, 0.5)) );
     }
 
     // Use a method reference instead of this method
@@ -109,7 +116,7 @@ public class ExampleSubsystem extends SubsystemLance
     public void periodic()
     {
         // This method will be called once per scheduler run
-        // Use this for sensors sensors that need to be read periodically.
+        // Use this for sensors that need to be read periodically.
         // Use this for data that needs to be logged.
     }
 
