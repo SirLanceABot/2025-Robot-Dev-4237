@@ -16,23 +16,23 @@ import frc.robot.tests.Test;
 // Uncomment one of these statements
 
 // import frc.robot.tests.ExampleTest;
-import frc.robot.tests.YalinGTest;
-import frc.robot.tests.YamanGTest;
-import frc.robot.tests.AdityaYTest;
-import frc.robot.tests.BradyWTest;
-import frc.robot.tests.GretaHTest;
-import frc.robot.tests.JWoodTest;
-import frc.robot.tests.JacksonDTest;
-import frc.robot.tests.LoganBTest;
-import frc.robot.tests.MasonBTest;
-import frc.robot.tests.MatthewFTest;
-import frc.robot.tests.NiyatiPTest;
-import frc.robot.tests.OwenDTest;
-import frc.robot.tests.PoishaBTest;
-import frc.robot.tests.RickTTest;
-import frc.robot.tests.RobbieFTest;
-import frc.robot.tests.RobbieJTest;
-import frc.robot.tests.TanishkaJTest;
+// import frc.robot.tests.YalinGTest;
+// import frc.robot.tests.YamanGTest;
+// import frc.robot.tests.AdityaYTest;
+// import frc.robot.tests.BradyWTest;
+// import frc.robot.tests.GretaHTest;
+// import frc.robot.tests.JWoodTest;
+// import frc.robot.tests.JacksonDTest;
+// import frc.robot.tests.LoganBTest;
+// import frc.robot.tests.MasonBTest;
+// import frc.robot.tests.MatthewFTest;
+// import frc.robot.tests.NiyatiPTest;
+// import frc.robot.tests.OwenDTest;
+// import frc.robot.tests.PoishaBTest;
+// import frc.robot.tests.RickTTest;
+// import frc.robot.tests.RobbieFTest;
+// import frc.robot.tests.RobbieJTest;
+// import frc.robot.tests.TanishkaJTest;
 
 
 public class TestMode

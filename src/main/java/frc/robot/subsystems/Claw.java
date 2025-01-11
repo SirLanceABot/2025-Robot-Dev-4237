@@ -66,10 +66,10 @@ public class Claw extends SubsystemLance
      * Returns the value of the sensor
     * @return The value of periodData.sensorValue
     */
-    private void setSpeed(double speed)
+    public void setSpeed(double speed)
     {
         topMotor.set(speed);
-        lowerMotor.set(speed);
+        lowerMotor.set(-speed);
     }
 
     public void stop()
@@ -101,18 +101,23 @@ public class Claw extends SubsystemLance
     public Command acceptCoralCommand()
     {
         // design pending
-        return Commands.run(() -> setSpeed(-0.25), this).withName("Accept Coral");
+        return Commands.run(() -> setSpeed(-0.075), this).withName("Accept Coral");
     }
 
     public Command placeCoralCommand()
     {
-        return Commands.run(() -> setSpeed(0.25), this).withName("Place Coral");
+        return Commands.run(() -> setSpeed(0.075), this).withName("Place Coral");
     }
 
     public Command ejectCoralCommand()
     {
-        return Commands.run(() -> setSpeed(0.25), this).withName("Eject Coral");
-    }    
+        return Commands.run(() -> setSpeed(0.075), this).withName("Eject Coral");
+    }   
+    
+    public Command stopCommand()
+    {
+        return Commands.run(() -> stop(), this).withName("Stop");
+    }
     // *** OVERRIDEN METHODS ***
     // Put all methods that are Overridden here
     @Override

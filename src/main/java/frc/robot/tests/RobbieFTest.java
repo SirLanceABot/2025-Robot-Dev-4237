@@ -71,12 +71,19 @@ public class RobbieFTest implements Test
     //  */
     public void periodic()
     {
-        if (joystick.getRawButton(0))
-        ;
-        
         if (joystick.getRawButton(1))
-        ;
-        
+        {
+            // robotContainer.claw.setSpeed(0.05);
+            robotContainer.claw.placeCoralCommand().schedule();
+        }
+        if (joystick.getRawButton(2))
+        {
+            // robotContainer.claw.setSpeed(-0.05);
+            robotContainer.claw.acceptCoralCommand().schedule();
+        }
+
+        if (joystick.getRawButton(4))
+            robotContainer.claw.stopCommand().schedule();
         
     }
     
