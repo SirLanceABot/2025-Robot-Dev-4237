@@ -113,7 +113,7 @@ public class Claw extends SubsystemLance
 
     public Command placeCoralCommand()
     {
-        return Commands.run(() -> placeCoral(), this).withName("Place Coral");
+        return Commands.run(() -> placeCoral(0.5), this).withName("Place Coral");
     }
 
     public Command ejectCoralCommand()
