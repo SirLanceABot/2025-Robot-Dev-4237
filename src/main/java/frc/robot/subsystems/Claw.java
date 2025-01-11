@@ -120,17 +120,6 @@ public class Claw extends SubsystemLance
     }
     // *** OVERRIDEN METHODS ***
     // Put all methods that are Overridden here
-    @Override
-    public void readPeriodicInputs()
-    {
-
-    }
-
-    @Override
-    public void writePeriodicOutputs()
-    {
-
-    }
 
     @Override
     public void periodic()
