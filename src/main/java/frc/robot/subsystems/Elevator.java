@@ -2,6 +2,12 @@ package frc.robot.subsystems;
 
 import java.lang.invoke.MethodHandles;
 
+import com.revrobotics.RelativeEncoder;
+import com.revrobotics.spark.SparkLimitSwitch;
+
+import edu.wpi.first.util.datalog.DoubleLogEntry;
+import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.Commands;
 import frc.robot.Constants;
 import frc.robot.motors.TalonFXLance;
 
@@ -31,6 +37,7 @@ public class Elevator extends SubsystemLance
 
         // OUTPUTS
         private double speed;
+        private DoubleLogEntry elevatorPositionEntry;
         
     }
 
@@ -39,6 +46,19 @@ public class Elevator extends SubsystemLance
     private final PeriodicData periodicData = new PeriodicData();
     private final TalonFXLance leftMotor = new TalonFXLance(Constants.Elevator.LEFT_MOTOR_PORT, Constants.Elevator.LEFT_MOTOR_CAN_BUS, "Left Motor");
     private final TalonFXLance rightMotor = new TalonFXLance(Constants.Elevator.RIGHT_MOTOR_PORT, Constants.Elevator.RIGHT_MOTOR_CAN_BUS, "Right Motor");
+    private SparkLimitSwitch forwardLimitSwitch;
+    private SparkLimitSwitch reverseLimitSwitch;
+    private RelativeEncoder encoder;
+    private Constants.TargetPosition targetPosition = Constants.TargetPosition.kOverride;
+    private final double threshold = 0.01;
+
+    // PID Values
+    private final double kP = 0.0;
+    private final double kI = 0.0;
+    private final double kD = 0.0;
+    private final double kS = 0.0;
+
+
 
     
 
@@ -93,19 +113,89 @@ public class Elevator extends SubsystemLance
         return periodicData.rightMotorEncoderPosition;
     }
 
-    /**
-     * Returns the value of the sensor
-    * @return The value of periodData.sensorValue
-    */
-    public void set(double speed)
+    // public void moveToPosition(Constants.TargetPosition targetPosition)
+    // {
+    //     this.targetPosition = targetPosition;
+    // }
+
+    // public void movetoStartingPosition()
+    // {
+    //     targetPosition = Constants.TargetPosition.kStartingPosition;
+    // }
+
+    // public void movetoGrabCoral()
+    // {
+    //     targetPosition = Constants.TargetPosition.kGrabCoralPosition;
+    // }
+
+    // public void movetoL1()
+    // {
+    //     targetPosition = Constants.TargetPosition.kL1;
+    // }
+
+    // public void movetoL2()
+    // {
+    //     targetPosition = Constants.TargetPosition.kL2;
+    // }
+
+    // public void movetoL3()
+    // {
+    //     targetPosition = Constants.TargetPosition.kL3;
+    // }
+
+    // public void movetoL4()
+    // {
+    //     targetPosition = Constants.TargetPosition.kL4;
+    // }
+
+    public void moveToSetPosition(Constants.TargetPosition targetPosition)
     {
+        if(getLeftPosition() > targetPosition.elevator + threshold)
+        {
+            manualMove(-0.5);
+        }
+        else if(getLeftPosition() > targetPosition.elevator - threshold)
+        {
+            manualMove(0.5);
+        }
+        else
+        {
+            turnOff();
+        }
+    }
+
+    public void manualMove(double speed)
+    {
+        targetPosition = Constants.TargetPosition.kOverride;
         periodicData.speed = speed;
     }
 
-    public void stop()
+    public void turnOff()
     {
+        targetPosition = Constants.TargetPosition.kOverride;
         periodicData.speed = 0.0;
     }
+
+    public Command manualMoveCommand(double speed)
+    {
+        return Commands.run(() -> manualMove(speed), this).withName("Manual Move Elevator");
+    }
+
+    public Command turnOffCommand()
+    {
+        return Commands.run(() -> turnOff(), this).withName("Turn Off Elevator");
+    }
+
+    public Command moveToSetPositionCommand(Constants.TargetPosition targetPosition)
+    {
+        return Commands.run(() -> moveToSetPosition(targetPosition), this).withName("Turn Off Elevator");
+    }
+
+    
+
+    
+
+    
 
 
     // *** OVERRIDEN METHODS ***

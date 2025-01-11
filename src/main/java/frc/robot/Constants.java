@@ -113,15 +113,24 @@ public final class Constants
         public static String MOTOR_CAN_BUS                              = ROBORIO;
     }
 
-    // public enum TargetPosition
-    // {
-    //     // kL4(Constants.Elevator.L4, Constants.Shoulder.L4),
-    //     // kL3(Constants.Elevator.L3, Constants.Shoulder.L3),
-    //     // kL2(Constants.Elevator.L2, Constants.Shoulder.L2),
-    //     // kL1(Constants.Elevator.L1, Constants.Shoulder.L1),
-    //     // kStartingPosition(Constants.Elevator.STARTING_POSITION, Constants.Shoulder.STARTING_POSITION),
-    //     // kGrabCoralPosition(Constants.Elevator.GRAB_CORAL_POSITION, Constants.Shoulder.GRAB_CORAL_POSITION),
-    //     // kOverride(-4237, -4237);
+    public enum TargetPosition
+    {
+        kStartingPosition(Constants.Elevator.STARTING_POSITION, Constants.Shoulder.STARTING_POSITION),
+        kGrabCoralPosition(Constants.Elevator.GRAB_CORAL_POSITION, Constants.Shoulder.GRAB_CORAL_POSITION),
+        kL1(Constants.Elevator.L1, Constants.Shoulder.L1),
+        kL2(Constants.Elevator.L2, Constants.Shoulder.L2),
+        kL3(Constants.Elevator.L3, Constants.Shoulder.L3),
+        kL4(Constants.Elevator.L4, Constants.Shoulder.L4),
+        kOverride(-4237, -4237);
 
-    // }
+        public final double shoulder;
+        public final double elevator;
+
+        private TargetPosition(double shoulder, double elevator)
+        {
+            this.shoulder = shoulder;
+            this.elevator = elevator;
+        }
+
+    }
 }
