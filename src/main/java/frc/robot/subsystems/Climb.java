@@ -160,19 +160,9 @@ public class Climb extends SubsystemLance
     {
         return Commands.runOnce(() -> stopCommand(), this).withName("Stops Climb");
     }
+    
     // *** OVERRIDEN METHODS ***
     // Put all methods that are Overridden here
-    @Override
-    public void readPeriodicInputs()
-    {
-
-    }
-
-    @Override
-    public void writePeriodicOutputs()
-    {
-
-    }
 
     @Override
     public void periodic()
