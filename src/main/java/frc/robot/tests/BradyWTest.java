@@ -2,7 +2,12 @@ package frc.robot.tests;
 
 import java.lang.invoke.MethodHandles;
 
+import javax.lang.model.util.ElementScanner14;
+
+import edu.wpi.first.wpilibj.Joystick;
 import frc.robot.RobotContainer;
+import frc.robot.subsystems.Elevator;
+import frc.robot.Constants;
 
 public class BradyWTest implements Test
 {
@@ -25,6 +30,8 @@ public class BradyWTest implements Test
     // *** CLASS & INSTANCE VARIABLES ***
     // Put all class and instance variables here.
     private final RobotContainer robotContainer;
+    private final Elevator elevator;
+    private final Joystick joystick = new Joystick(0);
     // private final ExampleSubsystem exampleSubsystem;
 
 
@@ -40,6 +47,7 @@ public class BradyWTest implements Test
         System.out.println("  Constructor Started:  " + fullClassName);
 
         this.robotContainer = robotContainer;
+        elevator = robotContainer.elevator;
         // this.exampleSubsystem = robotContainer.exampleSubsystem;
 
         System.out.println("  Constructor Finished: " + fullClassName);
@@ -64,7 +72,21 @@ public class BradyWTest implements Test
      * This method runs periodically (every 20ms).
      */
     public void periodic()
-    {}
+    {
+        if(joystick.getRawButton(1))
+        {
+            elevator.moveToSetPosition(Constants.TargetPosition.kL3);
+        }
+        else if(joystick.getRawButton(2))
+        {
+            elevator.moveToSetPosition(Constants.TargetPosition.kL2);
+        }
+        else 
+        {
+            elevator.stop();
+        }
+    }
+
     
     /**
      * This method runs one time after the periodic() method.

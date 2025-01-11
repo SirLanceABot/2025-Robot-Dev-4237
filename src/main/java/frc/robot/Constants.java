@@ -36,11 +36,11 @@ public final class Constants
         public static final String LEFT_MOTOR_CAN_BUS                   = CANIVORE;
         public static final String RIGHT_MOTOR_CAN_BUS                  = CANIVORE;
 
-        public static final double L4                                   = 0.0;
-        public static final double L3                                   = 0.0;
-        public static final double L2                                   = 0.0;
-        public static final double L1                                   = 0.0;
-        public static final double STARTING_POSITION                    = 0.0;
+        public static final double L4                                   = 100.0;
+        public static final double L3                                   = 80.0;
+        public static final double L2                                   = 60.0;
+        public static final double L1                                   = 40.0;
+        public static final double STARTING_POSITION                    = 20.0;
         public static final double GRAB_CORAL_POSITION                  = 0.0;
     }
 
