@@ -15,7 +15,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants;
 import frc.robot.motors.TalonFXLance;
-import frc.robot.sensors.Gyro4237;
+import frc.robot.sensors.GyroLance;
 
 public class Drivetrain extends SubsystemLance
 {
@@ -79,7 +79,7 @@ public class Drivetrain extends SubsystemLance
     private final SwerveModule backLeft;
     private final SwerveModule backRight;
 
-    private final Gyro4237 gyro;
+    private final GyroLance gyro;
     private final SwerveDriveKinematics kinematics;
 
     private double xSpeed;
@@ -99,7 +99,7 @@ public class Drivetrain extends SubsystemLance
     
 
 
-    public Drivetrain(Gyro4237 gyro, boolean useFullRobot, boolean usePoseEstimator, BooleanSupplier isRedAllianceSupplier)
+    public Drivetrain(GyroLance gyro, boolean useFullRobot, boolean usePoseEstimator, BooleanSupplier isRedAllianceSupplier)
     {   
         super("Drivetrain");
         System.out.println("  Constructor Started:  " + fullClassName);

@@ -19,7 +19,7 @@ import frc.robot.Constants;
 /*
  * This class creates gyro which is used for rotation 
  */
-public class Gyro4237 extends SensorLance
+public class GyroLance extends SensorLance
 {
     // This string gets the full name of the class, including the package name
     private static final String fullClassName = MethodHandles.lookup().lookupClass().getCanonicalName();
@@ -36,28 +36,21 @@ public class Gyro4237 extends SensorLance
         kStart, kTry, kDone;
     }
 
-    private class PeriodicData
-    {
-        // Inputs
-        private double yaw;
-        private double pitch;
-        private double roll;
-        private Rotation2d rotation2d;
+   
+    // Inputs
+    private double yaw;
+    private double pitch;
+    private double roll;
+    private Rotation2d rotation2d;
 
-        // Outputs
-        private DoubleEntry yawEntry;
-        private DoubleEntry xAxisEntry;
-        private DoubleEntry yAxisEntry;
-    }
+    // Outputs
+    private DoubleEntry yawEntry;
+    private DoubleEntry xAxisEntry;
+    private DoubleEntry yAxisEntry;
+    
 
     public static final double RESET_DELAY = 0.1;
 
-    public final double BLUE_AMP_STARTING_YAW = 60.0;
-    public final double BLUE_SUB_STARTING_YAW = 0.0;
-    public final double BLUE_SOURCE_STARTING_YAW = -60.0;
-    public final double RED_AMP_STARTING_YAW = -60.0; //120.0
-    public final double RED_SUB_STARTING_YAW = 0.0; //180.0
-    public final double RED_SOURCE_STARTING_YAW = 60.0; // -120.0
 
     //TODO find out gyro port
     private final Pigeon2 gyro = new Pigeon2(0, "CANivore");
@@ -66,20 +59,19 @@ public class Gyro4237 extends SensorLance
 
     private NetworkTable ASTable;// = NetworkTableInstance.getDefault().getTable("ASTable");
 
-    private final PeriodicData periodicData = new PeriodicData();
 
-    public Gyro4237()
+    public GyroLance()
     {
         super("Gyro4237");
         System.out.println("  Constructor Started:  " + fullClassName);
 
         ASTable = NetworkTableInstance.getDefault().getTable(Constants.ADVANTAGE_SCOPE_TABLE_NAME);
-        periodicData.yawEntry = ASTable.getDoubleTopic("GyroYaw").getEntry(0.0);
-        periodicData.xAxisEntry = ASTable.getDoubleTopic("accelXAxis").getEntry(0.0);
-        periodicData.yAxisEntry = ASTable.getDoubleTopic("accelYAxis").getEntry(0.0);
+        yawEntry = ASTable.getDoubleTopic("GyroYaw").getEntry(0.0);
+        xAxisEntry = ASTable.getDoubleTopic("accelXAxis").getEntry(0.0);
+        yAxisEntry = ASTable.getDoubleTopic("accelYAxis").getEntry(0.0);
 
         configGyro();
-        periodicData.rotation2d = gyro.getRotation2d();
+        rotation2d = gyro.getRotation2d();
 
         System.out.println("  Constructor Finished: " + fullClassName);
     }
@@ -152,60 +144,43 @@ public class Gyro4237 extends SensorLance
 
     public double getRoll()
     {
-        return periodicData.roll; // x-axis
+        return roll; // x-axis
     }
 
     public double getPitch()
     {
-        return periodicData.pitch; // y-axis
+        return pitch; // y-axis
     }
 
     public double getYaw()
     {
-        return periodicData.yaw; // z-axis
+        return yaw; // z-axis
     }
 
     public Rotation2d getRotation2d()
     {
-        return periodicData.rotation2d;
+        return rotation2d;
     }
 
-    public Command setYawRedCommand()
-    {
-        return Commands.runOnce(() -> setYaw(RED_SUB_STARTING_YAW));
-    }
+    // public Command setYawRedCommand()
+    // {
+    //     return Commands.runOnce(() -> setYaw(   ));
+    // }
 
-    public Command setYawBlueCommand()
-    {
-        return Commands.runOnce(() -> setYaw(BLUE_SUB_STARTING_YAW));
-    }
+    // public Command setYawBlueCommand()
+    // {
+    //     return Commands.runOnce(() -> setYaw(   ));
+    // }
 
     @Override
     public void readPeriodicInputs()
-    {
-        if(resetState == ResetState.kDone)
-        {
-            periodicData.yaw = gyro.getYaw().getValueAsDouble();
-            periodicData.pitch = gyro.getPitch().getValueAsDouble();
-            periodicData.roll = gyro.getRoll().getValueAsDouble();
+    {}
 
-            periodicData.rotation2d = gyro.getRotation2d();
-        }
-    }
+   
 
     @Override
     public void writePeriodicOutputs()
-    {
-        SmartDashboard.putNumber("Current Yaw:", getYaw());
-        
-        periodicData.yawEntry.set(periodicData.yaw);
-        periodicData.xAxisEntry.set(gyro.getAccelerationX().getValueAsDouble());
-        periodicData.yAxisEntry.set(gyro.getAccelerationY().getValueAsDouble());
-        // ASTable.getEntry("gyro yaw").setDouble(periodicData.yaw);
-
-        // System.out.println("Z Axis Anuglar Velocity: " + gyro.getAngularVelocityZDevice().getValueAsDouble());
-        // System.out.println("Acceleration: " + Math.sqrt(Math.pow(gyro.getAccelerationX().getValueAsDouble(), 2) + Math.pow(gyro.getAccelerationY().getValueAsDouble(), 2)));
-    }
+    {}
 
     @Override
     public void runPeriodicTask()
@@ -226,12 +201,27 @@ public class Gyro4237 extends SensorLance
             case kDone:
                 break;
         }
+
+        if(resetState == ResetState.kDone)
+        {
+            yaw = gyro.getYaw().getValueAsDouble();
+            pitch = gyro.getPitch().getValueAsDouble();
+            roll = gyro.getRoll().getValueAsDouble();
+
+            rotation2d = gyro.getRotation2d();
+        }
+
+        SmartDashboard.putNumber("Current Yaw:", getYaw());
+        
+        yawEntry.set(yaw);
+        xAxisEntry.set(gyro.getAccelerationX().getValueAsDouble());
+        yAxisEntry.set(gyro.getAccelerationY().getValueAsDouble());
     }
 
     @Override
     public String toString()
     {
-        return String.format("Gyro %f \n", periodicData.yaw);
+        return String.format("Gyro %f \n", yaw);
     }
 
     
