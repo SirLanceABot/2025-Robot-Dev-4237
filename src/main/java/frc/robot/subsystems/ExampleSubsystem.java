@@ -26,15 +26,11 @@ public class ExampleSubsystem extends SubsystemLance
 
     // *** INNER ENUMS and INNER CLASSES ***
     // Put all inner enums and inner classes here
-    private class PeriodicData
-    {
-        // REMOVE ALL CODE FROM HERE
-    }
 
 
+    
     // *** CLASS VARIABLES & INSTANCE VARIABLES ***
     // Put all class variables and instance variables here
-    private final PeriodicData periodicData = new PeriodicData();
     private final TalonFXLance motor1 = new TalonFXLance(4, Constants.ROBORIO, "Motor 1");
     private final TalonFXLance motor2 = new TalonFXLance(12, Constants.ROBORIO, "Motor 2");
 

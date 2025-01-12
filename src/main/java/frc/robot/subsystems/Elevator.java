@@ -30,6 +30,8 @@ public class Elevator extends SubsystemLance
     // *** INNER ENUMS and INNER CLASSES ***
     // Put all inner enums and inner classes here
 
+
+    
     // *** CLASS VARIABLES & INSTANCE VARIABLES ***
     // Put all class variables and instance variables here
     private final TalonFXLance leftMotor = new TalonFXLance(Constants.Elevator.LEFT_MOTOR_PORT, Constants.Elevator.LEFT_MOTOR_CAN_BUS, "Left Motor");

@@ -36,7 +36,6 @@ public class Drivetrain extends SubsystemLance
 
 
 
-
     // *** CLASS VARIABLES & INSTANCE VARIABLES ***
     // Put all class variables and instance variables here
 

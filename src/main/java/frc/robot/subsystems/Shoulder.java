@@ -27,11 +27,6 @@ public class Shoulder extends SubsystemLance
     // *** INNER ENUMS and INNER CLASSES ***
     // Put all inner enums and inner classes here
 
-    private class PeriodicData
-    {
-        // Remove all code from here
-
-    }
 
 
     // *** CLASS VARIABLES & INSTANCE VARIABLES ***
@@ -48,7 +43,6 @@ public class Shoulder extends SubsystemLance
     private SparkLimitSwitch forwardLimitSwitch;
     private SparkLimitSwitch reverseLimitSwitch;
     
-    private final PeriodicData periodicData = new PeriodicData();
     private final TalonFXLance leadMotor = new TalonFXLance(Constants.Shoulder.RIGHT_MOTOR_PORT, Constants.Shoulder.MOTOR_CAN_BUS, "RightShoulderMotor");
     private final TalonFXLance followMotor = new TalonFXLance(Constants.Shoulder.LEFT_MOTOR_PORT, Constants.Shoulder.MOTOR_CAN_BUS, "LeftShoulderMotor");
 
