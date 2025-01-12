@@ -15,8 +15,6 @@ import frc.robot.tests.Test;
 // *** IMPORT statements ***
 // Uncomment one of these statements
 
-import frc.robot.tests.ExampleTest;
-
 // import frc.robot.tests.AdityaYTest;
 // import frc.robot.tests.BradyWTest;
 // import frc.robot.tests.GretaHTest;
@@ -59,19 +57,16 @@ public class TestMode
         // *** INITIALIZATION statements ***
         // Uncomment one of these statements
 
-        myTest = new ExampleTest(robotContainer);
         // myTest = new AdityaYTest(robotContainer);
         // myTest = new BradyWTest(robotContainer);
         // myTest = new GretaHTest(robotContainer);
         // myTest = new JacksonDTest(robotContainer);
-
         // myTest = new LoganBTest(robotContainer);
         // myTest = new MasonBTest(robotContainer);
         // myTest = new MatthewFTest(robotContainer);
         // myTest = new NiyatiPTest(robotContainer);
         // myTest = new OwenDTest(robotContainer);
         // myTest = new PoishaBTest(robotContainer);
-
         // myTest = new RobbieFTest(robotContainer);
         // myTest = new RobbieJTest(robotContainer);
         // myTest = new TanishkaJTest(robotContainer);
@@ -88,7 +83,8 @@ public class TestMode
      */
     public void init()
     {
-        myTest.init();
+        if(myTest != null)
+            myTest.init();
     }
 
     /**
@@ -96,7 +92,8 @@ public class TestMode
      */
     public void periodic()
     {
-        myTest.periodic();
+        if(myTest != null)
+            myTest.periodic();
     }
 
     /**
@@ -104,7 +101,8 @@ public class TestMode
      */
     public void exit()
     {
-        myTest.exit();
+        if(myTest != null)
+            myTest.exit();
 
         // Set the Test object to null so that garbage collection will remove the object.
         myTest = null;
