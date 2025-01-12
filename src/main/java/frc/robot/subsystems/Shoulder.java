@@ -112,13 +112,13 @@ public class Shoulder extends SubsystemLance
     // /** @return encoder ticks (double) */
     // public double getPosition() // encoder ticks
     // {
-    //     return periodicIO.currentPosition;
+    //     return currentPosition;
     // }
 
     // /** @return angle (double) */
     // public double getAngle()
     // {
-    //     return periodicIO.currentAngle;
+    //     return currentAngle;
     // }
 
     /** move the shoulder to Level 1 */

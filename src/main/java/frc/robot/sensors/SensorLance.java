@@ -2,14 +2,13 @@ package frc.robot.sensors;
 
 import java.lang.invoke.MethodHandles;
 
-import frc.robot.PeriodicIO;
 import frc.robot.PeriodicTask;
 
 /**
  * This abstract class will be extended for every sensor on the robot. 
  * Every sensor will automatically be added to the array list for periodic inputs, outputs, and tasks.
  */
-abstract class SensorLance implements PeriodicIO, PeriodicTask
+abstract class SensorLance implements PeriodicTask
 {
     // This string gets the full name of the class, including the package name
     private static final String fullClassName = MethodHandles.lookup().lookupClass().getCanonicalName();
@@ -35,9 +34,6 @@ abstract class SensorLance implements PeriodicIO, PeriodicTask
 
         System.out.println("  Constructor Started:  " + fullClassName + " >> " + sensorName);
 
-        // Register this sensor in the array list to get periodic input and output
-        registerPeriodicIO();
-
         // Register this sensor in the array list to run periodic tasks
         registerPeriodicTask();
 
@@ -47,7 +43,7 @@ abstract class SensorLance implements PeriodicIO, PeriodicTask
 
     // *** ABSTRACT METHODS ***
     // These methods must be defined in any subclass that extends this class
-    public abstract void readPeriodicInputs();
-    public abstract void writePeriodicOutputs();
-    public abstract void runPeriodicTask();
+    public void readPeriodicInputs(){}
+    public void writePeriodicOutputs(){}
+    public abstract void periodic();
 }
