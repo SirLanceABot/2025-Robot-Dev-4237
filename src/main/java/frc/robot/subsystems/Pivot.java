@@ -12,7 +12,7 @@ import frc.robot.motors.TalonFXLance;
 /**
  * Use this class as a template to create other subsystems.
  */
-public class Shoulder extends SubsystemLance
+public class Pivot extends SubsystemLance
 {
     // This string gets the full name of the class, including the package name
     private static final String fullClassName = MethodHandles.lookup().lookupClass().getCanonicalName();
@@ -43,19 +43,19 @@ public class Shoulder extends SubsystemLance
     private SparkLimitSwitch forwardLimitSwitch;
     private SparkLimitSwitch reverseLimitSwitch;
     
-    private final TalonFXLance leadMotor = new TalonFXLance(Constants.Shoulder.RIGHT_MOTOR_PORT, Constants.Shoulder.MOTOR_CAN_BUS, "RightShoulderMotor");
-    private final TalonFXLance followMotor = new TalonFXLance(Constants.Shoulder.LEFT_MOTOR_PORT, Constants.Shoulder.MOTOR_CAN_BUS, "LeftShoulderMotor");
+    private final TalonFXLance leadMotor = new TalonFXLance(Constants.Pivot.RIGHT_MOTOR_PORT, Constants.Pivot.MOTOR_CAN_BUS, "Right Pivot Motor");
+    private final TalonFXLance followMotor = new TalonFXLance(Constants.Pivot.LEFT_MOTOR_PORT, Constants.Pivot.MOTOR_CAN_BUS, "Left Pivot Motor");
 
     private TargetPosition targetPosition = TargetPosition.kOverride;
 
     // *** CLASS CONSTRUCTORS ***
     // Put all class constructors here
     
-    public Shoulder()
+    public Pivot()
     {
-        super("Shoulder");
+        super("Pivot");
         System.out.println("  Constructor Started:  " + fullClassName);
-        configShoulderMotors();
+        configPivotMotors();
 
         System.out.println("  Constructor Finished: " + fullClassName);
     }
@@ -71,7 +71,7 @@ public class Shoulder extends SubsystemLance
     //     setup(() -> cancoder.getConfigurator().apply(canCoderCOnfig), "Setup CANcoder"); //sends all values to the device
     // }
 
-    private void configShoulderMotors()
+    private void configPivotMotors()
     {
         // Factory Defaults
         leadMotor.setupFactoryDefaults();
@@ -82,7 +82,7 @@ public class Shoulder extends SubsystemLance
         followMotor.setupInverted(true);
         leadMotor.setPosition(0.0);
         followMotor.setPosition(0.0);
-        followMotor.setupFollower(Constants.Shoulder.RIGHT_MOTOR_PORT, true);
+        followMotor.setupFollower(Constants.Pivot.RIGHT_MOTOR_PORT, true);
 
         // Hard Limits
         leadMotor.setupForwardHardLimitSwitch(true, true);

@@ -47,7 +47,7 @@ public class BradyWTest implements Test
         System.out.println("  Constructor Started:  " + fullClassName);
 
         this.robotContainer = robotContainer;
-        elevator = robotContainer.elevator;
+        elevator = robotContainer.getElevator();
         // this.exampleSubsystem = robotContainer.exampleSubsystem;
 
         System.out.println("  Constructor Finished: " + fullClassName);

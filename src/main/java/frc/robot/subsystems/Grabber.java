@@ -10,7 +10,7 @@ import frc.robot.motors.SparkMaxLance;
 /**
  * Use this class as a template to create other subsystems.
  */
-public class Claw extends SubsystemLance
+public class Grabber extends SubsystemLance
 {
     // This string gets the full name of the class, including the package name
     private static final String fullClassName = MethodHandles.lookup().lookupClass().getCanonicalName();
@@ -31,8 +31,8 @@ public class Claw extends SubsystemLance
     // *** CLASS VARIABLES & INSTANCE VARIABLES ***
     // Put all class variables and instance variables here
 
-    private final SparkMaxLance topMotor = new SparkMaxLance(Constants.Claw.TOP_MOTOR_PORT, Constants.Claw.TOP_MOTOR_CAN_BUS, "Top Claw Motor");
-    private final SparkMaxLance lowerMotor = new SparkMaxLance(Constants.Claw.BOTTOM_MOTOR_PORT, Constants.Claw.BOTTOM_MOTOR_CAN_BUS, "Lower Claw Motor2");
+    private final SparkMaxLance topMotor = new SparkMaxLance(Constants.Grabber.TOP_MOTOR_PORT, Constants.Grabber.TOP_MOTOR_CAN_BUS, "Top Grabber Motor");
+    private final SparkMaxLance lowerMotor = new SparkMaxLance(Constants.Grabber.BOTTOM_MOTOR_PORT, Constants.Grabber.BOTTOM_MOTOR_CAN_BUS, "Lower Grabber Motor");
 
     // *** CLASS CONSTRUCTORS ***
     // Put all class constructors here
@@ -40,9 +40,9 @@ public class Claw extends SubsystemLance
     /** 
      * Creates a new Claw. 
      */
-    public Claw()
+    public Grabber()
     {
-        super("Example Subsystem");
+        super("Grabber");
         System.out.println("  Constructor Started:  " + fullClassName);
 
         configMotors();
@@ -133,6 +133,6 @@ public class Claw extends SubsystemLance
     @Override
     public String toString()
     {
-        return "Claw Top Motor Speed: " + topMotor.get() + "Claw Lower Motor Speed: " + lowerMotor.get();
+        return "Grabber Top Motor Speed: " + topMotor.get() + "Grabber Lower Motor Speed: " + lowerMotor.get();
     }
 }
