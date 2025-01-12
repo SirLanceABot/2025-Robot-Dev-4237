@@ -165,17 +165,6 @@ public class Shoulder extends SubsystemLance
 
     // *** OVERRIDEN METHODS ***
     // Put all methods that are Overridden here
-    @Override
-    public void readPeriodicInputs()
-    {
-        // Remove all code from here
-    }
-
-    @Override
-    public void writePeriodicOutputs()
-    {
-        // Remove all code from here
-    }
 
     @Override
     public void periodic()
@@ -184,9 +173,9 @@ public class Shoulder extends SubsystemLance
 
     }
 
-    // @Override
-    // public String toString()
-    // {
-    //     return "Shoulder position: \n";
-    // }
+    @Override
+    public String toString()
+    {
+        return "Shoulder position: \n";
+    }
 }

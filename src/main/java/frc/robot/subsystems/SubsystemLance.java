@@ -40,12 +40,4 @@ abstract class SubsystemLance extends SubsystemBase //implements PeriodicIO
 
         System.out.println("  Constructor Finished: " + fullClassName + " >> " + subsystemName);
     }
-    
-
-    // *** ABSTRACT METHODS ***
-    // These methods must be defined in any subclass that extends this class
-    // public abstract void readPeriodicInputs();
-    public void readPeriodicInputs(){}
-    public void writePeriodicOutputs(){}
 }
-

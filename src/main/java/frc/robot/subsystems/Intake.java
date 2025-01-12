@@ -198,13 +198,6 @@ public class Intake extends SubsystemLance
   }
   // *** OVERRIDEN METHODS ***
   // Put all methods that are Overridden here
-  @Override
-  public void readPeriodicInputs() 
-  {}
-
-  @Override
-  public void writePeriodicOutputs() 
-  {}
 
   @Override
   public void periodic() 
@@ -216,12 +209,6 @@ public class Intake extends SubsystemLance
     //periodicDatopRollerVelocityta.bottomRollerVelocity = bottomMotor.getVelocity();
   }
  
-  @Override
-  public void simulationPeriodic() 
-  {
-    // This method will be called once per scheduler run during simulation
-  }
-
   @Override
   public String toString() 
   {
