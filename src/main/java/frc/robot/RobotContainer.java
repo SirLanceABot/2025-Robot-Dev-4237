@@ -35,13 +35,13 @@ public class RobotContainer
 
     private boolean useFullRobot            = false;
 
-    private boolean useGrabber                 = false;
+    private boolean useGrabber              = false;
     private boolean useClimb                = false;
     private boolean useDrivetrain           = false;
     private boolean useElevator             = false;
     private boolean useIntake               = false;
     private boolean useIntakeWrist          = false;
-    private boolean usePivot             = false;
+    private boolean usePivot                = false;
     private boolean useShuttle              = false;
 
     private boolean useGyro                 = false;
