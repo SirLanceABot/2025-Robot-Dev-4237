@@ -35,7 +35,6 @@ public class OperatorController extends Xbox
 
         System.out.println("  Constructor Started:  " + fullClassName);
 
-        registerPeriodicIO();
         configureAxes();
         createRumbleEvents();
 
@@ -80,8 +79,29 @@ public class OperatorController extends Xbox
         return () -> periodicData.dpad == dpad;
     }
 
+    // @Override
+    // public void readPeriodicInputs()
+    // {
+    //     for(int a = 0; a <= 5; a++)
+    //         periodicData.axis[a] = getRawAxis(a);
+
+    //     for(int b = 1; b <= 13; b++)
+    //     {
+    //         if(b != 11) // skip over subscripts 0 and 11
+    //             periodicData.button[b] = getRawButton(b);
+    //     }
+
+    //     periodicData.dpad = getDpad();
+    // }
+
+    // @Override
+    // public void writePeriodicOutputs()
+    // {
+    //     checkRumbleEvent();
+    // }
+
     @Override
-    public void readPeriodicInputs()
+    public void periodic()
     {
         for(int a = 0; a <= 5; a++)
             periodicData.axis[a] = getRawAxis(a);
@@ -93,17 +113,8 @@ public class OperatorController extends Xbox
         }
 
         periodicData.dpad = getDpad();
-    }
-
-    @Override
-    public void writePeriodicOutputs()
-    {
         checkRumbleEvent();
     }
-
-    @Override
-    public void runPeriodicTask()
-    {}
 
     @Override
     public String toString()
