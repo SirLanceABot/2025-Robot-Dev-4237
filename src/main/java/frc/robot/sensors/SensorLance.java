@@ -43,7 +43,5 @@ abstract class SensorLance implements PeriodicTask
 
     // *** ABSTRACT METHODS ***
     // These methods must be defined in any subclass that extends this class
-    public void readPeriodicInputs(){}
-    public void writePeriodicOutputs(){}
     public abstract void periodic();
 }
