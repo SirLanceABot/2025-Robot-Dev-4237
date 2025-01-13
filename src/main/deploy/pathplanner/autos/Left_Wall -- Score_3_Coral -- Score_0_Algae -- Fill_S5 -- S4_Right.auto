@@ -1,0 +1,43 @@
+{
+  "version": "2025.0",
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Left Wall to S5 Left"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "S5 Left to Left Station"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Left Station to S5 Right"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "S5 Right to Left Station"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Left Station to S4 Left"
+          }
+        }
+      ]
+    }
+  },
+  "resetOdom": true,
+  "folder": null,
+  "choreoAuto": false
+}
