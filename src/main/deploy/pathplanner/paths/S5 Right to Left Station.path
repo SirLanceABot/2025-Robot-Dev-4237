@@ -28,7 +28,12 @@
       "linkedName": "Left Station"
     }
   ],
-  "rotationTargets": [],
+  "rotationTargets": [
+    {
+      "waypointRelativePos": 0.7039370078740097,
+      "rotationDegrees": -144.273
+    }
+  ],
   "constraintZones": [],
   "pointTowardsZones": [],
   "eventMarkers": [],
@@ -42,7 +47,7 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 125.72700000000002
+    "rotation": -144.273
   },
   "reversed": false,
   "folder": null,
