@@ -8,7 +8,7 @@ import frc.robot.Constants;
 import frc.robot.motors.SparkMaxLance;
 
 /**
- * Use this class as a template to create other subsystems.
+ * This class creates the grabber subsystem and setsup related practice commands
  */
 public class Grabber extends SubsystemLance
 {
@@ -31,14 +31,14 @@ public class Grabber extends SubsystemLance
     // *** CLASS VARIABLES & INSTANCE VARIABLES ***
     // Put all class variables and instance variables here
 
-    private final SparkMaxLance topMotor = new SparkMaxLance(Constants.Grabber.TOP_MOTOR_PORT, Constants.Grabber.TOP_MOTOR_CAN_BUS, "Top Grabber Motor");
-    private final SparkMaxLance lowerMotor = new SparkMaxLance(Constants.Grabber.BOTTOM_MOTOR_PORT, Constants.Grabber.BOTTOM_MOTOR_CAN_BUS, "Lower Grabber Motor");
+    private final SparkMaxLance frontMotor = new SparkMaxLance(Constants.Grabber.FRONT_MOTOR_PORT, Constants.Grabber.FRONT_MOTOR_CAN_BUS, "Front Grabber Motor");
+    private final SparkMaxLance backMotor = new SparkMaxLance(Constants.Grabber.BACK_MOTOR_PORT, Constants.Grabber.BACK_MOTOR_CAN_BUS, "Back Grabber Motor");
 
     // *** CLASS CONSTRUCTORS ***
     // Put all class constructors here
 
     /** 
-     * Creates a new Claw. 
+     * Creates a new Grabber. 
      */
     public Grabber()
     {
@@ -60,8 +60,8 @@ public class Grabber extends SubsystemLance
 
     private void configMotors()
     {
-        topMotor.setupFactoryDefaults();
-        lowerMotor.setupFactoryDefaults();
+        frontMotor.setupFactoryDefaults();
+        backMotor.setupFactoryDefaults();
     }
 
     /**
@@ -70,8 +70,8 @@ public class Grabber extends SubsystemLance
     */
     public void setSpeed(double speed)
     {
-        topMotor.set(speed);
-        lowerMotor.set(-speed);
+        frontMotor.set(speed);
+        backMotor.set(-speed);
     }
 
     public void stop()
@@ -133,6 +133,6 @@ public class Grabber extends SubsystemLance
     @Override
     public String toString()
     {
-        return "Grabber Top Motor Speed: " + topMotor.get() + "Grabber Lower Motor Speed: " + lowerMotor.get();
+        return "Grabber Top Motor Speed: " + frontMotor.get() + "Grabber Lower Motor Speed: " + backMotor.get();
     }
 }
