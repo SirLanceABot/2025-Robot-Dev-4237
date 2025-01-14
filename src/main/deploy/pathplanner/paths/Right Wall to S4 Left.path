@@ -48,7 +48,7 @@
   "folder": "Right Wall Starts",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 90.0
+    "rotation": 179.61294743284617
   },
   "useDefaultConstraints": true
 }

@@ -62,7 +62,7 @@
   "folder": "Left Station Starts",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": -144.273
+    "rotation": -54.70194854825028
   },
   "useDefaultConstraints": true
 }
