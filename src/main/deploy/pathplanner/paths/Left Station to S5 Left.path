@@ -16,12 +16,12 @@
     },
     {
       "anchor": {
-        "x": 4.163,
-        "y": 5.439
+        "x": 4.223930921052631,
+        "y": 5.506743421052631
       },
       "prevControl": {
-        "x": 2.93475,
-        "y": 6.365
+        "x": 2.9956809210526307,
+        "y": 6.432743421052631
       },
       "nextControl": null,
       "isLocked": false,
@@ -42,10 +42,10 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 119.99999999999999
+    "rotation": -150.18399708763388
   },
   "reversed": false,
-  "folder": null,
+  "folder": "Left Station Starts",
   "idealStartingState": {
     "velocity": 0,
     "rotation": -144.273

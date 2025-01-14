@@ -6,7 +6,7 @@ import java.util.function.DoubleSupplier;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.RobotContainer;
-import frc.robot.commands.CommandsLance;
+import frc.robot.commands.GeneralCommands;
 
 
 // ------------------------------------------------------------------------------------------

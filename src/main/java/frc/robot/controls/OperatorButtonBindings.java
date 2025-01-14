@@ -16,7 +16,7 @@ import frc.robot.RobotContainer;
 // import frc.robot.subsystems.AmpAssist.AmpAssistPosition;
 // import frc.robot.subsystems.Candle4237.LEDColor;
 // import frc.robot.subsystems.Climb.TargetPosition;
-import frc.robot.commands.CommandsLance;
+import frc.robot.commands.GeneralCommands;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 
 

@@ -3,13 +3,13 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 3.8707500000000006,
-        "y": 5.302249999999999
+        "x": 3.819819078947368,
+        "y": 5.410526315789473
       },
       "prevControl": null,
       "nextControl": {
-        "x": 4.146442163628452,
-        "y": 5.178217376333946
+        "x": 4.095511242575819,
+        "y": 5.28649369212342
       },
       "isLocked": false,
       "linkedName": "S5 Right"
@@ -50,10 +50,10 @@
     "rotation": -144.273
   },
   "reversed": false,
-  "folder": null,
+  "folder": "Reef Starts",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 119.99999999999999
+    "rotation": -148.50839131011392
   },
   "useDefaultConstraints": true
 }

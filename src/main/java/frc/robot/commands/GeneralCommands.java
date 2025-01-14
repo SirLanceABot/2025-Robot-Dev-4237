@@ -5,7 +5,7 @@ import java.lang.invoke.MethodHandles;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.RobotContainer;
 
-public final class CommandsLance
+public final class GeneralCommands
 {
     // This string gets the full name of the class, including the package name
     private static final String fullClassName = MethodHandles.lookup().lookupClass().getCanonicalName();
@@ -31,7 +31,7 @@ public final class CommandsLance
 
     // *** CLASS CONSTRUCTORS ***
     // Put all class constructors here
-    private CommandsLance(RobotContainer robotContainer)
+    private GeneralCommands(RobotContainer robotContainer)
     {
         System.out.println("  Constructor Started:  " + fullClassName);
 
@@ -40,8 +40,8 @@ public final class CommandsLance
 
     public static void setRobotContainer(RobotContainer robotContainer)
     {
-        if(CommandsLance.robotContainer == null)
-            CommandsLance.robotContainer = robotContainer;
+        if(GeneralCommands.robotContainer == null)
+            GeneralCommands.robotContainer = robotContainer;
     }
 
 

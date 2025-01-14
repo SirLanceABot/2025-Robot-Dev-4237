@@ -3,44 +3,39 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 4.223930921052631,
-        "y": 5.506743421052631
+        "x": 7.176,
+        "y": 7.428
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.5471809210526306,
-        "y": 6.559493421052631
+        "x": 6.427302631580045,
+        "y": 7.652384868417159
       },
       "isLocked": false,
-      "linkedName": "S5 Left"
+      "linkedName": "Left Wall"
     },
     {
       "anchor": {
-        "x": 1.745,
-        "y": 7.262
+        "x": 2.9538651315800455,
+        "y": 4.525328947364528
       },
       "prevControl": {
-        "x": 2.33,
-        "y": 6.76475
+        "x": 2.03738889982425,
+        "y": 4.83770791063572
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "Left Station"
+      "linkedName": "S4 Left"
     }
   ],
-  "rotationTargets": [
-    {
-      "waypointRelativePos": 0.4,
-      "rotationDegrees": -144.273
-    }
-  ],
+  "rotationTargets": [],
   "constraintZones": [
     {
       "name": "Constraints Zone",
-      "minWaypointRelativePos": 0.75,
-      "maxWaypointRelativePos": 1.0,
+      "minWaypointRelativePos": 0,
+      "maxWaypointRelativePos": 0,
       "constraints": {
-        "maxVelocity": 1.25,
+        "maxVelocity": 3.0,
         "maxAcceleration": 3.0,
         "maxAngularVelocity": 540.0,
         "maxAngularAcceleration": 720.0,
@@ -61,13 +56,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -144.273
+    "rotation": -89.26547896582521
   },
   "reversed": false,
-  "folder": "Reef Starts",
+  "folder": "Left Wall Starts",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": -150.18399708763388
+    "rotation": 179.76979125660685
   },
   "useDefaultConstraints": true
 }

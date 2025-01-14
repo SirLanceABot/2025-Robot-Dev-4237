@@ -16,12 +16,12 @@
     },
     {
       "anchor": {
-        "x": 4.163,
-        "y": 5.439
+        "x": 4.223930921052631,
+        "y": 5.506743421052631
       },
       "prevControl": {
-        "x": 4.396819934074251,
-        "y": 5.610687836400832
+        "x": 4.457750855126881,
+        "y": 5.678431257453463
       },
       "nextControl": null,
       "isLocked": false,
@@ -56,13 +56,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 119.99999999999999
+    "rotation": -150.18399708763388
   },
   "reversed": false,
-  "folder": null,
+  "folder": "Left Wall Starts",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 90.0
+    "rotation": 179.76979125660685
   },
   "useDefaultConstraints": true
 }
