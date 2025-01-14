@@ -60,7 +60,7 @@ public class Intake extends SubsystemLance
     // *** CLASS VARIABLES & INSTANCE VARIABLES ***
     // Put all class variables and instance variables here
     private final PeriodicData periodicData = new PeriodicData();
-    private final TalonFXLance Motor = new TalonFXLance(4, Constants.ROBORIO, "Motor");
+    private final TalonFXLance Motor = new TalonFXLance(1, Constants.ROBORIO, "Motor");
     //private final TalonFXLance bottomMotor = new TalonFXLance(12, Constants.ROBORIO, "Bottom Motor");
 
     private final double GEAR_RATIO = 1.0 / 5.0; // previously 1.0 / 25.0
