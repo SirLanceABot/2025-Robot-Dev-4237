@@ -65,31 +65,49 @@ public class Shuttle extends SubsystemLance
         motor.setupCoastMode();
     }
 
+    /**
+     * Sets motor to move shuttle forward
+     */
     private void moveForward()
     {
         motor.set(0.5);
     }
 
+    /**
+     * Sets motor to move shuttle backward
+     */
     private void moveBackward()
     {
         motor.set(-0.5);
     }
-   
+ 
+     /**
+     * Sets motor to stop shuttle 
+     */
     private void stop()
     {
        motor.set(0.0);
     }
 
+    /**
+     * runs move forward method
+     */
     public Command moveForwardCommand()
     {
         return Commands.run(() -> moveForward(), this).withName("Move Forward");
     }
 
+    /**
+     * runs move backwards method
+     */
     public Command moveBackwardCommand()
     {
         return Commands.run(() -> moveBackward(), this).withName("Move Backward");
     }
 
+    /**
+     * runs shuttle stop method
+     */
     public Command stopCommand()
     {
         return Commands.run(() -> stop(), this).withName("Stop");
@@ -111,7 +129,7 @@ public class Shuttle extends SubsystemLance
     @Override
     public String toString()
     {
-        return "Shuttle";
+        return "Shuttle speed:" + motor.get();
     }
 }
 
