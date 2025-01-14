@@ -7,6 +7,9 @@ import edu.wpi.first.wpilibj2.command.Commands;
 import frc.robot.Constants;
 import frc.robot.motors.TalonFXLance;
 
+/**
+ * Creates a new climb subsystem with one Kraken motor
+ */
 public class Climb extends SubsystemLance
 {
     // This string gets the full name of the class, including the package name
@@ -59,6 +62,9 @@ public class Climb extends SubsystemLance
     // *** CLASS METHODS & INSTANCE METHODS ***
     // Put all class methods and instance methods here
 
+    /**
+     * Puts motor in brake mode and sets up soft and hard limit switches
+     */
     private void configMotors()
     {
         motor.setupFactoryDefaults();
@@ -73,28 +79,43 @@ public class Climb extends SubsystemLance
         motor.setupReverseHardLimitSwitch(true, true);
     }
 
+    /**
+     * gets the encoder position of the motor
+     * @return motor position
+     */
     public double getPosition()
     {
         return position;
     }
 
+    /**
+     * sets the motor to the speed passed to the function
+     * @param speed sets speed from -1.0 to 1.0
+     */
     private void set(double speed)
     {
         motor.set(speed);
     }
 
-    // Moves the climb so the robot will climb up the cage
+    /**
+     * Moves the climb so the robot will climb up the cage
+     */
     public void climbUp()
     {
         motor.set(0.1);
     }
 
-    // Moves the climb so the robot will climb down the cage
+    /**
+     * Moves the climb so the robot will climb down the cage
+     */
     public void climbDown()
     {
         motor.set(-0.1);
     }
 
+    /**
+     * Moves the climb to the position where the robot will be hanging from the cage
+     */
     public void moveToUpPosition()
     {
         if(position < Constants.Climb.CLIMB_UP_POSITION - POSITION_TOLERANCE)
@@ -111,6 +132,9 @@ public class Climb extends SubsystemLance
         }
     }
 
+    /**
+     * Moves the climb to the position where the robot will be ready to climb
+     */
     public void moveToDownPosition()
     {
         if(position < Constants.Climb.CLIMB_DOWN_POSITION)
@@ -127,36 +151,58 @@ public class Climb extends SubsystemLance
         }
     }
 
+    /**
+     * Stops the climb motor
+     */
     public void stop()
     {
         motor.set(0.0);
     }
 
+     /**
+     * gets the encoder position of the motor
+     * @param speed the speed of the motor from -1.0 to 1.0
+     */
     public Command setCommand(double speed)
     {
         return Commands.run(() -> set(speed), this).withName("Set Climb Speed");
     }
 
+    /**
+     * Moves the climb so the robot will climb up the cage
+     */
     public Command climbUpCommand()
     {
         return Commands.run(() -> climbUp(), this).withName("Climb Up");
     }
 
+    /**
+     * Moves the climb so the robot will climb down the cage
+     */
     public Command climbDownCommand()
     {
         return Commands.run(() -> climbDown(), this).withName("Climb Down");
     }
 
+    /**
+     * Moves the climb to the position where the robot will be hanging from the cage
+     */
     public Command moveToUpPositionCommand()
     {
         return Commands.run(() -> moveToUpPositionCommand(), this).withName("Move To Up Position");
     }
 
+    /**
+     * Moves the climb to the position where the robot will be ready to climb
+     */
     public Command moveToDownPositionCommand()
     {
         return Commands.run(() -> moveToDownPositionCommand(), this).withName("Move To Down Position");
     }
 
+    /**
+     * Stops the climb motor
+     */
     public Command stopCommand()
     {
         return Commands.runOnce(() -> stopCommand(), this).withName("Stops Climb");
