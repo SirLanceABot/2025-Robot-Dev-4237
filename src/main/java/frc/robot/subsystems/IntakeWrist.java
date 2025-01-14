@@ -61,7 +61,7 @@ public class IntakeWrist extends SubsystemLance
     // Put all class constructors here
 
     /** 
-     * Creates a new ExampleSubsystem. 
+     * creates a new Intake Wrist. 
      */
     public IntakeWrist()
     {
@@ -81,6 +81,9 @@ public class IntakeWrist extends SubsystemLance
     // *** CLASS METHODS & INSTANCE METHODS ***
     // Put all class methods and instance methods here
 
+    /*
+     * configures motors.
+     */
     private void configMotors()
     {
         motor.setupFactoryDefaults();
@@ -88,6 +91,9 @@ public class IntakeWrist extends SubsystemLance
         motor.setPosition(0.0);
     }
 
+    /*
+     * returns the motors position.
+     */
     public double getPosition()
     {
         return motor.getPosition();
@@ -97,16 +103,26 @@ public class IntakeWrist extends SubsystemLance
      * Returns the value of the sensor
     * @return The value of periodData.sensorValue
     */
+
+    /*
+     * sets the speed of motor
+     */
     private void set(double speed)
     {
         motor.set(speed);
     }
 
+    /*
+     * stops the motor.
+     */
     private void stop()
     {
         motor.set(0.0);
     }
 
+    /*
+     * moves wrist to position.
+     */
     private void moveToPosition(TargetPosition targetPosition)
     {
         if(getPosition() > (targetPosition.value + tolerance))
@@ -123,27 +139,16 @@ public class IntakeWrist extends SubsystemLance
         }
     }
 
+    /*
+     * runs the moveToPosition() method.
+     */
     public Command moveToSetPositionCommand(TargetPosition targetPosition)
     {
         return Commands.run(() -> moveToPosition(targetPosition), this).withName("Move To Set Position Intake Wrist");
     }
 
- 
-
-
     // *** OVERRIDEN METHODS ***
     // Put all methods that are Overridden here
-    @Override
-    public void readPeriodicInputs()
-    {
-
-    }
-
-    @Override
-    public void writePeriodicOutputs()
-    {
-        
-    }
 
     @Override
     public void periodic()
