@@ -83,7 +83,7 @@ public class RobbieFTest implements Test
             grabber.acceptCoralCommand().schedule();
         }
 
-        if (joystick.getRawButton(4))
+        if (joystick.getRawButton(3))
             grabber.stopCommand().schedule();
         
     }

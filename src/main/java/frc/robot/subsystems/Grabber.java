@@ -38,7 +38,7 @@ public class Grabber extends SubsystemLance
     // Put all class constructors here
 
     /** 
-     * Creates a new Grabber. 
+     * Creates a new Grabber and congures the motors. 
      */
     public Grabber()
     {
@@ -46,10 +46,6 @@ public class Grabber extends SubsystemLance
         System.out.println("  Constructor Started:  " + fullClassName);
 
         configMotors();
-
-        // SendableRegistry.addLW(this, "Example Subsystem", "MY Subsystem");
-        // addChild("Motor 1", motor1);
-        // addChild("Motor 2", motor2);
 
         System.out.println("  Constructor Finished: " + fullClassName);
     }
@@ -62,73 +58,92 @@ public class Grabber extends SubsystemLance
     {
         frontMotor.setupFactoryDefaults();
         backMotor.setupFactoryDefaults();
+        frontMotor.setupCoastMode();
+        backMotor.setupCoastMode();
     }
 
     /**
-     * Returns the value of the sensor
-    * @return The value of periodData.sensorValue
+     *Sets speed of front motor
     */
-    public void setSpeed(double speed)
+    public void setFront(double speed)
     {
         frontMotor.set(speed);
-        backMotor.set(-speed);
+    }
+
+    /**
+     *Sets speed of back motor
+    */
+    public void setBack(double speed)
+    {
+        backMotor.set(speed);
+    }
+
+    /** 
+     * Sets speed of front and back motor to place coral
+    */
+    public void placeCoral(double backSpeed, double frontSpeed)
+    {
+        setFront(frontSpeed);
+        setBack(backSpeed);
+    }
+
+    /** 
+    * Sets speed of front and back motor to accept coral (speed is automaticly reversed)
+    */
+    public void acceptCoral(double backSpeed, double frontSpeed)
+    {
+        setFront(-frontSpeed);
+        setBack(-backSpeed);
+    }
+
+    
+    public void eject(double speed)
+    {
+        setFront(speed);
     }
 
     public void stop()
     {
-        setSpeed(0.0);
+        setFront(0.0);
+        setBack(0.0);
     }
 
-    /* 
-     * Turns on motors to place coral on reef
-     */
-    // * different speed and function for L4?
-
-    // public void placeCoral(double speed)
-    // {
-    //     topMotor.set(speed);
-    //     lowerMotor.set(speed);
-    // }
-
-    // /* 
-    //  * Turns on motors to set speed to release coral from the claw
-    //  * redundant with place coral
-    //  */
-    // public void ejectCoral(double speed)
-    // {
-    //     topMotor.set(speed);
-    //     lowerMotor.set(speed);
-    // }
+    /**
+     * runs accept coral method 
+     * */
 
     public Command acceptCoralCommand()
     {
         // design pending
-        return Commands.run(() -> setSpeed(-0.075), this).withName("Accept Coral");
+        return Commands.run(() -> acceptCoral(0.075, 0.075), this).withName("Accept Coral");
     }
 
+    /**
+     * runs place coral method
+    */
     public Command placeCoralCommand()
     {
-        return Commands.run(() -> setSpeed(0.075), this).withName("Place Coral");
+        return Commands.run(() -> placeCoral(0.075, 0.075), this).withName("Place Coral");
     }
 
+    /**
+     * runs eject coral method
+     */
     public Command ejectCoralCommand()
     {
-        return Commands.run(() -> setSpeed(0.075), this).withName("Eject Coral");
+        return Commands.run(() -> eject(0.075), this).withName("Eject Coral");
     }   
     
+    /**
+     * runs stop command
+     * 
+     */
     public Command stopCommand()
     {
         return Commands.run(() -> stop(), this).withName("Stop");
     }
     // *** OVERRIDEN METHODS ***
     // Put all methods that are Overridden here
-
-    @Override
-    public void periodic()
-    {
-        // This method will be called once per scheduler run
-        // use for sensors and data log
-    }
 
     @Override
     public String toString()

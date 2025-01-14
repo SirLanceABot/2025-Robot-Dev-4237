@@ -68,14 +68,14 @@ public class RobotContainer
     {
         fullRobot          = (useFullRobot);
         
-        grabber               = (useFullRobot || useGrabber)             ? new Grabber()                                         : null;
+        grabber            = (useFullRobot || useGrabber)          ? new Grabber()                                      : null;
         climb              = (useFullRobot || useClimb)            ? new Climb()                                        : null;
-        gyro              = (useFullRobot || useGyro)              ? new GyroLance()                                    : null;
+        gyro               = (useFullRobot || useGyro)             ? new GyroLance()                                    : null;
         // drivetrain         = (useFullRobot || useDrivetrain)       ? new Drivetrain(gyro, useFullRobot, true, isRedAllianceSupplier())                                   : null;
         elevator           = (useFullRobot || useElevator)         ? new Elevator()                                     : null;
         intake             = (useFullRobot || useIntake)           ? new Intake()                                       : null;
         intakeWrist        = (useFullRobot || useIntakeWrist)      ? new IntakeWrist()                                  : null;
-        pivot           = (useFullRobot || usePivot)         ? new Pivot()                                     : null;
+        pivot              = (useFullRobot || usePivot)            ? new Pivot()                                        : null;
         shuttle            = (useFullRobot || useShuttle)          ? new Shuttle()                                      : null;
 
         configureBindings();
