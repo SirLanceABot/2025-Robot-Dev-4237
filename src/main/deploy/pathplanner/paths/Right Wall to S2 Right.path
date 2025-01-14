@@ -1,0 +1,54 @@
+{
+  "version": "2025.0",
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 7.176,
+        "y": 0.603
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 7.460650375358069,
+        "y": 0.5268898177799963
+      },
+      "isLocked": false,
+      "linkedName": "Right Wall"
+    },
+    {
+      "anchor": {
+        "x": 4.791611842105263,
+        "y": 2.4470394736842103
+      },
+      "prevControl": {
+        "x": 4.5420384060520025,
+        "y": 2.5165175436726837
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": "S2 Right"
+    }
+  ],
+  "rotationTargets": [],
+  "constraintZones": [],
+  "pointTowardsZones": [],
+  "eventMarkers": [],
+  "globalConstraints": {
+    "maxVelocity": 3.0,
+    "maxAcceleration": 3.0,
+    "maxAngularVelocity": 540.0,
+    "maxAngularAcceleration": 720.0,
+    "nominalVoltage": 12.0,
+    "unlimited": false
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": -57.264773727892525
+  },
+  "reversed": false,
+  "folder": "Right Wall Starts",
+  "idealStartingState": {
+    "velocity": 0,
+    "rotation": 90.0
+  },
+  "useDefaultConstraints": true
+}

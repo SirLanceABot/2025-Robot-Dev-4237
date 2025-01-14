@@ -6,7 +6,7 @@ package frc.robot.commands;
 
 import java.lang.invoke.MethodHandles;
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.subsystems.Shoulder;
+import frc.robot.subsystems.ExampleSubsystem;
 
 /** 
  * An example command that uses an example subsystem. 
@@ -24,7 +24,7 @@ public class ExampleCommand extends Command
     }
 
     // *** CLASS AND INSTANCE VARIABLES ***
-    private final Shoulder exampleSubsystem;
+    private final ExampleSubsystem exampleSubsystem;
 
 
     /**
@@ -32,7 +32,7 @@ public class ExampleCommand extends Command
      *
      * @param subsystem The subsystem used by this command.
      */
-    public ExampleCommand(Shoulder exampleSubsystem) 
+    public ExampleCommand(ExampleSubsystem exampleSubsystem) 
     {
         this.exampleSubsystem = exampleSubsystem;
         

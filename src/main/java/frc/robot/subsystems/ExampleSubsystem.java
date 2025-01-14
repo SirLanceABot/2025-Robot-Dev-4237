@@ -9,7 +9,7 @@ import frc.robot.Constants;
 import frc.robot.motors.TalonFXLance;
 
 /**
- * Use this class as a template to create other subsystems.
+ * This is an example of what a subsystem should look like.
  */
 public class ExampleSubsystem extends SubsystemLance
 {
@@ -26,15 +26,11 @@ public class ExampleSubsystem extends SubsystemLance
 
     // *** INNER ENUMS and INNER CLASSES ***
     // Put all inner enums and inner classes here
-    private class PeriodicData
-    {
-        // REMOVE ALL CODE FROM HERE
-    }
 
 
+    
     // *** CLASS VARIABLES & INSTANCE VARIABLES ***
     // Put all class variables and instance variables here
-    private final PeriodicData periodicData = new PeriodicData();
     private final TalonFXLance motor1 = new TalonFXLance(4, Constants.ROBORIO, "Motor 1");
     private final TalonFXLance motor2 = new TalonFXLance(12, Constants.ROBORIO, "Motor 2");
 
@@ -66,9 +62,9 @@ public class ExampleSubsystem extends SubsystemLance
     }
 
     /**
-     * Returns the value of the sensor
-    * @return The value of periodData.sensorValue
-    */
+     * This sets the speed of the motors.
+     * @param speed The motor speed (-1.0 to 1.0)
+     */
     private void set(double speed)
     {
         motor1.set(speed);
@@ -100,17 +96,6 @@ public class ExampleSubsystem extends SubsystemLance
 
     // *** OVERRIDEN METHODS ***
     // Put all methods that are Overridden here
-    // @Override
-    // public void readPeriodicInputs()
-    // {
-    //     // REMOVE ALL CODE FROM HERE
-    // }
-
-    // @Override
-    // public void writePeriodicOutputs()
-    // {
-    //     // REMOVE ALL CODE FROM HERE
-    // }
 
     @Override
     public void periodic()

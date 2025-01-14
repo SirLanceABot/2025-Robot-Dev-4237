@@ -16,6 +16,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import frc.robot.Constants;
+
 /*
  * This class creates gyro which is used for rotation 
  */
@@ -173,17 +174,7 @@ public class GyroLance extends SensorLance
     // }
 
     @Override
-    public void readPeriodicInputs()
-    {}
-
-   
-
-    @Override
-    public void writePeriodicOutputs()
-    {}
-
-    @Override
-    public void runPeriodicTask()
+    public void periodic()
     {
         switch(resetState)
         {
@@ -223,7 +214,5 @@ public class GyroLance extends SensorLance
     {
         return String.format("Gyro %f \n", yaw);
     }
-
-    
 }
 

@@ -23,7 +23,7 @@ public interface PeriodicTask
     public static void runAllPeriodicTasks()
     {
         for(PeriodicTask periodicTask : allPeriodicTasks)
-            periodicTask.runPeriodicTask();
+            periodicTask.periodic();
     }
 
 
@@ -42,5 +42,6 @@ public interface PeriodicTask
     // *** ABSTRACT METHODS ***
     // Put all abstract methods here - automatically "public abstract"
     // These methods must be defined in any subclass that implements this interface
-    public abstract void runPeriodicTask();
+
+    public abstract void periodic();
 }

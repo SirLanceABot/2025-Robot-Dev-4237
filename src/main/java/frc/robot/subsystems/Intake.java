@@ -11,220 +11,217 @@ import java.lang.invoke.MethodHandles;
  */
 public class Intake extends SubsystemLance 
 {
-  // This string gets the full name of the class, including the package name
-  private static final String fullClassName = MethodHandles.lookup().lookupClass().getCanonicalName();
+    // This string gets the full name of the class, including the package name
+    private static final String fullClassName = MethodHandles.lookup().lookupClass().getCanonicalName();
 
-  // *** STATIC INITIALIZATION BLOCK ***
-  // This block of code is run first when the class is loaded
-  static 
-  {
-    System.out.println("Loading: " + fullClassName);
-  }
-
-  // *** INNER ENUMS and INNER CLASSES ***
-  public enum Direction 
-  {
-    kForward(0.1),
-    kBackward(-0.1),
-    kOff(0.0);
-
-    public final double value;
-
-    private Direction(double value) 
+    // *** STATIC INITIALIZATION BLOCK ***
+    // This block of code is run first when the class is loaded
+    static 
     {
-      this.value = value;
+        System.out.println("Loading: " + fullClassName);
     }
-  }
 
-  public enum Action 
-  {
-    kPickup,
-    kEject;
-  }
+    // *** INNER ENUMS and INNER CLASSES ***
+    // Put all inner enums and inner classes here
+    public enum Direction 
+    {
+        kForward(0.1),
+        kBackward(-0.1),
+        kOff(0.0);
 
-  // Put all inner enums and inner classes here
-  private class PeriodicData 
-  {
-    // INPUTS
+        public final double value;
+
+        private Direction(double value) 
+        {
+            this.value = value;
+        }
+    }
+
+    public enum Action 
+    {
+        kPickup,
+        kEject;
+    }
+
+    // Put all inner enums and inner classes here
+    private class PeriodicData 
+    {
+        // INPUTS
+        // private double rollerPosition = 0.0;
+        // private double bottomRollerPosition = 0.0;
+        // private double rollerVelocity;
+        // private double bottomRollerVelocity;
+
+        // OUTPUTS
+        // private double topRollerSpeed = 0.0;
+        // private double bottomRollerSpeed = 0.0;
+    }
+
+    // *** CLASS VARIABLES & INSTANCE VARIABLES ***
+    // Put all class variables and instance variables here
+    private final PeriodicData periodicData = new PeriodicData();
+    private final TalonFXLance Motor = new TalonFXLance(1, Constants.ROBORIO, "Motor");
+    //private final TalonFXLance bottomMotor = new TalonFXLance(12, Constants.ROBORIO, "Bottom Motor");
+
+    private final double GEAR_RATIO = 1.0 / 5.0; // previously 1.0 / 25.0
+    private final double WHEEL_DIAMETER_FEET = 2.25 / 12.0;
+    private final double MINUTES_TO_SECONDS = 1.0 / 60.0;
+    private final double RPM_TO_FPS = GEAR_RATIO * MINUTES_TO_SECONDS * Math.PI * WHEEL_DIAMETER_FEET;
+    // private final double PERCENT_VOLTAGE = 0.9;
+    // private final double VOLTAGE = PERCENT_VOLTAGE * Constants.END_OF_MATCH_BATTERY_VOLTAGE;
+    private final double DEFAULT_SPEED = 0.9;
+
     private double rollerPosition = 0.0;
     private double bottomRollerPosition = 0.0;
     private double rollerVelocity;
     private double bottomRollerVelocity;
 
-    // OUTPUTS
-    // private double topRollerSpeed = 0.0;
-    // private double bottomRollerSpeed = 0.0;
-  }
+    // *** CLASS CONSTRUCTORS ***
+    // Put all class constructors here
 
-  // *** CLASS VARIABLES & INSTANCE VARIABLES ***
-  // Put all class variables and instance variables here
-  private final PeriodicData periodicData = new PeriodicData();
-  private final TalonFXLance Motor = new TalonFXLance(4, Constants.ROBORIO, "Motor");
- //private final TalonFXLance bottomMotor = new TalonFXLance(12, Constants.ROBORIO, "Bottom Motor");
+    /**
+     * Creates a new Intake.
+     */
+    public Intake() 
+    {
+        super("Intake");
+        System.out.println("  Constructor Started:  " + fullClassName);
 
-  private final double GEAR_RATIO = 1.0 / 5.0; // previously 1.0 / 25.0
-  private final double WHEEL_DIAMETER_FEET = 2.25 / 12.0;
-  private final double MINUTES_TO_SECONDS = 1.0 / 60.0;
-  private final double RPM_TO_FPS = GEAR_RATIO * MINUTES_TO_SECONDS * Math.PI * WHEEL_DIAMETER_FEET;
-  // private final double PERCENT_VOLTAGE = 0.9;
-  // private final double VOLTAGE = PERCENT_VOLTAGE * Constants.END_OF_MATCH_BATTERY_VOLTAGE;
-  private final double DEFAULT_SPEED = 0.9;
+        configMotors();
+        setDefaultCommand(stopCommand());
 
-  // *** CLASS CONSTRUCTORS ***
-  // Put all class constructors here
+        // SendableRegistry.addLW(this, "Intake", "MY Subsystem");
+        // addChild("Motor 1", motor1);
+        // addChild("Motor 2", motor2);
 
-  /**
-   * Creates a new Intake.
-   */
-  public Intake() 
-  {
-    super("Intake");
-    System.out.println("  Constructor Started:  " + fullClassName);
+        System.out.println("  Constructor Finished: " + fullClassName);
+    }
 
-    configMotors();
-    setDefaultCommand(stopCommand());
+    // *** CLASS METHODS & INSTANCE METHODS ***
+    // Put all class methods and instance methods here
 
-    // SendableRegistry.addLW(this, "Intake", "MY Subsystem");
-    // addChild("Motor 1", motor1);
-    // addChild("Motor 2", motor2);
+    private void configMotors() 
+    {
+        // Factory Defaults
+        Motor.setupFactoryDefaults();
+        //bottomMotor.setupFactoryDefaults();
+        // Do Not Invert Motor Direction
+        Motor.setupInverted(false); // test later
+        //bottomMotor.setupInverted(true); // test later
+        // Set Coast Mode
+        Motor.setupCoastMode();
+        //bottomMotor.setupCoastMode();
+        // topMotor.setupPIDController(0, periodicData.kP, periodicData.kI, periodicData.kD);
+        // bottomMotor.setupPIDController(0, 17.0, 0.0, 0.0);
 
-    System.out.println("  Constructor Finished: " + fullClassName);
-  }
+        Motor.setupVelocityConversionFactor(RPM_TO_FPS);
 
-  // *** CLASS METHODS & INSTANCE METHODS ***
-  // Put all class methods and instance methods here
+        Motor.setupCurrentLimit(30.0, 35.0, 0.5);
+        Motor.setSafetyEnabled(false);
+        //bottomMotor.setSafetyEnabled(false);
+    }
 
-  private void configMotors() 
-  {
-    // Factory Defaults
-    Motor.setupFactoryDefaults();
-    //bottomMotor.setupFactoryDefaults();
-    // Do Not Invert Motor Direction
-    Motor.setupInverted(false); // test later
-    //bottomMotor.setupInverted(true); // test later
-    // Set Coast Mode
-    Motor.setupCoastMode();
-    //bottomMotor.setupCoastMode();
-    // topMotor.setupPIDController(0, periodicData.kP, periodicData.kI, periodicData.kD);
-    // bottomMotor.setupPIDController(0, 17.0, 0.0, 0.0);
+    /**
+     * Returns the value of the sensor
+     * @return The value of periodData.sensorValue
+     */
+    public void in(double speed) 
+    {
+        setVoltage(speed * Constants.END_OF_MATCH_BATTERY_VOLTAGE);
+        //bottomSetVoltage(speed * Constants.END_OF_MATCH_BATTERY_VOLTAGE);
+    }
 
-    Motor.setupVelocityConversionFactor(RPM_TO_FPS);
+    public void stop() 
+    {
+        // periodicData.speed = 0.0;
+        setVoltage(0.0 * Constants.END_OF_MATCH_BATTERY_VOLTAGE);
+        //bottomSetVoltage(0.0 * Constants.END_OF_MATCH_BATTERY_VOLTAGE);
+    }
 
-    Motor.setupCurrentLimit(30.0, 35.0, 0.5);
-    Motor.setSafetyEnabled(false);
-    //bottomMotor.setSafetyEnabled(false);
-  }
+    public double getPosition() 
+    {
+        return rollerPosition;
+    }
 
-  /**
-   * Returns the value of the sensor
-   * @return The value of periodData.sensorValue
-   */
-  public void in(double speed) 
-  {
-    setVoltage(speed * Constants.END_OF_MATCH_BATTERY_VOLTAGE);
-    //bottomSetVoltage(speed * Constants.END_OF_MATCH_BATTERY_VOLTAGE);
-  }
+    //   public double getBottomPosition() 
+    //   {
+    //       return periodicData.bottomRollerPosition;
+    //   }
 
-  public void stop() 
-  {
-    // periodicData.speed = 0.0;
-    setVoltage(0.0 * Constants.END_OF_MATCH_BATTERY_VOLTAGE);
-    //bottomSetVoltage(0.0 * Constants.END_OF_MATCH_BATTERY_VOLTAGE);
-  }
+    public void pickup() 
+    {
+        setVoltage(1.0 * Constants.END_OF_MATCH_BATTERY_VOLTAGE);
+        //bottomSetVoltage(1.0 * Constants.END_OF_MATCH_BATTERY_VOLTAGE);
+    }
 
-  public double getPosition() 
-  {
-    return periodicData.rollerPosition;
-  }
+    public void eject() 
+    {
+        setVoltage(-1.0 * Constants.END_OF_MATCH_BATTERY_VOLTAGE);
+        //bottomSetVoltage(-1.0 * Constants.END_OF_MATCH_BATTERY_VOLTAGE);
+    }
 
-//   public double getBottomPosition() 
-//   {
-//     return periodicData.bottomRollerPosition;
-//   }
+    private void setVoltage(double voltage) 
+    {
+        Motor.setVoltage(voltage);
+    }
 
-  public void pickup() 
-  {
-    setVoltage(1.0 * Constants.END_OF_MATCH_BATTERY_VOLTAGE);
-    //bottomSetVoltage(1.0 * Constants.END_OF_MATCH_BATTERY_VOLTAGE);
-  }
+    //   private void bottomSetVoltage(double voltage) 
+    //   {
+    //       bottomMotor.setVoltage(voltage);
+    //   }
 
-  public void eject() 
-  {
-    setVoltage(-1.0 * Constants.END_OF_MATCH_BATTERY_VOLTAGE);
-    //bottomSetVoltage(-1.0 * Constants.END_OF_MATCH_BATTERY_VOLTAGE);
-  }
+    private void set(double speed) 
+    {
+        Motor.set(speed);
+    }
 
-  private void setVoltage(double voltage) 
-  {
-    Motor.setVoltage(voltage);
-  }
+    //   private void bottomSet(double speed) 
+    //   {
+    //       bottomMotor.set(speed);
+    //   }
 
-//   private void bottomSetVoltage(double voltage) 
-//   {
-//     bottomMotor.setVoltage(voltage);
-//   }
+    public double getVelocity() 
+    {
+        return rollerVelocity;
+    }
 
-  private void set(double speed) 
-  {
-    Motor.set(speed);
-  }
+    //   public double getBottomVelocity() 
+    //   {
+    //       return periodicData.bottomRollerVelocity;
+    //   }
 
-//   private void bottomSet(double speed) 
-//   {
-//     bottomMotor.set(speed);
-//   }
+    public Command pickupCommand() 
+    {
+        return Commands.run(() -> pickup(), this).withName("Pickup");
+    }
 
-  public double getVelocity() 
-  {
-    return periodicData.rollerVelocity;
-  }
+    public Command ejectCommand() 
+    {
+        return Commands.run(() -> eject(), this).withName("Eject");
+    }
 
-//   public double getBottomVelocity() 
-//   {
-//     return periodicData.bottomRollerVelocity;
-//   }
+    public Command stopCommand() 
+    {
+        return Commands.runOnce(() -> stop(), this).withName("Stop");
+    }
 
-  public Command pickupCommand() 
-  {
-    return Commands.run(() -> pickup(), this).withName("Pickup");
-  }
 
-  public Command ejectCommand() {
-    return Commands.run(() -> eject(), this).withName("Eject");
-  }
+    // *** OVERRIDEN METHODS ***
+    // Put all methods that are Overridden here
 
-  public Command stopCommand() {
-    return Commands.runOnce(() -> stop(), this).withName("Stop");
-  }
-  // *** OVERRIDEN METHODS ***
-  // Put all methods that are Overridden here
-  @Override
-  public void readPeriodicInputs() 
-  {}
+    @Override
+    public void periodic() 
+    {
+        // This method will be called once per scheduler run
+        rollerPosition = Motor.getPosition();
+        //periodicData.bottomRollerPosition = bottomMotor.getPosition();
+        rollerVelocity = Motor.getVelocity();
+        //periodicDatopRollerVelocityta.bottomRollerVelocity = bottomMotor.getVelocity();
+    }
 
-  @Override
-  public void writePeriodicOutputs() 
-  {}
-
-  @Override
-  public void periodic() 
-  {
-    // This method will be called once per scheduler run
-    periodicData.rollerPosition = Motor.getPosition();
-    //periodicData.bottomRollerPosition = bottomMotor.getPosition();
-    periodicData.rollerVelocity = Motor.getVelocity();
-    //periodicDatopRollerVelocityta.bottomRollerVelocity = bottomMotor.getVelocity();
-  }
- 
-  @Override
-  public void simulationPeriodic() 
-  {
-    // This method will be called once per scheduler run during simulation
-  }
-
-  @Override
-  public String toString() 
-  {
-    return "Current Intake Position: " + periodicData.rollerPosition;
-  }
+    @Override
+    public String toString() 
+    {
+        return "Current Intake Position: " + rollerPosition;
+    }
 }

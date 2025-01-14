@@ -313,9 +313,9 @@ public abstract class Logitech extends ControllerLance
         setAxisSettings(axis, axisSettings.axisDeadzone, axisSettings.axisMinOutput, axisSettings.axisMaxOutput, axisSettings.axisIsFlipped, axisSettings.axisScale);
     }
 
-    public abstract void readPeriodicInputs();
-    public abstract void writePeriodicOutputs();
-    public abstract void runPeriodicTask();
+    // public abstract void readPeriodicInputs();
+    // public abstract void writePeriodicOutputs();
+    public abstract void periodic();
     
     @Override
     public String toString()

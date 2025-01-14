@@ -23,6 +23,7 @@ public class Climb extends SubsystemLance
     // *** INNER ENUMS and INNER CLASSES ***
     // Put all inner enums and inner classes here
 
+    
 
     // *** CLASS VARIABLES & INSTANCE VARIABLES ***
     // Put all class variables and instance variables here
@@ -160,19 +161,9 @@ public class Climb extends SubsystemLance
     {
         return Commands.runOnce(() -> stopCommand(), this).withName("Stops Climb");
     }
+    
     // *** OVERRIDEN METHODS ***
     // Put all methods that are Overridden here
-    @Override
-    public void readPeriodicInputs()
-    {
-
-    }
-
-    @Override
-    public void writePeriodicOutputs()
-    {
-
-    }
 
     @Override
     public void periodic()

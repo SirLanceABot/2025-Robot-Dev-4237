@@ -1,0 +1,68 @@
+{
+  "version": "2025.0",
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 7.176,
+        "y": 7.428
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 5.31375,
+        "y": 7.0184999999999995
+      },
+      "isLocked": false,
+      "linkedName": "Left Wall"
+    },
+    {
+      "anchor": {
+        "x": 4.223930921052631,
+        "y": 5.506743421052631
+      },
+      "prevControl": {
+        "x": 4.457750855126881,
+        "y": 5.678431257453463
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": "S5 Left"
+    }
+  ],
+  "rotationTargets": [],
+  "constraintZones": [
+    {
+      "name": "Constraints Zone",
+      "minWaypointRelativePos": 0.7,
+      "maxWaypointRelativePos": 1.0,
+      "constraints": {
+        "maxVelocity": 1.25,
+        "maxAcceleration": 3.0,
+        "maxAngularVelocity": 540.0,
+        "maxAngularAcceleration": 720.0,
+        "nominalVoltage": 12.0,
+        "unlimited": false
+      }
+    }
+  ],
+  "pointTowardsZones": [],
+  "eventMarkers": [],
+  "globalConstraints": {
+    "maxVelocity": 3.0,
+    "maxAcceleration": 3.0,
+    "maxAngularVelocity": 540.0,
+    "maxAngularAcceleration": 720.0,
+    "nominalVoltage": 12.0,
+    "unlimited": false
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": -150.18399708763388
+  },
+  "reversed": false,
+  "folder": "Left Wall Starts",
+  "idealStartingState": {
+    "velocity": 0,
+    "rotation": 179.76979125660685
+  },
+  "useDefaultConstraints": true
+}

@@ -45,7 +45,7 @@ public class LoganBTest implements Test
 
         this.robotContainer = robotContainer;
         // this.exampleSubsystem = robotContainer.exampleSubsystem;
-        climb = robotContainer.climb;
+        climb = robotContainer.getClimb();
         System.out.println("  Constructor Finished: " + fullClassName);
     }
 

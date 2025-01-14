@@ -64,7 +64,7 @@ public final class Constants
         public static final double CLIMB_DOWN_POSITION                  = 1.0;      // Check value once we have robot
     }
 
-    public static class Shoulder
+    public static class Pivot
     {
         public static final int LEFT_MOTOR_PORT                         = 0;
         public static final int RIGHT_MOTOR_PORT                        = 0;
@@ -78,12 +78,12 @@ public final class Constants
         public static final double GRAB_CORAL_POSITION                  = 0.0;
     }
 
-    public static class Claw
+    public static class Grabber
     {
-        public static final int TOP_MOTOR_PORT                          = 0;
-        public static final int BOTTOM_MOTOR_PORT                       = 0;
-        public static final String TOP_MOTOR_CAN_BUS                    = ROBORIO;
-        public static final String BOTTOM_MOTOR_CAN_BUS                 = ROBORIO;
+        public static final int FRONT_MOTOR_PORT                        = 0;
+        public static final int BACK_MOTOR_PORT                         = 0;
+        public static final String FRONT_MOTOR_CAN_BUS                  = ROBORIO;
+        public static final String BACK_MOTOR_CAN_BUS                   = ROBORIO;
     }
 
     public static class Drivetrain
@@ -119,12 +119,12 @@ public final class Constants
 
     public enum TargetPosition
     {
-        kStartingPosition(Constants.Elevator.STARTING_POSITION, Constants.Shoulder.STARTING_POSITION),
-        kGrabCoralPosition(Constants.Elevator.GRAB_CORAL_POSITION, Constants.Shoulder.GRAB_CORAL_POSITION),
-        kL1(Constants.Elevator.L1, Constants.Shoulder.L1),
-        kL2(Constants.Elevator.L2, Constants.Shoulder.L2),
-        kL3(Constants.Elevator.L3, Constants.Shoulder.L3),
-        kL4(Constants.Elevator.L4, Constants.Shoulder.L4),
+        kStartingPosition(Constants.Elevator.STARTING_POSITION, Constants.Pivot.STARTING_POSITION),
+        kGrabCoralPosition(Constants.Elevator.GRAB_CORAL_POSITION, Constants.Pivot.GRAB_CORAL_POSITION),
+        kL1(Constants.Elevator.L1, Constants.Pivot.L1),
+        kL2(Constants.Elevator.L2, Constants.Pivot.L2),
+        kL3(Constants.Elevator.L3, Constants.Pivot.L3),
+        kL4(Constants.Elevator.L4, Constants.Pivot.L4),
         kOverride(-4237, -4237);
 
         public final double shoulder;

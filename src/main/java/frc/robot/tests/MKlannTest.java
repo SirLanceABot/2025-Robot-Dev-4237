@@ -4,7 +4,7 @@ import java.lang.invoke.MethodHandles;
 
 import frc.robot.RobotContainer;
 
-public class RickTTest implements Test
+public class MKlannTest implements Test
 {
     // This string gets the full name of the class, including the package name
     private static final String fullClassName = MethodHandles.lookup().lookupClass().getCanonicalName();
@@ -35,7 +35,7 @@ public class RickTTest implements Test
      * Use this class to test your code using Test mode
      * @param robotContainer The container of all robot components
      */
-    public RickTTest(RobotContainer robotContainer)
+    public MKlannTest(RobotContainer robotContainer)
     {
         System.out.println("  Constructor Started:  " + fullClassName);
 

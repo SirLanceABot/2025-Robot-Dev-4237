@@ -490,9 +490,9 @@ public abstract class Xbox extends ControllerLance
         rumbleCounter = 0;
     }
 
-    public abstract void readPeriodicInputs();
-    public abstract void writePeriodicOutputs();
-    public abstract void runPeriodicTask();
+    // public abstract void readPeriodicInputs();
+    // public abstract void writePeriodicOutputs();
+    public abstract void periodic();
     
     @Override
     public String toString()

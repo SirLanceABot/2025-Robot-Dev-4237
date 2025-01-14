@@ -2,14 +2,13 @@ package frc.robot.controls;
 
 import java.lang.invoke.MethodHandles;
 
-import frc.robot.PeriodicIO;
 import frc.robot.PeriodicTask;
 
 /**
  * This abstract class will be extended for every controller. 
  * Every controller will automatically be added to the array list for periodic inputs, outputs, and tasks.
  */
-abstract class ControllerLance implements PeriodicIO, PeriodicTask
+abstract class ControllerLance implements PeriodicTask
 {
     // This string gets the full name of the class, including the package name
     private static final String fullClassName = MethodHandles.lookup().lookupClass().getCanonicalName();
@@ -26,7 +25,7 @@ abstract class ControllerLance implements PeriodicIO, PeriodicTask
     // Put all class constructors here
     
     /**
-     * Registers the controller for PeriodicIO and PeriodicTask.
+     * Registers the controller for PeriodicTask.
      * @param controllerName
      */
     ControllerLance(String controllerName)
@@ -34,9 +33,6 @@ abstract class ControllerLance implements PeriodicIO, PeriodicTask
         super();
 
         System.out.println("  Constructor Started:  " + fullClassName + " >> " + controllerName);
-
-        // Register this sensor in the array list to get periodic input and output
-        registerPeriodicIO();
 
         // Register this controller in the array list to run periodic tasks
         registerPeriodicTask();
@@ -47,7 +43,5 @@ abstract class ControllerLance implements PeriodicIO, PeriodicTask
 
     // *** ABSTRACT METHODS ***
     // These methods must be defined in any subclass that extends this class
-    public abstract void readPeriodicInputs();
-    public abstract void writePeriodicOutputs();
-    public abstract void runPeriodicTask();
+    public abstract void periodic();
 }

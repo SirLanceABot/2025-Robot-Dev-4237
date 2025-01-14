@@ -15,24 +15,25 @@ import frc.robot.tests.Test;
 // *** IMPORT statements ***
 // Uncomment one of these statements
 
-// import frc.robot.tests.ExampleTest;
-import frc.robot.tests.YalinGTest;
-import frc.robot.tests.YamanGTest;
-import frc.robot.tests.AdityaYTest;
-import frc.robot.tests.BradyWTest;
-import frc.robot.tests.GretaHTest;
-import frc.robot.tests.JWoodTest;
-import frc.robot.tests.JacksonDTest;
-import frc.robot.tests.LoganBTest;
-import frc.robot.tests.MasonBTest;
-import frc.robot.tests.MatthewFTest;
-import frc.robot.tests.NiyatiPTest;
-import frc.robot.tests.OwenDTest;
-import frc.robot.tests.PoishaBTest;
-import frc.robot.tests.RickTTest;
-import frc.robot.tests.RobbieFTest;
-import frc.robot.tests.RobbieJTest;
-import frc.robot.tests.TanishkaJTest;
+// import frc.robot.tests.AdityaYTest;
+// import frc.robot.tests.BradyWTest;
+// import frc.robot.tests.GretaHTest;
+// import frc.robot.tests.JacksonDTest;
+// import frc.robot.tests.LoganBTest;
+// import frc.robot.tests.MasonBTest;
+// import frc.robot.tests.MatthewFTest;
+// import frc.robot.tests.NiyatiPTest;
+// import frc.robot.tests.OwenDTest;
+// import frc.robot.tests.PoishaBTest;
+// import frc.robot.tests.RobbieFTest;
+// import frc.robot.tests.RobbieJTest;
+// import frc.robot.tests.TanishkaJTest;
+// import frc.robot.tests.YalinGTest;
+// import frc.robot.tests.YamanGTest;
+
+// import frc.robot.tests.JWoodTest;
+// import frc.robot.tests.MKlannTest;
+// import frc.robot.tests.RickC137Test;
 
 
 public class TestMode
@@ -56,8 +57,6 @@ public class TestMode
         // *** INITIALIZATION statements ***
         // Uncomment one of these statements
 
-        // myTest = new ExampleTest(robotContainer);
-        // myTest = new JWoodTest(robotContainer);
         // myTest = new AdityaYTest(robotContainer);
         // myTest = new BradyWTest(robotContainer);
         // myTest = new GretaHTest(robotContainer);
@@ -68,12 +67,15 @@ public class TestMode
         // myTest = new NiyatiPTest(robotContainer);
         // myTest = new OwenDTest(robotContainer);
         // myTest = new PoishaBTest(robotContainer);
-        // myTest = new RickTTest(robotContainer);
         // myTest = new RobbieFTest(robotContainer);
-        // myTest = new RobbieJTest(robotContainer);  
+        // myTest = new RobbieJTest(robotContainer);
         // myTest = new TanishkaJTest(robotContainer);
         // myTest = new YalinGTest(robotContainer);
-        // myTest = new YamanGTest(robotContainer);     
+        // myTest = new YamanGTest(robotContainer);
+
+        // myTest = new JWoodTest(robotContainer);
+        // myTest = new MKlannTest(robotContainer);
+        // myTest = new RickC137Test(robotContainer);
     }
 
     /**
@@ -81,7 +83,8 @@ public class TestMode
      */
     public void init()
     {
-        myTest.init();
+        if(myTest != null)
+            myTest.init();
     }
 
     /**
@@ -89,7 +92,8 @@ public class TestMode
      */
     public void periodic()
     {
-        myTest.periodic();
+        if(myTest != null)
+            myTest.periodic();
     }
 
     /**
@@ -97,7 +101,8 @@ public class TestMode
      */
     public void exit()
     {
-        myTest.exit();
+        if(myTest != null)
+            myTest.exit();
 
         // Set the Test object to null so that garbage collection will remove the object.
         myTest = null;

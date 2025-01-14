@@ -3,45 +3,34 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 10.7445,
-        "y": 8.052
+        "x": 7.176,
+        "y": 7.428
       },
       "prevControl": null,
       "nextControl": {
-        "x": 10.802999999999999,
-        "y": 6.9209999999999985
+        "x": 7.544298261763061,
+        "y": 7.569010233851623
       },
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "Left Wall"
     },
     {
       "anchor": {
-        "x": 10.745,
-        "y": 0.0
+        "x": 3.819819078947368,
+        "y": 5.410526315789473
       },
       "prevControl": {
-        "x": 10.69625,
-        "y": 2.281499999999995
+        "x": 3.6101646292861,
+        "y": 5.2743462447907
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "S5 Right"
     }
   ],
   "rotationTargets": [],
   "constraintZones": [],
-  "pointTowardsZones": [
-    {
-      "fieldPosition": {
-        "x": 5.0,
-        "y": 8.0
-      },
-      "rotationOffset": 0.0,
-      "minWaypointRelativePos": 0.25,
-      "maxWaypointRelativePos": 1.0,
-      "name": "Point Towards Zone"
-    }
-  ],
+  "pointTowardsZones": [],
   "eventMarkers": [],
   "globalConstraints": {
     "maxVelocity": 3.0,
@@ -53,13 +42,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 63.924644416051294
+    "rotation": -148.50839131011392
   },
   "reversed": false,
-  "folder": null,
+  "folder": "Left Wall Starts",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": -171.6204640940872
+    "rotation": 179.76979125660685
   },
   "useDefaultConstraints": true
 }

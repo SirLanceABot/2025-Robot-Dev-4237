@@ -26,6 +26,7 @@ public class Shuttle extends SubsystemLance
     // *** INNER ENUMS and INNER CLASSES ***
     // Put all inner enums and inner classes here
 
+    
 
     // *** CLASS VARIABLES & INSTANCE VARIABLES ***
     // Put all class variables and instance variables here
@@ -100,28 +101,11 @@ public class Shuttle extends SubsystemLance
 
     // *** OVERRIDEN METHODS ***
     // Put all methods that are Overridden here
-    @Override
-    public void readPeriodicInputs()
-    {
-
-    }
-
-    @Override
-    public void writePeriodicOutputs()
-    {
-
-    }
 
     @Override
     public void periodic()
     {
         // This method will be called once per scheduler run
-    }
-
-    @Override
-    public void simulationPeriodic()
-    {
-        // This method will be called once per scheduler run during simulation
     }
 
     @Override

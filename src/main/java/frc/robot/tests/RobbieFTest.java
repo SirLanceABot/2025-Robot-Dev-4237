@@ -4,7 +4,7 @@ import java.lang.invoke.MethodHandles;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.Commands;
-import frc.robot.Constants.Claw;
+import frc.robot.subsystems.Grabber;
 import frc.robot.RobotContainer;
 
 public class RobbieFTest implements Test
@@ -28,7 +28,7 @@ public class RobbieFTest implements Test
     // *** CLASS & INSTANCE VARIABLES ***
     // Put all class and instance variables here.
     private final RobotContainer robotContainer;
-    // private final Claw claw;
+    private final Grabber grabber;
 
     private final Joystick joystick = new Joystick(0);
     // private final ExampleSubsystem exampleSubsystem;
@@ -46,6 +46,7 @@ public class RobbieFTest implements Test
         System.out.println("  Constructor Started:  " + fullClassName);
 
         this.robotContainer = robotContainer;
+        grabber = robotContainer.getGrabber();
         // this.exampleSubsystem = robotContainer.exampleSubsystem;
 
         System.out.println("  Constructor Finished: " + fullClassName);
@@ -71,12 +72,19 @@ public class RobbieFTest implements Test
     //  */
     public void periodic()
     {
-        if (joystick.getRawButton(0))
-        ;
-        
         if (joystick.getRawButton(1))
-        ;
-        
+        {
+            // robotContainer.claw.setSpeed(0.05);
+            grabber.placeCoralCommand().schedule();
+        }
+        if (joystick.getRawButton(2))
+        {
+            // robotContainer.claw.setSpeed(-0.05);
+            grabber.acceptCoralCommand().schedule();
+        }
+
+        if (joystick.getRawButton(3))
+            grabber.stopCommand().schedule();
         
     }
     

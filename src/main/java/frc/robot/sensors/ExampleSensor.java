@@ -23,19 +23,13 @@ public class ExampleSensor extends SensorLance
 
     // *** INNER ENUMS and INNER CLASSES ***
     // Put all inner enums and inner classes here
-    private class PeriodicData
-    {
-        // INPUTS
-        private double sensorValue;
 
-        // OUTPUTS
-    }
 
 
     // *** CLASS VARIABLES & INSTANCE VARIABLES ***
     // Put all class variables and instance variables here
-    private final PeriodicData periodicData = new PeriodicData();
     private final AnalogInput sensor = new AnalogInput(0);
+    private double sensorValue;
 
 
     // *** CLASS CONSTRUCTORS ***
@@ -63,7 +57,7 @@ public class ExampleSensor extends SensorLance
     */
     public double getSensorValue()
     {
-        return periodicData.sensorValue;
+        return sensorValue;
     }
     
 
@@ -71,21 +65,9 @@ public class ExampleSensor extends SensorLance
     // Put all methods that are Overridden here
 
     @Override
-    public void readPeriodicInputs() 
+    public void periodic()
     {
-        periodicData.sensorValue = sensor.getAverageVoltage();
-    }
-
-    @Override
-    public void writePeriodicOutputs() 
-    {
-        SmartDashboard.putNumber("Analog Input", periodicData.sensorValue);
-    }
-
-    @Override
-    public void runPeriodicTask()
-    {
-
+        sensorValue = sensor.getAverageVoltage();
     }
 
     @Override

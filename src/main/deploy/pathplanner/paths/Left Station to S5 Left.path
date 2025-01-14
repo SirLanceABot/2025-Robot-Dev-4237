@@ -1,0 +1,54 @@
+{
+  "version": "2025.0",
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 1.74525,
+        "y": 7.262
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 2.54475,
+        "y": 6.7745
+      },
+      "isLocked": false,
+      "linkedName": "Left Station"
+    },
+    {
+      "anchor": {
+        "x": 4.223930921052631,
+        "y": 5.506743421052631
+      },
+      "prevControl": {
+        "x": 2.9956809210526307,
+        "y": 6.432743421052631
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": "S5 Left"
+    }
+  ],
+  "rotationTargets": [],
+  "constraintZones": [],
+  "pointTowardsZones": [],
+  "eventMarkers": [],
+  "globalConstraints": {
+    "maxVelocity": 3.0,
+    "maxAcceleration": 3.0,
+    "maxAngularVelocity": 540.0,
+    "maxAngularAcceleration": 720.0,
+    "nominalVoltage": 12.0,
+    "unlimited": false
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": -150.18399708763388
+  },
+  "reversed": false,
+  "folder": "Left Station Starts",
+  "idealStartingState": {
+    "velocity": 0,
+    "rotation": -144.273
+  },
+  "useDefaultConstraints": true
+}
