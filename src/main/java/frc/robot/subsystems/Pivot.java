@@ -2,15 +2,18 @@ package frc.robot.subsystems;
 
 import java.lang.invoke.MethodHandles;
 
+import javax.lang.model.util.ElementScanner14;
+
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.spark.SparkLimitSwitch;
 
 import frc.robot.Constants;
 import frc.robot.Constants.TargetPosition;
+import frc.robot.motors.SparkMaxLance;
 import frc.robot.motors.TalonFXLance;
 
 /**
- * Use this class as a template to create other subsystems.
+ * This is the Pivot. It allows the robot to move it's arm.
  */
 public class Pivot extends SubsystemLance
 {
@@ -39,14 +42,16 @@ public class Pivot extends SubsystemLance
 
     // output
     private double motorSpeed = 0.0;
+    
+    private final SparkMaxLance leadMotor = new SparkMaxLance(Constants.Pivot.RIGHT_MOTOR_PORT, Constants.Pivot.MOTOR_CAN_BUS, "Right Pivot Motor");
+    // private final SparkMaxLance followMotor = new SparkMaxLance(Constants.Pivot.LEFT_MOTOR_PORT, Constants.Pivot.MOTOR_CAN_BUS, "Left Pivot Motor");
 
     private SparkLimitSwitch forwardLimitSwitch;
     private SparkLimitSwitch reverseLimitSwitch;
-    
-    private final TalonFXLance leadMotor = new TalonFXLance(Constants.Pivot.RIGHT_MOTOR_PORT, Constants.Pivot.MOTOR_CAN_BUS, "Right Pivot Motor");
-    private final TalonFXLance followMotor = new TalonFXLance(Constants.Pivot.LEFT_MOTOR_PORT, Constants.Pivot.MOTOR_CAN_BUS, "Left Pivot Motor");
 
     private TargetPosition targetPosition = TargetPosition.kOverride;
+    private final double threshold = 0.1;
+
 
     // *** CLASS CONSTRUCTORS ***
     // Put all class constructors here
@@ -73,34 +78,45 @@ public class Pivot extends SubsystemLance
 
     private void configPivotMotors()
     {
-        // Factory Defaults
+    //     // Factory Defaults
         leadMotor.setupFactoryDefaults();
-        followMotor.setupFactoryDefaults();
+    //     followMotor.setupFactoryDefaults();
         leadMotor.setupBrakeMode();
-        followMotor.setupBrakeMode();
+    //     followMotor.setupBrakeMode();
         leadMotor.setupInverted(true);
-        followMotor.setupInverted(true);
+    //     followMotor.setupInverted(true);
         leadMotor.setPosition(0.0);
-        followMotor.setPosition(0.0);
-        followMotor.setupFollower(Constants.Pivot.RIGHT_MOTOR_PORT, true);
+    //     followMotor.setPosition(0.0);
+        leadMotor.setupFollower(Constants.Pivot.RIGHT_MOTOR_PORT, true);
 
-        // Hard Limits
+    //     // Hard Limits
         leadMotor.setupForwardHardLimitSwitch(true, true);
         leadMotor.setupReverseHardLimitSwitch(true, true);
         
+        leadMotor.setupPIDController(0,1,0,0);
+
+        //Configure PID Controller
+        // pidController.setP(kP);
+        // pidController.setI(kI);
+        // pidController.setD(kD);
+        // pidController.setIZone(kIz);
+        // pidController.setFF(kFF);
+        // pidController.setOutputRange(kMinOutput, kMaxOutput);
     }
 
-    /**
-     * Returns the value of the sensor
-    * @return The value of periodData.sensorValue
-    */
+    // /**
+    // * This turns on the motor.
+    // * @param motorSpeed
+    // */
     public void on(double motorSpeed)
     {
-        leadMotor.set(0.2);
+        targetPosition = Constants.TargetPosition.kOverride;
+        leadMotor.set(motorSpeed);
     }
 
     public void hold()
     {
+        targetPosition = Constants.TargetPosition.kOverride;
         leadMotor.set(0.0);
     }
 
@@ -109,13 +125,16 @@ public class Pivot extends SubsystemLance
     //     resetState = ResetState.kStart;
     // }
 
-    // /** @return encoder ticks (double) */
-    // public double getPosition() // encoder ticks
-    // {
-    //     return currentPosition;
-    // }
+    /** @return encoder ticks (double) */
+    public double getPosition() // encoder ticks
+    {
+        return leadMotor.getPosition();
+    }
 
-    // /** @return angle (double) */
+    // ask how to do this
+    /** returns the current angle of arm
+     *  @return angle (double) 
+    */
     // public double getAngle()
     // {
     //     return currentAngle;
@@ -124,38 +143,55 @@ public class Pivot extends SubsystemLance
     /** move the shoulder to Level 1 */
     public void L1()
     {
-        targetPosition = TargetPosition.kL1;
+        targetPosition = Constants.TargetPosition.kL1;
     }
 
     /** move the shoulder to Level 2*/
     public void L2()
     {
-        targetPosition = TargetPosition.kL2;
+        targetPosition = Constants.TargetPosition.kL2;
     }
 
     /** move the shoulder to Level 3 */
     public void L3()
     {
-        targetPosition = TargetPosition.kL3;
+        targetPosition = Constants.TargetPosition.kL3;
     }
 
     /** move the shoulder to Level 4 */
     public void L4()
     {
-        targetPosition = TargetPosition.kL4;
+        targetPosition = Constants.TargetPosition.kL4;
     }
 
     /** move the shoulder to Starting Position */
     public void StartingPosition()
     {
-        targetPosition = TargetPosition.kStartingPosition;
+        targetPosition = Constants.TargetPosition.kStartingPosition;
     }
 
     /** move the shoulder to Grab Coral Position */
     public void GrabCoralPosition()
     {
-        targetPosition = TargetPosition.kGrabCoralPosition;
+        targetPosition = Constants.TargetPosition.kGrabCoralPosition;
     }
+
+    // public void moveToSetPosition(Constants.TargetPosition targetPosition)
+    // {
+    //     if(getPosition() > targetPosition.pivot + threshold)
+    //     {
+    //         on(-0.5);
+    //     }
+    //     else if(getPosition() > targetPosition.pivot - threshold)
+    //     {
+    //         on(0.5);
+    //     }
+    //     else
+    //     {
+    //         hold();
+    //     }
+
+    // }
 
     // *** OVERRIDEN METHODS ***
     // Put all methods that are Overridden here
@@ -167,9 +203,9 @@ public class Pivot extends SubsystemLance
 
     }
 
-    @Override
-    public String toString()
-    {
-        return "Shoulder position: \n";
-    }
+    // @Override
+    // public String toString()
+    // {
+    //     // return "Current Pivot Angle: \n" + getAngle();
+    // }
 }
