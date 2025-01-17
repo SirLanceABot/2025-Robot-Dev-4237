@@ -45,12 +45,13 @@ public class RobotContainer
     private boolean useShuttle              = false;
 
     private boolean useGyro                 = false;
+    private boolean usePoseEstimator        = false;
 
     public final boolean fullRobot;
 
     private final Grabber grabber;
     private final Climb climb;
-    // private final Drivetrain drivetrain;
+    private final Drivetrain drivetrain;
     private final Elevator elevator;
     private final Intake intake;
     private final IntakeWrist intakeWrist;
@@ -71,7 +72,7 @@ public class RobotContainer
         grabber            = (useFullRobot || useGrabber)          ? new Grabber()                                      : null;
         climb              = (useFullRobot || useClimb)            ? new Climb()                                        : null;
         gyro               = (useFullRobot || useGyro)             ? new GyroLance()                                    : null;
-        // drivetrain         = (useFullRobot || useDrivetrain)       ? new Drivetrain(gyro, useFullRobot, true, isRedAllianceSupplier())                                   : null;
+        drivetrain         = (useFullRobot || useDrivetrain)       ? new Drivetrain(gyro, useFullRobot, usePoseEstimator, isRedAllianceSupplier())                                   : null;
         elevator           = (useFullRobot || useElevator)         ? new Elevator()                                     : null;
         intake             = (useFullRobot || useIntake)           ? new Intake()                                       : null;
         intakeWrist        = (useFullRobot || useIntakeWrist)      ? new IntakeWrist()                                  : null;
@@ -96,10 +97,10 @@ public class RobotContainer
         return gyro;
     }
 
-    // public Drivetrain getDrivetrain()
-    // {
-    //     return drivetrain;
-    // }
+    public Drivetrain getDrivetrain()
+    {
+        return drivetrain;
+    }
 
     public Elevator getElevator()
     {
