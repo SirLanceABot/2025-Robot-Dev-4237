@@ -108,7 +108,7 @@ public final class Constants
     public static class IntakeWrist
     {
         public static int MOTOR_PORT                                    = 0;
-        public static String MOTOR_CAN_BUS                              = CANIVORE;
+        public static String MOTOR_CAN_BUS                              = ROBORIO;
     }
 
     public static class Shuttle

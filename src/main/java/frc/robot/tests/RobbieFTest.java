@@ -1,11 +1,17 @@
 package frc.robot.tests;
 
+import java.lang.annotation.Target;
 import java.lang.invoke.MethodHandles;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.Commands;
 import frc.robot.subsystems.Grabber;
+import frc.robot.subsystems.Shuttle;
+import frc.robot.subsystems.IntakeWrist;
 import frc.robot.RobotContainer;
+import frc.robot.Constants;
+import frc.robot.Constants.TargetPosition;
+// import frc.robot.subsystems.IntakeWrist.TargetPosition;
 
 public class RobbieFTest implements Test
 {
@@ -29,6 +35,8 @@ public class RobbieFTest implements Test
     // Put all class and instance variables here.
     private final RobotContainer robotContainer;
     private final Grabber grabber;
+    private final Shuttle shuttle;
+    private final IntakeWrist intakeWrist;
 
     private final Joystick joystick = new Joystick(0);
     // private final ExampleSubsystem exampleSubsystem;
@@ -47,6 +55,8 @@ public class RobbieFTest implements Test
 
         this.robotContainer = robotContainer;
         grabber = robotContainer.getGrabber();
+        shuttle = robotContainer.getShuttle();
+        intakeWrist = robotContainer.getIntakeWrist();
         // this.exampleSubsystem = robotContainer.exampleSubsystem;
 
         System.out.println("  Constructor Finished: " + fullClassName);
@@ -72,19 +82,30 @@ public class RobbieFTest implements Test
     //  */
     public void periodic()
     {
+        System.out.println("Position" + intakeWrist.getPosition());
         if (joystick.getRawButton(1))
         {
+            System.out.println("Hello");
+            // intakeWrist.moveToSetPositionCommand(IntakeWrist.Position.kIntakeAlgaePosition).schedule();
             // robotContainer.claw.setSpeed(0.05);
-            grabber.placeCoralCommand().schedule();
+            // grabber.placeCoralCommand().schedule();
+            // shuttle.moveBackwardCommand().schedule();
         }
         if (joystick.getRawButton(2))
         {
+            intakeWrist.moveToSetPositionCommand(IntakeWrist.Position.kIntakeCoralPosition).schedule();
             // robotContainer.claw.setSpeed(-0.05);
-            grabber.acceptCoralCommand().schedule();
+            // grabber.acceptCoralCommand().schedule();
+            // shuttle.moveForwardCommand().schedule();;
         }
 
         if (joystick.getRawButton(3))
-            grabber.stopCommand().schedule();
+        {
+            intakeWrist.moveToSetPositionCommand(IntakeWrist.Position.kShootingPosition).schedule();
+            // grabber.stopCommand().schedule();
+            // shuttle.stopCommand().schedule();;            
+        }
+
         
     }
     

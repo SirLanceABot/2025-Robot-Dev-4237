@@ -25,7 +25,7 @@ public class IntakeWrist extends SubsystemLance
 
     // *** INNER ENUMS and INNER CLASSES ***
     // Put all inner enums and inner classes here
-    private enum TargetPosition
+    public enum Position
     {
         kStartingPosition(IntakeWrist.STARTING_POSITION),
         kIntakeCoralPosition(IntakeWrist.INTAKE_CORAL_POSITION),
@@ -34,7 +34,7 @@ public class IntakeWrist extends SubsystemLance
 
         double value;
 
-        private TargetPosition(double value)
+        private Position(double value)
         {
             this.value = value;
         }
@@ -46,10 +46,10 @@ public class IntakeWrist extends SubsystemLance
     // Put all class variables and instance variables here
     private final TalonFXLance motor = new TalonFXLance(Constants.IntakeWrist.MOTOR_PORT, Constants.IntakeWrist.MOTOR_CAN_BUS, "Intake Wrist Motor");
     private double speed;
-    private static final double STARTING_POSITION = 0.0;
-    private static final double INTAKE_CORAL_POSITION = 0.0;
-    private static final double INTAKE_ALGAE_POSITION = 0.0;
-    private static final double SHOOTING_POSITION = 0.0;
+    private static final double STARTING_POSITION = 100.0;
+    private static final double INTAKE_CORAL_POSITION = 200.0;
+    private static final double INTAKE_ALGAE_POSITION = 300.0;
+    private static final double SHOOTING_POSITION = 400.0;
 
     private final double tolerance = 5.0;
     
@@ -123,7 +123,7 @@ public class IntakeWrist extends SubsystemLance
     /*
      * moves wrist to position.
      */
-    private void moveToPosition(TargetPosition targetPosition)
+    private void moveToPosition(Position targetPosition)
     {
         if(getPosition() > (targetPosition.value + tolerance))
         {
@@ -142,7 +142,7 @@ public class IntakeWrist extends SubsystemLance
     /*
      * runs the moveToPosition() method.
      */
-    public Command moveToSetPositionCommand(TargetPosition targetPosition)
+    public Command moveToSetPositionCommand(Position targetPosition)
     {
         return Commands.run(() -> moveToPosition(targetPosition), this).withName("Move To Set Position Intake Wrist");
     }
