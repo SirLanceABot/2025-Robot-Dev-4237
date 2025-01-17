@@ -8,24 +8,24 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.11575,
-        "y": 1.44125
+        "x": 1.6842760005333322,
+        "y": 2.1075182439480007
       },
       "isLocked": false,
       "linkedName": "Right Station"
     },
     {
       "anchor": {
-        "x": 3.101,
-        "y": 3.557
+        "x": 2.925,
+        "y": 4.169325657894737
       },
       "prevControl": {
-        "x": 2.101,
-        "y": 3.557
+        "x": 2.831575072022125,
+        "y": 3.5982828969657863
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "S4 Right"
     }
   ],
   "rotationTargets": [],
@@ -42,7 +42,7 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 0.0
+    "rotation": -90.0
   },
   "reversed": false,
   "folder": "Right Station Starts",

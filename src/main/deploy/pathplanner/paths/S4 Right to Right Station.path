@@ -8,8 +8,8 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 3.925,
-        "y": 4.169325657894737
+        "x": 3.1729868947402418,
+        "y": 4.20098793887846
       },
       "isLocked": false,
       "linkedName": "S4 Right"
@@ -20,8 +20,8 @@
         "y": 0.759
       },
       "prevControl": {
-        "x": 0.7160000000000002,
-        "y": 0.7590000000000003
+        "x": 1.5927816774183883,
+        "y": 0.5414747256519972
       },
       "nextControl": null,
       "isLocked": false,

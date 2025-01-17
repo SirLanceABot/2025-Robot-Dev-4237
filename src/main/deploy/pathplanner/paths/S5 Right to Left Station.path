@@ -28,12 +28,7 @@
       "linkedName": "Left Station"
     }
   ],
-  "rotationTargets": [
-    {
-      "waypointRelativePos": 0.7039370078740097,
-      "rotationDegrees": -144.273
-    }
-  ],
+  "rotationTargets": [],
   "constraintZones": [],
   "pointTowardsZones": [],
   "eventMarkers": [],
