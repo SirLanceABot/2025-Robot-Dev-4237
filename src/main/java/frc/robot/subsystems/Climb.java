@@ -68,6 +68,7 @@ public class Climb extends SubsystemLance
     private void configMotors()
     {
         motor.setupFactoryDefaults();
+        motor.setSafetyEnabled(false);
         motor.setupBrakeMode();
 
         motor.setupInverted(false);
@@ -189,7 +190,7 @@ public class Climb extends SubsystemLance
      */
     public Command moveToUpPositionCommand()
     {
-        return Commands.run(() -> moveToUpPositionCommand(), this).withName("Move To Up Position");
+        return Commands.run(() -> moveToUpPosition(), this).withName("Move To Up Position");
     }
 
     /**
@@ -197,7 +198,7 @@ public class Climb extends SubsystemLance
      */
     public Command moveToDownPositionCommand()
     {
-        return Commands.run(() -> moveToDownPositionCommand(), this).withName("Move To Down Position");
+        return Commands.run(() -> moveToDownPosition(), this).withName("Move To Down Position");
     }
 
     /**
@@ -205,7 +206,7 @@ public class Climb extends SubsystemLance
      */
     public Command stopCommand()
     {
-        return Commands.runOnce(() -> stopCommand(), this).withName("Stops Climb");
+        return Commands.runOnce(() -> stop(), this).withName("Stops Climb");
     }
     
     // *** OVERRIDEN METHODS ***

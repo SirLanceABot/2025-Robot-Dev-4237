@@ -2,6 +2,8 @@ package frc.robot.tests;
 
 import java.lang.invoke.MethodHandles;
 
+import javax.lang.model.util.ElementScanner14;
+
 import edu.wpi.first.wpilibj.Joystick;
 import frc.robot.RobotContainer;
 import frc.robot.subsystems.Climb;
@@ -71,19 +73,17 @@ public class LoganBTest implements Test
     {
         if(joystick.getRawButton(1)) // A button
         {
-            climb.climbUp();
+            // climb.climbUp();
+            climb.climbUpCommand().schedule();
         }
         else if(joystick.getRawButton(2)) // B button
         {
-            climb.climbDown();
-        }
-        else if(joystick.getRawButton(3)) // X button
-        {
-            climb.climbUpCommand().schedule();
-        }
-        else if(joystick.getRawButton(4)) // Y button
-        {
+            // climb.climbDown();
             climb.climbDownCommand().schedule();
+        }
+        else if(joystick.getRawButton(3))
+        {
+            climb.stopCommand().schedule();
         }
     }
     
