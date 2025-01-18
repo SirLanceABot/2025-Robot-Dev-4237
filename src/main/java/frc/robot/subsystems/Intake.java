@@ -7,7 +7,7 @@ import frc.robot.motors.TalonFXLance;
 import java.lang.invoke.MethodHandles;
 
 /**
- * Use this class as a template to create other subsystems.
+ * This is the Intake subsystem
  */
 public class Intake extends SubsystemLance 
 {
@@ -23,6 +23,9 @@ public class Intake extends SubsystemLance
 
     // *** INNER ENUMS and INNER CLASSES ***
     // Put all inner enums and inner classes here
+    /** 
+     * This class sets the direction the motor is going in
+     */
     public enum Direction 
     {
         kForward(0.1),
