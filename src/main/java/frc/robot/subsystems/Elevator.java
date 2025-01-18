@@ -92,10 +92,10 @@ public class Elevator extends SubsystemLance
 
         rightMotor.setupFollower(Constants.Elevator.LEFT_MOTOR_PORT, true);
 
-        leftMotor.setupForwardSoftLimit(0.0, true);
-        leftMotor.setupReverseSoftLimit(0.0, true);
-        leftMotor.setupForwardHardLimitSwitch(true, true);
-        leftMotor.setupReverseHardLimitSwitch(true, true);
+        leftMotor.setupForwardSoftLimit(150.0, false);
+        leftMotor.setupReverseSoftLimit(0.0, false);
+        leftMotor.setupForwardHardLimitSwitch(false, false);
+        leftMotor.setupReverseHardLimitSwitch(false, false);
     }
 
     public double getLeftPosition()
@@ -145,16 +145,21 @@ public class Elevator extends SubsystemLance
 
     public void moveToSetPosition(Constants.TargetPosition targetPosition)
     {
-        if(getLeftPosition() > targetPosition.elevator + threshold)
+        System.out.println("1");
+        leftMotorEncoderPosition = getLeftPosition();
+        if(leftMotorEncoderPosition > (targetPosition.elevator + threshold))
         {
+            System.out.println("2");
             manualMove(-0.5);
         }
-        else if(getLeftPosition() > targetPosition.elevator - threshold)
+        else if(leftMotorEncoderPosition < (targetPosition.elevator - threshold))
         {
+            System.out.println("3");
             manualMove(0.5);
         }
         else
         {
+            System.out.println("4");
             stop();
         }
     }
@@ -178,7 +183,7 @@ public class Elevator extends SubsystemLance
 
     public Command stopCommand()
     {
-        return Commands.run(() -> stop(), this).withName("Stop Elevator");
+        return Commands.runOnce(() -> stop(), this).withName("Stop Elevator");
     }
 
     public Command moveToSetPositionCommand(Constants.TargetPosition targetPosition)
