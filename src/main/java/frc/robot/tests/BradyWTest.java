@@ -110,18 +110,18 @@ public class BradyWTest implements Test
             pivot.holdCommand().schedule();
         }
 
-        if (joystick.getRawButton(1))
-        {
-            pivot.moveToSetPositionCommand(Constants.TargetPosition.kL1).schedule();
-        }
-        else if(joystick.getRawButton(2))
-        {
-            pivot.moveToSetPositionCommand(Constants.TargetPosition.kL2).schedule();
-        }
-        else
-        {
-            pivot.holdCommand().schedule();
-        }
+        // if (joystick.getRawButton(1))
+        // {
+        //     pivot.moveToSetPositionCommand(Constants.TargetPosition.kL1).schedule();
+        // }
+        // else if(joystick.getRawButton(2))
+        // {
+        //     pivot.moveToSetPositionCommand(Constants.TargetPosition.kL2).schedule();
+        // }
+        // else
+        // {
+        //     pivot.holdCommand().schedule();
+        // }
 
 
         System.out.println("Elevator Position: " + elevator.getLeftPosition());

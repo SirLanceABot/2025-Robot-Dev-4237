@@ -89,11 +89,11 @@ public class Pivot extends SubsystemLance
     //     followMotor.setupInverted(true);
         leadMotor.setPosition(0.0);
     //     followMotor.setPosition(0.0);
-        leadMotor.setupFollower(Constants.Pivot.RIGHT_MOTOR_PORT, true);
+        // leadMotor.setupFollower(Constants.Pivot.RIGHT_MOTOR_PORT, true);
 
     //     // Hard Limits
-        leadMotor.setupForwardHardLimitSwitch(true, true);
-        leadMotor.setupReverseHardLimitSwitch(true, true);
+        leadMotor.setupForwardHardLimitSwitch(false, false);
+        leadMotor.setupReverseHardLimitSwitch(false, false);
         
         leadMotor.setupPIDController(0,1,0,0);
 
