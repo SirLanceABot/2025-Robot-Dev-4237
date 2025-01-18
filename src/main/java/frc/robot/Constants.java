@@ -72,8 +72,8 @@ public final class Constants
 
         public static final double L4                                   = 0.0;
         public static final double L3                                   = 0.0;
-        public static final double L2                                   = 0.0;
-        public static final double L1                                   = 0.0;
+        public static final double L2                                   = 200.0;
+        public static final double L1                                   = 100.0;
         public static final double STARTING_POSITION                    = 0.0;
         public static final double GRAB_CORAL_POSITION                  = 0.0;
     }
@@ -130,7 +130,7 @@ public final class Constants
         public final double pivot;
         public final double elevator;
 
-        private TargetPosition(double pivot, double elevator)
+        private TargetPosition(double elevator, double pivot)
         {
             this.pivot = pivot;
             this.elevator = elevator;

@@ -8,6 +8,7 @@ import edu.wpi.first.wpilibj.Joystick;
 import frc.robot.RobotContainer;
 import frc.robot.subsystems.Elevator;
 import frc.robot.Constants;
+import frc.robot.subsystems.Pivot;
 
 public class BradyWTest implements Test
 {
@@ -32,6 +33,7 @@ public class BradyWTest implements Test
     private final RobotContainer robotContainer;
     private final Elevator elevator;
     private final Joystick joystick = new Joystick(0);
+    private final Pivot pivot;
     // private final ExampleSubsystem exampleSubsystem;
 
 
@@ -48,6 +50,7 @@ public class BradyWTest implements Test
 
         this.robotContainer = robotContainer;
         elevator = robotContainer.getElevator();
+        pivot = robotContainer.getPivot();
         // this.exampleSubsystem = robotContainer.exampleSubsystem;
 
         System.out.println("  Constructor Finished: " + fullClassName);
@@ -73,18 +76,53 @@ public class BradyWTest implements Test
      */
     public void periodic()
     {
+        // if(joystick.getRawButton(1))
+        // {
+        //     elevator.moveToSetPosition(Constants.TargetPosition.kL3);
+        // }
+        // else if(joystick.getRawButton(2))
+        // {
+        //     elevator.moveToSetPosition(Constants.TargetPosition.kL2);
+        // }
+        // else 
+        // {
+        //     elevator.stop();
+        // }
+
         if(joystick.getRawButton(1))
         {
-            elevator.moveToSetPosition(Constants.TargetPosition.kL3);
+            pivot.on(0.5);
         }
         else if(joystick.getRawButton(2))
         {
-            elevator.moveToSetPosition(Constants.TargetPosition.kL2);
+            pivot.on(-0.5);
+        }
+        else if(joystick.getRawButton(3))
+        {
+            pivot.onCommand(0.5).schedule();
+        }
+        else if(joystick.getRawButton(4))
+        {
+            pivot.onCommand(-0.5).schedule();
         }
         else 
         {
-            elevator.stop();
+            pivot.holdCommand().schedule();
         }
+
+        if (joystick.getRawButton(1))
+        {
+            pivot.moveToSetPositionCommand(Constants.TargetPosition.kL1).schedule();
+        }
+        else if(joystick.getRawButton(2))
+        {
+            pivot.moveToSetPositionCommand(Constants.TargetPosition.kL2).schedule();
+        }
+        else
+        {
+            pivot.holdCommand().schedule();
+        }
+
 
         System.out.println("Elevator Position: " + elevator.getLeftPosition());
     }
