@@ -40,7 +40,7 @@ public class Elevator extends SubsystemLance
     private SparkLimitSwitch reverseLimitSwitch;
     private RelativeEncoder encoder;
     private Constants.TargetPosition targetPosition = Constants.TargetPosition.kOverride;
-    private final double threshold = 0.01;
+    private final double threshold = 2.0;
 
     private double leftMotorEncoderPosition = 0.0;
     private double rightMotorEncoderPosition = 0.0;

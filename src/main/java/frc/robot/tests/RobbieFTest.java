@@ -91,30 +91,20 @@ public class RobbieFTest implements Test
         {
             // elevator.manualMove(0.1);
             System.out.println("B Button Pressed");
-            // elevator.manualMoveCommand(0.25).schedule();
 
-            elevator.moveToSetPosition(Constants.TargetPosition.kL2);
-
-            // elevator.moveToSetPositionCommand(Constants.TargetPosition.kL1).schedule();
+            elevator.moveToSetPositionCommand(Constants.TargetPosition.kL1).schedule();
         }
         else if (joystick.getRawButton(3))
         {
             // elevator.manualMove(-0.1);
             System.out.println("X Button Pressed");
-            // elevator.manualMoveCommand(-0.25).schedule();
 
-            elevator.moveToSetPosition(Constants.TargetPosition.kL1);
-
-            // elevator.moveToSetPositionCommand(Constants.TargetPosition.kL2).schedule();
+            elevator.moveToSetPositionCommand(Constants.TargetPosition.kL2).schedule();
         }
         else if (joystick.getRawButton(4))
         {
             elevator.stopCommand().schedule();
         }
-        // else
-        // {
-        //     elevator.stop();
-        // }
     }
     
     /**
