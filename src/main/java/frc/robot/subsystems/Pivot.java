@@ -7,6 +7,8 @@ import javax.lang.model.util.ElementScanner14;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.spark.SparkLimitSwitch;
 
+import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.Commands;
 import frc.robot.Constants;
 import frc.robot.Constants.TargetPosition;
 import frc.robot.motors.SparkMaxLance;
@@ -176,22 +178,37 @@ public class Pivot extends SubsystemLance
         targetPosition = Constants.TargetPosition.kGrabCoralPosition;
     }
 
-    // public void moveToSetPosition(Constants.TargetPosition targetPosition)
-    // {
-    //     if(getPosition() > targetPosition.pivot + threshold)
-    //     {
-    //         on(-0.5);
-    //     }
-    //     else if(getPosition() > targetPosition.pivot - threshold)
-    //     {
-    //         on(0.5);
-    //     }
-    //     else
-    //     {
-    //         hold();
-    //     }
+    public void moveToSetPosition(Constants.TargetPosition targetPosition)
+    {
+        if(getPosition() > targetPosition.pivot + threshold)
+        {
+            on(-0.5);
+        }
+        else if(getPosition() > targetPosition.pivot - threshold)
+        {
+            on(0.5);
+        }
+        else
+        {
+            hold();
+        }
+    }
 
-    // }
+    public Command onCommand(double speed)
+    {
+        return Commands.run(() -> on(speed), this).withName("Turn On Pivot");
+    }
+
+    public Command holdCommand()
+    {
+        return Commands.run(() -> hold(), this).withName("Hold Pivot");
+    }
+
+    public Command moveToSetPositionCommand(Constants.TargetPosition targetPosition)
+    {
+        return Commands.run(() -> moveToSetPosition(targetPosition), this).withName("Move To Set Position Pivot");
+    }
+
 
     // *** OVERRIDEN METHODS ***
     // Put all methods that are Overridden here

@@ -127,12 +127,12 @@ public final class Constants
         kL4(Constants.Elevator.L4, Constants.Pivot.L4),
         kOverride(-4237, -4237);
 
-        public final double shoulder;
+        public final double pivot;
         public final double elevator;
 
-        private TargetPosition(double shoulder, double elevator)
+        private TargetPosition(double pivot, double elevator)
         {
-            this.shoulder = shoulder;
+            this.pivot = pivot;
             this.elevator = elevator;
         }
 
