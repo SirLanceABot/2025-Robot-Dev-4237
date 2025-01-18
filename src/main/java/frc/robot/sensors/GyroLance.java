@@ -201,8 +201,6 @@ public class GyroLance extends SensorLance
 
             rotation2d = gyro.getRotation2d();
         }
-
-        SmartDashboard.putNumber("Current Yaw:", getYaw());
         
         yawEntry.set(yaw);
         xAxisEntry.set(gyro.getAccelerationX().getValueAsDouble());
