@@ -87,15 +87,19 @@ public class Elevator extends SubsystemLance
         rightMotor.setupFactoryDefaults();
         leftMotor.setupBrakeMode();
         rightMotor.setupBrakeMode();
-        leftMotor.setPosition(0.0);
-        rightMotor.setPosition(0.0);
+        leftMotor.setPosition(1.0);
+        rightMotor.setPosition(1.0);
 
         rightMotor.setupFollower(Constants.Elevator.LEFT_MOTOR_PORT, true);
 
-        leftMotor.setupForwardSoftLimit(150.0, false);
-        leftMotor.setupReverseSoftLimit(0.0, false);
+        leftMotor.setupForwardSoftLimit(150.0, true);
+        leftMotor.setupReverseSoftLimit(0.0, true);
         leftMotor.setupForwardHardLimitSwitch(false, false);
         leftMotor.setupReverseHardLimitSwitch(false, false);
+
+        leftMotor.setupPIDController(0,1,0,0);
+
+        // Configure PID Controller
     }
 
     public double getLeftPosition()
@@ -145,21 +149,21 @@ public class Elevator extends SubsystemLance
 
     public void moveToSetPosition(Constants.TargetPosition targetPosition)
     {
-        System.out.println("1");
-        leftMotorEncoderPosition = getLeftPosition();
-        if(leftMotorEncoderPosition > (targetPosition.elevator + threshold))
+        // System.out.println("1");
+
+        if(getLeftPosition() > (targetPosition.elevator + threshold))
         {
-            System.out.println("2");
+            // System.out.println("2");
             manualMove(-0.5);
         }
-        else if(leftMotorEncoderPosition < (targetPosition.elevator - threshold))
+        else if(getLeftPosition() < (targetPosition.elevator - threshold))
         {
-            System.out.println("3");
+            // System.out.println("3");
             manualMove(0.5);
         }
         else
         {
-            System.out.println("4");
+            // System.out.println("4");
             stop();
         }
     }
