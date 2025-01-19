@@ -43,6 +43,9 @@ public class PoseEstimator extends SubsystemLance
     private final SwerveDrivePoseEstimator poseEstimator;
 
     private final NetworkTable ASTable;
+    private final double fieldXDimension = 17.5482504;
+    private final double fieldYDimension = 8.0519016;
+    private final double[] defaultPosition = {0.0, 0.0, 0.0};
 
     // Kalman filter, experiment later
     private Matrix<N3, N1> visionStdDevs;
@@ -72,7 +75,7 @@ public class PoseEstimator extends SubsystemLance
     // Put all class constructors here
 
     /** 
-     * Creates a new ExampleSubsystem. 
+     * Creates a new PoseEstimator. 
      */
     public PoseEstimator(Drivetrain drivetrain, GyroLance gyro, Camera[] cameraArray)
     {
@@ -84,6 +87,8 @@ public class PoseEstimator extends SubsystemLance
         this.cameraArray = cameraArray;
 
         ASTable = NetworkTableInstance.getDefault().getTable(Constants.ADVANTAGE_SCOPE_TABLE_NAME);
+        // This is where the robot starts in AdvantageScope
+        poseEstimatorEntry = ASTable.getDoubleArrayTopic("PoseEstimator").getEntry(defaultPosition);
 
         double[] doubleArray = {0.0, 0.0, 0.0};
 
@@ -97,8 +102,8 @@ public class PoseEstimator extends SubsystemLance
             poseEstimator = new SwerveDrivePoseEstimator(
                 drivetrain.getKinematics(), 
                 gyro.getRotation2d(), 
-                null, //drivetrain.getSwerveModulePositions(), TODO update once getter is made in drivetrain
-                null, //drivetrain.getPose(), TODO update once getter is made in drivetrain
+                drivetrain.getSwerveModulePositions(),
+                drivetrain.getPose(),
                 stateStdDevs,
                 visionStdDevs);
         }
@@ -124,6 +129,10 @@ public class PoseEstimator extends SubsystemLance
         visionStdDevs.set(2, 0, 0.95); // heading in radians
     }
 
+    /**
+     * gets the estimated pose updated by both the odometry and the vision
+     * @return estimated pose
+     */
     public Pose2d getEstimatedPose()
     {
         if(poseEstimator != null)
@@ -133,6 +142,23 @@ public class PoseEstimator extends SubsystemLance
         else
         {
             return new Pose2d();
+        }
+    }
+
+    /**
+     * checks if the pose given is within the field boundaries in meters
+     * @param pose
+     * @return true or false
+     */
+    public boolean isPoseInsideField(Pose2d pose)
+    {
+        if((pose.getX() > -1.0 && pose.getX() < fieldXDimension + 1.0) && (pose.getY() > -1.0 && pose.getY() < fieldYDimension + 1.0))
+        {
+            return true;
+        }
+        else
+        {
+            return false;
         }
     }
 
@@ -154,16 +180,54 @@ public class PoseEstimator extends SubsystemLance
         if (drivetrain != null && gyro != null) 
         {
             gyroRotation = gyro.getRotation2d();
-            //swerveModulePositions = drivetrain.getSwerveModulePositions();
+            swerveModulePositions = drivetrain.getSwerveModulePositions();
 
             // Updates odometry
             estimatedPose = poseEstimator.update(gyroRotation, swerveModulePositions);
+        }
+
+        //does this for each camera in the camera array
+        for(Camera camera : cameraArray)
+        {
+            if(camera.getTagCount() > 0)
+            {
+                if(camera != null)
+                {
+                    Pose2d visionPose = camera.getPose();
+
+                    // only updates the pose with the cameras if the pose shown by the vision is within the field limits
+                    if(isPoseInsideField(visionPose)) // maybe don't check if inside field in order to make pose more accurate or find different solution later
+                    {
+                        totalTagCount += camera.getTagCount();
+                        poseEstimator.addVisionMeasurement(
+                            visionPose,
+                            camera.getTimestamp(),
+                            visionStdDevs);//visionStdDevs.times(camera.getAverageTagDistance() * 0.5));
+                    }
+                }
+            }
+        }
+
+        // maybe combine this if statement with the one above
+        if(totalTagCount >= 2)
+        {
+            drivetrain.resetOdometryOnly(poseEstimator.getEstimatedPosition());
+        }
+
+        //OUTPUTS
+        if(drivetrain != null && gyro != null && poseEstimator != null)
+        {
+            estimatedPose = poseEstimator.getEstimatedPosition();
+
+            //puts pose onto AdvantageScope
+            double[] pose = {estimatedPose.getX(), estimatedPose.getY(), estimatedPose.getRotation().getDegrees()};
+            poseEstimatorEntry.set(pose);
         }
     }
 
     @Override
     public String toString()
     {
-        return "";
+        return "Estimated Pose: " + getEstimatedPose();
     }
 }

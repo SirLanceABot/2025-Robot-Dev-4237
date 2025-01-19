@@ -4,6 +4,7 @@ import java.lang.invoke.MethodHandles;
 import java.util.function.BooleanSupplier;
 import java.util.function.DoubleSupplier;
 
+import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
@@ -164,6 +165,29 @@ public class Drivetrain extends SubsystemLance
         setSwerveModuleStates(inputSwerveModuleStates);
     }
 
+    public Pose2d getPose()
+    {
+        return odometry.getPoseMeters();
+    }
+
+    public SwerveModulePosition[] getSwerveModulePositions()
+    {
+        return new SwerveModulePosition[]
+            {
+                frontLeft.getPosition(),
+                frontRight.getPosition(),
+                backLeft.getPosition(),
+                backRight.getPosition()
+            };
+    }
+
+    public void resetOdometryOnly(Pose2d newPose)
+    {
+        odometry.resetPosition(
+            gyro.getRotation2d(),
+            getSwerveModulePositions(),
+            newPose);
+    }
 
     private void setSwerveModuleStates(SwerveModuleState[] states)
     {
