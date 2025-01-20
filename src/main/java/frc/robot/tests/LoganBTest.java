@@ -6,7 +6,9 @@ import javax.lang.model.util.ElementScanner14;
 
 import edu.wpi.first.wpilibj.Joystick;
 import frc.robot.RobotContainer;
+import frc.robot.Constants.TargetPosition;
 import frc.robot.subsystems.Climb;
+import frc.robot.subsystems.Pivot;
 
 public class LoganBTest implements Test
 {
@@ -30,6 +32,7 @@ public class LoganBTest implements Test
     // Put all class and instance variables here.
     private final RobotContainer robotContainer;
     private final Climb climb;
+    private final Pivot pivot;
     private final Joystick joystick = new Joystick(0);
     // private final ExampleSubsystem exampleSubsystem;
 
@@ -48,6 +51,7 @@ public class LoganBTest implements Test
         this.robotContainer = robotContainer;
         // this.exampleSubsystem = robotContainer.exampleSubsystem;
         climb = robotContainer.getClimb();
+        pivot = robotContainer.getPivot();
         System.out.println("  Constructor Finished: " + fullClassName);
     }
 
@@ -74,15 +78,23 @@ public class LoganBTest implements Test
         if(joystick.getRawButton(1)) // A button
         {
             // climb.climbUp();
-            climb.climbToUpPositionCommand().schedule(); // value of 100.0 from motor encoder
+            pivot.moveToSetPositionCommand(TargetPosition.kL1).schedule(); // value of 100.0 from motor encoder
         }
         else if(joystick.getRawButton(2)) // B button
         {
             // climb.climbDown();
-            climb.climbToDownPositionCommand().schedule(); // value of 1.0 from motor encoder
+            pivot.moveToSetPositionCommand(TargetPosition.kL2).schedule(); // value of 1.0 from motor encoder
+        }
+        else if(joystick.getRawButton(3)) // X button
+        {
+            pivot.moveToSetPositionCommand(TargetPosition.kL3).schedule();
+        }
+        else if(joystick.getRawButton(4)) // Y button
+        {
+            pivot.moveToSetPositionCommand(TargetPosition.kL4).schedule();
         }
 
-        System.out.println(climb.getPosition());
+        System.out.println(pivot.getPosition());
     }
     
     /**

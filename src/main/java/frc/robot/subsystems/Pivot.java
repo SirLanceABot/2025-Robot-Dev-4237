@@ -45,15 +45,15 @@ public class Pivot extends SubsystemLance
     // output
     private double motorSpeed = 0.0;
     
-    private final SparkMaxLance leadMotor = new SparkMaxLance(Constants.Pivot.RIGHT_MOTOR_PORT, Constants.Pivot.MOTOR_CAN_BUS, "Right Pivot Motor");
+    // private final SparkMaxLance motor = new SparkMaxLance(Constants.Pivot.MOTOR_PORT, Constants.Pivot.MOTOR_CAN_BUS, "Pivot Motor");
+    private final TalonFXLance motor = new TalonFXLance(Constants.Pivot.MOTOR_PORT, Constants.Pivot.MOTOR_CAN_BUS, "Pivot Motor");
     // private final SparkMaxLance followMotor = new SparkMaxLance(Constants.Pivot.LEFT_MOTOR_PORT, Constants.Pivot.MOTOR_CAN_BUS, "Left Pivot Motor");
 
     private SparkLimitSwitch forwardLimitSwitch;
     private SparkLimitSwitch reverseLimitSwitch;
 
     private TargetPosition targetPosition = TargetPosition.kOverride;
-    private final double threshold = 0.1;
-
+    private final double threshold = 1.0;
 
     // *** CLASS CONSTRUCTORS ***
     // Put all class constructors here
@@ -81,21 +81,21 @@ public class Pivot extends SubsystemLance
     private void configPivotMotors()
     {
     //     // Factory Defaults
-        leadMotor.setupFactoryDefaults();
+        motor.setupFactoryDefaults();
     //     followMotor.setupFactoryDefaults();
-        leadMotor.setupBrakeMode();
+        motor.setupBrakeMode();
     //     followMotor.setupBrakeMode();
-        leadMotor.setupInverted(true);
+        motor.setupInverted(true);
     //     followMotor.setupInverted(true);
-        leadMotor.setPosition(0.0);
+        motor.setPosition(0.0);
     //     followMotor.setPosition(0.0);
         // leadMotor.setupFollower(Constants.Pivot.RIGHT_MOTOR_PORT, true);
 
     //     // Hard Limits
-        leadMotor.setupForwardHardLimitSwitch(false, false);
-        leadMotor.setupReverseHardLimitSwitch(false, false);
+        motor.setupForwardHardLimitSwitch(false, false);
+        motor.setupReverseHardLimitSwitch(false, false);
         
-        leadMotor.setupPIDController(0,1,0,0);
+        motor.setupPIDController(0,1,0,0);
 
         //Configure PID Controller
         // pidController.setP(kP);
@@ -113,13 +113,13 @@ public class Pivot extends SubsystemLance
     public void on(double motorSpeed)
     {
         targetPosition = Constants.TargetPosition.kOverride;
-        leadMotor.set(motorSpeed);
+        motor.set(motorSpeed);
     }
 
     public void hold()
     {
         targetPosition = Constants.TargetPosition.kOverride;
-        leadMotor.set(0.0);
+        motor.set(0.0);
     }
 
     // public void resetEncoder()
@@ -130,7 +130,7 @@ public class Pivot extends SubsystemLance
     /** @return encoder ticks (double) */
     public double getPosition() // encoder ticks
     {
-        return leadMotor.getPosition();
+        return motor.getPosition();
     }
 
     // ask how to do this
@@ -180,18 +180,23 @@ public class Pivot extends SubsystemLance
 
     public void moveToSetPosition(Constants.TargetPosition targetPosition)
     {
-        if(getPosition() > targetPosition.pivot + threshold)
+        if(getPosition() > (targetPosition.pivot + threshold))
         {
-            on(-0.5);
+            on(-0.1);
         }
-        else if(getPosition() > targetPosition.pivot - threshold)
+        else if(getPosition() < (targetPosition.pivot - threshold))
         {
-            on(0.5);
+            on(0.1);
         }
         else
         {
             hold();
         }
+    }
+
+    public void stop()
+    {
+        motor.set(0.0);
     }
 
     public Command onCommand(double speed)
@@ -207,6 +212,11 @@ public class Pivot extends SubsystemLance
     public Command moveToSetPositionCommand(Constants.TargetPosition targetPosition)
     {
         return Commands.run(() -> moveToSetPosition(targetPosition), this).withName("Move To Set Position Pivot");
+    }
+
+    public Command stopCommand()
+    {
+        return Commands.runOnce(() -> stop(), this).withName("Stop Pivot");
     }
 
 

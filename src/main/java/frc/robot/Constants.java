@@ -66,15 +66,15 @@ public final class Constants
 
     public static class Pivot
     {
-        public static final int LEFT_MOTOR_PORT                         = 0;
-        public static final int RIGHT_MOTOR_PORT                        = 0;
-        public static final String MOTOR_CAN_BUS                        = CANIVORE;
+        // public static final int LEFT_MOTOR_PORT                         = 0;
+        public static final int MOTOR_PORT                              = 0;
+        public static final String MOTOR_CAN_BUS                        = ROBORIO;
 
-        public static final double L4                                   = 0.0;
-        public static final double L3                                   = 0.0;
-        public static final double L2                                   = 200.0;
-        public static final double L1                                   = 100.0;
-        public static final double STARTING_POSITION                    = 0.0;
+        public static final double L4                                   = 40.0;
+        public static final double L3                                   = 30.0;
+        public static final double L2                                   = 20.0;
+        public static final double L1                                   = 10.0;
+        public static final double STARTING_POSITION                    = 5.0;
         public static final double GRAB_CORAL_POSITION                  = 0.0;
     }
 
