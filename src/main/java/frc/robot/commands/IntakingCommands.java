@@ -3,6 +3,7 @@ package frc.robot.commands;
 import java.lang.invoke.MethodHandles;
 
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.Commands;
 import frc.robot.RobotContainer;
 
 public final class IntakingCommands
@@ -47,6 +48,23 @@ public final class IntakingCommands
 
     // *** CLASS METHODS & INSTANCE METHODS ***
     // Put all class methods and instance methods here
+
+    // public static Command pickupCoralCommand()
+    // {
+    //     if(robotContainer.getIntakeWrist() != null && robotContainer.getElevator() != null && robotContainer.getGrabber() != null && robotContainer.getLEDs() != null)
+    //     {
+    //         // NEEDS CHANGED
+    //         return 
+    //         robotContainer.getLEDs().setBlueBlinkCommand()
+    //         .andThen(
+                
+    //         )
+    //     }
+    //     else
+    //     {
+    //         return Commands.none();
+    //     }
+    // }
 
 
     // public static Command exampleCommand()

@@ -6,6 +6,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import frc.robot.Constants;
 import frc.robot.RobotContainer;
+import frc.robot.subsystems.IntakeWrist.Position;
 
 public final class ScoringCommands
 {
@@ -49,13 +50,54 @@ public final class ScoringCommands
     // *** CLASS METHODS & INSTANCE METHODS ***
     // Put all class methods and instance methods here
 
-    public static Command placeCoralCommand(Constants.TargetPosition targetPosition)
+    // public static Command placeCoralCommand(Constants.TargetPosition targetPosition)
+    // {
+    //     if(robotContainer.getElevator() != null && robotContainer.getPivot() != null && robotContainer.getGrabber() != null && robotContainer.getDrivetrain() != null && robotContainer.getLEDs() != null)
+    //     {
+    //         // NEEDS CHANGED
+    //         return 
+    //         robotContainer.getLEDs().setBlueBlinkCommand()
+    //         .andThen(
+
+    //         )
+
+    //     }
+    //     else
+    //     {
+    //         return Commands.none();
+    //     }
+    // }
+
+    // public static Command scoreProcessorWithArmCommand()
+    // {
+    //     if(robotContainer.getElevator() != null && robotContainer.getPivot() != null && robotContainer.getGrabber() != null && robotContainer.getLEDs() != null)
+    //     {
+    //         // NEEDS CHANGED
+    //         return 
+    //         robotContainer.getLEDs().setBlueBlinkCommand()
+    //         .andThen(
+                
+    //         )
+    //     }
+    //     else
+    //     {
+    //         return Commands.none();
+    //     }
+    // }
+
+    public static Command scoreProcessorWithIntakeCommand()
     {
-        if(robotContainer.getElevator() != null && robotContainer.getPivot() != null && robotContainer.getGrabber() != null && robotContainer.getDrivetrain() != null)
+        if(robotContainer.getIntake() != null && robotContainer.getIntakeWrist() != null && robotContainer.getLEDs() != null)
         {
             // NEEDS CHANGED
-            return Commands.none();
-
+            return 
+            robotContainer.getLEDs().setBlueBlinkCommand()
+            .andThen(
+                robotContainer.getIntake().ejectCommand())
+                .withTimeout(1.5)
+            .andThen(
+                robotContainer.getIntakeWrist().moveToSetPositionCommand(Position.kIntakeAlgaePosition))
+            .withName("Score Processor With Intake Command");
         }
         else
         {
@@ -63,31 +105,22 @@ public final class ScoringCommands
         }
     }
 
-    public static Command scoreAlgaeInProcessorCommand()
-    {
-        if(robotContainer.getIntake() != null && robotContainer.getIntakeWrist() != null)
-        {
-            // NEEDS CHANGED
-            return Commands.none();
-        }
-        else
-        {
-            return Commands.none();
-        }
-    }
-
-    public static Command scoreAlgaeInBargeCommand()
-    {
-        if(robotContainer.getElevator() != null && robotContainer.getPivot() != null && robotContainer.getGrabber() != null)
-        {
-            // NEEDS CHANGED
-            return Commands.none();
-        }
-        else
-        {
-            return Commands.none();
-        }
-    }
+    // public static Command scoreAlgaeInBargeCommand()
+    // {
+    //     if(robotContainer.getElevator() != null && robotContainer.getPivot() != null && robotContainer.getGrabber() != null && robotContainer.getLEDs() != null)
+    //     {
+    //         // NEEDS CHANGED
+    //         return 
+    //         robotContainer.getLEDs().setBlueBlinkCommand()
+    //         .andThen(
+                
+    //         )
+    //     }
+    //     else
+    //     {
+    //         return Commands.none();
+    //     }
+    // }
 
     // public static Command exampleCommand()
     // {

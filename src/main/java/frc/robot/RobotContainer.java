@@ -15,6 +15,7 @@ import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.IntakeWrist;
 import frc.robot.subsystems.Pivot;
 import frc.robot.subsystems.Shuttle;
+import frc.robot.subsystems.LEDs;
 
 import frc.robot.sensors.GyroLance;
 
@@ -43,6 +44,7 @@ public class RobotContainer
     private boolean useIntakeWrist          = false;
     private boolean usePivot                = false;
     private boolean useShuttle              = false;
+    private boolean useLEDs                 = false;
 
     private boolean useGyro                 = false;
     private boolean usePoseEstimator        = false;
@@ -57,6 +59,7 @@ public class RobotContainer
     private final IntakeWrist intakeWrist;
     private final Pivot pivot;
     private final Shuttle shuttle;
+    private final LEDs leds;
 
     private final GyroLance gyro;
     
@@ -69,15 +72,16 @@ public class RobotContainer
     {
         fullRobot          = (useFullRobot);
         
-        grabber            = (useFullRobot || useGrabber)          ? new Grabber()                                      : null;
-        climb              = (useFullRobot || useClimb)            ? new Climb()                                        : null;
-        gyro               = (useFullRobot || useGyro)             ? new GyroLance()                                    : null;
+        grabber            = (useFullRobot || useGrabber)          ? new Grabber()                                                                                                   : null;
+        climb              = (useFullRobot || useClimb)            ? new Climb()                                                                                                     : null;
+        gyro               = (useFullRobot || useGyro)             ? new GyroLance()                                                                                                 : null;
         drivetrain         = (useFullRobot || useDrivetrain)       ? new Drivetrain(gyro, useFullRobot, usePoseEstimator, isRedAllianceSupplier())                                   : null;
-        elevator           = (useFullRobot || useElevator)         ? new Elevator()                                     : null;
-        intake             = (useFullRobot || useIntake)           ? new Intake()                                       : null;
-        intakeWrist        = (useFullRobot || useIntakeWrist)      ? new IntakeWrist()                                  : null;
-        pivot              = (useFullRobot || usePivot)            ? new Pivot()                                        : null;
-        shuttle            = (useFullRobot || useShuttle)          ? new Shuttle()                                      : null;
+        elevator           = (useFullRobot || useElevator)         ? new Elevator()                                                                                                  : null;
+        intake             = (useFullRobot || useIntake)           ? new Intake()                                                                                                    : null;
+        intakeWrist        = (useFullRobot || useIntakeWrist)      ? new IntakeWrist()                                                                                               : null;
+        pivot              = (useFullRobot || usePivot)            ? new Pivot()                                                                                                     : null;
+        shuttle            = (useFullRobot || useShuttle)          ? new Shuttle()                                                                                                   : null;
+        leds               = (useFullRobot || useLEDs)             ? new LEDs()                                                                                                      : null;
 
         configureBindings();
     }
@@ -125,6 +129,11 @@ public class RobotContainer
     public Shuttle getShuttle()
     {
         return shuttle;
+    }
+
+    public LEDs getLEDs()
+    {
+        return leds;
     }
 
     public BooleanSupplier isRedAllianceSupplier()
