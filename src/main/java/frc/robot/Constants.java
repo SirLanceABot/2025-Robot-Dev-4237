@@ -107,14 +107,20 @@ public final class Constants
 
     public static class IntakeWrist
     {
-        public static int MOTOR_PORT                                    = 0;
-        public static String MOTOR_CAN_BUS                              = ROBORIO;
+        public static final int MOTOR_PORT                              = 0;
+        public static final String MOTOR_CAN_BUS                        = ROBORIO;
     }
 
     public static class Shuttle
     {
-        public static int MOTOR_PORT                                    = 0;
-        public static String MOTOR_CAN_BUS                              = ROBORIO;
+        public static final int MOTOR_PORT                              = 0;
+        public static final String MOTOR_CAN_BUS                        = ROBORIO;
+    }
+
+    public static class Controllers
+    {
+        public static final int DRIVER_CONTROLLER_PORT                  = 0;
+        public static final int OPERATOR_CONTROLLER_PORT                = 1;
     }
 
     public enum TargetPosition

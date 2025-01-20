@@ -11,51 +11,15 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.StartEndCommand;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
+import frc.robot.Constants;
 import frc.robot.RobotContainer;
 import frc.robot.commands.GeneralCommands;
+import frc.robot.commands.IntakingCommands;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 
-
-// ------------------------------------------------------------------------------------------
-// COMMAND EXAMPLES
-// ------------------------------------------------------------------------------------------
-// 
-// Here are other options ways to create "Suppliers"
-// DoubleSupplier leftYAxis =  () -> { return driverController.getRawAxis(Xbox.Axis.kLeftY) * 2.0; };
-// DoubleSupplier leftXAxis =  () -> { return driverController.getRawAxis(Xbox.Axis.kLeftX) * 2.0; };
-// DoubleSupplier rightXAxis = () -> { return driverController.getRawAxis(Xbox.Axis.kRightX) * 2.0; };
-// BooleanSupplier aButton =   () -> { return driverController.getRawButton(Xbox.Button.kA); };
-//
-// ------------------------------------------------------------------------------------------
-//
-// Here are 4 ways to perform the "LockWheels" command
-// Press the X button to lock the wheels, unlock when the driver moves left or right axis
-// 
-// Option 1
-// xButtonTrigger.onTrue( new RunCommand( () -> drivetrain.lockWheels(), drivetrain )
-//						.until(driverController.tryingToMoveRobot()) );
-//
-// Option 2
-// xButtonTrigger.onTrue(new LockWheels(drivetrain)
-// 						.until(driverController.tryingToMoveRobot()));
-//
-// Option 3
-// xButtonTrigger.onTrue(new FunctionalCommand(
-// 		() -> {}, 								// onInit
-// 		() -> { drivetrain.lockWheels(); }, 	// onExec
-// 		(interrupted) -> {}, 					// onEnd
-// 		driverController.tryingToMoveRobot(),	// isFinished
-// 		drivetrain ) );							// requirements
-// 
-// Option 4
-// xButtonTrigger.onTrue( run( () -> drivetrain.lockWheels() )	//run(drivetrain::lockWheels)
-// 						.until(driverController.tryingToMoveRobot()) );
-//
-
-
-public class OperatorButtonBindings 
+public class TESTOperatorControllerBindings 
 {
-    // This string gets the full name of the class, including the package name
+    // / This string gets the full name of the class, including the package name
     private static final String fullClassName = MethodHandles.lookup().lookupClass().getCanonicalName();
 
     // *** STATIC INITIALIZATION BLOCK ***
@@ -67,15 +31,13 @@ public class OperatorButtonBindings
     
     // *** CLASS & INSTANCE VARIABLES ***
     // Put all class and instance variables here.
-    private final RobotContainer robotContainer;
+    private static RobotContainer robotContainer = null;
    
 
     // *** CLASS CONSTRUCTOR ***
-    public OperatorButtonBindings(RobotContainer robotContainer)
+    public TESTOperatorControllerBindings(RobotContainer robotContainer)
     {
         System.out.println("  Constructor Started:  " + fullClassName);
-
-        this.robotContainer = robotContainer;
         
         // if(robotContainer.operatorController != null)
         {
@@ -101,10 +63,19 @@ public class OperatorButtonBindings
 
         System.out.println("  Constructor Finished: " + fullClassName);
     }
-    
+
+     public static void setRobotContainer(RobotContainer robotContainer)
+    {
+        if(TESTOperatorControllerBindings.robotContainer == null)
+            TESTOperatorControllerBindings.robotContainer = robotContainer;
+    }
+
     private void configAButton()
     {
         // A Button
+        Trigger aButton;
+        aButton = robotContainer.getOperatorController().a();
+        aButton.onTrue(robotContainer.getElevator().moveToSetPositionCommand(Constants.TargetPosition.kL4));
         // BooleanSupplier aButton = robotContainer.operatorController.getButtonSupplier(Xbox.Button.kA);
         // Trigger aButtonTrigger = new Trigger(aButton);
     }

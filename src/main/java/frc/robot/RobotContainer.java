@@ -6,6 +6,7 @@ import java.util.function.BooleanSupplier;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
+import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 
 import frc.robot.subsystems.Grabber;
 import frc.robot.subsystems.Climb;
@@ -16,7 +17,10 @@ import frc.robot.subsystems.IntakeWrist;
 import frc.robot.subsystems.Pivot;
 import frc.robot.subsystems.Shuttle;
 import frc.robot.subsystems.LEDs;
-
+import frc.robot.controls.DriverButtonBindings;
+import frc.robot.controls.DriverController;
+import frc.robot.controls.OperatorButtonBindings;
+import frc.robot.controls.OperatorController;
 import frc.robot.sensors.GyroLance;
 
 
@@ -49,6 +53,10 @@ public class RobotContainer
     private boolean useGyro                 = false;
     private boolean usePoseEstimator        = false;
 
+    private boolean useBindings             = false;
+    private boolean useDriverController     = false;
+    private boolean useOperatorController   = false;
+
     public final boolean fullRobot;
 
     private final Grabber grabber;
@@ -62,6 +70,11 @@ public class RobotContainer
     private final LEDs leds;
 
     private final GyroLance gyro;
+
+    private final DriverButtonBindings driverButtonBindings;
+    private final CommandXboxController driverController;
+    private final OperatorButtonBindings operatorButtonBindings;
+    private final CommandXboxController operatorController;
     
 
     /** 
@@ -72,16 +85,22 @@ public class RobotContainer
     {
         fullRobot          = (useFullRobot);
         
-        grabber            = (useFullRobot || useGrabber)          ? new Grabber()                                                                                                   : null;
-        climb              = (useFullRobot || useClimb)            ? new Climb()                                                                                                     : null;
-        gyro               = (useFullRobot || useGyro)             ? new GyroLance()                                                                                                 : null;
-        drivetrain         = (useFullRobot || useDrivetrain)       ? new Drivetrain(gyro, useFullRobot, usePoseEstimator, isRedAllianceSupplier())                                   : null;
-        elevator           = (useFullRobot || useElevator)         ? new Elevator()                                                                                                  : null;
-        intake             = (useFullRobot || useIntake)           ? new Intake()                                                                                                    : null;
-        intakeWrist        = (useFullRobot || useIntakeWrist)      ? new IntakeWrist()                                                                                               : null;
-        pivot              = (useFullRobot || usePivot)            ? new Pivot()                                                                                                     : null;
-        shuttle            = (useFullRobot || useShuttle)          ? new Shuttle()                                                                                                   : null;
-        leds               = (useFullRobot || useLEDs)             ? new LEDs()                                                                                                      : null;
+        grabber                 = (useFullRobot || useGrabber)              ? new Grabber()                                                                                                   : null;
+        climb                   = (useFullRobot || useClimb)                ? new Climb()                                                                                                     : null;
+        gyro                    = (useFullRobot || useGyro)                 ? new GyroLance()                                                                                                 : null;
+        drivetrain              = (useFullRobot || useDrivetrain)           ? new Drivetrain(gyro, useFullRobot, usePoseEstimator, isRedAllianceSupplier())                                   : null;
+        elevator                = (useFullRobot || useElevator)             ? new Elevator()                                                                                                  : null;
+        intake                  = (useFullRobot || useIntake)               ? new Intake()                                                                                                    : null;
+        intakeWrist             = (useFullRobot || useIntakeWrist)          ? new IntakeWrist()                                                                                               : null;
+        pivot                   = (useFullRobot || usePivot)                ? new Pivot()                                                                                                     : null;
+        shuttle                 = (useFullRobot || useShuttle)              ? new Shuttle()                                                                                                   : null;
+        leds                    = (useFullRobot || useLEDs)                 ? new LEDs()                                                                                                      : null;
+
+
+        driverController        = (useFullRobot || useDriverController)     ? new CommandXboxController(Constants.Controllers.DRIVER_CONTROLLER_PORT)                                         : null;
+        driverButtonBindings    = (useFullRobot || useBindings)             ? new DriverButtonBindings(this)                                                                                  : null;
+        operatorController      = (useFullRobot || useOperatorController)   ? new CommandXboxController(Constants.Controllers.OPERATOR_CONTROLLER_PORT)                                       : null;
+        operatorButtonBindings  = (useFullRobot || useBindings)             ? new OperatorButtonBindings(this)                                                                                : null;
 
         configureBindings();
     }
@@ -129,6 +148,16 @@ public class RobotContainer
     public Shuttle getShuttle()
     {
         return shuttle;
+    }
+
+    public CommandXboxController getDriverController()
+    {
+        return driverController;
+    }
+
+    public CommandXboxController getOperatorController()
+    {
+        return operatorController;
     }
 
     public LEDs getLEDs()
