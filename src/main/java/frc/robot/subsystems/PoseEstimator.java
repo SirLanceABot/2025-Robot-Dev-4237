@@ -37,7 +37,7 @@ public class PoseEstimator extends SubsystemLance
     }
 
     private final GyroLance gyro;
-    private final Drivetrain drivetrain;
+    private final CommandSwerveDrivetrain drivetrain;
     private final Camera[] cameraArray;
 
     private final SwerveDrivePoseEstimator poseEstimator;
@@ -68,7 +68,7 @@ public class PoseEstimator extends SubsystemLance
     /** 
      * Creates a new PoseEstimator. 
      */
-    public PoseEstimator(Drivetrain drivetrain, GyroLance gyro, Camera[] cameraArray)
+    public PoseEstimator(CommandSwerveDrivetrain drivetrain, GyroLance gyro, Camera[] cameraArray)
     {
         super("PoseEstimator");
         System.out.println("  Constructor Started:  " + fullClassName);
@@ -93,8 +93,8 @@ public class PoseEstimator extends SubsystemLance
             poseEstimator = new SwerveDrivePoseEstimator(
                 drivetrain.getKinematics(), 
                 gyro.getRotation2d(), 
-                drivetrain.getSwerveModulePositions(),
-                drivetrain.getPose(),
+                drivetrain.getState().ModulePositions,
+                drivetrain.getState().Pose,
                 stateStdDevs,
                 visionStdDevs);
         }
@@ -171,7 +171,7 @@ public class PoseEstimator extends SubsystemLance
         if (drivetrain != null && gyro != null) 
         {
             gyroRotation = gyro.getRotation2d();
-            swerveModulePositions = drivetrain.getSwerveModulePositions();
+            swerveModulePositions = drivetrain.getState().ModulePositions;
 
             // Updates odometry
             estimatedPose = poseEstimator.update(gyroRotation, swerveModulePositions);
@@ -202,7 +202,8 @@ public class PoseEstimator extends SubsystemLance
         // maybe combine this if statement with the one above
         if(totalTagCount >= 2)
         {
-            drivetrain.resetOdometryOnly(poseEstimator.getEstimatedPosition());
+            //TODO: reset odometry
+            // drivetrain.resetOdometryOnly(poseEstimator.getEstimatedPosition());
         }
 
         //OUTPUTS
