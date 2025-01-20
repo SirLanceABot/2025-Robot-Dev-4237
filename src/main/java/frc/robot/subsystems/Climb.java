@@ -74,8 +74,8 @@ public class Climb extends SubsystemLance
         motor.setupInverted(false);
         motor.setPosition(0.0);
 
-        motor.setupForwardSoftLimit(FORWARD_SOFT_LIMIT, false);
-        motor.setupReverseSoftLimit(REVERSE_SOFT_LIMIT, false);
+        motor.setupForwardSoftLimit(FORWARD_SOFT_LIMIT, true);
+        motor.setupReverseSoftLimit(REVERSE_SOFT_LIMIT, true);
         motor.setupForwardHardLimitSwitch(true, true);
         motor.setupReverseHardLimitSwitch(true, true);
     }

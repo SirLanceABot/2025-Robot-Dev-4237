@@ -49,10 +49,10 @@ public final class Constants
 
     public static class Intake
     {
-        public static final int TOP_MOTOR_PORT                          = 0;
-        public static final int BOTTOM_MOTOR_PORT                       = 0;
-        public static final String TOP_MOTOR_CAN_BUS                    = CANIVORE;
-        public static final String BOTTOM_MOTOR_CAN_BUS                 = CANIVORE;
+        public static final int MOTOR_PORT                              = 3;
+        // public static final int BOTTOM_MOTOR_PORT                       = 0;
+        public static final String MOTOR_CAN_BUS                        = ROBORIO;
+        // public static final String BOTTOM_MOTOR_CAN_BUS                 = CANIVORE;
     }
     
     public static class Climb

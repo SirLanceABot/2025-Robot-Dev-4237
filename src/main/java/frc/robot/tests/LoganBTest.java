@@ -8,6 +8,7 @@ import edu.wpi.first.wpilibj.Joystick;
 import frc.robot.RobotContainer;
 import frc.robot.Constants.TargetPosition;
 import frc.robot.subsystems.Climb;
+import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Pivot;
 
 public class LoganBTest implements Test
@@ -33,6 +34,7 @@ public class LoganBTest implements Test
     private final RobotContainer robotContainer;
     private final Climb climb;
     private final Pivot pivot;
+    private final Intake intake;
     private final Joystick joystick = new Joystick(0);
     // private final ExampleSubsystem exampleSubsystem;
 
@@ -52,6 +54,7 @@ public class LoganBTest implements Test
         // this.exampleSubsystem = robotContainer.exampleSubsystem;
         climb = robotContainer.getClimb();
         pivot = robotContainer.getPivot();
+        intake = robotContainer.getIntake();
         System.out.println("  Constructor Finished: " + fullClassName);
     }
 
@@ -78,23 +81,25 @@ public class LoganBTest implements Test
         if(joystick.getRawButton(1)) // A button
         {
             // climb.climbUp();
-            pivot.moveToSetPositionCommand(TargetPosition.kL1).schedule(); // value of 100.0 from motor encoder
+            // pivot.moveToSetPositionCommand(TargetPosition.kL1).schedule(); // value of 100.0 from motor encoder
+            intake.pickup();
         }
         else if(joystick.getRawButton(2)) // B button
         {
             // climb.climbDown();
-            pivot.moveToSetPositionCommand(TargetPosition.kL2).schedule(); // value of 1.0 from motor encoder
+            // pivot.moveToSetPositionCommand(TargetPosition.kL2).schedule(); // value of 1.0 from motor encoder
+            intake.eject();
         }
-        else if(joystick.getRawButton(3)) // X button
-        {
-            pivot.moveToSetPositionCommand(TargetPosition.kL3).schedule();
-        }
-        else if(joystick.getRawButton(4)) // Y button
-        {
-            pivot.moveToSetPositionCommand(TargetPosition.kL4).schedule();
-        }
+        // else if(joystick.getRawButton(3)) // X button
+        // {
+        //     // pivot.moveToSetPositionCommand(TargetPosition.kL3).schedule();
+        // }
+        // else if(joystick.getRawButton(4)) // Y button
+        // {
+        //     // pivot.moveToSetPositionCommand(TargetPosition.kL4).schedule();
+        // }
 
-        System.out.println(pivot.getPosition());
+        System.out.println(intake.getPosition());
     }
     
     /**
