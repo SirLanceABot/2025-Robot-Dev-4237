@@ -75,7 +75,7 @@ public class TESTOperatorControllerBindings
         // A Button
         Trigger aButton;
         aButton = robotContainer.getOperatorController().a();
-        aButton.onTrue(robotContainer.getElevator().moveToSetPositionCommand(Constants.TargetPosition.kL4));
+        aButton.onTrue(robotContainer.getShuttle().moveForwardCommand());
         // BooleanSupplier aButton = robotContainer.operatorController.getButtonSupplier(Xbox.Button.kA);
         // Trigger aButtonTrigger = new Trigger(aButton);
     }
@@ -83,6 +83,9 @@ public class TESTOperatorControllerBindings
     private void configBButton()
     {
         // B Button
+        Trigger bButton;
+        bButton = robotContainer.getOperatorController().b();
+        bButton.onTrue(robotContainer.getShuttle().moveBackwardCommand());
         // BooleanSupplier bButton = robotContainer.operatorController.getButtonSupplier(Xbox.Button.kB);
         // Trigger bButtonTrigger = new Trigger(bButton);
     }
