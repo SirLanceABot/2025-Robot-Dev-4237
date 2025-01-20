@@ -74,8 +74,8 @@ public class Climb extends SubsystemLance
         motor.setupInverted(false);
         motor.setPosition(0.0);
 
-        motor.setupForwardSoftLimit(FORWARD_SOFT_LIMIT, true);
-        motor.setupReverseSoftLimit(REVERSE_SOFT_LIMIT, true);
+        motor.setupForwardSoftLimit(FORWARD_SOFT_LIMIT, false);
+        motor.setupReverseSoftLimit(REVERSE_SOFT_LIMIT, false);
         motor.setupForwardHardLimitSwitch(true, true);
         motor.setupReverseHardLimitSwitch(true, true);
     }
@@ -117,38 +117,38 @@ public class Climb extends SubsystemLance
     /**
      * Moves the climb to the position where the robot will be hanging from the cage
      */
-    public void moveToUpPosition()
+    public void climbToUpPosition()
     {
-        if(position < Constants.Climb.CLIMB_UP_POSITION - POSITION_TOLERANCE)
+        if(position < (Constants.Climb.CLIMB_UP_POSITION - POSITION_TOLERANCE))
         {
             climbUp();
         }
-        else if(position > Constants.Climb.CLIMB_UP_POSITION + POSITION_TOLERANCE)
+        else if(position > (Constants.Climb.CLIMB_UP_POSITION + POSITION_TOLERANCE))
         {
             climbDown();
         }
         else
         {
-            stop();
+            set(0.0);
         }
     }
 
     /**
      * Moves the climb to the position where the robot will be ready to climb
      */
-    public void moveToDownPosition()
+    public void climbToDownPosition()
     {
-        if(position < Constants.Climb.CLIMB_DOWN_POSITION)
+        if(position < (Constants.Climb.CLIMB_DOWN_POSITION - POSITION_TOLERANCE))
         {
             climbUp();
         }
-        else if(position < Constants.Climb.CLIMB_DOWN_POSITION)
+        else if(position > (Constants.Climb.CLIMB_DOWN_POSITION + POSITION_TOLERANCE))
         {
             climbDown();
         }
         else
         {
-            stop();
+            set(0.0);
         }
     }
 
@@ -188,17 +188,17 @@ public class Climb extends SubsystemLance
     /**
      * Moves the climb to the position where the robot will be hanging from the cage
      */
-    public Command moveToUpPositionCommand()
+    public Command climbToUpPositionCommand()
     {
-        return Commands.run(() -> moveToUpPosition(), this).withName("Move To Up Position");
+        return Commands.run(() -> climbToUpPosition(), this).withName("Move To Up Position");
     }
 
     /**
      * Moves the climb to the position where the robot will be ready to climb
      */
-    public Command moveToDownPositionCommand()
+    public Command climbToDownPositionCommand()
     {
-        return Commands.run(() -> moveToDownPosition(), this).withName("Move To Down Position");
+        return Commands.run(() -> climbToDownPosition(), this).withName("Move To Down Position");
     }
 
     /**

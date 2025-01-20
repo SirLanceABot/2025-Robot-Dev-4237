@@ -60,15 +60,6 @@ public class PoseEstimator extends SubsystemLance
     // Outputs
     private Pose2d estimatedPose = new Pose2d();
     private DoubleArrayEntry poseEstimatorEntry;
-    
-
-    // *** INNER ENUMS and INNER CLASSES ***
-    // Put all inner enums and inner classes here
-
-
-    
-    // *** CLASS VARIABLES & INSTANCE VARIABLES ***
-    // Put all class variables and instance variables here
 
 
     // *** CLASS CONSTRUCTORS ***

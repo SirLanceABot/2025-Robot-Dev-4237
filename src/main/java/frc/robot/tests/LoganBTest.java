@@ -74,17 +74,15 @@ public class LoganBTest implements Test
         if(joystick.getRawButton(1)) // A button
         {
             // climb.climbUp();
-            climb.climbUpCommand().schedule();
+            climb.climbToUpPositionCommand().schedule(); // value of 100.0 from motor encoder
         }
         else if(joystick.getRawButton(2)) // B button
         {
             // climb.climbDown();
-            climb.climbDownCommand().schedule();
+            climb.climbToDownPositionCommand().schedule(); // value of 1.0 from motor encoder
         }
-        else if(joystick.getRawButton(3))
-        {
-            climb.stopCommand().schedule();
-        }
+
+        System.out.println(climb.getPosition());
     }
     
     /**
