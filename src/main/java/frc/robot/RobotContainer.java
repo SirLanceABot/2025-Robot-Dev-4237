@@ -10,7 +10,7 @@ import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 
 import frc.robot.subsystems.Grabber;
 import frc.robot.subsystems.Climb;
-import frc.robot.subsystems.Drivetrain;
+import frc.robot.subsystems.CommandSwerveDrivetrain;
 import frc.robot.subsystems.Elevator;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.IntakeWrist;
@@ -21,6 +21,7 @@ import frc.robot.controls.DriverButtonBindings;
 import frc.robot.controls.DriverController;
 import frc.robot.controls.OperatorButtonBindings;
 import frc.robot.controls.OperatorController;
+import frc.robot.generated.TunerConstants;
 import frc.robot.sensors.GyroLance;
 
 
@@ -61,7 +62,7 @@ public class RobotContainer
 
     private final Grabber grabber;
     private final Climb climb;
-    private final Drivetrain drivetrain;
+    private final CommandSwerveDrivetrain drivetrain;
     private final Elevator elevator;
     private final Intake intake;
     private final IntakeWrist intakeWrist;
@@ -88,7 +89,7 @@ public class RobotContainer
         grabber                 = (useFullRobot || useGrabber)              ? new Grabber()                                                                                                   : null;
         climb                   = (useFullRobot || useClimb)                ? new Climb()                                                                                                     : null;
         gyro                    = (useFullRobot || useGyro)                 ? new GyroLance()                                                                                                 : null;
-        drivetrain              = (useFullRobot || useDrivetrain)           ? new Drivetrain(gyro, useFullRobot, usePoseEstimator, isRedAllianceSupplier())                                   : null;
+        drivetrain              = (useFullRobot || useDrivetrain)           ? new CommandSwerveDrivetrain(TunerConstants.DrivetrainConstants, TunerConstants.FrontLeft, TunerConstants.FrontRight, TunerConstants.BackLeft, TunerConstants.BackRight)                                   : null;
         elevator                = (useFullRobot || useElevator)             ? new Elevator()                                                                                                  : null;
         intake                  = (useFullRobot || useIntake)               ? new Intake()                                                                                                    : null;
         intakeWrist             = (useFullRobot || useIntakeWrist)          ? new IntakeWrist()                                                                                               : null;
@@ -120,7 +121,7 @@ public class RobotContainer
         return gyro;
     }
 
-    public Drivetrain getDrivetrain()
+    public CommandSwerveDrivetrain getDrivetrain()
     {
         return drivetrain;
     }
