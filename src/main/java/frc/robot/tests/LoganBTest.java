@@ -9,6 +9,8 @@ import frc.robot.RobotContainer;
 import frc.robot.Constants.TargetPosition;
 import frc.robot.subsystems.Climb;
 import frc.robot.subsystems.Intake;
+import frc.robot.subsystems.IntakeWrist;
+import frc.robot.subsystems.IntakeWrist.Position;
 import frc.robot.subsystems.Pivot;
 
 public class LoganBTest implements Test
@@ -35,6 +37,7 @@ public class LoganBTest implements Test
     private final Climb climb;
     private final Pivot pivot;
     private final Intake intake;
+    private final IntakeWrist intakeWrist;
     private final Joystick joystick = new Joystick(0);
     // private final ExampleSubsystem exampleSubsystem;
 
@@ -55,6 +58,7 @@ public class LoganBTest implements Test
         climb = robotContainer.getClimb();
         pivot = robotContainer.getPivot();
         intake = robotContainer.getIntake();
+        intakeWrist = robotContainer.getIntakeWrist();
         System.out.println("  Constructor Finished: " + fullClassName);
     }
 
@@ -82,13 +86,19 @@ public class LoganBTest implements Test
         {
             // climb.climbUp();
             // pivot.moveToSetPositionCommand(TargetPosition.kL1).schedule(); // value of 100.0 from motor encoder
-            intake.pickup();
+            // intake.pickup();
+            intakeWrist.moveToSetPositionCommand(Position.kStartingPosition).schedule(); // 10.0
         }
         else if(joystick.getRawButton(2)) // B button
         {
             // climb.climbDown();
             // pivot.moveToSetPositionCommand(TargetPosition.kL2).schedule(); // value of 1.0 from motor encoder
-            intake.eject();
+            // intake.eject();
+            intakeWrist.moveToSetPositionCommand(Position.kShootingPosition).schedule(); // 20.0
+        }
+        else if(joystick.getRawButton(3))
+        {
+            intakeWrist.moveToSetPositionCommand(Position.kIntakePosition).schedule(); // 40.0
         }
         // else if(joystick.getRawButton(3)) // X button
         // {
@@ -99,7 +109,7 @@ public class LoganBTest implements Test
         //     // pivot.moveToSetPositionCommand(TargetPosition.kL4).schedule();
         // }
 
-        System.out.println(intake.getPosition());
+        System.out.println(intakeWrist.getPosition());
     }
     
     /**

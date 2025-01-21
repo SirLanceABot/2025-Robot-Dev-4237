@@ -6,6 +6,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import frc.robot.Constants;
 import frc.robot.motors.SparkMaxLance;
+import frc.robot.motors.TalonFXLance;
 
 /**
  * This class creates the grabber subsystem and setsup related practice commands
@@ -31,8 +32,9 @@ public class Grabber extends SubsystemLance
     // *** CLASS VARIABLES & INSTANCE VARIABLES ***
     // Put all class variables and instance variables here
 
-    private final SparkMaxLance frontMotor = new SparkMaxLance(Constants.Grabber.FRONT_MOTOR_PORT, Constants.Grabber.FRONT_MOTOR_CAN_BUS, "Front Grabber Motor");
-    private final SparkMaxLance backMotor = new SparkMaxLance(Constants.Grabber.BACK_MOTOR_PORT, Constants.Grabber.BACK_MOTOR_CAN_BUS, "Back Grabber Motor");
+    private final SparkMaxLance kickMotor = new SparkMaxLance(Constants.Grabber.KICK_MOTOR_PORT, Constants.Grabber.KICK_MOTOR_CAN_BUS, "Grabber Kick Motor");
+    private final TalonFXLance grabMotor = new TalonFXLance(Constants.Grabber.GRAB_MOTOR_PORT, Constants.Grabber.GRAB_MOTOR_CAN_BUS, "Grabber Grab Motor");
+    // private final SparkMaxLance backMotor = new SparkMaxLance(Constants.Grabber.BACK_MOTOR_PORT, Constants.Grabber.BACK_MOTOR_CAN_BUS, "Back Grabber Motor");
 
     // *** CLASS CONSTRUCTORS ***
     // Put all class constructors here
@@ -56,66 +58,72 @@ public class Grabber extends SubsystemLance
 
     private void configMotors()
     {
-        frontMotor.setupFactoryDefaults();
-        backMotor.setupFactoryDefaults();
-        frontMotor.setupCoastMode();
-        backMotor.setupCoastMode();
+        kickMotor.setupFactoryDefaults();
+        grabMotor.setupFactoryDefaults();
+        kickMotor.setupCoastMode();
+        grabMotor.setupCoastMode();
     }
 
     /**
-     *Sets speed of front motor
+     *Sets the speed of the grab motor
     */
-    public void setFront(double speed)
+    public void setGrabSpeed(double speed)
     {
-        frontMotor.set(speed);
+        grabMotor.set(speed);
     }
 
     /**
-     *Sets speed of back motor
+     *Sets the speed of the kick motor
     */
-    public void setBack(double speed)
+    public void setKickSpeed(double speed)
     {
-        backMotor.set(speed);
+        kickMotor.set(speed);
+    }
+
+    /**
+     * Sets the grab motor to grab the game piece
+     */
+    public void grabGamePiece()
+    {
+        grabMotor.set(0.1);
+    }
+
+    public void ejectAlgae()
+    {
+        setGrabSpeed(-0.1);
     }
 
     /** 
-     * Sets speed of front and back motor to place coral
+     * Sets speed of the kick motor to spit out coral
     */
-    public void placeCoral(double backSpeed, double frontSpeed)
+    public void placeCoral()
     {
-        setFront(frontSpeed);
-        setBack(backSpeed);
-    }
-
-    /** 
-    * Sets speed of front and back motor to accept coral (speed is automaticly reversed)
-    */
-    public void acceptCoral(double backSpeed, double frontSpeed)
-    {
-        setFront(-frontSpeed);
-        setBack(-backSpeed);
-    }
-
-    
-    public void eject(double speed)
-    {
-        setFront(speed);
+        setKickSpeed(0.1);
     }
 
     public void stop()
     {
-        setFront(0.0);
-        setBack(0.0);
+        setGrabSpeed(0.0);
+        setKickSpeed(0.0);
     }
 
     /**
-     * runs accept coral method 
-     * */
-
-    public Command acceptCoralCommand()
+     * grabs the game piece
+     * @return the command lol
+     */
+    public Command grabGamePieceCommand()
     {
         // design pending
-        return Commands.run(() -> acceptCoral(0.075, 0.075), this).withName("Accept Coral");
+        return Commands.run(() -> grabGamePiece(), this).withName("Grab GamePiece");
+    }
+
+    /**
+     * ejects the algae held by the grabber
+     * @return the command lol
+     */
+    public Command ejectAlgaeCommand()
+    {
+        return Commands.run(() -> ejectAlgae(), this).withName("Eject Algae");
     }
 
     /**
@@ -123,16 +131,8 @@ public class Grabber extends SubsystemLance
     */
     public Command placeCoralCommand()
     {
-        return Commands.run(() -> placeCoral(0.075, 0.075), this).withName("Place Coral");
+        return Commands.run(() -> placeCoral(), this).withName("Place Coral");
     }
-
-    /**
-     * runs eject coral method
-     */
-    public Command ejectCoralCommand()
-    {
-        return Commands.run(() -> eject(0.075), this).withName("Eject Coral");
-    }   
     
     /**
      * runs stop command
@@ -148,6 +148,6 @@ public class Grabber extends SubsystemLance
     @Override
     public String toString()
     {
-        return "Grabber Top Motor Speed: " + frontMotor.get() + "Grabber Lower Motor Speed: " + backMotor.get();
+        return "Grabber Kick Motor Speed: " + kickMotor.get() + "Grabber Grab Motor Speed: " + grabMotor.get();
     }
 }

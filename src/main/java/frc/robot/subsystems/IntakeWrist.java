@@ -28,8 +28,7 @@ public class IntakeWrist extends SubsystemLance
     public enum Position
     {
         kStartingPosition(IntakeWrist.STARTING_POSITION),
-        kIntakeCoralPosition(IntakeWrist.INTAKE_CORAL_POSITION),
-        kIntakeAlgaePosition(IntakeWrist.INTAKE_ALGAE_POSITION),
+        kIntakePosition(IntakeWrist.INTAKE_CORAL_POSITION),
         kShootingPosition(IntakeWrist.SHOOTING_POSITION);
 
         double value;
@@ -46,16 +45,11 @@ public class IntakeWrist extends SubsystemLance
     // Put all class variables and instance variables here
     private final TalonFXLance motor = new TalonFXLance(Constants.IntakeWrist.MOTOR_PORT, Constants.IntakeWrist.MOTOR_CAN_BUS, "Intake Wrist Motor");
     private double speed;
-    private static final double STARTING_POSITION = 100.0;
-    private static final double INTAKE_CORAL_POSITION = 200.0;
-    private static final double INTAKE_ALGAE_POSITION = 300.0;
-    private static final double SHOOTING_POSITION = 400.0;
+    private static final double STARTING_POSITION = 10.0;
+    private static final double INTAKE_CORAL_POSITION = 20.0;
+    private static final double SHOOTING_POSITION = 40.0;
 
-    private final double tolerance = 5.0;
-    
-    
-
-
+    private final double tolerance = 1.0;
 
     // *** CLASS CONSTRUCTORS ***
     // Put all class constructors here
@@ -98,11 +92,6 @@ public class IntakeWrist extends SubsystemLance
     {
         return motor.getPosition();
     }
-
-    /**
-     * Returns the value of the sensor
-    * @return The value of periodData.sensorValue
-    */
 
     /*
      * sets the speed of motor

@@ -80,10 +80,10 @@ public final class Constants
 
     public static class Grabber
     {
-        public static final int FRONT_MOTOR_PORT                        = 0;
-        public static final int BACK_MOTOR_PORT                         = 0;
-        public static final String FRONT_MOTOR_CAN_BUS                  = ROBORIO;
-        public static final String BACK_MOTOR_CAN_BUS                   = ROBORIO;
+        public static final int KICK_MOTOR_PORT                         = 0;
+        public static final int GRAB_MOTOR_PORT                         = 0;
+        public static final String KICK_MOTOR_CAN_BUS                   = ROBORIO;
+        public static final String GRAB_MOTOR_CAN_BUS                   = ROBORIO;
     }
 
     public static class Drivetrain

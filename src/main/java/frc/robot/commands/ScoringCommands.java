@@ -96,7 +96,7 @@ public final class ScoringCommands
                 robotContainer.getIntake().ejectCommand())
                 .withTimeout(1.5)
             .andThen(
-                robotContainer.getIntakeWrist().moveToSetPositionCommand(Position.kIntakeAlgaePosition))
+                robotContainer.getIntakeWrist().moveToSetPositionCommand(Position.kIntakePosition))
             .withName("Score Processor With Intake Command");
         }
         else
