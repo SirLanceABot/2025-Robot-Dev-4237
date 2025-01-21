@@ -202,7 +202,7 @@ public class PoseEstimator extends SubsystemLance
         // maybe combine this if statement with the one above
         if(totalTagCount >= 2)
         {
-            //TODO: reset odometry
+            //TODO: Updating the drivetrain's odometry might not be necessary
             // drivetrain.resetOdometryOnly(poseEstimator.getEstimatedPosition());
         }
 
