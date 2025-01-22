@@ -67,7 +67,7 @@ public class Grabber extends SubsystemLance
     /**
      *Sets the speed of the grab motor
     */
-    public void setGrabSpeed(double speed)
+    private void setGrabSpeed(double speed)
     {
         grabMotor.set(speed);
     }
@@ -75,7 +75,7 @@ public class Grabber extends SubsystemLance
     /**
      *Sets the speed of the kick motor
     */
-    public void setKickSpeed(double speed)
+    private void setKickSpeed(double speed)
     {
         kickMotor.set(speed);
     }
@@ -85,7 +85,7 @@ public class Grabber extends SubsystemLance
      */
     public void grabGamePiece()
     {
-        grabMotor.set(0.1);
+        setGrabSpeed(0.1);
     }
 
     public void ejectAlgae()
@@ -114,7 +114,7 @@ public class Grabber extends SubsystemLance
     public Command grabGamePieceCommand()
     {
         // design pending
-        return Commands.run(() -> grabGamePiece(), this).withName("Grab GamePiece");
+        return run( () -> grabGamePiece()).withName("Grab GamePiece");
     }
 
     /**
@@ -123,7 +123,7 @@ public class Grabber extends SubsystemLance
      */
     public Command ejectAlgaeCommand()
     {
-        return Commands.run(() -> ejectAlgae(), this).withName("Eject Algae");
+        return run(() -> ejectAlgae()).withName("Eject Algae");
     }
 
     /**
@@ -131,7 +131,7 @@ public class Grabber extends SubsystemLance
     */
     public Command placeCoralCommand()
     {
-        return Commands.run(() -> placeCoral(), this).withName("Place Coral");
+        return run(() -> placeCoral()).withName("Place Coral");
     }
     
     /**
@@ -140,10 +140,16 @@ public class Grabber extends SubsystemLance
      */
     public Command stopCommand()
     {
-        return Commands.run(() -> stop(), this).withName("Stop");
+        return run(() -> stop()).withName("Stop");
     }
     // *** OVERRIDEN METHODS ***
     // Put all methods that are Overridden here
+
+    @Override
+    public void periodic()
+    {
+        // This method will be called once per scheduler run
+    }
 
     @Override
     public String toString()
