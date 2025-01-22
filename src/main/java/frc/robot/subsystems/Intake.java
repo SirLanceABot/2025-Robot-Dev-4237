@@ -27,26 +27,7 @@ public class Intake extends SubsystemLance
     /** 
      * This class sets the direction the motor is going in
      */
-    public enum Direction 
-    {
-        kForward(0.1),
-        kBackward(-0.1),
-        kOff(0.0);
-
-        public final double value;
-
-        private Direction(double value) 
-        {
-            this.value = value;
-        }
-    }
-
-    public enum Action 
-    {
-        kPickup,
-        kEject;
-    }
-
+ 
     // *** CLASS VARIABLES & INSTANCE VARIABLES ***
     // Put all class variables and instance variables here
     // private final TalonFXLance motor = new TalonFXLance(Constants.Intake.MOTOR_PORT, Constants.Intake.MOTOR_CAN_BUS, "Intake Motor");
@@ -76,7 +57,6 @@ public class Intake extends SubsystemLance
         System.out.println("  Constructor Started:  " + fullClassName);
 
         configMotors();
-        setDefaultCommand(stopCommand());
 
         // SendableRegistry.addLW(this, "Intake", "MY Subsystem");
         // addChild("Motor 1", motor1);
@@ -101,19 +81,19 @@ public class Intake extends SubsystemLance
         // motor.setupVelocityConversionFactor(RPM_TO_FPS);
 
         // motor.setupCurrentLimit(30.0, 35.0, 0.5);
-        motor.setSafetyEnabled(false);
+        motor.setSafetyEnabled(true);
         //bottomMotor.setSafetyEnabled(false);
     }
 
-    public double getPosition() 
-    {
-        return rollerPosition;
-    }
+    // public double getPosition() 
+    // {
+    //     return rollerPosition;
+    // }
 
-    public double getVelocity() 
-    {
-        return rollerVelocity;
-    }
+    // public double getVelocity() 
+    // {
+    //     return rollerVelocity;
+    // }
 
     private void set(double speed) 
     {
@@ -142,17 +122,17 @@ public class Intake extends SubsystemLance
 
     public Command pickupCommand() 
     {
-        return Commands.run(() -> pickup(), this).withName("Pickup");
+        return run(() -> pickup()).withName("Pickup");
     }
 
     public Command ejectCommand() 
     {
-        return Commands.run(() -> eject(), this).withName("Eject");
+        return run(() -> eject()).withName("Eject");
     }
 
     public Command stopCommand() 
     {
-        return Commands.runOnce(() -> stop(), this).withName("Stop");
+        return runOnce(() -> stop()).withName("Stop");
     }
 
 
@@ -163,9 +143,9 @@ public class Intake extends SubsystemLance
     public void periodic() 
     {
         // This method will be called once per scheduler run
-        rollerPosition = motor.getPosition();
+        //rollerPosition = motor.getPosition();
         //periodicData.bottomRollerPosition = bottomMotor.getPosition();
-        rollerVelocity = motor.getVelocity();
+        //rollerVelocity = motor.getVelocity();
         //periodicDatopRollerVelocityta.bottomRollerVelocity = bottomMotor.getVelocity();
     }
 
