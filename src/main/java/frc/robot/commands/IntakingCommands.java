@@ -5,6 +5,9 @@ import java.lang.invoke.MethodHandles;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import frc.robot.RobotContainer;
+import frc.robot.Constants.TargetPosition;
+import frc.robot.subsystems.IntakeWrist.Position;
+import frc.robot.subsystems.LEDs.Color;
 
 public final class IntakingCommands
 {
@@ -49,22 +52,39 @@ public final class IntakingCommands
     // *** CLASS METHODS & INSTANCE METHODS ***
     // Put all class methods and instance methods here
 
-    // public static Command pickupCoralCommand()
-    // {
-    //     if(robotContainer.getIntakeWrist() != null && robotContainer.getElevator() != null && robotContainer.getGrabber() != null && robotContainer.getLEDs() != null)
-    //     {
-    //         // NEEDS CHANGED
-    //         return 
-    //         robotContainer.getLEDs().setBlueBlinkCommand()
-    //         .andThen(
-                
-    //         )
-    //     }
-    //     else
-    //     {
-    //         return Commands.none();
-    //     }
-    // }
+    public static Command pickupCoralCommand()
+    {
+        if(robotContainer.getIntake() != null && robotContainer.getIntakeWrist() != null && robotContainer.getElevator() != null && robotContainer.getGrabber() != null && robotContainer.getLEDs() != null)
+        {
+            // NEEDS CHANGED
+            return 
+            robotContainer.getLEDs().setColorBlinkCommand(Color.kYellow)
+            .alongWith(
+                robotContainer.getIntakeWrist().moveToSetPositionCommand(Position.kIntakePosition))
+            .andThen(
+                // Commands.waitUntil(Put Proxy sensor detection for intake here)
+                // .deadlineWith(
+                    robotContainer.getIntake().pickupCommand())
+            .andThen(
+                robotContainer.getIntake().stopCommand())
+            .andThen(
+                    robotContainer.getIntakeWrist().moveToSetPositionCommand(Position.kStartingPosition)
+                    .alongWith(
+                        robotContainer.getGrabber().grabGamePieceCommand()))
+            .andThen(
+                robotContainer.getElevator().moveToSetPositionCommand(TargetPosition.kGrabCoralPosition)
+                .alongWith(
+                    robotContainer.getIntake().ejectCommand()));
+            // .andThen(
+            //     // Commands.waitUntil(put proxy detection for grabber here)
+            //     .dead
+            // )
+        }
+        else
+        {
+            return Commands.none();
+        }
+    }
 
 
     // public static Command exampleCommand()
