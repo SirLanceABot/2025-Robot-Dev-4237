@@ -104,11 +104,11 @@ public class RobbieFTest implements Test
         }
         else if (joystick.getRawButton(3))
         {
-            elevator.manualMoveCommand(0.3).schedule();
+            // elevator.manualMoveCommand(0.3).schedule();
         }
         else if(joystick.getRawButton(4))
         {
-            elevator.manualMoveCommand(-0.3).schedule();
+            // elevator.manualMoveCommand(-0.3).schedule();
         }
     }
     

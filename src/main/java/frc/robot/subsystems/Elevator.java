@@ -5,6 +5,7 @@ import java.lang.invoke.MethodHandles;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.spark.SparkLimitSwitch;
 
+import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.util.datalog.DoubleLogEntry;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
@@ -36,11 +37,13 @@ public class Elevator extends SubsystemLance
     // Put all class variables and instance variables here
     private final TalonFXLance leftMotor = new TalonFXLance(Constants.Elevator.LEFT_MOTOR_PORT, Constants.Elevator.LEFT_MOTOR_CAN_BUS, "Left Motor");
     private final TalonFXLance rightMotor = new TalonFXLance(Constants.Elevator.RIGHT_MOTOR_PORT, Constants.Elevator.RIGHT_MOTOR_CAN_BUS, "Right Motor");
-    private SparkLimitSwitch forwardLimitSwitch;
-    private SparkLimitSwitch reverseLimitSwitch;
-    private RelativeEncoder encoder;
+    // private SparkLimitSwitch forwardLimitSwitch;
+    // private SparkLimitSwitch reverseLimitSwitch;
+    // private RelativeEncoder encoder;
     private Constants.TargetPosition targetPosition = Constants.TargetPosition.kOverride;
     private final double threshold = 2.0;
+    private final double MAX_OUTPUT = 0.6;
+    private final double MIN_OUTPUT = 0.1;
 
     private double leftMotorEncoderPosition = 0.0;
     private double rightMotorEncoderPosition = 0.0;
@@ -147,52 +150,52 @@ public class Elevator extends SubsystemLance
     //     targetPosition = Constants.TargetPosition.kL4;
     // }
 
-    public void moveToSetPosition(Constants.TargetPosition targetPosition)
+    private void moveToSetPosition(Constants.TargetPosition targetPosition)
     {
         // System.out.println("1");
 
-        if(getLeftPosition() > (targetPosition.elevator + threshold))
-        {
-            // System.out.println("2");
-            manualMove(-0.5);
-        }
-        else if(getLeftPosition() < (targetPosition.elevator - threshold))
-        {
-            // System.out.println("3");
-            manualMove(0.5);
-        }
-        else
-        {
-            // System.out.println("4");
-            stop();
-        }
+        // if(getLeftPosition() > (targetPosition.elevator + threshold))
+        // {
+        //     // System.out.println("2");
+        //     manualMove(-0.5);
+        // }
+        // else if(getLeftPosition() < (targetPosition.elevator - threshold))
+        // {
+        //     // System.out.println("3");
+        //     manualMove(0.5);
+        // }
+        // else
+        // {
+        //     // System.out.println("4");
+        //     stop();
+        // }
+
+        leftMotor.setControlPosition(targetPosition.elevator);
     }
 
-    private void manualMove(double speed)
+    private void set(double speed)
     {
-        targetPosition = Constants.TargetPosition.kOverride;
-        leftMotor.set(speed);
+        leftMotor.set(MathUtil.clamp(speed, MIN_OUTPUT, MAX_OUTPUT));
     }
 
     public void stop()
     {
-        targetPosition = Constants.TargetPosition.kOverride;
         leftMotor.set(0.0);
     }
 
-    public Command manualMoveCommand(double speed)
+    private Command setCommand(double speed)
     {
-        return Commands.run(() -> manualMove(speed), this).withName("Manual Move Elevator");
+        return run(() -> set(speed)).withName("Set Command");
     }
 
     public Command stopCommand()
     {
-        return Commands.runOnce(() -> stop(), this).withName("Stop Elevator");
+        return runOnce(() -> stop()).withName("Stop Elevator");
     }
 
     public Command moveToSetPositionCommand(Constants.TargetPosition targetPosition)
     {
-        return Commands.run(() -> moveToSetPosition(targetPosition), this).withName("Move To Set Position Elevator");
+        return run(() -> moveToSetPosition(targetPosition)).withName("Move To Set Position Elevator");
     }
 
     

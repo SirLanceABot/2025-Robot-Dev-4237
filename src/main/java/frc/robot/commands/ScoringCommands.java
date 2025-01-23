@@ -7,6 +7,7 @@ import edu.wpi.first.wpilibj2.command.Commands;
 import frc.robot.Constants;
 import frc.robot.RobotContainer;
 import frc.robot.subsystems.IntakeWrist.Position;
+import frc.robot.subsystems.LEDs.Color;
 
 public final class ScoringCommands
 {
@@ -91,7 +92,7 @@ public final class ScoringCommands
         {
             // NEEDS CHANGED
             return 
-            robotContainer.getLEDs().setBlueBlinkCommand()
+            robotContainer.getLEDs().setColorBlinkCommand(Color.kBlue)
             .andThen(
                 robotContainer.getIntake().ejectCommand())
                 .withTimeout(1.5)
