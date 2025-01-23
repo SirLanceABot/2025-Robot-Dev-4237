@@ -60,8 +60,8 @@ public final class Constants
         public static final int MOTOR_PORT                              = 0;
         public static final String MOTOR_CAN_BUS                        = CANIVORE;
 
-        public static final double CLIMB_UP_POSITION                    = 50.0;   // Check value once we have robot
-        public static final double CLIMB_DOWN_POSITION                  = 10.0;      // Check value once we have robot
+        public static final double CLIMB_UP_CAGE_POSITION                    = 50.0;   // Check value once we have robot
+        public static final double CLIMB_DOWN_CAGE_POSITION                  = 10.0;      // Check value once we have robot
     }
 
     public static class Pivot

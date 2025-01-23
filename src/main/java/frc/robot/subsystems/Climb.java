@@ -2,6 +2,7 @@ package frc.robot.subsystems;
 
 import java.lang.invoke.MethodHandles;
 
+import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import frc.robot.Constants;
@@ -9,6 +10,8 @@ import frc.robot.motors.TalonFXLance;
 
 /**
  * Creates a new climb subsystem with one Kraken motor
+ * @author Logan Bellinger
+ * @author Mason Bellinger
  */
 public class Climb extends SubsystemLance
 {
@@ -73,6 +76,8 @@ public class Climb extends SubsystemLance
 
         motor.setupInverted(false);
         motor.setPosition(0.0);
+        
+        // motor.setupPIDController(0, 0.0, 0.0, 0.0);
 
         motor.setupForwardSoftLimit(FORWARD_SOFT_LIMIT, true);
         motor.setupReverseSoftLimit(REVERSE_SOFT_LIMIT, true);
@@ -95,23 +100,26 @@ public class Climb extends SubsystemLance
      */
     private void set(double speed)
     {
-        motor.set(speed);
+        motor.set(MathUtil.clamp(speed, -0.5, 0.5));
+        position = motor.getPosition();
     }
 
     /**
      * Moves the climb so the robot will climb up the cage
      */
-    public void climbUp()
+    public void climbUpCage()
     {
-        motor.set(0.1);
+        set(0.1);
+        position = motor.getPosition();
     }
 
     /**
      * Moves the climb so the robot will climb down the cage
      */
-    public void climbDown()
+    public void climbDownCage()
     {
-        motor.set(-0.1);
+        set(-0.1);
+        position = motor.getPosition();
     }
 
     /**
@@ -119,18 +127,21 @@ public class Climb extends SubsystemLance
      */
     public void climbToUpPosition()
     {
-        if(position < (Constants.Climb.CLIMB_UP_POSITION - POSITION_TOLERANCE))
+        if(position < (Constants.Climb.CLIMB_UP_CAGE_POSITION - POSITION_TOLERANCE))
         {
-            climbUp();
+            climbUpCage();
         }
-        else if(position > (Constants.Climb.CLIMB_UP_POSITION + POSITION_TOLERANCE))
+        else if(position > (Constants.Climb.CLIMB_UP_CAGE_POSITION + POSITION_TOLERANCE))
         {
-            climbDown();
+            climbDownCage();
         }
         else
         {
             set(0.0);
         }
+
+        position = motor.getPosition();
+        // motor.setControlPosition(Constants.Climb.CLIMB_UP_CAGE_POSITION);
     }
 
     /**
@@ -138,18 +149,21 @@ public class Climb extends SubsystemLance
      */
     public void climbToDownPosition()
     {
-        if(position < (Constants.Climb.CLIMB_DOWN_POSITION - POSITION_TOLERANCE))
+        if(position < (Constants.Climb.CLIMB_DOWN_CAGE_POSITION - POSITION_TOLERANCE))
         {
-            climbUp();
+            climbUpCage();
         }
-        else if(position > (Constants.Climb.CLIMB_DOWN_POSITION + POSITION_TOLERANCE))
+        else if(position > (Constants.Climb.CLIMB_DOWN_CAGE_POSITION + POSITION_TOLERANCE))
         {
-            climbDown();
+            climbDownCage();
         }
         else
         {
             set(0.0);
         }
+
+        position = motor.getPosition();
+        // motor.setControlPosition(Constants.Climb.CLIMB_DOWN_CAGE_POSITION);
     }
 
     /**
@@ -157,16 +171,16 @@ public class Climb extends SubsystemLance
      */
     public void stop()
     {
-        motor.set(0.0);
+        set(0.0);
     }
 
      /**
      * gets the encoder position of the motor
      * @param speed the speed of the motor from -1.0 to 1.0
      */
-    public Command setCommand(double speed)
+    private Command setCommand(double speed)
     {
-        return Commands.run(() -> set(speed), this).withName("Set Climb Speed");
+        return run(() -> set(speed)).withName("Set Climb Speed");
     }
 
     /**
@@ -174,7 +188,7 @@ public class Climb extends SubsystemLance
      */
     public Command climbUpCommand()
     {
-        return Commands.run(() -> climbUp(), this).withName("Climb Up");
+        return run(() -> climbUpCage()).withName("Climb Up");
     }
 
     /**
@@ -182,7 +196,7 @@ public class Climb extends SubsystemLance
      */
     public Command climbDownCommand()
     {
-        return Commands.run(() -> climbDown(), this).withName("Climb Down");
+        return run(() -> climbDownCage()).withName("Climb Down");
     }
 
     /**
@@ -190,7 +204,7 @@ public class Climb extends SubsystemLance
      */
     public Command climbToUpPositionCommand()
     {
-        return Commands.run(() -> climbToUpPosition(), this).withName("Move To Up Position");
+        return run(() -> climbToUpPosition()).withName("Move To Up Position");
     }
 
     /**
@@ -198,7 +212,7 @@ public class Climb extends SubsystemLance
      */
     public Command climbToDownPositionCommand()
     {
-        return Commands.run(() -> climbToDownPosition(), this).withName("Move To Down Position");
+        return run(() -> climbToDownPosition()).withName("Move To Down Position");
     }
 
     /**
@@ -206,7 +220,7 @@ public class Climb extends SubsystemLance
      */
     public Command stopCommand()
     {
-        return Commands.runOnce(() -> stop(), this).withName("Stops Climb");
+        return runOnce(() -> stop()).withName("Stops Climb");
     }
     
     // *** OVERRIDEN METHODS ***
@@ -216,7 +230,6 @@ public class Climb extends SubsystemLance
     public void periodic()
     {
         // This method will be called once per scheduler run
-        position = motor.getPosition();
     }
 
     @Override

@@ -2,6 +2,7 @@ package frc.robot.subsystems;
 
 import java.lang.invoke.MethodHandles;
 
+import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import frc.robot.Constants;
@@ -27,9 +28,9 @@ public class IntakeWrist extends SubsystemLance
     // Put all inner enums and inner classes here
     public enum Position
     {
-        kStartingPosition(IntakeWrist.STARTING_POSITION),
-        kIntakePosition(IntakeWrist.INTAKE_CORAL_POSITION),
-        kShootingPosition(IntakeWrist.SHOOTING_POSITION);
+        kStartingPosition(10.0),
+        kIntakePosition(20.0),
+        kShootingPosition(40.0);
 
         double value;
 
@@ -45,9 +46,10 @@ public class IntakeWrist extends SubsystemLance
     // Put all class variables and instance variables here
     private final TalonFXLance motor = new TalonFXLance(Constants.IntakeWrist.MOTOR_PORT, Constants.IntakeWrist.MOTOR_CAN_BUS, "Intake Wrist Motor");
     private double speed;
-    private static final double STARTING_POSITION = 10.0;
-    private static final double INTAKE_CORAL_POSITION = 20.0;
-    private static final double SHOOTING_POSITION = 40.0;
+
+    private static final double kP = 0.0;
+    private static final double kI = 0.0;
+    private static final double kD = 0.0;
 
     private final double tolerance = 1.0;
 
@@ -83,6 +85,8 @@ public class IntakeWrist extends SubsystemLance
         motor.setupFactoryDefaults();
         motor.setupBrakeMode();
         motor.setPosition(0.0);
+
+        motor.setupPIDController(0, kP, kI, kD);
     }
 
     /*
@@ -98,7 +102,7 @@ public class IntakeWrist extends SubsystemLance
      */
     private void set(double speed)
     {
-        motor.set(speed);
+        motor.set(MathUtil.clamp(speed, -0.5, 0.5));
     }
 
     /*
@@ -106,7 +110,7 @@ public class IntakeWrist extends SubsystemLance
      */
     private void stop()
     {
-        motor.set(0.0);
+        set(0.0);
     }
 
     /*
@@ -116,10 +120,12 @@ public class IntakeWrist extends SubsystemLance
     {
         if(getPosition() > (targetPosition.value + tolerance))
         {
+            // motor.setControlPosition(targetPosition.value);
             set(-0.2);
         }
         else if(getPosition() < (targetPosition.value - tolerance))
         {
+            // motor.setControlPosition(targetPosition.value);
             set(0.2);
         }
         else
@@ -133,7 +139,7 @@ public class IntakeWrist extends SubsystemLance
      */
     public Command moveToSetPositionCommand(Position targetPosition)
     {
-        return Commands.run(() -> moveToPosition(targetPosition), this).withName("Move To Set Position Intake Wrist");
+        return run(() -> moveToPosition(targetPosition)).withName("Move To Set Position Intake Wrist");
     }
 
     // *** OVERRIDEN METHODS ***
