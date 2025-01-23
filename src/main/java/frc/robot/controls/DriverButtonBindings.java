@@ -3,10 +3,18 @@ package frc.robot.controls;
 import java.lang.invoke.MethodHandles;
 import java.util.function.BooleanSupplier;
 import java.util.function.DoubleSupplier;
+
+import com.ctre.phoenix6.swerve.SwerveModule.DriveRequestType;
+import com.ctre.phoenix6.swerve.SwerveRequest;
+
+import edu.wpi.first.math.MathUtil;
+import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.RobotContainer;
 import frc.robot.commands.GeneralCommands;
+import frc.robot.generated.TunerConstants;
+import frc.robot.subsystems.CommandSwerveDrivetrain;
 
 
 // ------------------------------------------------------------------------------------------
@@ -78,15 +86,15 @@ public class DriverButtonBindings
 
         this.robotContainer = robotContainer;
         
-        // if(robotContainer.driverController != null)
-        // {
+        if(robotContainer.getDriverController() != null)
+        {
         //     scaleFactorSupplier = () -> scaleFactor;
         //     leftYAxis = robotContainer.driverController.getAxisSupplier(Xbox.Axis.kLeftY, scaleFactorSupplier);
         //     leftXAxis = robotContainer.driverController.getAxisSupplier(Xbox.Axis.kLeftX, scaleFactorSupplier);
         //     rightXAxis = robotContainer.driverController.getAxisSupplier(Xbox.Axis.kRightX);
             
         //     configAButton();
-        //     configBButton();
+            configBButton();
         //     configXButton();
         //     configYButton();
         //     configLeftBumper();
@@ -100,8 +108,8 @@ public class DriverButtonBindings
         //     configDpadUp();
         //     configDpadDown();
         //     configRumble();
-        //     configDefaultCommands();
-        // }
+            configDefaultCommands();
+        }
 
         System.out.println("  Constructor Finished: " + fullClassName);
     }
@@ -117,6 +125,10 @@ public class DriverButtonBindings
 
     private void configAButton()
     {
+        Trigger aButton;
+        aButton = robotContainer.getOperatorController().a();
+        aButton.onTrue(robotContainer.getDrivetrain().applyRequest(() -> CommandSwerveDrivetrain.brake));
+        
         // A Button
         // BooleanSupplier aButton = robotContainer.driverController.getButtonSupplier(Xbox.Button.kA);
         // Trigger aButtonTrigger = new Trigger(aButton);
@@ -130,7 +142,14 @@ public class DriverButtonBindings
     }
 
     private void configBButton()
-    {
+    {  
+        //Testing buttons
+        // Trigger bButton;
+        // bButton = robotContainer.getDriverController().b();
+        // bButton.whileTrue(robotContainer.getDrivetrain().applyRequest(() -> 
+        // CommandSwerveDrivetrain.point.withModuleDirection(new Rotation2d(-robotContainer.getDriverController().getLeftY(), -robotContainer.getDriverController().getLeftX()))));
+
+
         // B Button
         // BooleanSupplier bButton = robotContainer.driverController.getButtonSupplier(Xbox.Button.kB);
         // Trigger bButtonTrigger = new Trigger(bButton);
@@ -296,6 +315,14 @@ public class DriverButtonBindings
 
     private void configDefaultCommands()
     {
+        robotContainer.getDrivetrain().setDefaultCommand(
+            robotContainer.getDrivetrain().applyRequest(() ->
+                TunerConstants.drive.withVelocityX(MathUtil.applyDeadband(-robotContainer.getDriverController().getLeftY(), 0.1) * (TunerConstants.MaxDriveSpeed / 4.0))// Drive forward with negative Y (forward)
+                    .withVelocityY(MathUtil.applyDeadband(-robotContainer.getDriverController().getLeftX(), 0.1) * (TunerConstants.MaxDriveSpeed / 4.0)) // Drive left with negative X (left)
+                    .withRotationalRate(MathUtil.applyDeadband(-robotContainer.getDriverController().getRightX(), 0.1) * TunerConstants.MaxAngularRate)) // Drive counterclockwise with negative X (left)
+        );
+
+            
         // Axis, driving and rotating
         // DoubleSupplier leftYAxis = robotContainer.driverController.getAxisSupplier(Xbox.Axis.kLeftY);
         // DoubleSupplier leftXAxis = robotContainer.driverController.getAxisSupplier(Xbox.Axis.kLeftX);
