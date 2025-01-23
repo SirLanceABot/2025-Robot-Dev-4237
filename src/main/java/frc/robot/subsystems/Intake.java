@@ -112,7 +112,7 @@ public class Intake extends SubsystemLance
 
     public void eject() 
     {
-        set(0.5);
+        set(-0.5);
     }
 
     public void stop() 
