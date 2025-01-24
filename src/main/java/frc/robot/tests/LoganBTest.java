@@ -90,24 +90,25 @@ public class LoganBTest implements Test
         {
             // climb.climbUp();
             // pivot.moveToSetPositionCommand(TargetPosition.kL1).schedule(); // value of 100.0 from motor encoder
-            // intake.pickupCommand().schedule();
-            intakeWrist.moveToSetPositionCommand(Position.kStartingPosition).schedule(); // 10.0
+            intake.pickupCommand().schedule();
+            // intakeWrist.moveToSetPositionCommand(Position.kStartingPosition).schedule(); // 10.0
             // grabber.grabGamePieceCommand().schedule();
             // elevator.moveToSetPositionCommand(TargetPosition.kGrabCoralPosition).schedule(); // 0.0
         }
-        else if(joystick.getRawButton(2)) // B button
-        {
-            // climb.climbDown();
-            // pivot.moveToSetPositionCommand(TargetPosition.kL2).schedule(); // value of 1.0 from motor encoder
-            // intake.ejectCommand().schedule();
-            intakeWrist.moveToSetPositionCommand(Position.kShootingPosition).schedule(); // 20.0
-            // grabber.ejectAlgaeCommand().schedule();
-            // elevator.moveToSetPositionCommand(TargetPosition.kStartingPosition).schedule(); // 20.0
-        }
+        // else if(joystick.getRawButton(2)) // B button
+        // {
+        //     // climb.climbDown();
+        //     // pivot.moveToSetPositionCommand(TargetPosition.kL2).schedule(); // value of 1.0 from motor encoder
+        //     // intake.ejectCommand().schedule();
+        //     // intakeWrist.moveToSetPositionCommand(Position.kShootingPosition).schedule(); // 20.0
+        //     // grabber.ejectAlgaeCommand().schedule();
+        //     // elevator.moveToSetPositionCommand(TargetPosition.kStartingPosition).schedule(); // 20.0
+        // }
         else
         {
             // elevator.stopCommand().schedule();
-            intakeWrist.stopCommand().schedule();
+            // intakeWrist.stopCommand().schedule();
+            intake.stopCommand().schedule();
         }
         // else if(joystick.getRawButton(3)) // X button
         // {
@@ -119,7 +120,7 @@ public class LoganBTest implements Test
         // }
 
         // System.out.println(intakeWrist.getPosition());
-        System.out.println(intakeWrist.getPosition());
+        // System.out.println(intakeWrist.getPosition());
     }
     
     /**
