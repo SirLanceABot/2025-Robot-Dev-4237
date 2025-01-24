@@ -136,6 +136,27 @@ public class LEDs extends SubsystemLance
         }
     }
 
+    private void setColorRainbow(int r, int g, int b)
+    {
+        // for(int c = 0; c < blankBuffer.getLength(); c++)
+        // {
+        //     for(int i = 0; i < blankBuffer.getLength(); i++)
+        //     {
+        //         setBuffer.setRGB(i, r, g, b);
+        //     }
+        // }
+
+        for(int i = 0; i < blankBuffer.getLength(); i++)
+        {
+            setBuffer.setRGB(i, r, g, b);
+
+            r += 25;
+            g += 25;
+            b += 25;
+        }
+
+    }
+
     //COMMANDS
 
     public Command stopCommand()
@@ -145,13 +166,18 @@ public class LEDs extends SubsystemLance
 
     public Command setColorSolidCommand(Color color)
     {
-        return runOnce(() -> setColorSolid(color.r, color.g, color.b)).withName("Set LED Red");
+        return runOnce(() -> setColorSolid(color.r, color.g, color.b)).withName("Set LED Solid");
     }
 
     public Command setColorBlinkCommand(Color color)
     {
-        return run(() -> setColorBlink(color.r, color.g, color.b)).withName("Set LED Green Blink");
+        return run(() -> setColorRainbow(color.r, color.g, color.b)).withName("Set LED Blink");
     }
+
+    // public Command setColorRainbowCommand(Color color)
+    // {
+    //     return run(() -> setColorRainbow(color.r, color.g, color.b)).withName("Set LED Rainbow");
+    // }
 
     
 
