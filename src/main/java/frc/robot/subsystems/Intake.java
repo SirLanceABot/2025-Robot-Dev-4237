@@ -9,6 +9,7 @@ import java.lang.invoke.MethodHandles;
 
 /**
  * This is the Intake subsystem
+ * @author Tanishka
  */
 public class Intake extends SubsystemLance 
 {
