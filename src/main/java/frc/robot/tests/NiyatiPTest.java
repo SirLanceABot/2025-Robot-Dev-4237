@@ -83,33 +83,41 @@ public class NiyatiPTest implements Test
         // {
         //     pivot.on(-0.5);
         // }
-        // else if(joystick.getRawButton(3))
+        // if(joystick.getRawButton(3))
         // {
-        //     pivot.onCommand(0.5).schedule();
+        //     pivot.onCommand(0.1).schedule();
         // }
         // else if(joystick.getRawButton(4))
         // {
-        //     pivot.onCommand(-0.5).schedule();
+        //     pivot.onCommand(-0.1).schedule();
         // }
         // else 
         // {
         //     pivot.holdCommand().schedule();
         // }
 
-        // if (joystick.getRawButton(1))
-        // {
-        //     pivot.moveToSetPositionCommand(Constants.TargetPosition.kL1).schedule();
-        // }
-        // else if(joystick.getRawButton(2))
-        // {
-        //     pivot.moveToSetPositionCommand(Constants.TargetPosition.kL2).schedule();
-        // }
-        // else
-        // {
-        //     pivot.holdCommand().schedule();
-        // }
+        if (joystick.getRawButton(1))
+        {
+            pivot.moveToSetPositionCommand(Constants.TargetPosition.kL1).schedule();
+        }
+        else if(joystick.getRawButton(2))
+        {
+            pivot.moveToSetPositionCommand(Constants.TargetPosition.kL2).schedule();
+        }
+        else if(joystick.getRawButton(3))
+        {
+            pivot.moveToSetPositionCommand(Constants.TargetPosition.kL3).schedule();
+        }
+        else if(joystick.getRawButton(4))
+        {
+            pivot.moveToSetPositionCommand(Constants.TargetPosition.kL4).schedule();
+        }
+        else
+        {
+            pivot.stopCommand().schedule();
+        }
 
-
+        System.out.println(pivot.getPosition());
        
     }
 

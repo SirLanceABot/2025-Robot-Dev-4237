@@ -89,15 +89,15 @@ public class BradyWTest implements Test
         //     elevator.stop();
         // }
 
-        if(joystick.getRawButton(1))
-        {
-            pivot.on(0.5);
-        }
-        else if(joystick.getRawButton(2))
-        {
-            pivot.on(-0.5);
-        }
-        else if(joystick.getRawButton(3))
+        // if(joystick.getRawButton(1))
+        // {
+        //     pivot.set(0.5);
+        // }
+        // else if(joystick.getRawButton(2))
+        // {
+        //     pivot.on(-0.5);
+        // }
+        if(joystick.getRawButton(3))
         {
             pivot.onCommand(0.5).schedule();
         }
@@ -107,7 +107,7 @@ public class BradyWTest implements Test
         }
         else 
         {
-            pivot.holdCommand().schedule();
+            pivot.stopCommand().schedule();
         }
 
         // if (joystick.getRawButton(1))

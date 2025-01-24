@@ -7,6 +7,7 @@ import javax.lang.model.util.ElementScanner14;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.spark.SparkLimitSwitch;
 
+import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import frc.robot.Constants;
@@ -49,10 +50,10 @@ public class Pivot extends SubsystemLance
     private final TalonFXLance motor = new TalonFXLance(Constants.Pivot.MOTOR_PORT, Constants.Pivot.MOTOR_CAN_BUS, "Pivot Motor");
     // private final SparkMaxLance followMotor = new SparkMaxLance(Constants.Pivot.LEFT_MOTOR_PORT, Constants.Pivot.MOTOR_CAN_BUS, "Left Pivot Motor");
 
-    private SparkLimitSwitch forwardLimitSwitch;
-    private SparkLimitSwitch reverseLimitSwitch;
+    // private SparkLimitSwitch forwardLimitSwitch;
+    // private SparkLimitSwitch reverseLimitSwitch;
 
-    private TargetPosition targetPosition = TargetPosition.kOverride;
+    // private TargetPosition targetPosition = TargetPosition.kOverride;
     private final double threshold = 1.0;
 
     // *** CLASS CONSTRUCTORS ***
@@ -95,7 +96,7 @@ public class Pivot extends SubsystemLance
         motor.setupForwardHardLimitSwitch(false, false);
         motor.setupReverseHardLimitSwitch(false, false);
         
-        motor.setupPIDController(0,1,0,0);
+        motor.setupPIDController(0,0.2,0,0);
 
         //Configure PID Controller
         // pidController.setP(kP);
@@ -110,17 +111,22 @@ public class Pivot extends SubsystemLance
     // * This turns on the motor.
     // * @param motorSpeed
     // */
-    public void on(double motorSpeed)
+    private void set(double motorSpeed)
     {
-        targetPosition = Constants.TargetPosition.kOverride;
-        motor.set(motorSpeed);
+        // targetPosition = Constants.TargetPosition.kOverride;
+        motor.set( MathUtil.clamp(motorSpeed, -0.2, 0.2));
     }
 
-    public void hold()
+    public void stop()
     {
-        targetPosition = Constants.TargetPosition.kOverride;
-        motor.set(0.0);
+        set(0.0);
     }
+
+    // public void hold()
+    // {
+    //     targetPosition = Constants.TargetPosition.kOverride;
+    //     motor.set(0.0);
+    // }
 
     // public void resetEncoder()
     // {
@@ -143,80 +149,64 @@ public class Pivot extends SubsystemLance
     // }
 
     /** move the shoulder to Level 1 */
-    public void L1()
-    {
-        targetPosition = Constants.TargetPosition.kL1;
-    }
+    // public void L1()
+    // {
+    //     targetPosition = Constants.TargetPosition.kL1;
+    // }
 
-    /** move the shoulder to Level 2*/
-    public void L2()
-    {
-        targetPosition = Constants.TargetPosition.kL2;
-    }
+    // /** move the shoulder to Level 2*/
+    // public void L2()
+    // {
+    //     targetPosition = Constants.TargetPosition.kL2;
+    // }
 
-    /** move the shoulder to Level 3 */
-    public void L3()
-    {
-        targetPosition = Constants.TargetPosition.kL3;
-    }
+    // /** move the shoulder to Level 3 */
+    // public void L3()
+    // {
+    //     targetPosition = Constants.TargetPosition.kL3;
+    // }
 
-    /** move the shoulder to Level 4 */
-    public void L4()
-    {
-        targetPosition = Constants.TargetPosition.kL4;
-    }
+    // /** move the shoulder to Level 4 */
+    // public void L4()
+    // {
+    //     targetPosition = Constants.TargetPosition.kL4;
+    // }
 
     /** move the shoulder to Starting Position */
-    public void StartingPosition()
-    {
-        targetPosition = Constants.TargetPosition.kStartingPosition;
-    }
+    // public void StartingPosition()
+    // {
+    //     targetPosition = Constants.TargetPosition.kStartingPosition;
+    // }
 
-    /** move the shoulder to Grab Coral Position */
-    public void GrabCoralPosition()
-    {
-        targetPosition = Constants.TargetPosition.kGrabCoralPosition;
-    }
+    // /** move the shoulder to Grab Coral Position */
+    // public void GrabCoralPosition()
+    // {
+    //     targetPosition = Constants.TargetPosition.kGrabCoralPosition;
+    // }
 
-    public void moveToSetPosition(Constants.TargetPosition targetPosition)
-    {
-        if(getPosition() > (targetPosition.pivot + threshold))
-        {
-            on(-0.1);
-        }
-        else if(getPosition() < (targetPosition.pivot - threshold))
-        {
-            on(0.1);
-        }
-        else
-        {
-            hold();
-        }
-    }
-
-    public void stop()
-    {
-        motor.set(0.0);
-    }
+    // public void moveToSetPosition(Constants.TargetPosition targetPosition)
+    // {
+    //     motor.setControlPosition(targetPosition.pivot);
+    // }
 
     public Command onCommand(double speed)
     {
-        return Commands.run(() -> on(speed), this).withName("Turn On Pivot");
+        return run(() -> set(speed)).withName("Turn On Pivot");
     }
 
-    public Command holdCommand()
-    {
-        return Commands.run(() -> hold(), this).withName("Hold Pivot");
-    }
+    // public Command holdCommand()
+    // {
+    //     return run(() -> stop()).withName("Hold Pivot");
+    // }
 
     public Command moveToSetPositionCommand(Constants.TargetPosition targetPosition)
     {
-        return Commands.run(() -> moveToSetPosition(targetPosition), this).withName("Move To Set Position Pivot");
+        return run(() -> motor.setControlPosition(targetPosition.pivot));
     }
 
     public Command stopCommand()
     {
-        return Commands.runOnce(() -> stop(), this).withName("Stop Pivot");
+        return runOnce(() -> stop()).withName("Stop Pivot");
     }
 
 
