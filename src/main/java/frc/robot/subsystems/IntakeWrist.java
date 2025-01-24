@@ -47,7 +47,7 @@ public class IntakeWrist extends SubsystemLance
     private final TalonFXLance motor = new TalonFXLance(Constants.IntakeWrist.MOTOR_PORT, Constants.IntakeWrist.MOTOR_CAN_BUS, "Intake Wrist Motor");
     private double speed;
 
-    private static final double kP = 0.0;
+    private static final double kP = 0.5;
     private static final double kI = 0.0;
     private static final double kD = 0.0;
 
@@ -118,20 +118,21 @@ public class IntakeWrist extends SubsystemLance
      */
     private void moveToPosition(Position targetPosition)
     {
-        if(getPosition() > (targetPosition.value + tolerance))
-        {
-            // motor.setControlPosition(targetPosition.value);
-            set(-0.2);
-        }
-        else if(getPosition() < (targetPosition.value - tolerance))
-        {
-            // motor.setControlPosition(targetPosition.value);
-            set(0.2);
-        }
-        else
-        {
-            stop();
-        }
+        // if(getPosition() > (targetPosition.value + tolerance))
+        // {
+        //     // motor.setControlPosition(targetPosition.value);
+        //     set(-0.2);
+        // }
+        // else if(getPosition() < (targetPosition.value - tolerance))
+        // {
+        //     // motor.setControlPosition(targetPosition.value);
+        //     set(0.2);
+        // }
+        // else
+        // {
+        //     stop();
+        // }
+        motor.setControlPosition(targetPosition.value);
     }
 
     /*
@@ -140,6 +141,11 @@ public class IntakeWrist extends SubsystemLance
     public Command moveToSetPositionCommand(Position targetPosition)
     {
         return run(() -> moveToPosition(targetPosition)).withName("Move To Set Position Intake Wrist");
+    }
+
+    public Command stopCommand()
+    {
+        return runOnce(() -> stop()).withName("Stop Intake Wrist");
     }
 
     // *** OVERRIDEN METHODS ***

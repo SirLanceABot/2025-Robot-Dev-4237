@@ -13,7 +13,7 @@ import frc.robot.Constants;
 import frc.robot.motors.TalonFXLance;
 
 /**
- * Use this class as a template to create other subsystems.
+ * Two big motors (probably falcons), one on either side
  */
 public class Elevator extends SubsystemLance
 {
@@ -100,7 +100,7 @@ public class Elevator extends SubsystemLance
         leftMotor.setupForwardHardLimitSwitch(false, false);
         leftMotor.setupReverseHardLimitSwitch(false, false);
 
-        leftMotor.setupPIDController(0,1,0,0);
+        leftMotor.setupPIDController(0, 1.0, 0.0, 0.0); // TODO tune this
 
         // Configure PID Controller
     }
@@ -183,7 +183,7 @@ public class Elevator extends SubsystemLance
         leftMotor.set(0.0);
     }
 
-    private Command setCommand(double speed)
+    public Command setCommand(double speed)
     {
         return run(() -> set(speed)).withName("Set Command");
     }
