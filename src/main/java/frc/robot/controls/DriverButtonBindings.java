@@ -93,7 +93,7 @@ public class DriverButtonBindings
         //     leftXAxis = robotContainer.driverController.getAxisSupplier(Xbox.Axis.kLeftX, scaleFactorSupplier);
         //     rightXAxis = robotContainer.driverController.getAxisSupplier(Xbox.Axis.kRightX);
             
-        //     configAButton();
+            // configAButton();
             configBButton();
         //     configXButton();
         //     configYButton();
@@ -124,11 +124,7 @@ public class DriverButtonBindings
     }
 
     private void configAButton()
-    {
-        Trigger aButton;
-        aButton = robotContainer.getOperatorController().a();
-        aButton.onTrue(robotContainer.getDrivetrain().applyRequest(() -> CommandSwerveDrivetrain.brake));
-        
+    {        
         // A Button
         // BooleanSupplier aButton = robotContainer.driverController.getButtonSupplier(Xbox.Button.kA);
         // Trigger aButtonTrigger = new Trigger(aButton);
@@ -143,11 +139,11 @@ public class DriverButtonBindings
 
     private void configBButton()
     {  
-        //Testing buttons
-        // Trigger bButton;
-        // bButton = robotContainer.getDriverController().b();
-        // bButton.whileTrue(robotContainer.getDrivetrain().applyRequest(() -> 
-        // CommandSwerveDrivetrain.point.withModuleDirection(new Rotation2d(-robotContainer.getDriverController().getLeftY(), -robotContainer.getDriverController().getLeftX()))));
+        // Testing buttons
+        Trigger bButton;
+        bButton = robotContainer.getDriverController().b();
+        bButton.whileTrue(robotContainer.getDrivetrain().applyRequest(() -> 
+        CommandSwerveDrivetrain.point.withModuleDirection(new Rotation2d(-robotContainer.getDriverController().getLeftY(), -robotContainer.getDriverController().getLeftX()))));
 
 
         // B Button
@@ -315,12 +311,15 @@ public class DriverButtonBindings
 
     private void configDefaultCommands()
     {
-        robotContainer.getDrivetrain().setDefaultCommand(
-            robotContainer.getDrivetrain().applyRequest(() ->
-                TunerConstants.drive.withVelocityX(MathUtil.applyDeadband(-robotContainer.getDriverController().getLeftY(), 0.1) * (TunerConstants.MaxDriveSpeed / 4.0))// Drive forward with negative Y (forward)
-                    .withVelocityY(MathUtil.applyDeadband(-robotContainer.getDriverController().getLeftX(), 0.1) * (TunerConstants.MaxDriveSpeed / 4.0)) // Drive left with negative X (left)
-                    .withRotationalRate(MathUtil.applyDeadband(-robotContainer.getDriverController().getRightX(), 0.1) * TunerConstants.MaxAngularRate)) // Drive counterclockwise with negative X (left)
-        );
+        if(robotContainer.getDrivetrain() != null)
+        {
+            robotContainer.getDrivetrain().setDefaultCommand(
+                robotContainer.getDrivetrain().applyRequest(() ->
+                    CommandSwerveDrivetrain.drive.withVelocityX(-robotContainer.getDriverController().getLeftY() * (TunerConstants.MaxDriveSpeed / 4.0))// Drive forward with negative Y (forward)
+                        .withVelocityY(-robotContainer.getDriverController().getLeftX() * (TunerConstants.MaxDriveSpeed / 4.0)) // Drive left with negative X (left)
+                        .withRotationalRate(-robotContainer.getDriverController().getRightX() * TunerConstants.MaxAngularRate)) // Drive counterclockwise with negative X (left)
+            );
+        }
 
             
         // Axis, driving and rotating
