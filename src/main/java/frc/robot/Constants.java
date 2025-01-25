@@ -40,11 +40,13 @@ public final class Constants
         public static final String RIGHT_MOTOR_CAN_BUS                  = CANIVORE;
 
         public static final double L4                                   = 100.0;
+        public static final double UPPER_REEF_ALGAE                     = 90.0;
         public static final double L3                                   = 80.0;
+        public static final double LOWER_REEF_ALGAE                     = 70.0;
         public static final double L2                                   = 60.0;
         public static final double L1                                   = 40.0;
-        public static final double STARTING_POSITION                    = 20.0;
-        public static final double GRAB_CORAL_POSITION                  = 0.0;
+        public static final double GRAB_CORAL_POSITION                  = 20.0;
+        public static final double RESTING_POSITION                     = 0.0;
     }
 
     public static class Intake
@@ -72,10 +74,11 @@ public final class Constants
 
         public static final double L4                                   = 40.0;
         public static final double L3                                   = 30.0;
+        public static final double GRAB_REEF_ALGAE                      = 25.0;
         public static final double L2                                   = 20.0;
         public static final double L1                                   = 10.0;
-        public static final double STARTING_POSITION                    = 5.0;
-        public static final double GRAB_CORAL_POSITION                  = 0.0;
+        public static final double HOLD_ALGAE_POSITION                  = 5.0;
+        public static final double RESTING_POSITION                     = 0.0;
     }
 
     public static class Grabber
@@ -132,11 +135,14 @@ public final class Constants
 
     public enum TargetPosition
     {
-        kStartingPosition(Constants.Elevator.STARTING_POSITION, Constants.Pivot.STARTING_POSITION),
-        kGrabCoralPosition(Constants.Elevator.GRAB_CORAL_POSITION, Constants.Pivot.GRAB_CORAL_POSITION),
+        kStartingPosition(Constants.Elevator.RESTING_POSITION, Constants.Pivot.RESTING_POSITION),
+        kGrabCoralPosition(Constants.Elevator.GRAB_CORAL_POSITION, Constants.Pivot.RESTING_POSITION),
+        kHoldAlgaePosition(Constants.Elevator.L1, Constants.Pivot.HOLD_ALGAE_POSITION),
         kL1(Constants.Elevator.L1, Constants.Pivot.L1),
         kL2(Constants.Elevator.L2, Constants.Pivot.L2),
+        kLowerReefAlgae(Constants.Elevator.LOWER_REEF_ALGAE, Constants.Pivot.GRAB_REEF_ALGAE),
         kL3(Constants.Elevator.L3, Constants.Pivot.L3),
+        kUpperReefAlgae(Constants.Elevator.UPPER_REEF_ALGAE, Constants.Pivot.GRAB_REEF_ALGAE),
         kL4(Constants.Elevator.L4, Constants.Pivot.L4),
         kOverride(-4237, -4237);
 

@@ -1,6 +1,7 @@
 package frc.robot.subsystems;
 
 import java.lang.invoke.MethodHandles;
+import java.util.function.BooleanSupplier;
 
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.spark.SparkLimitSwitch;
@@ -10,6 +11,7 @@ import edu.wpi.first.util.datalog.DoubleLogEntry;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import frc.robot.Constants;
+import frc.robot.Constants.TargetPosition;
 import frc.robot.motors.TalonFXLance;
 
 /**
@@ -41,7 +43,7 @@ public class Elevator extends SubsystemLance
     // private SparkLimitSwitch reverseLimitSwitch;
     // private RelativeEncoder encoder;
     private Constants.TargetPosition targetPosition = Constants.TargetPosition.kOverride;
-    private final double threshold = 2.0;
+    private final double threshold = 1.0;
     private final double MAX_OUTPUT = 0.6;
     private final double MIN_OUTPUT = 0.1;
 
@@ -183,6 +185,11 @@ public class Elevator extends SubsystemLance
         leftMotor.set(0.0);
     }
 
+    public BooleanSupplier isAtPosition(TargetPosition position)
+    {
+        return () -> Math.abs(leftMotor.getPosition() - position.elevator) < threshold;
+    }
+
     public Command setCommand(double speed)
     {
         return run(() -> set(speed)).withName("Set Command");
@@ -197,13 +204,6 @@ public class Elevator extends SubsystemLance
     {
         return run(() -> moveToSetPosition(targetPosition)).withName("Move To Set Position Elevator");
     }
-
-    
-
-    
-
-    
-
 
     // *** OVERRIDEN METHODS ***
     // Put all methods that are Overridden here

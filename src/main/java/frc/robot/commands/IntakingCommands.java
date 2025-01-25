@@ -52,32 +52,105 @@ public final class IntakingCommands
     // *** CLASS METHODS & INSTANCE METHODS ***
     // Put all class methods and instance methods here
 
+    /**
+     * Command to pickup a coral from the ground
+     * @return the command to pickup coral
+     * @author Logan Bellinger
+    */
     public static Command pickupCoralCommand()
     {
-        if(robotContainer.getIntake() != null && robotContainer.getIntakeWrist() != null && robotContainer.getElevator() != null && robotContainer.getGrabber() != null && robotContainer.getLEDs() != null)
+        if(robotContainer.getIntake() != null && robotContainer.getIntakeWrist() != null && robotContainer.getElevator() != null && robotContainer.getGrabber() != null && robotContainer.getLEDs() != null && robotContainer.getIntakeProximity() != null && robotContainer.getElevatorProximity() != null && robotContainer.getGrabberProximity() != null)
         {
-            // NEEDS CHANGED
+            // Does it work?  I don't know.  I'm sure its fine
             return 
-            robotContainer.getLEDs().setColorBlinkCommand(Color.kYellow)
-            .alongWith(
-                robotContainer.getIntakeWrist().moveToSetPositionCommand(Position.kIntakePosition))
+            Commands.waitUntil(robotContainer.getIntakeWrist().isAtPosition(Position.kIntakeCoralPosition))
+            .deadlineFor(
+                robotContainer.getLEDs().setColorBlinkCommand(Color.kYellow),
+                robotContainer.getIntakeWrist().moveToSetPositionCommand(Position.kIntakeCoralPosition))
             .andThen(
-                // Commands.waitUntil(Put Proxy sensor detection for intake here) **withDeadline now, not deadlineWith
-                    robotContainer.getIntake().pickupCommand())
+                Commands.waitUntil(robotContainer.getIntakeProximity().isDetectedSupplier())
+                .deadlineFor(
+                    robotContainer.getIntake().pickupCommand(),
+                    robotContainer.getElevator().moveToSetPositionCommand(TargetPosition.kGrabCoralPosition)))
             .andThen(
-                robotContainer.getIntake().stopCommand())
+                Commands.waitUntil(robotContainer.getIntakeWrist().isAtPosition(Position.kPassToGrabberPosition))
+                .deadlineFor(
+                    robotContainer.getIntake().stopCommand(),
+                    robotContainer.getIntakeWrist().moveToSetPositionCommand(Position.kPassToGrabberPosition)))
             .andThen(
-                    robotContainer.getIntakeWrist().moveToSetPositionCommand(Position.kStartingPosition)
-                    .alongWith(
+                    Commands.waitUntil(robotContainer.getElevatorProximity().isDetectedSupplier())
+                    .deadlineFor(
+                        robotContainer.getIntake().ejectCommand(),
                         robotContainer.getGrabber().grabGamePieceCommand()))
             .andThen(
-                robotContainer.getElevator().moveToSetPositionCommand(TargetPosition.kGrabCoralPosition)
-                .alongWith(
-                    robotContainer.getIntake().ejectCommand()));
-            // .andThen(
-            //     // Commands.waitUntil(put proxy detection for grabber here)
-            //     .dead
-            // )
+                Commands.waitUntil(robotContainer.getGrabberProximity().isDetectedSupplier())
+                .deadlineFor(
+                    robotContainer.getElevator().moveToSetPositionCommand(TargetPosition.kStartingPosition)))
+            .andThen(
+                Commands.waitUntil(robotContainer.getIntakeWrist().isAtPosition(Position.kRestingPosition))
+                .deadlineFor(
+                    robotContainer.getGrabber().stopCommand(),
+                    robotContainer.getIntakeWrist().moveToSetPositionCommand(Position.kRestingPosition),
+                    robotContainer.getLEDs().setColorSolidCommand(Color.kRed)));
+        }
+        else
+        {
+            return Commands.none();
+        }
+    }
+
+    /**
+     * The command to intake algae from the ground with our ground intake
+     * @return Command to intake algae
+     * @author Logan Bellinger
+     */
+    public static Command intakeAlgaeCommand()
+    {
+        if(robotContainer.getIntake() != null && robotContainer.getIntakeWrist() != null && robotContainer.getIntakeProximity() != null && robotContainer.getLEDs() != null)
+        {
+            return
+            Commands.waitUntil(robotContainer.getIntakeProximity().isDetectedSupplier())
+            .deadlineFor(
+                robotContainer.getLEDs().setColorBlinkCommand(Color.kYellow),
+                robotContainer.getIntakeWrist().moveToSetPositionCommand(Position.kManipAlgaePosition),
+                robotContainer.getIntake().pickupCommand())
+            .andThen(
+                Commands.waitUntil(robotContainer.getIntakeWrist().isAtPosition(Position.kAlgaeIntakedPosition))
+                .deadlineFor(
+                    robotContainer.getIntakeWrist().moveToSetPositionCommand(Position.kAlgaeIntakedPosition),
+                    robotContainer.getIntake().stopCommand(),
+                    robotContainer.getLEDs().setColorSolidCommand(Color.kRed)));
+        }
+        else
+        {
+            return Commands.none();
+        }
+    }
+
+    /**
+     * Command to intake an Algae from the reef
+     * @param targetPosition the position to move the elevator and pivot to, either the UPPER_REEF_ALGAE (between L3 and L4) or the LOWER_REEF_ALGAE (between L2 and L3)
+     * @return The command to intake the algae
+     * @author Logan Bellinger
+     */
+    public static Command intakeAlgaeFromReefCommand(TargetPosition targetPosition)
+    {
+        if(robotContainer.getGrabber() != null && robotContainer.getElevator() != null && robotContainer.getPivot() != null && robotContainer.getGrabberProximity() != null && robotContainer.getLEDs() != null)
+        {
+            return
+            Commands.waitUntil(robotContainer.getGrabberProximity().isDetectedSupplier())
+            .deadlineFor(
+                robotContainer.getLEDs().setColorBlinkCommand(Color.kYellow),
+                robotContainer.getElevator().moveToSetPositionCommand(targetPosition),
+                robotContainer.getPivot().moveToSetPositionCommand(targetPosition),
+                robotContainer.getGrabber().grabGamePieceCommand())
+            .andThen(
+                Commands.waitUntil(() -> (robotContainer.getPivot().isAtPosition(targetPosition).getAsBoolean() && robotContainer.getElevator().isAtPosition(targetPosition).getAsBoolean()))
+                .deadlineFor(
+                    robotContainer.getElevator().moveToSetPositionCommand(TargetPosition.kHoldAlgaePosition),
+                    robotContainer.getPivot().moveToSetPositionCommand(TargetPosition.kHoldAlgaePosition),
+                    robotContainer.getGrabber().stopCommand(),
+                    robotContainer.getLEDs().setColorSolidCommand(Color.kRed)));
         }
         else
         {

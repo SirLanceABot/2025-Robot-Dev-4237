@@ -1,6 +1,7 @@
 package frc.robot.subsystems;
 
 import java.lang.invoke.MethodHandles;
+import java.util.function.BooleanSupplier;
 
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -28,9 +29,11 @@ public class IntakeWrist extends SubsystemLance
     // Put all inner enums and inner classes here
     public enum Position
     {
-        kStartingPosition(10.0),
-        kIntakePosition(20.0),
-        kShootingPosition(40.0);
+        kIntakeCoralPosition(0.0),
+        kManipAlgaePosition(1.0),
+        kAlgaeIntakedPosition(5.0),
+        kRestingPosition(10.0),
+        kPassToGrabberPosition(30.0);
 
         double value;
 
@@ -133,6 +136,11 @@ public class IntakeWrist extends SubsystemLance
         //     stop();
         // }
         motor.setControlPosition(targetPosition.value);
+    }
+
+    public BooleanSupplier isAtPosition(Position position)
+    {
+        return () -> Math.abs(motor.getPosition() - position.value) < tolerance;
     }
 
     /*

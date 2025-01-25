@@ -1,6 +1,7 @@
 package frc.robot.subsystems;
 
 import java.lang.invoke.MethodHandles;
+import java.util.function.BooleanSupplier;
 
 import javax.lang.model.util.ElementScanner14;
 
@@ -140,6 +141,11 @@ public class Pivot extends SubsystemLance
     public double getPosition() // encoder ticks
     {
         return motor.getPosition();
+    }
+
+    public BooleanSupplier isAtPosition(TargetPosition position)
+    {
+        return () -> Math.abs(motor.getPosition() - position.pivot) < threshold;
     }
 
     // ask how to do this
