@@ -8,20 +8,20 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.716,
-        "y": 0.7590000000000003
+        "x": 2.46675,
+        "y": 1.14875
       },
       "isLocked": false,
       "linkedName": "Right Station"
     },
     {
       "anchor": {
-        "x": 4.173,
-        "y": 2.553
+        "x": 3.75,
+        "y": 2.812
       },
       "prevControl": {
-        "x": 3.173,
-        "y": 2.553
+        "x": 3.159,
+        "y": 2.2114999999999996
       },
       "nextControl": null,
       "isLocked": false,
@@ -42,7 +42,7 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 150.57332974079523
+    "rotation": -29.999999999999996
   },
   "reversed": false,
   "folder": "Right Station Starts",

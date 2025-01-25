@@ -4,12 +4,12 @@
     {
       "anchor": {
         "x": 5.128371710526316,
-        "y": 2.610608552631579
+        "y": 2.738
       },
       "prevControl": null,
       "nextControl": {
         "x": 5.6671875,
-        "y": 2.8896381578947365
+        "y": 3.0170296052631573
       },
       "isLocked": false,
       "linkedName": "S2 Left"
@@ -48,7 +48,7 @@
   "folder": "Reef Starts",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 36.702855030163136
+    "rotation": 29.999999999999996
   },
   "useDefaultConstraints": true
 }

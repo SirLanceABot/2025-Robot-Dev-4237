@@ -17,11 +17,11 @@
     {
       "anchor": {
         "x": 5.128371710526316,
-        "y": 2.610608552631579
+        "y": 2.738
       },
       "prevControl": {
         "x": 4.128371710526316,
-        "y": 2.610608552631579
+        "y": 2.738
       },
       "nextControl": null,
       "isLocked": false,
@@ -42,7 +42,7 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 36.702855030163136
+    "rotation": 29.999999999999996
   },
   "reversed": false,
   "folder": "Right Station Starts",
