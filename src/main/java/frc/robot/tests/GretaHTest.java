@@ -2,7 +2,9 @@ package frc.robot.tests;
 
 import java.lang.invoke.MethodHandles;
 
+import edu.wpi.first.wpilibj.Joystick;
 import frc.robot.RobotContainer;
+import frc.robot.subsystems.LEDs;
 
 public class GretaHTest implements Test
 {
@@ -25,6 +27,7 @@ public class GretaHTest implements Test
     // *** CLASS & INSTANCE VARIABLES ***
     // Put all class and instance variables here.
     private final RobotContainer robotContainer;
+    private final Joystick joystick = new Joystick(0);
     // private final ExampleSubsystem exampleSubsystem;
 
 
@@ -64,7 +67,12 @@ public class GretaHTest implements Test
      * This method runs periodically (every 20ms).
      */
     public void periodic()
-    {}
+    {
+        // if(joystick.getRawButton(1))
+        // {
+        //     setColorSolidCommand(kRED);
+        // }
+    }
     
     /**
      * This method runs one time after the periodic() method.
