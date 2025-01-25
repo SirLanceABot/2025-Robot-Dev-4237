@@ -62,8 +62,7 @@ public final class IntakingCommands
             .alongWith(
                 robotContainer.getIntakeWrist().moveToSetPositionCommand(Position.kIntakePosition))
             .andThen(
-                // Commands.waitUntil(Put Proxy sensor detection for intake here)
-                // .deadlineWith(
+                // Commands.waitUntil(Put Proxy sensor detection for intake here) **withDeadline now, not deadlineWith
                     robotContainer.getIntake().pickupCommand())
             .andThen(
                 robotContainer.getIntake().stopCommand())

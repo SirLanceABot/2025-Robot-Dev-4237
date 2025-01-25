@@ -88,9 +88,9 @@ public class LoganBTest implements Test
     {
         if(joystick.getRawButton(1)) // A button
         {
-            // climb.climbUp();
+            climb.climbUpCommand().schedule();
             // pivot.moveToSetPositionCommand(TargetPosition.kL1).schedule(); // value of 100.0 from motor encoder
-            intake.pickupCommand().schedule();
+            // intake.pickupCommand().schedule();
             // intakeWrist.moveToSetPositionCommand(Position.kStartingPosition).schedule(); // 10.0
             // grabber.grabGamePieceCommand().schedule();
             // elevator.moveToSetPositionCommand(TargetPosition.kGrabCoralPosition).schedule(); // 0.0
@@ -104,12 +104,6 @@ public class LoganBTest implements Test
         //     // grabber.ejectAlgaeCommand().schedule();
         //     // elevator.moveToSetPositionCommand(TargetPosition.kStartingPosition).schedule(); // 20.0
         // }
-        else
-        {
-            // elevator.stopCommand().schedule();
-            // intakeWrist.stopCommand().schedule();
-            intake.stopCommand().schedule();
-        }
         // else if(joystick.getRawButton(3)) // X button
         // {
         //     // pivot.moveToSetPositionCommand(TargetPosition.kL3).schedule();

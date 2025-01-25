@@ -123,12 +123,12 @@ public class Intake extends SubsystemLance
 
     public Command pickupCommand() 
     {
-        return run(() -> pickup()).withName("Pickup");
+        return runOnce(() -> pickup()).withName("Pickup");
     }
 
     public Command ejectCommand() 
     {
-        return run(() -> eject()).withName("Eject");
+        return runOnce(() -> eject()).withName("Eject");
     }
 
     public Command stopCommand() 
