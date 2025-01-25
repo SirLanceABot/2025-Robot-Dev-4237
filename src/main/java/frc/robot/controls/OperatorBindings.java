@@ -3,14 +3,11 @@ package frc.robot.controls;
 import java.lang.invoke.MethodHandles;
 import java.util.function.DoubleSupplier;
 
-import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.RobotContainer;
-import frc.robot.generated.TunerConstants;
-import frc.robot.subsystems.CommandSwerveDrivetrain;
 
-public final class DriverBindings {
+public final class OperatorBindings {
 
     // This string gets the full name of the class, including the package name
     private static final String fullClassName = MethodHandles.lookup().lookupClass().getCanonicalName();
@@ -24,29 +21,29 @@ public final class DriverBindings {
     
     // *** CLASS & INSTANCE VARIABLES ***
     // Put all class and instance variables here.
-    private static CommandSwerveDrivetrain drivetrain;
     private static CommandXboxController controller;
     private static DoubleSupplier leftYAxis;
     private static DoubleSupplier leftXAxis;
     private static DoubleSupplier rightXAxis;
+    private static DoubleSupplier rightYAxis;
+
 
 
     // *** CLASS CONSTRUCTOR ***
-    private DriverBindings()
+    private OperatorBindings()
     {}
 
     public static void createBindings(RobotContainer robotContainer)
     {
         System.out.println("  Constructor Started:  " + fullClassName);
 
-        drivetrain = robotContainer.getDrivetrain();
-        controller = robotContainer.getDriverController();
+        controller = robotContainer.getOperatorController();
 
-        configSuppliers();
+        // configSuppliers();
 
         // configAButton();
-        configBButton();
-        configXButton();
+        // configBButton();
+        // configXButton();
         // configYButton();
         // configLeftBumper();
         // configRightBumper();
@@ -59,45 +56,42 @@ public final class DriverBindings {
         // configDpadUp();
         // configDpadDown();
         // configRumble();
-        configDefaultCommands();
+        // configDefaultCommands();
 
         System.out.println("  Constructor Finished: " + fullClassName);
+
     }
+
 
     private static void configSuppliers()
     {
         leftYAxis = () -> -controller.getRawAxis(1);
         leftXAxis = () -> -controller.getRawAxis(0);
         rightXAxis = () -> -controller.getRawAxis(4);
+        rightYAxis = () -> -controller.getRawAxis(5);
     }
+
 
     private static void configAButton()
     {
-        Trigger aButton = controller.a();
+
     }
 
 
     private static void configBButton()
     {
-        Trigger bButton = controller.b();
-        bButton.whileTrue(drivetrain.pointCommand(leftYAxis, leftXAxis));
-        
-        //applyRequest(() -> 
-        //CommandSwerveDrivetrain.point.withModuleDirection(new Rotation2d(-leftYAxis.getAsDouble(), -leftXAxis.getAsDouble()))));
     }
 
 
     private static void configXButton()
     {
-        Trigger xButton = controller.x();
-        xButton.whileTrue(drivetrain.lockWheelsCommand());
+    
     }
 
 
     private static void configYButton()
     {
-        Trigger yButton = controller.y();
-        
+
     }
 
 
@@ -169,22 +163,10 @@ public final class DriverBindings {
 
     private static void configDefaultCommands()
     {
-        if(drivetrain != null)
-        {
-            drivetrain.setDefaultCommand(drivetrain.driveCommand(leftYAxis, leftXAxis, rightXAxis));
-               
-            //.applyRequest(() ->
-            //         CommandSwerveDrivetrain.drive.withVelocityX(leftYAxis.getAsDouble() * (TunerConstants.MaxDriveSpeed / 4.0))// Drive forward with negative Y (forward)
-            //             .withVelocityY(leftXAxis.getAsDouble() * (TunerConstants.MaxDriveSpeed / 4.0)) // Drive left with negative X (left)
-            //             .withRotationalRate(rightXAxis.getAsDouble() * TunerConstants.MaxAngularRate)) // Drive counterclockwise with negative X (left)
-            // );
-        }
         
     }
 
 
     
 
-
-    
 }
