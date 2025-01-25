@@ -31,15 +31,19 @@ public class Robot extends TimedRobot
      */
     Robot() 
     {
+        //Configure RobotContainer
         robotContainer = new RobotContainer();
+        
         
         //Configure commands
 
-        if(robotContainer.useBindings())
-        {
+
+        //Configure Bindings
+        if(robotContainer.useDriverBindings())
             DriverBindings.createBindings(robotContainer);
+        if(robotContainer.useOperatorBindings())
             OperatorBindings.createBindings(robotContainer);
-        }
+
     }
 
     @Override

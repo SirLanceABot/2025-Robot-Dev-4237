@@ -18,13 +18,15 @@ import frc.robot.subsystems.Pivot;
 import frc.robot.subsystems.Shuttle;
 import frc.robot.subsystems.LEDs;
 import frc.robot.controls.DriverBindings;
-// import frc.robot.controls.DriverButtonBindings;
 import frc.robot.controls.DriverController;
-import frc.robot.controls.OperatorButtonBindings;
 import frc.robot.controls.OperatorController;
 import frc.robot.generated.TunerConstants;
 import frc.robot.sensors.GyroLance;
 import frc.robot.sensors.Proximity;
+// import frc.robot.controls.DriverButtonBindings;
+// import frc.robot.controls.OperatorButtonBindings;
+
+
 
 
 
@@ -57,7 +59,8 @@ public class RobotContainer
     private boolean usePoseEstimator        = false;
     private boolean useProximity            = false;
 
-    private boolean useBindings             = false;
+    private boolean useDriverBindings       = false;
+    private boolean useOperatorBindings     = false;
     private boolean useDriverController     = false;
     private boolean useOperatorController   = false;
 
@@ -79,8 +82,8 @@ public class RobotContainer
     private final Proximity grabberProximity;
 
     // private final DriverButtonBindings driverButtonBindings;
+    // private final OperatorButtonBindings operatorButtonBindings;
     private final CommandXboxController driverController;
-    private final OperatorButtonBindings operatorButtonBindings;
     private final CommandXboxController operatorController;
     
 
@@ -109,7 +112,8 @@ public class RobotContainer
 
         driverController        = (useFullRobot || useDriverController)     ? new CommandXboxController(Constants.Controllers.DRIVER_CONTROLLER_PORT)                                         : null;
         operatorController      = (useFullRobot || useOperatorController)   ? new CommandXboxController(Constants.Controllers.OPERATOR_CONTROLLER_PORT)                                       : null;
-        operatorButtonBindings  = (useFullRobot || useBindings)             ? new OperatorButtonBindings(this)                                                                                : null;
+        // operatorButtonBindings  = (useFullRobot || useBindings)             ? new OperatorButtonBindings(this)                                                                                : null;
+        // driverButtonBindings    = (useFullRobot || useBindings)             ? new DriverButtonBindings(this)                                                                                  : null;
 
     }
 
@@ -202,9 +206,14 @@ public class RobotContainer
         };
     }
 
-    public boolean useBindings() 
+    public boolean useDriverBindings() 
     {
-        return (useBindings || useFullRobot);
+        return (useDriverBindings || useFullRobot);
+    }
+
+    public boolean useOperatorBindings() 
+    {
+        return (useOperatorBindings || useFullRobot);
     }
 
     public Command getAutonomousCommand() 
