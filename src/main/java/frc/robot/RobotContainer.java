@@ -24,6 +24,7 @@ import frc.robot.controls.OperatorButtonBindings;
 import frc.robot.controls.OperatorController;
 import frc.robot.generated.TunerConstants;
 import frc.robot.sensors.GyroLance;
+import frc.robot.sensors.Proximity;
 
 
 
@@ -44,7 +45,7 @@ public class RobotContainer
 
     private boolean useGrabber              = false;
     private boolean useClimb                = false;
-    private boolean useDrivetrain           = true;
+    private boolean useDrivetrain           = false;
     private boolean useElevator             = false;
     private boolean useIntake               = false;
     private boolean useIntakeWrist          = false;
@@ -54,9 +55,10 @@ public class RobotContainer
 
     private boolean useGyro                 = false;
     private boolean usePoseEstimator        = false;
+    private boolean useProximity            = false;
 
-    private boolean useBindings             = true;
-    private boolean useDriverController     = true;
+    private boolean useBindings             = false;
+    private boolean useDriverController     = false;
     private boolean useOperatorController   = false;
 
     public final boolean fullRobot;
@@ -72,6 +74,9 @@ public class RobotContainer
     private final LEDs leds;
 
     private final GyroLance gyro;
+    private final Proximity intakeProximity;
+    private final Proximity elevatorProximity;
+    private final Proximity grabberProximity;
 
     // private final DriverButtonBindings driverButtonBindings;
     private final CommandXboxController driverController;
@@ -97,6 +102,9 @@ public class RobotContainer
         pivot                   = (useFullRobot || usePivot)                ? new Pivot()                                                                                                     : null;
         shuttle                 = (useFullRobot || useShuttle)              ? new Shuttle()                                                                                                   : null;
         leds                    = (useFullRobot || useLEDs)                 ? new LEDs()                                                                                                      : null;
+        intakeProximity         = (useFullRobot || useProximity)            ? new Proximity(Constants.Proximity.INTAKE_PORT)                                                                  : null;
+        elevatorProximity       = (useFullRobot || useProximity)            ? new Proximity(Constants.Proximity.ELEVATOR_PORT)                                                                : null;
+        grabberProximity        = (useFullRobot || useProximity)            ? new Proximity(Constants.Proximity.GRABBER_PORT)                                                                 : null;              
 
 
         driverController        = (useFullRobot || useDriverController)     ? new CommandXboxController(Constants.Controllers.DRIVER_CONTROLLER_PORT)                                         : null;
@@ -148,6 +156,21 @@ public class RobotContainer
     public Shuttle getShuttle()
     {
         return shuttle;
+    }
+
+    public Proximity getIntakeProximity()
+    {
+        return intakeProximity;
+    }
+
+    public Proximity getElevatorProximity()
+    {
+        return elevatorProximity;
+    }
+
+    public Proximity getGrabberProximity()
+    {
+        return grabberProximity;
     }
 
     public CommandXboxController getDriverController()
