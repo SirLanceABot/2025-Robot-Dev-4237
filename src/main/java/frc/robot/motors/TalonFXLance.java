@@ -26,6 +26,7 @@ import com.ctre.phoenix6.signals.InvertedValue;
 import com.ctre.phoenix6.signals.NeutralModeValue;
 import com.ctre.phoenix6.signals.ReverseLimitSourceValue;
 import com.ctre.phoenix6.signals.ReverseLimitTypeValue;
+import com.ctre.phoenix6.signals.StaticFeedforwardSignValue;
 import com.ctre.phoenix6.spns.SpnValue;
 
 import edu.wpi.first.networktables.NetworkTable;
@@ -387,6 +388,7 @@ public class TalonFXLance extends MotorControllerLance
             slotConfigs.kD = kD;
             slotConfigs.kS = kS;
             slotConfigs.kV = kV;
+            slotConfigs.StaticFeedforwardSign = StaticFeedforwardSignValue.UseClosedLoopSign;
             setup(() -> motor.getConfigurator().apply(slotConfigs), "Setup PID Controller"); 
         }
     }

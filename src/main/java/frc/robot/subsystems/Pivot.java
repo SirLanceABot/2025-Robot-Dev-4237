@@ -8,15 +8,18 @@ import com.revrobotics.RelativeEncoder;
 import com.revrobotics.spark.SparkLimitSwitch;
 
 import edu.wpi.first.math.MathUtil;
+import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import frc.robot.Constants;
 import frc.robot.Constants.TargetPosition;
-import frc.robot.motors.SparkMaxLance;
+// import frc.robot.motors.SparkMaxLance;
 import frc.robot.motors.TalonFXLance;
 
 /**
  * This is the Pivot. It allows the robot to move it's arm.
+ * @author Greta
+ * @author Niyati
  */
 public class Pivot extends SubsystemLance
 {
@@ -96,14 +99,14 @@ public class Pivot extends SubsystemLance
         motor.setupForwardHardLimitSwitch(false, false);
         motor.setupReverseHardLimitSwitch(false, false);
         
-        motor.setupPIDController(0,0.2,0,0);
+        motor.setupPIDController(0, 2.5, 0, 0, 0.05, 0);
 
         //Configure PID Controller
         // pidController.setP(kP);
         // pidController.setI(kI);
         // pidController.setD(kD);
         // pidController.setIZone(kIz);
-        // pidController.setFF(kFF);
+        // motor.setFF(kFF);
         // pidController.setOutputRange(kMinOutput, kMaxOutput);
     }
 
@@ -191,7 +194,7 @@ public class Pivot extends SubsystemLance
 
     public Command onCommand(double speed)
     {
-        return run(() -> set(speed)).withName("Turn On Pivot");
+        return runOnce(() -> set(speed)).withName("Turn On Pivot");
     }
 
     // public Command holdCommand()
@@ -201,7 +204,7 @@ public class Pivot extends SubsystemLance
 
     public Command moveToSetPositionCommand(Constants.TargetPosition targetPosition)
     {
-        return run(() -> motor.setControlPosition(targetPosition.pivot));
+        return runOnce(() -> motor.setControlPosition(targetPosition.pivot));
     }
 
     public Command stopCommand()
