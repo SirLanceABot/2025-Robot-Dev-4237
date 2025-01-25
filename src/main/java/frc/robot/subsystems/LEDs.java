@@ -36,7 +36,8 @@ public class LEDs extends SubsystemLance
         kGreen(0, 255, 0),
         kBlue(0, 0, 255),
         kYellow(255, 255, 0),
-        kPurple(255, 0, 255);
+        kPurple(255, 0, 255),
+        kOff(0, 0, 0);
 
         int r;
         int g;
@@ -56,8 +57,8 @@ public class LEDs extends SubsystemLance
     // *** CLASS VARIABLES & INSTANCE VARIABLES ***
     // Put all class variables and instance variables here
     private final AddressableLED ledStrip = new AddressableLED(1);
-    private final AddressableLEDBuffer blankBuffer = new AddressableLEDBuffer(60);
-    private final AddressableLEDBuffer setBuffer = new AddressableLEDBuffer(60);
+    private final AddressableLEDBuffer blankBuffer;
+    private final AddressableLEDBuffer setBuffer;
     // private final AddressableLEDBuffer greenBuffer = new AddressableLEDBuffer(60);
     // private final AddressableLEDBuffer blueBuffer = new AddressableLEDBuffer(60);
     // private final AddressableLEDBuffer yellowBuffer = new AddressableLEDBuffer(60);
@@ -81,9 +82,13 @@ public class LEDs extends SubsystemLance
         System.out.println("  Constructor Started:  " + fullClassName);
         
         timer.start();
+        
+        ledStrip.setLength(5);
+        blankBuffer = new AddressableLEDBuffer(5);
+        setBuffer = new AddressableLEDBuffer(5);
+
         configLEDs();
         configBuffers();
-
         System.out.println("  Constructor Finished: " + fullClassName);
     }
 
@@ -107,6 +112,7 @@ public class LEDs extends SubsystemLance
     private void off()
     {
         ledStrip.setData(blankBuffer);
+        // setColorSolidCommand(Color.kOff);
     }
 
     private void setColorSolid(int r, int g, int b)
@@ -145,7 +151,7 @@ public class LEDs extends SubsystemLance
         //         setBuffer.setRGB(i, r, g, b);
         //     }
         // }
-
+     
         for(int i = 0; i < blankBuffer.getLength(); i++)
         {
             setBuffer.setRGB(i, r, g, b);
@@ -153,7 +159,9 @@ public class LEDs extends SubsystemLance
             r += 25;
             g += 25;
             b += 25;
+
         }
+        
 
     }
 
@@ -171,13 +179,13 @@ public class LEDs extends SubsystemLance
 
     public Command setColorBlinkCommand(Color color)
     {
-        return run(() -> setColorRainbow(color.r, color.g, color.b)).withName("Set LED Blink");
+        return run(() -> setColorBlink(color.r, color.g, color.b)).withName("Set LED Blink");
     }
 
-    // public Command setColorRainbowCommand(Color color)
-    // {
-    //     return run(() -> setColorRainbow(color.r, color.g, color.b)).withName("Set LED Rainbow");
-    // }
+    public Command setColorRainbowCommand(Color color)
+    {
+        return run(() -> setColorRainbow(color.r, color.g, color.b)).withName("Set LED Rainbow");
+    }
 
     
 
