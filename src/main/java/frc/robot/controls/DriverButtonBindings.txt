@@ -10,6 +10,7 @@ import com.ctre.phoenix6.swerve.SwerveRequest;
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj2.command.Commands;
+import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.RobotContainer;
 import frc.robot.commands.GeneralCommands;
@@ -54,7 +55,7 @@ import frc.robot.subsystems.CommandSwerveDrivetrain;
 //
 
 
-public class DriverButtonBindings 
+public final class DriverButtonBindings 
 {
     // This string gets the full name of the class, including the package name
     private static final String fullClassName = MethodHandles.lookup().lookupClass().getCanonicalName();
@@ -68,19 +69,20 @@ public class DriverButtonBindings
     
     // *** CLASS & INSTANCE VARIABLES ***
     // Put all class and instance variables here.
-    private final RobotContainer robotContainer;
-    private final double CRAWL_SPEED = 0.4;
-    private final double WALK_SPEED = 0.65;
-    private final double RUN_SPEED = 1.0;
+    private static CommandSwerveDrivetrain drivetrain;
+    private static CommandXboxController controller;
+    private static final double CRAWL_SPEED = 0.4;
+    private static final double WALK_SPEED = 0.65;
+    private static final double RUN_SPEED = 1.0;
 
-    private double scaleFactor = 0.5;
-    private DoubleSupplier leftYAxis;
-    private DoubleSupplier leftXAxis;
-    private DoubleSupplier rightXAxis;
-    private DoubleSupplier scaleFactorSupplier;
+    private static double scaleFactor = 0.5;
+    private static DoubleSupplier leftYAxis;
+    private static DoubleSupplier leftXAxis;
+    private static DoubleSupplier rightXAxis;
+    private static DoubleSupplier scaleFactorSupplier;
 
     // *** CLASS CONSTRUCTOR ***
-    public DriverButtonBindings(RobotContainer robotContainer)
+    private DriverButtonBindings(RobotContainer robotContainer)
     {
         System.out.println("  Constructor Started:  " + fullClassName);
 
@@ -95,23 +97,57 @@ public class DriverButtonBindings
             
             // configAButton();
             configBButton();
-        //     configXButton();
+            configXButton();
         //     configYButton();
-        //     configLeftBumper();
-        //     configRightBumper();
-        //     configBackButton();
-        //     configStartButton();
-        //     configLeftTrigger();
-        //     configRightTrigger();
-        //     configLeftStick();
-        //     configRightStick();
-        //     configDpadUp();
-        //     configDpadDown();
-        //     configRumble();
-            configDefaultCommands();
+            // configLeftBumper();
+            // configRightBumper();
+            // configBackButton();
+            // configStartButton();
+            // configLeftTrigger();
+            // configRightTrigger();
+            // configLeftStick();
+            // configRightStick();
+            // configDpadUp();
+            // configDpadDown();
+            // configRumble();
+            // configDefaultCommands();
         }
 
         System.out.println("  Constructor Finished: " + fullClassName);
+    }
+
+    public static void createBindings(RobotContainer robotContainer)
+    {
+        drivetrain = robotContainer.getDrivetrain();
+        controller = robotContainer.getDriverController();
+
+        configSuppliers();
+
+        configAButton();
+        configBButton();
+        configXButton();
+        configYButton();
+        configLeftBumper();
+        configRightBumper();
+        configBackButton();
+        configStartButton();
+        configLeftTrigger();
+        configRightTrigger();
+        configLeftStick();
+        configRightStick();
+        configDpadUp();
+        configDpadDown();
+        configRumble();
+        configDefaultCommands();
+        
+
+    }
+
+    private static void configSuppliers()
+    {
+        leftYAxis = () -> -controller.getRawAxis(1);
+        leftXAxis = () -> -controller.getRawAxis(0);
+        rightXAxis = () -> -controller.getRawAxis(2);
     }
 
     public void setJoystickAxis()
@@ -123,7 +159,7 @@ public class DriverButtonBindings
 
     }
 
-    private void configAButton()
+    private static void configAButton()
     {        
         // A Button
         // BooleanSupplier aButton = robotContainer.driverController.getButtonSupplier(Xbox.Button.kA);
@@ -137,13 +173,12 @@ public class DriverButtonBindings
         // aButtonTrigger.onTrue(Commands4237.shootCommand( () -> 0.0));
     }
 
-    private void configBButton()
+    private static void configBButton()
     {  
         // Testing buttons
-        Trigger bButton;
-        bButton = robotContainer.getDriverController().b();
-        bButton.whileTrue(robotContainer.getDrivetrain().applyRequest(() -> 
-        CommandSwerveDrivetrain.point.withModuleDirection(new Rotation2d(-robotContainer.getDriverController().getLeftY(), -robotContainer.getDriverController().getLeftX()))));
+        Trigger bButton = controller.b();
+        bButton.whileTrue(drivetrain.applyRequest(() -> 
+        CommandSwerveDrivetrain.point.withModuleDirection(new Rotation2d(-controller.getLeftY(), -controller.getLeftX()))));
 
 
         // B Button
@@ -162,9 +197,13 @@ public class DriverButtonBindings
         // }
     }
 
-    private void configXButton()
+    private static void configXButton()
     {
-        // X Button
+        Trigger xButton = controller.x();
+        xButton.onTrue(drivetrain.lockWheels());
+
+
+
         // BooleanSupplier xButton = robotContainer.driverController.getButtonSupplier(Xbox.Button.kX);
         // Trigger xButtonTrigger = new Trigger(xButton);
 
@@ -176,7 +215,7 @@ public class DriverButtonBindings
         // }
     }
 
-    private void configYButton()
+    private static void configYButton()
     {
         // Y Button
         // BooleanSupplier yButton = robotContainer.driverController.getButtonSupplier(Xbox.Button.kY);
@@ -190,7 +229,7 @@ public class DriverButtonBindings
         // }
     }
 
-    private void configLeftBumper()
+    private static void configLeftBumper()
     {
         //Left Bumper
         // BooleanSupplier leftBumper = robotContainer.driverController.getButtonSupplier(Xbox.Button.kLeftBumper);
@@ -204,7 +243,7 @@ public class DriverButtonBindings
         
     }
 
-    private void configRightBumper()
+    private static void configRightBumper()
     {
         // Right Bumper
         // BooleanSupplier rightBumper = robotContainer.driverController.getButtonSupplier(Xbox.Button.kRightBumper);
@@ -217,7 +256,7 @@ public class DriverButtonBindings
         // }
     }
 
-    private void configBackButton()
+    private static void configBackButton()
     {
         // Back Button
         // BooleanSupplier backButton = robotContainer.driverController.getButtonSupplier(Xbox.Button.kBack);
@@ -230,7 +269,7 @@ public class DriverButtonBindings
         // }
     }
 
-    private void configStartButton()
+    private static void configStartButton()
     {
         // Start Button
         // BooleanSupplier startButton = robotContainer.driverController.getButtonSupplier(Xbox.Button.kStart);
@@ -247,7 +286,7 @@ public class DriverButtonBindings
         // }
     }
 
-    private void configLeftStick()
+    private static void configLeftStick()
     {
         // Left Stick Button
         // BooleanSupplier leftStickButton = robotContainer.driverController.getButtonSupplier(Xbox.Button.kLeftStick);
@@ -257,7 +296,7 @@ public class DriverButtonBindings
         {}
     }
 
-    private void configRightStick()
+    private static void configRightStick()
     {
         // Left Stick Button
         // BooleanSupplier rightStickButton = robotContainer.driverController.getButtonSupplier(Xbox.Button.kRightStick);
@@ -267,7 +306,7 @@ public class DriverButtonBindings
         {}
     }
 
-    private void configLeftTrigger()
+    private static void configLeftTrigger()
     {
         //Left trigger 
         // BooleanSupplier leftTrigger = robotContainer.driverController.getButtonSupplier(Xbox.Button.kLeftTrigger);
@@ -276,7 +315,7 @@ public class DriverButtonBindings
         // leftTriggerTrigger.onTrue(Commands.runOnce(() -> scaleFactor = (scaleFactor > (WALK_SPEED + RUN_SPEED) / 2.0) ? WALK_SPEED : RUN_SPEED));
     }
 
-    private void configRightTrigger()
+    private static void configRightTrigger()
     {
         //Right trigger 
         // BooleanSupplier rightTrigger = robotContainer.driverController.getButtonSupplier(Xbox.Button.kRightTrigger);
@@ -285,7 +324,7 @@ public class DriverButtonBindings
         // rightTriggerTrigger.toggleOnTrue(Commands4237.intakeFromSource());
     }
 
-    private void configDpadUp()
+    private static void configDpadUp()
     {
         // Dpad down button
         // BooleanSupplier dPadUp = robotContainer.driverController.getDpadSupplier(Xbox.Dpad.kUp);
@@ -296,7 +335,7 @@ public class DriverButtonBindings
 
     }
 
-    private void configDpadDown()
+    private static void configDpadDown()
     {
         // BooleanSupplier dPadDown = robotContainer.driverController.getDpadSupplier(Xbox.Dpad.kDown);
         // Trigger dPadDownTrigger = new Trigger(dPadDown);
@@ -304,20 +343,20 @@ public class DriverButtonBindings
         // dPadDownTrigger.onTrue(Commands4237.shootFromAnywhereCommand());
     }
 
-    private void configRumble()
+    private static void configRumble()
     {
         // Rumble
     }
 
-    private void configDefaultCommands()
+    private static void configDefaultCommands()
     {
-        if(robotContainer.getDrivetrain() != null)
+        if(drivetrain != null)
         {
-            robotContainer.getDrivetrain().setDefaultCommand(
-                robotContainer.getDrivetrain().applyRequest(() ->
-                    CommandSwerveDrivetrain.drive.withVelocityX(-robotContainer.getDriverController().getLeftY() * (TunerConstants.MaxDriveSpeed / 4.0))// Drive forward with negative Y (forward)
-                        .withVelocityY(-robotContainer.getDriverController().getLeftX() * (TunerConstants.MaxDriveSpeed / 4.0)) // Drive left with negative X (left)
-                        .withRotationalRate(-robotContainer.getDriverController().getRightX() * TunerConstants.MaxAngularRate)) // Drive counterclockwise with negative X (left)
+            drivetrain.setDefaultCommand(
+                drivetrain.applyRequest(() ->
+                    CommandSwerveDrivetrain.drive.withVelocityX(-controller.getLeftY() * (TunerConstants.MaxDriveSpeed / 4.0))// Drive forward with negative Y (forward)
+                        .withVelocityY(-controller.getLeftX() * (TunerConstants.MaxDriveSpeed / 4.0)) // Drive left with negative X (left)
+                        .withRotationalRate(-controller.getRightX() * TunerConstants.MaxAngularRate)) // Drive counterclockwise with negative X (left)
             );
         }
 

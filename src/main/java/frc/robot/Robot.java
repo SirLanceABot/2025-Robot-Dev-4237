@@ -5,6 +5,7 @@ import java.lang.invoke.MethodHandles;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import frc.robot.controls.DriverBindings;
 
 public class Robot extends TimedRobot 
 {
@@ -18,9 +19,10 @@ public class Robot extends TimedRobot
         System.out.println("Loading: " + fullClassName);
     }
 
-    private final static RobotContainer robotContainer = new RobotContainer();
+    private final RobotContainer robotContainer;
     private Command autonomousCommand = null;
     private TestMode testMode = null;
+
 
 
     /** 
@@ -28,7 +30,14 @@ public class Robot extends TimedRobot
      */
     Robot() 
     {
+        robotContainer = new RobotContainer();
         
+        //Configure commands
+
+        if(robotContainer.useBindings())
+        {
+            DriverBindings.createBindings(robotContainer);
+        }
     }
 
     @Override

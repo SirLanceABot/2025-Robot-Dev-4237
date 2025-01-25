@@ -3,6 +3,8 @@ package frc.robot.subsystems;
 
 import static edu.wpi.first.units.Units.*;
 
+import java.util.concurrent.locks.Lock;
+import java.util.function.DoubleSupplier;
 import java.util.function.Supplier;
 
 import com.ctre.phoenix6.SignalLogger;
@@ -30,6 +32,7 @@ import frc.robot.generated.TunerConstants.TunerSwerveDrivetrain;
 /**
  * Class that extends the Phoenix 6 SwerveDrivetrain class and implements
  * Subsystem so it can easily be used in command-based projects.
+ * @author Matthew Fontecchio
  */
 public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Subsystem {
     private static final double kSimLoopPeriod = 0.005; // 5 ms
@@ -44,10 +47,15 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
     private boolean m_hasAppliedOperatorPerspective = false;
 
 
+    //Drive the robot
     public static final SwerveRequest.FieldCentric drive = new SwerveRequest.FieldCentric()
             .withDeadband(TunerConstants.MaxDriveSpeed * 0.1).withRotationalDeadband(TunerConstants.MaxAngularRate * 0.1) // Add a 10% deadband
             .withDriveRequestType(DriveRequestType.OpenLoopVoltage);
-    public static final SwerveRequest.SwerveDriveBrake brake = new SwerveRequest.SwerveDriveBrake();
+
+    //Lock the wheels
+    public static final SwerveRequest.SwerveDriveBrake lock = new SwerveRequest.SwerveDriveBrake();
+
+    //Point the wheels at a specific angle
     public static final SwerveRequest.PointWheelsAt point = new SwerveRequest.PointWheelsAt();
 
     /* Swerve requests to apply during SysId characterization */
@@ -194,7 +202,6 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
     }
 
 
-
     /**
      * Returns a command that applies the specified control request to this swerve drivetrain.
      *
@@ -203,6 +210,53 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
      */
     public Command applyRequest(Supplier<SwerveRequest> requestSupplier) {
         return run(() -> this.setControl(requestSupplier.get()));
+    }
+
+    /**
+     * Returns a command that will lock the wheels of the drivetrain in an X shape
+     * 
+     * @return Command to lock wheels
+     * @author Matthew Fontecchio
+     */
+    public Command lockWheelsCommand()
+    {
+        return applyRequest(() -> lock);
+    }
+
+    /**
+     * Returns a command that will drive the robot
+     * 
+     * @param leftYAxis the left Y axis of the controller
+     * @param leftXAxis the left X axis of the controller
+     * @param rightXAxis the right X axis of the controller
+     * @return Command to Drive
+     * @author Matthew Fontecchio
+     */
+    public Command driveCommand(DoubleSupplier leftYAxis, DoubleSupplier leftXAxis, DoubleSupplier rightXAxis)
+    {
+        return applyRequest(
+            () -> drive
+                .withVelocityX(leftYAxis.getAsDouble() * TunerConstants.MaxDriveSpeed)
+                .withVelocityY(leftXAxis.getAsDouble() * TunerConstants.MaxDriveSpeed)
+                .withRotationalRate(rightXAxis.getAsDouble() * TunerConstants.MaxAngularRate)
+        );
+    }
+
+    /**
+     * Returns a command that will point the robot's wheels in a specified direction
+     * 
+     * @param leftYAxis the left Y axis of the controller
+     * @param leftXAxis the left X axis of the controller
+     * @return Command to point the wheels at a specific angle
+     * @author Matthew Fontecchio
+     */
+    public Command pointCommand(DoubleSupplier leftYAxis, DoubleSupplier leftXAxis)
+    {
+        return applyRequest(
+            () -> point
+                .withModuleDirection(new Rotation2d(leftYAxis.getAsDouble(), leftXAxis.getAsDouble()))
+
+        );
     }
 
     /**

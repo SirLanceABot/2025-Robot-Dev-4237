@@ -17,7 +17,8 @@ import frc.robot.subsystems.IntakeWrist;
 import frc.robot.subsystems.Pivot;
 import frc.robot.subsystems.Shuttle;
 import frc.robot.subsystems.LEDs;
-import frc.robot.controls.DriverButtonBindings;
+import frc.robot.controls.DriverBindings;
+// import frc.robot.controls.DriverButtonBindings;
 import frc.robot.controls.DriverController;
 import frc.robot.controls.OperatorButtonBindings;
 import frc.robot.controls.OperatorController;
@@ -43,7 +44,7 @@ public class RobotContainer
 
     private boolean useGrabber              = false;
     private boolean useClimb                = false;
-    private boolean useDrivetrain           = false;
+    private boolean useDrivetrain           = true;
     private boolean useElevator             = false;
     private boolean useIntake               = false;
     private boolean useIntakeWrist          = false;
@@ -54,8 +55,8 @@ public class RobotContainer
     private boolean useGyro                 = false;
     private boolean usePoseEstimator        = false;
 
-    private boolean useBindings             = false;
-    private boolean useDriverController     = false;
+    private boolean useBindings             = true;
+    private boolean useDriverController     = true;
     private boolean useOperatorController   = false;
 
     public final boolean fullRobot;
@@ -72,7 +73,7 @@ public class RobotContainer
 
     private final GyroLance gyro;
 
-    private final DriverButtonBindings driverButtonBindings;
+    // private final DriverButtonBindings driverButtonBindings;
     private final CommandXboxController driverController;
     private final OperatorButtonBindings operatorButtonBindings;
     private final CommandXboxController operatorController;
@@ -99,11 +100,9 @@ public class RobotContainer
 
 
         driverController        = (useFullRobot || useDriverController)     ? new CommandXboxController(Constants.Controllers.DRIVER_CONTROLLER_PORT)                                         : null;
-        driverButtonBindings    = (useFullRobot || useBindings)             ? new DriverButtonBindings(this)                                                                                  : null;
         operatorController      = (useFullRobot || useOperatorController)   ? new CommandXboxController(Constants.Controllers.OPERATOR_CONTROLLER_PORT)                                       : null;
         operatorButtonBindings  = (useFullRobot || useBindings)             ? new OperatorButtonBindings(this)                                                                                : null;
 
-        configureBindings();
     }
 
     public Grabber getGrabber()
@@ -180,8 +179,10 @@ public class RobotContainer
         };
     }
 
-    private void configureBindings() 
-    {}
+    public boolean useBindings() 
+    {
+        return (useBindings || useFullRobot);
+    }
 
     public Command getAutonomousCommand() 
     {
