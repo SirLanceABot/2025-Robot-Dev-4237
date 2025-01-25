@@ -10,6 +10,9 @@ import frc.robot.motors.TalonFXLance;
 
 /**
  * This class creates the grabber subsystem and setsup related practice commands
+ * The grabber will handle coral and algae, it intakes and outakes both game pieces
+ * 
+ * @author Robbie Frank, Robbie Jeffery, Logan Bellinger
  */
 public class Grabber extends SubsystemLance
 {
@@ -60,8 +63,8 @@ public class Grabber extends SubsystemLance
     {
         kickMotor.setupFactoryDefaults();
         grabMotor.setupFactoryDefaults();
-        kickMotor.setupCoastMode();
-        grabMotor.setupCoastMode();
+        kickMotor.setupBrakeMode();
+        grabMotor.setupBrakeMode();
     }
 
     /**
@@ -114,7 +117,7 @@ public class Grabber extends SubsystemLance
     public Command grabGamePieceCommand()
     {
         // design pending
-        return run( () -> grabGamePiece()).withName("Grab GamePiece");
+        return runOnce( () -> grabGamePiece()).withName("Grab GamePiece");
     }
 
     /**
@@ -123,7 +126,7 @@ public class Grabber extends SubsystemLance
      */
     public Command ejectAlgaeCommand()
     {
-        return run(() -> ejectAlgae()).withName("Eject Algae");
+        return runOnce(() -> ejectAlgae()).withName("Eject Algae");
     }
 
     /**
@@ -131,7 +134,7 @@ public class Grabber extends SubsystemLance
     */
     public Command placeCoralCommand()
     {
-        return run(() -> placeCoral()).withName("Place Coral");
+        return runOnce(() -> placeCoral()).withName("Place Coral");
     }
     
     /**
@@ -140,7 +143,7 @@ public class Grabber extends SubsystemLance
      */
     public Command stopCommand()
     {
-        return run(() -> stop()).withName("Stop");
+        return runOnce(() -> stop()).withName("Stop");
     }
     // *** OVERRIDEN METHODS ***
     // Put all methods that are Overridden here
