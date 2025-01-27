@@ -225,7 +225,7 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
 
     /**
      * Returns a command that will drive the robot
-     * 
+     * The current drive speed is 1/4 that of the max for testing
      * @param leftYAxis the left Y axis of the controller
      * @param leftXAxis the left X axis of the controller
      * @param rightXAxis the right X axis of the controller
@@ -236,8 +236,8 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
     {
         return applyRequest(
             () -> drive
-                .withVelocityX(leftYAxis.getAsDouble() * TunerConstants.MaxDriveSpeed)
-                .withVelocityY(leftXAxis.getAsDouble() * TunerConstants.MaxDriveSpeed)
+                .withVelocityX(leftYAxis.getAsDouble() * (TunerConstants.MaxDriveSpeed / 4.0))
+                .withVelocityY(leftXAxis.getAsDouble() * (TunerConstants.MaxDriveSpeed / 4.0))
                 .withRotationalRate(rightXAxis.getAsDouble() * TunerConstants.MaxAngularRate)
         );
     }

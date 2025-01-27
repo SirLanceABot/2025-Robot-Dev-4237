@@ -1,8 +1,12 @@
 package frc.robot.controls;
 
 import java.lang.invoke.MethodHandles;
+import java.util.function.BooleanSupplier;
 import java.util.function.DoubleSupplier;
 
+import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.GenericHID.RumbleType;
+import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.RobotContainer;
@@ -27,7 +31,8 @@ public final class OperatorBindings {
     private static DoubleSupplier rightXAxis;
     private static DoubleSupplier rightYAxis;
 
-
+    private static BooleanSupplier isTeleop;
+    private static DoubleSupplier matchTime;
 
     // *** CLASS CONSTRUCTOR ***
     private OperatorBindings()
@@ -55,7 +60,7 @@ public final class OperatorBindings {
         // configRightStick();
         // configDpadUp();
         // configDpadDown();
-        // configRumble();
+        // configRumble(30);
         // configDefaultCommands();
 
         System.out.println("  Constructor Finished: " + fullClassName);
@@ -69,6 +74,9 @@ public final class OperatorBindings {
         leftXAxis = () -> -controller.getRawAxis(0);
         rightXAxis = () -> -controller.getRawAxis(4);
         rightYAxis = () -> -controller.getRawAxis(5);
+
+        isTeleop = () -> DriverStation.isTeleopEnabled();
+        matchTime = () -> DriverStation.getMatchTime();
     }
 
 
@@ -155,8 +163,13 @@ public final class OperatorBindings {
     }
 
 
-    private static void configRumble()
+    private static void configRumble(int time)
     {
+        Trigger rumble = new Trigger(() -> (matchTime.getAsDouble() == time && isTeleop.getAsBoolean()));
+        
+        rumble
+            .onTrue(Commands.runOnce(() -> controller.getHID().setRumble(RumbleType.kBothRumble, 1.0)))
+            .onFalse(Commands.runOnce(() -> controller.getHID().setRumble(RumbleType.kBothRumble, 0.0)));
         
     }
 

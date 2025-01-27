@@ -1,9 +1,17 @@
 package frc.robot.controls;
 
 import java.lang.invoke.MethodHandles;
+import java.util.function.BooleanSupplier;
 import java.util.function.DoubleSupplier;
+import java.util.function.IntSupplier;
+
+import javax.lang.model.util.ElementScanner14;
 
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.GenericHID.RumbleType;
+import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.RobotContainer;
@@ -26,10 +34,13 @@ public final class DriverBindings {
     // Put all class and instance variables here.
     private static CommandSwerveDrivetrain drivetrain;
     private static CommandXboxController controller;
+
     private static DoubleSupplier leftYAxis;
     private static DoubleSupplier leftXAxis;
     private static DoubleSupplier rightXAxis;
 
+    private static BooleanSupplier isTeleop;
+    private static DoubleSupplier matchTime;
 
     // *** CLASS CONSTRUCTOR ***
     private DriverBindings()
@@ -47,7 +58,7 @@ public final class DriverBindings {
         // configAButton();
         configBButton();
         configXButton();
-        // configYButton();
+        configYButton();
         // configLeftBumper();
         // configRightBumper();
         // configBackButton();
@@ -58,7 +69,7 @@ public final class DriverBindings {
         // configRightStick();
         // configDpadUp();
         // configDpadDown();
-        // configRumble();
+        configRumble(30);
         configDefaultCommands();
 
         System.out.println("  Constructor Finished: " + fullClassName);
@@ -69,6 +80,9 @@ public final class DriverBindings {
         leftYAxis = () -> -controller.getRawAxis(1);
         leftXAxis = () -> -controller.getRawAxis(0);
         rightXAxis = () -> -controller.getRawAxis(4);
+
+        isTeleop = () -> DriverStation.isTeleopEnabled();
+        matchTime = () -> DriverStation.getMatchTime();
     }
 
     private static void configAButton()
@@ -96,9 +110,12 @@ public final class DriverBindings {
 
     private static void configYButton()
     {
-        Trigger yButton = controller.y();
-        
+        // Trigger yButton = controller.y(); 
+        // yButton
+        // .onTrue( Commands.runOnce(() -> controller.getHID().setRumble(RumbleType.kBothRumble, 1.0)))
+        // .onFalse( Commands.runOnce(() -> controller.getHID().setRumble(RumbleType.kBothRumble, 0.0)));
     }
+
 
 
     private static void configLeftBumper()
@@ -160,10 +177,13 @@ public final class DriverBindings {
         
     }
 
-
-    private static void configRumble()
+    public static void configRumble(int time)
     {
+        Trigger rumble = new Trigger(() -> (matchTime.getAsDouble() == time && isTeleop.getAsBoolean()));
         
+        rumble
+            .onTrue(Commands.runOnce(() -> controller.getHID().setRumble(RumbleType.kBothRumble, 1.0)))
+            .onFalse(Commands.runOnce(() -> controller.getHID().setRumble(RumbleType.kBothRumble, 0.0)));
     }
 
 
