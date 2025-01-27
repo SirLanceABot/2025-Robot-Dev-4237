@@ -4,8 +4,10 @@ import java.lang.invoke.MethodHandles;
 import java.util.function.DoubleSupplier;
 
 import edu.wpi.first.math.MathUtil;
+import edu.wpi.first.units.measure.Distance;
 import edu.wpi.first.wpilibj.AddressableLED;
 import edu.wpi.first.wpilibj.AddressableLEDBuffer;
+import edu.wpi.first.wpilibj.LEDPattern;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
@@ -64,6 +66,8 @@ public class LEDs extends SubsystemLance
     // private final AddressableLEDBuffer yellowBuffer = new AddressableLEDBuffer(60);
     // private final AddressableLEDBuffer purpleBuffer = new AddressableLEDBuffer(60);
     private final Timer timer = new Timer();
+    // private final LEDPattern rainbow = LEDPattern.rainbow(255, 100);
+    // private static final Distance LEDSpacing = Meters.of(1/ 120.0);
 
     
 

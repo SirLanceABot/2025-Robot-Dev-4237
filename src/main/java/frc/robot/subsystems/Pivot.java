@@ -13,7 +13,7 @@ import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import frc.robot.Constants;
-import frc.robot.Constants.TargetPosition;
+// import frc.robot.Constants.TargetPosition;
 // import frc.robot.motors.SparkMaxLance;
 import frc.robot.motors.TalonFXLance;
 
@@ -36,6 +36,25 @@ public class Pivot extends SubsystemLance
 
     // *** INNER ENUMS and INNER CLASSES ***
     // Put all inner enums and inner classes here
+
+    public enum PivotPosition
+    {
+        kL4(100.0),
+        kL3(80.0),
+        kGrabReefAlgae(70.0),
+        kL2(60.0),
+        kL1(50.0),
+        kHoldAlgaePosition(30.0),
+        kRestingPosition(15.0);
+
+        public final double pivotPosition;
+
+        private PivotPosition(double pivotPosition)
+        {
+            this.pivotPosition = pivotPosition;
+        }
+
+    }
 
 
 
@@ -143,9 +162,9 @@ public class Pivot extends SubsystemLance
         return motor.getPosition();
     }
 
-    public BooleanSupplier isAtPosition(TargetPosition position)
+    public BooleanSupplier isAtPosition(PivotPosition position)
     {
-        return () -> Math.abs(motor.getPosition() - position.pivot) < threshold;
+        return () -> Math.abs(motor.getPosition() - position.pivotPosition) < threshold;
     }
 
     // ask how to do this
@@ -208,9 +227,9 @@ public class Pivot extends SubsystemLance
     //     return run(() -> stop()).withName("Hold Pivot");
     // }
 
-    public Command moveToSetPositionCommand(Constants.TargetPosition targetPosition)
+    public Command moveToSetPositionCommand(PivotPosition targetPosition)
     {
-        return runOnce(() -> motor.setControlPosition(targetPosition.pivot));
+        return runOnce(() -> motor.setControlPosition(targetPosition.pivotPosition));
     }
 
     public Command stopCommand()

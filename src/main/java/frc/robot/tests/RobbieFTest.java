@@ -9,9 +9,10 @@ import frc.robot.subsystems.Elevator;
 import frc.robot.subsystems.Grabber;
 import frc.robot.subsystems.Shuttle;
 import frc.robot.subsystems.IntakeWrist;
+import frc.robot.subsystems.Pivot;
 import frc.robot.RobotContainer;
 import frc.robot.Constants;
-import frc.robot.Constants.TargetPosition;
+// import frc.robot.Constants.TargetPosition;
 // import frc.robot.subsystems.IntakeWrist.TargetPosition;
 
 public class RobbieFTest implements Test
@@ -92,7 +93,8 @@ public class RobbieFTest implements Test
             // elevator.manualMove(0.1);
             System.out.println("A Button Pressed");
 
-            elevator.moveToSetPositionCommand(Constants.TargetPosition.kL2).schedule();
+            // elevator.moveToSetPositionCommand(Constants.TargetPosition.kL2).schedule();
+            elevator.moveToSetPositionCommand(Elevator.ElevatorPosition.kL2).schedule();
         }
         else if (joystick.getRawButton(2))
         {

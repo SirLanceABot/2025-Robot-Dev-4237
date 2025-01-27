@@ -11,7 +11,7 @@ import edu.wpi.first.util.datalog.DoubleLogEntry;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import frc.robot.Constants;
-import frc.robot.Constants.TargetPosition;
+// import frc.robot.Constants.TargetPosition;
 import frc.robot.motors.TalonFXLance;
 
 /**
@@ -32,6 +32,27 @@ public class Elevator extends SubsystemLance
 
     // *** INNER ENUMS and INNER CLASSES ***
     // Put all inner enums and inner classes here
+    public enum ElevatorPosition
+    {
+        kL4(100.0),
+        kUpperReefAlgae(80.0),
+        kL3(60.0),
+        kLowerReefAlgae(40.0),
+        kL2(20.0),
+        kL1(10.0),
+        kHoldAlgaePosition(7.0),
+        kGrabCoralPosition(5.0),
+        kRestingPosition(2.0);
+
+        public final double elevatorPosition;
+
+        private ElevatorPosition(double elevatorPosition)
+        {
+            this.elevatorPosition = elevatorPosition;
+        }
+    
+    }
+
 
 
     
@@ -42,7 +63,7 @@ public class Elevator extends SubsystemLance
     // private SparkLimitSwitch forwardLimitSwitch;
     // private SparkLimitSwitch reverseLimitSwitch;
     // private RelativeEncoder encoder;
-    private Constants.TargetPosition targetPosition = Constants.TargetPosition.kOverride;
+    // private Constants.TargetPosition targetPosition = Constants.TargetPosition.kOverride;
     private final double threshold = 1.0;
     private final double MAX_OUTPUT = 0.6;
     private final double MIN_OUTPUT = 0.1;
@@ -152,7 +173,7 @@ public class Elevator extends SubsystemLance
     //     targetPosition = Constants.TargetPosition.kL4;
     // }
 
-    private void moveToSetPosition(Constants.TargetPosition targetPosition)
+    private void moveToSetPosition(ElevatorPosition targetPosition)
     {
         // System.out.println("1");
 
@@ -172,7 +193,7 @@ public class Elevator extends SubsystemLance
         //     stop();
         // }
 
-        leftMotor.setControlPosition(targetPosition.elevator);
+        leftMotor.setControlPosition(targetPosition.elevatorPosition);
     }
 
     private void set(double speed)
@@ -185,9 +206,9 @@ public class Elevator extends SubsystemLance
         leftMotor.set(0.0);
     }
 
-    public BooleanSupplier isAtPosition(TargetPosition position)
+    public BooleanSupplier isAtPosition(ElevatorPosition position)
     {
-        return () -> Math.abs(leftMotor.getPosition() - position.elevator) < threshold;
+        return () -> Math.abs(leftMotor.getPosition() - position.elevatorPosition) < threshold;
     }
 
     public Command setCommand(double speed)
@@ -200,9 +221,9 @@ public class Elevator extends SubsystemLance
         return runOnce(() -> stop()).withName("Stop Elevator");
     }
 
-    public Command moveToSetPositionCommand(Constants.TargetPosition targetPosition)
+    public Command moveToSetPositionCommand(ElevatorPosition position)
     {
-        return run(() -> moveToSetPosition(targetPosition)).withName("Move To Set Position Elevator");
+        return run(() -> moveToSetPosition(position)).withName("Move To Set Position Elevator");
     }
 
     // *** OVERRIDEN METHODS ***
