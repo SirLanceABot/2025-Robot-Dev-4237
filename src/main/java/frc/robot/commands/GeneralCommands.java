@@ -3,7 +3,15 @@ package frc.robot.commands;
 import java.lang.invoke.MethodHandles;
 
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.Constants;
 import frc.robot.RobotContainer;
+import frc.robot.sensors.Proximity;
+import frc.robot.subsystems.Elevator;
+import frc.robot.subsystems.Grabber;
+import frc.robot.subsystems.Intake;
+import frc.robot.subsystems.IntakeWrist;
+import frc.robot.subsystems.LEDs;
+import frc.robot.subsystems.Pivot;
 
 public final class GeneralCommands
 {
@@ -25,23 +33,38 @@ public final class GeneralCommands
 
     // *** CLASS VARIABLES & INSTANCE VARIABLES ***
     // Put all class variables and instance variables here
-    private static RobotContainer robotContainer = null;
+    private static Intake intake = new Intake();
+    private static IntakeWrist intakeWrist = new IntakeWrist();
+    private static Pivot pivot = new Pivot();
+    private static Elevator elevator = new Elevator();
+    private static Grabber grabber = new Grabber();
+    private static LEDs leds = new LEDs();
+    private static Proximity intakeProximity = new Proximity(Constants.Proximity.INTAKE_PORT);
+    private static Proximity elevatorProximity = new Proximity(Constants.Proximity.ELEVATOR_PORT);
+    private static Proximity grabberProximity = new Proximity(Constants.Proximity.GRABBER_PORT);
    
 
 
     // *** CLASS CONSTRUCTORS ***
     // Put all class constructors here
-    private GeneralCommands(RobotContainer robotContainer)
+    private GeneralCommands()
+    {}
+
+    public static void createCommands(RobotContainer robotContainer)
     {
         System.out.println("  Constructor Started:  " + fullClassName);
 
-        System.out.println("  Constructor Finished: " + fullClassName);
-    }
+        intake = robotContainer.getIntake();
+        intakeWrist = robotContainer.getIntakeWrist();
+        pivot = robotContainer.getPivot();
+        elevator = robotContainer.getElevator();
+        grabber = robotContainer.getGrabber();
+        leds = robotContainer.getLEDs();
+        intakeProximity = robotContainer.getIntakeProximity();
+        elevatorProximity = robotContainer.getElevatorProximity();
+        grabberProximity = robotContainer.getGrabberProximity();
 
-    public static void setRobotContainer(RobotContainer robotContainer)
-    {
-        if(GeneralCommands.robotContainer == null)
-            GeneralCommands.robotContainer = robotContainer;
+        System.out.println("  Constructor Finished: " + fullClassName);
     }
 
 

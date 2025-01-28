@@ -4,12 +4,20 @@ import java.lang.invoke.MethodHandles;
 
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
+import frc.robot.Constants;
 import frc.robot.RobotContainer;
 import frc.robot.commands.CommandsManager.TargetPosition;
+import frc.robot.sensors.Proximity;
 // import frc.robot.Constants.TargetPosition;
 import frc.robot.subsystems.IntakeWrist.Position;
+import frc.robot.subsystems.Elevator;
+import frc.robot.subsystems.Intake;
+import frc.robot.subsystems.IntakeWrist;
+import frc.robot.subsystems.LEDs;
 import frc.robot.subsystems.Elevator.ElevatorPosition;
+import frc.robot.subsystems.Grabber;
 import frc.robot.subsystems.LEDs.Color;
+import frc.robot.subsystems.Pivot;
 import frc.robot.subsystems.Pivot.PivotPosition;
 
 public final class IntakingCommands
@@ -32,23 +40,37 @@ public final class IntakingCommands
 
     // *** CLASS VARIABLES & INSTANCE VARIABLES ***
     // Put all class variables and instance variables here
-    private static RobotContainer robotContainer = null;
-   
+    private static Intake intake = new Intake();
+    private static IntakeWrist intakeWrist = new IntakeWrist();
+    private static Pivot pivot = new Pivot();
+    private static Elevator elevator = new Elevator();
+    private static Grabber grabber = new Grabber();
+    private static LEDs leds = new LEDs();
+    private static Proximity intakeProximity = new Proximity(Constants.Proximity.INTAKE_PORT);
+    private static Proximity elevatorProximity = new Proximity(Constants.Proximity.ELEVATOR_PORT);
+    private static Proximity grabberProximity = new Proximity(Constants.Proximity.GRABBER_PORT);
 
 
     // *** CLASS CONSTRUCTORS ***
     // Put all class constructors here
-    private IntakingCommands(RobotContainer robotContainer)
+    private IntakingCommands()
+    {}
+
+    public static void createCommands(RobotContainer robotContainer)
     {
         System.out.println("  Constructor Started:  " + fullClassName);
 
-        System.out.println("  Constructor Finished: " + fullClassName);
-    }
+        intake = robotContainer.getIntake();
+        intakeWrist = robotContainer.getIntakeWrist();
+        pivot = robotContainer.getPivot();
+        elevator = robotContainer.getElevator();
+        grabber = robotContainer.getGrabber();
+        leds = robotContainer.getLEDs();
+        intakeProximity = robotContainer.getIntakeProximity();
+        elevatorProximity = robotContainer.getElevatorProximity();
+        grabberProximity = robotContainer.getGrabberProximity();
 
-    public static void setRobotContainer(RobotContainer robotContainer)
-    {
-        if(IntakingCommands.robotContainer == null)
-            IntakingCommands.robotContainer = robotContainer;
+        System.out.println("  Constructor Finished: " + fullClassName);
     }
 
 
@@ -62,39 +84,39 @@ public final class IntakingCommands
     */
     public static Command pickupCoralCommand()
     {
-        if(robotContainer.getIntake() != null && robotContainer.getIntakeWrist() != null && robotContainer.getElevator() != null && robotContainer.getGrabber() != null && robotContainer.getLEDs() != null && robotContainer.getIntakeProximity() != null && robotContainer.getElevatorProximity() != null && robotContainer.getGrabberProximity() != null)
+        if(intake != null && intakeWrist != null && elevator != null && grabber != null && leds != null && intakeProximity != null && elevatorProximity != null && grabberProximity != null)
         {
             // Does it work?  I don't know.  I'm sure its fine
             return 
-            Commands.waitUntil(robotContainer.getIntakeWrist().isAtPosition(Position.kIntakeCoralPosition))
+            Commands.waitUntil(intakeWrist.isAtPosition(Position.kIntakeCoralPosition))
             .deadlineFor(
-                robotContainer.getLEDs().setColorBlinkCommand(Color.kYellow),
-                robotContainer.getIntakeWrist().moveToSetPositionCommand(Position.kIntakeCoralPosition))
+                leds.setColorBlinkCommand(Color.kYellow),
+                intakeWrist.moveToSetPositionCommand(Position.kIntakeCoralPosition))
             .andThen(
-                Commands.waitUntil(robotContainer.getIntakeProximity().isDetectedSupplier())
+                Commands.waitUntil(intakeProximity.isDetectedSupplier())
                 .deadlineFor(
-                    robotContainer.getIntake().pickupCommand(),
-                    robotContainer.getElevator().moveToSetPositionCommand(TargetPosition.kGrabCoralPosition.elevator)))
+                    intake.pickupCommand(),
+                    elevator.moveToSetPositionCommand(TargetPosition.kGrabCoralPosition.elevator)))
             .andThen(
-                Commands.waitUntil(robotContainer.getIntakeWrist().isAtPosition(Position.kPassToGrabberPosition))
+                Commands.waitUntil(intakeWrist.isAtPosition(Position.kPassToGrabberPosition))
                 .deadlineFor(
-                    robotContainer.getIntake().stopCommand(),
-                    robotContainer.getIntakeWrist().moveToSetPositionCommand(Position.kPassToGrabberPosition)))
+                    intake.stopCommand(),
+                    intakeWrist.moveToSetPositionCommand(Position.kPassToGrabberPosition)))
             .andThen(
-                    Commands.waitUntil(robotContainer.getElevatorProximity().isDetectedSupplier())
+                    Commands.waitUntil(elevatorProximity.isDetectedSupplier())
                     .deadlineFor(
-                        robotContainer.getIntake().ejectCommand(),
-                        robotContainer.getGrabber().grabGamePieceCommand()))
+                        intake.ejectCommand(),
+                        grabber.grabGamePieceCommand()))
             .andThen(
-                Commands.waitUntil(robotContainer.getGrabberProximity().isDetectedSupplier())
+                Commands.waitUntil(grabberProximity.isDetectedSupplier())
                 .deadlineFor(
-                    robotContainer.getElevator().moveToSetPositionCommand(TargetPosition.kRestingPosition.elevator)))
+                    elevator.moveToSetPositionCommand(TargetPosition.kRestingPosition.elevator)))
             .andThen(
-                Commands.waitUntil(robotContainer.getIntakeWrist().isAtPosition(Position.kRestingPosition))
+                Commands.waitUntil(intakeWrist.isAtPosition(Position.kRestingPosition))
                 .deadlineFor(
-                    robotContainer.getGrabber().stopCommand(),
-                    robotContainer.getIntakeWrist().moveToSetPositionCommand(Position.kRestingPosition),
-                    robotContainer.getLEDs().setColorSolidCommand(Color.kRed)));
+                    grabber.stopCommand(),
+                    intakeWrist.moveToSetPositionCommand(Position.kRestingPosition),
+                    leds.setColorSolidCommand(Color.kRed)));
         }
         else
         {
@@ -109,20 +131,20 @@ public final class IntakingCommands
      */
     public static Command intakeAlgaeCommand()
     {
-        if(robotContainer.getIntake() != null && robotContainer.getIntakeWrist() != null && robotContainer.getIntakeProximity() != null && robotContainer.getLEDs() != null)
+        if(intake != null && intakeWrist != null && leds != null && intakeProximity != null)
         {
             return
-            Commands.waitUntil(robotContainer.getIntakeProximity().isDetectedSupplier())
+            Commands.waitUntil(intakeProximity.isDetectedSupplier())
             .deadlineFor(
-                robotContainer.getLEDs().setColorBlinkCommand(Color.kYellow),
-                robotContainer.getIntakeWrist().moveToSetPositionCommand(Position.kManipAlgaePosition),
-                robotContainer.getIntake().pickupCommand())
+                leds.setColorBlinkCommand(Color.kYellow),
+                intakeWrist.moveToSetPositionCommand(Position.kManipAlgaePosition),
+                intake.pickupCommand())
             .andThen(
-                Commands.waitUntil(robotContainer.getIntakeWrist().isAtPosition(Position.kAlgaeIntakedPosition))
+                Commands.waitUntil(intakeWrist.isAtPosition(Position.kAlgaeIntakedPosition))
                 .deadlineFor(
-                    robotContainer.getIntakeWrist().moveToSetPositionCommand(Position.kAlgaeIntakedPosition),
-                    robotContainer.getIntake().stopCommand(),
-                    robotContainer.getLEDs().setColorSolidCommand(Color.kRed)));
+                    intakeWrist.moveToSetPositionCommand(Position.kAlgaeIntakedPosition),
+                    intake.stopCommand(),
+                    leds.setColorSolidCommand(Color.kRed)));
         }
         else
         {
@@ -138,22 +160,22 @@ public final class IntakingCommands
      */
     public static Command intakeAlgaeFromReefCommand(TargetPosition targetPosition)
     {
-        if(robotContainer.getGrabber() != null && robotContainer.getElevator() != null && robotContainer.getPivot() != null && robotContainer.getGrabberProximity() != null && robotContainer.getLEDs() != null)
+        if(grabber != null && elevator != null && pivot != null && grabber != null && leds != null && grabberProximity != null)
         {
             return
-            Commands.waitUntil(robotContainer.getGrabberProximity().isDetectedSupplier())
+            Commands.waitUntil(grabberProximity.isDetectedSupplier())
             .deadlineFor(
-                robotContainer.getLEDs().setColorBlinkCommand(Color.kYellow),
-                robotContainer.getElevator().moveToSetPositionCommand(targetPosition.elevator),
-                robotContainer.getPivot().moveToSetPositionCommand(targetPosition.pivot),
-                robotContainer.getGrabber().grabGamePieceCommand())
+                leds.setColorBlinkCommand(Color.kYellow),
+                elevator.moveToSetPositionCommand(targetPosition.elevator),
+                pivot.moveToSetPositionCommand(targetPosition.pivot),
+                grabber.grabGamePieceCommand())
             .andThen(
-                Commands.waitUntil(() -> (robotContainer.getPivot().isAtPosition(targetPosition.pivot).getAsBoolean() && robotContainer.getElevator().isAtPosition(targetPosition.elevator).getAsBoolean()))
+                Commands.waitUntil(() -> (pivot.isAtPosition(targetPosition.pivot).getAsBoolean() && elevator.isAtPosition(targetPosition.elevator).getAsBoolean()))
                 .deadlineFor(
-                    robotContainer.getElevator().moveToSetPositionCommand(TargetPosition.kHoldAlgaePosition.elevator),
-                    robotContainer.getPivot().moveToSetPositionCommand(TargetPosition.kHoldAlgaePosition.pivot),
-                    robotContainer.getGrabber().stopCommand(),
-                    robotContainer.getLEDs().setColorSolidCommand(Color.kRed)));
+                    elevator.moveToSetPositionCommand(TargetPosition.kHoldAlgaePosition.elevator),
+                    pivot.moveToSetPositionCommand(TargetPosition.kHoldAlgaePosition.pivot),
+                    grabber.stopCommand(),
+                    leds.setColorSolidCommand(Color.kRed)));
         }
         else
         {

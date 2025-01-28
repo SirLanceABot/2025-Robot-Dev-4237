@@ -7,6 +7,7 @@ package frc.robot.commands;
 import java.lang.invoke.MethodHandles;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.ExampleSubsystem;
+import frc.robot.RobotContainer;
 import frc.robot.subsystems.Elevator.ElevatorPosition;
 import frc.robot.subsystems.Pivot.PivotPosition;
 
@@ -67,10 +68,19 @@ public class CommandsManager extends Command
         // }
     }
 
-    // public static void createCommands(RobotContainer robotContainer)
-    // {
+    public static void createCommands(RobotContainer robotContainer)
+    {
+        GeneralCommands.createCommands(robotContainer);
+        IntakingCommands.createCommands(robotContainer);
+        ScoringCommands.createCommands(robotContainer);
 
-    // }
+        createNamedCommands();
+    }
+
+    private static void createNamedCommands()
+    {
+        
+    }
 
     // Called when the command is initially scheduled.
     @Override
