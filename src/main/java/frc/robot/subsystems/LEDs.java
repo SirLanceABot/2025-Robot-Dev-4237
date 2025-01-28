@@ -39,6 +39,7 @@ public class LEDs extends SubsystemLance
         kBlue(0, 0, 255),
         kYellow(255, 255, 0),
         kPurple(255, 0, 255),
+        kHotPink(255, 105, 180),
         kOff(0, 0, 0);
 
         int r;
