@@ -59,8 +59,8 @@ public class RobotContainer
     private boolean usePoseEstimator        = false;
     private boolean useProximity            = false;
 
-    private boolean useDriverBindings       = false;
-    private boolean useOperatorBindings     = false;
+    // private boolean useDriverBindings       = false;
+    // private boolean useOperatorBindings     = false;
     private boolean useDriverController     = false;
     private boolean useOperatorController   = false;
 
@@ -204,16 +204,6 @@ public class RobotContainer
             DriverStation.reportError("No alliance is avaliable, assuming Blue", false);
             return false;
         };
-    }
-
-    public boolean useDriverBindings() 
-    {
-        return (useDriverBindings || useFullRobot);
-    }
-
-    public boolean useOperatorBindings() 
-    {
-        return (useOperatorBindings || useFullRobot);
     }
 
     public Command getAutonomousCommand() 

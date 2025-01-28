@@ -39,10 +39,8 @@ public class Robot extends TimedRobot
 
 
         //Configure Bindings
-        if(robotContainer.useDriverBindings())
-            DriverBindings.createBindings(robotContainer);
-        if(robotContainer.useOperatorBindings())
-            OperatorBindings.createBindings(robotContainer);
+        DriverBindings.createBindings(robotContainer);
+        OperatorBindings.createBindings(robotContainer);
 
     }
 

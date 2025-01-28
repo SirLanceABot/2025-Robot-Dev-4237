@@ -25,6 +25,7 @@ public final class OperatorBindings {
     
     // *** CLASS & INSTANCE VARIABLES ***
     // Put all class and instance variables here.
+    //Variables should be private and static
     private static CommandXboxController controller;
     private static DoubleSupplier leftYAxis;
     private static DoubleSupplier leftXAxis;
@@ -40,31 +41,34 @@ public final class OperatorBindings {
 
     public static void createBindings(RobotContainer robotContainer)
     {
-        System.out.println("  Constructor Started:  " + fullClassName);
-
         controller = robotContainer.getOperatorController();
 
-        // configSuppliers();
+        if(controller != null)
+        {
+            System.out.println("  Constructor Started:  " + fullClassName);
 
-        // configAButton();
-        // configBButton();
-        // configXButton();
-        // configYButton();
-        // configLeftBumper();
-        // configRightBumper();
-        // configBackButton();
-        // configStartButton();
-        // configLeftTrigger();
-        // configRightTrigger();
-        // configLeftStick();
-        // configRightStick();
-        // configDpadUp();
-        // configDpadDown();
-        // configRumble(30);
-        // configDefaultCommands();
 
-        System.out.println("  Constructor Finished: " + fullClassName);
+            // configSuppliers();
 
+            // configAButton();
+            // configBButton();
+            // configXButton();
+            // configYButton();
+            // configLeftBumper();
+            // configRightBumper();
+            // configBackButton();
+            // configStartButton();
+            // configLeftTrigger();
+            // configRightTrigger();
+            // configLeftStick();
+            // configRightStick();
+            // configDpadUp();
+            // configDpadDown();
+            // configRumble(30);
+            // configDefaultCommands();
+
+            System.out.println("  Constructor Finished: " + fullClassName);
+        }
     }
 
 
@@ -165,11 +169,12 @@ public final class OperatorBindings {
 
     private static void configRumble(int time)
     {
-        Trigger rumble = new Trigger(() -> (matchTime.getAsDouble() == time && isTeleop.getAsBoolean()));
+        BooleanSupplier isRumbleTime = () -> isTeleop.getAsBoolean() && Math.abs(matchTime.getAsDouble() - time) < 0.5;
+        Trigger rumble = new Trigger(isRumbleTime);
         
         rumble
-            .onTrue(Commands.runOnce(() -> controller.getHID().setRumble(RumbleType.kBothRumble, 1.0)))
-            .onFalse(Commands.runOnce(() -> controller.getHID().setRumble(RumbleType.kBothRumble, 0.0)));
+        .onTrue( Commands.runOnce(() -> controller.getHID().setRumble(RumbleType.kBothRumble, 1.0)))
+        .onFalse( Commands.runOnce(() -> controller.getHID().setRumble(RumbleType.kBothRumble, 0.0)));
         
     }
 

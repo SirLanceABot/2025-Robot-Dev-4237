@@ -11,6 +11,8 @@ import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.GenericHID.RumbleType;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.event.EventLoop;
+import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
@@ -32,6 +34,7 @@ public final class DriverBindings {
     
     // *** CLASS & INSTANCE VARIABLES ***
     // Put all class and instance variables here.
+    //Variables should be private and static
     private static CommandSwerveDrivetrain drivetrain;
     private static CommandXboxController controller;
 
@@ -48,31 +51,35 @@ public final class DriverBindings {
 
     public static void createBindings(RobotContainer robotContainer)
     {
-        System.out.println("  Constructor Started:  " + fullClassName);
-
-        drivetrain = robotContainer.getDrivetrain();
         controller = robotContainer.getDriverController();
 
-        configSuppliers();
+        if(controller != null)
+        {
+            System.out.println("  Constructor Started:  " + fullClassName);
 
-        // configAButton();
-        configBButton();
-        configXButton();
-        configYButton();
-        // configLeftBumper();
-        // configRightBumper();
-        // configBackButton();
-        // configStartButton();
-        // configLeftTrigger();
-        // configRightTrigger();
-        // configLeftStick();
-        // configRightStick();
-        // configDpadUp();
-        // configDpadDown();
-        configRumble(30);
-        configDefaultCommands();
+            drivetrain = robotContainer.getDrivetrain();
 
-        System.out.println("  Constructor Finished: " + fullClassName);
+            configSuppliers();
+
+            // configAButton();
+            // configBButton();
+            // configXButton();
+            // configYButton();
+            // configLeftBumper();
+            // configRightBumper();
+            // configBackButton();
+            // configStartButton();
+            // configLeftTrigger();
+            // configRightTrigger();
+            // configLeftStick();
+            // configRightStick();
+            // configDpadUp();
+            // configDpadDown();
+            configRumble(10);
+            // configDefaultCommands();
+
+            System.out.println("  Constructor Finished: " + fullClassName);
+        }
     }
 
     private static void configSuppliers()
@@ -83,6 +90,7 @@ public final class DriverBindings {
 
         isTeleop = () -> DriverStation.isTeleopEnabled();
         matchTime = () -> DriverStation.getMatchTime();
+
     }
 
     private static void configAButton()
@@ -110,10 +118,10 @@ public final class DriverBindings {
 
     private static void configYButton()
     {
-        // Trigger yButton = controller.y(); 
-        // yButton
-        // .onTrue( Commands.runOnce(() -> controller.getHID().setRumble(RumbleType.kBothRumble, 1.0)))
-        // .onFalse( Commands.runOnce(() -> controller.getHID().setRumble(RumbleType.kBothRumble, 0.0)));
+        Trigger yButton = controller.y(); 
+        yButton
+        .onTrue( Commands.runOnce(() -> controller.getHID().setRumble(RumbleType.kBothRumble, 1.0)))
+        .onFalse( Commands.runOnce(() -> controller.getHID().setRumble(RumbleType.kBothRumble, 0.0)));
     }
 
 
@@ -179,11 +187,12 @@ public final class DriverBindings {
 
     public static void configRumble(int time)
     {
-        Trigger rumble = new Trigger(() -> (matchTime.getAsDouble() == time && isTeleop.getAsBoolean()));
+        BooleanSupplier isRumbleTime = () -> isTeleop.getAsBoolean() && Math.abs(matchTime.getAsDouble() - time) < 0.5;
+        Trigger rumble = new Trigger(isRumbleTime);
         
         rumble
-            .onTrue(Commands.runOnce(() -> controller.getHID().setRumble(RumbleType.kBothRumble, 1.0)))
-            .onFalse(Commands.runOnce(() -> controller.getHID().setRumble(RumbleType.kBothRumble, 0.0)));
+        .onTrue( Commands.runOnce(() -> controller.getHID().setRumble(RumbleType.kBothRumble, 1.0)))
+        .onFalse( Commands.runOnce(() -> controller.getHID().setRumble(RumbleType.kBothRumble, 0.0)));
     }
 
 
