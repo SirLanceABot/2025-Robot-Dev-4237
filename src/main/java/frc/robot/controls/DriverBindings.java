@@ -10,13 +10,13 @@ import javax.lang.model.util.ElementScanner14;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.GenericHID.RumbleType;
-import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.event.EventLoop;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.RobotContainer;
+import frc.robot.controls.Xbox.RumbleEvent;
 import frc.robot.generated.TunerConstants;
 import frc.robot.subsystems.CommandSwerveDrivetrain;
 
@@ -128,71 +128,67 @@ public final class DriverBindings {
 
     private static void configLeftBumper()
     {
-
+        Trigger leftBumper = controller.leftBumper();
     }
 
 
     private static void configRightBumper()
     {
-        
+        Trigger rightBumper = controller.rightBumper();
     }
 
 
     private static void configBackButton()
     {
-        
+        Trigger backButton = controller.back();
     }
 
 
     private static void configStartButton()
     {
-        
+        Trigger startButton = controller.start();
     }
 
 
     private static void configLeftTrigger()
     {
-        
+        Trigger leftTrigger = controller.leftTrigger();
     }
 
 
     private static void configRightTrigger()
     {
-        
+        Trigger rightTrigger = controller.rightTrigger();
     }
 
 
     private static void configLeftStick()
     {
-        
+        Trigger leftStick = controller.leftStick();
     }
 
 
     private static void configRightStick()
     {
-        
+        Trigger rightTrigger = controller.rightStick();
     }
 
 
     private static void configDpadUp()
     {
-        
+        Trigger dpadUp = controller.povUp();
     }
 
 
     private static void configDpadDown()
     {
-        
+        Trigger dpadDown = controller.povDown();
     }
 
     public static void configRumble(int time)
     {
         BooleanSupplier isRumbleTime = () -> isTeleop.getAsBoolean() && Math.abs(matchTime.getAsDouble() - time) < 0.5;
-        Trigger rumble = new Trigger(isRumbleTime);
-        
-        rumble
-        .onTrue( Commands.runOnce(() -> controller.getHID().setRumble(RumbleType.kBothRumble, 1.0)))
-        .onFalse( Commands.runOnce(() -> controller.getHID().setRumble(RumbleType.kBothRumble, 0.0)));
+        Commands.either(Commands.run(() -> controller.getHID().setRumble(RumbleType.kBothRumble, 1.0)), Commands.run(() -> controller.getHID().setRumble(RumbleType.kBothRumble, 0.0)), isRumbleTime); 
     }
 
 
