@@ -33,15 +33,15 @@ public final class GeneralCommands
 
     // *** CLASS VARIABLES & INSTANCE VARIABLES ***
     // Put all class variables and instance variables here
-    private static Intake intake = new Intake();
-    private static IntakeWrist intakeWrist = new IntakeWrist();
-    private static Pivot pivot = new Pivot();
-    private static Elevator elevator = new Elevator();
-    private static Grabber grabber = new Grabber();
-    private static LEDs leds = new LEDs();
-    private static Proximity intakeProximity = new Proximity(Constants.Proximity.INTAKE_PORT);
-    private static Proximity elevatorProximity = new Proximity(Constants.Proximity.ELEVATOR_PORT);
-    private static Proximity grabberProximity = new Proximity(Constants.Proximity.GRABBER_PORT);
+    private static Intake intake;
+    private static IntakeWrist intakeWrist;
+    private static Pivot pivot;
+    private static Elevator elevator;
+    private static Grabber grabber;
+    private static LEDs leds;
+    private static Proximity intakeProximity;
+    private static Proximity elevatorProximity;
+    private static Proximity grabberProximity;
    
 
 

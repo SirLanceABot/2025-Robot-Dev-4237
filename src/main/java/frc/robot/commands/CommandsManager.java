@@ -53,19 +53,9 @@ public final class CommandsManager
 
     /**
      * Creates a new ExampleCommand.
-     *
-     * @param subsystem The subsystem used by this command.
      */
     private CommandsManager() 
-    {
-        // this.exampleSubsystem = exampleSubsystem;
-        
-        // // Use addRequirements() here to declare subsystem dependencies.
-        // if(this.exampleSubsystem != null)
-        // {
-        //     addRequirements(this.exampleSubsystem);
-        // }
-    }
+    {}
 
     public static void createCommands(RobotContainer robotContainer)
     {
