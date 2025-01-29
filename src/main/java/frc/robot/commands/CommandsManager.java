@@ -6,6 +6,8 @@ package frc.robot.commands;
 
 import java.lang.invoke.MethodHandles;
 
+import com.pathplanner.lib.auto.NamedCommands;
+
 import frc.robot.RobotContainer;
 import frc.robot.subsystems.Elevator.ElevatorPosition;
 import frc.robot.subsystems.Pivot.PivotPosition;
@@ -72,6 +74,8 @@ public final class CommandsManager
 
     private static void createNamedCommands()
     {
+        NamedCommands.registerCommand("Intake Upper Level Algae", IntakingCommands.intakeAlgaeFromReefCommand(TargetPosition.kUpperReefAlgae));
+        NamedCommands.registerCommand("Intake Lowel Level Algae", IntakingCommands.intakeAlgaeFromReefCommand(TargetPosition.kLowerReefAlgae));
         
     }
 }
