@@ -82,7 +82,7 @@ public final class IntakingCommands
      * @return the command to pickup coral
      * @author Logan Bellinger
     */
-    public static Command pickupCoralCommand()
+    public static Command intakeCoralCommand()
     {
         if(intake != null && intakeWrist != null && elevator != null && grabber != null && leds != null && intakeProximity != null && elevatorProximity != null && grabberProximity != null)
         {
