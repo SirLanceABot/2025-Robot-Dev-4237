@@ -60,7 +60,7 @@ public final class GeneralCommands
         elevator = robotContainer.getElevator();
         grabber = robotContainer.getGrabber();
         leds = robotContainer.getLEDs();
-        intakeProximity = robotContainer.getIntakeProximity();
+        intakeProximity = robotContainer.getCoralIntakeProximity();
         elevatorProximity = robotContainer.getElevatorProximity();
         grabberProximity = robotContainer.getGrabberProximity();
 

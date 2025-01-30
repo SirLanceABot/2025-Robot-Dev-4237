@@ -46,7 +46,8 @@ public final class IntakingCommands
     private static Elevator elevator;
     private static Grabber grabber;
     private static LEDs leds;
-    private static Proximity intakeProximity;
+    private static Proximity coralIntakeProximity;
+    private static Proximity algaeIntakeProximity;
     private static Proximity elevatorProximity;
     private static Proximity grabberProximity;
 
@@ -66,7 +67,8 @@ public final class IntakingCommands
         elevator = robotContainer.getElevator();
         grabber = robotContainer.getGrabber();
         leds = robotContainer.getLEDs();
-        intakeProximity = robotContainer.getIntakeProximity();
+        coralIntakeProximity = robotContainer.getCoralIntakeProximity();
+        algaeIntakeProximity = robotContainer.getAlgaeIntakeProximity();
         elevatorProximity = robotContainer.getElevatorProximity();
         grabberProximity = robotContainer.getGrabberProximity();
 
@@ -84,7 +86,7 @@ public final class IntakingCommands
     */
     public static Command intakeCoralCommand()
     {
-        if(intake != null && intakeWrist != null && elevator != null && grabber != null && leds != null && intakeProximity != null && elevatorProximity != null && grabberProximity != null)
+        if(intake != null && intakeWrist != null && elevator != null && grabber != null && leds != null && coralIntakeProximity != null && elevatorProximity != null && grabberProximity != null)
         {
             // Does it work?  I don't know.  I'm sure its fine
             return 
@@ -93,10 +95,11 @@ public final class IntakingCommands
                 leds.setColorBlinkCommand(Color.kYellow),
                 intakeWrist.moveToSetPositionCommand(Position.kIntakeCoralPosition))
             .andThen(
-                Commands.waitUntil(intakeProximity.isDetectedSupplier())
+                Commands.waitUntil(coralIntakeProximity.isDetectedSupplier())
                 .deadlineFor(
-                    intake.pickupCommand(),
-                    elevator.moveToSetPositionCommand(TargetPosition.kGrabCoralPosition.elevator)))
+                    intake.pickupCoralCommand(),
+                    elevator.moveToSetPositionCommand(TargetPosition.kGrabCoralPosition.elevator),
+                    pivot.moveToSetPositionCommand(TargetPosition.kGrabCoralPosition.pivot)))
             .andThen(
                 Commands.waitUntil(intakeWrist.isAtPosition(Position.kPassToGrabberPosition))
                 .deadlineFor(
@@ -105,7 +108,7 @@ public final class IntakingCommands
             .andThen(
                     Commands.waitUntil(elevatorProximity.isDetectedSupplier())
                     .deadlineFor(
-                        intake.ejectCommand(),
+                        intake.ejectCoralCommand(),
                         grabber.grabGamePieceCommand()))
             .andThen(
                 Commands.waitUntil(grabberProximity.isDetectedSupplier())
@@ -116,7 +119,38 @@ public final class IntakingCommands
                 .deadlineFor(
                     grabber.stopCommand(),
                     intakeWrist.moveToSetPositionCommand(Position.kRestingPosition),
-                    leds.setColorSolidCommand(Color.kRed)));
+                    leds.setColorSolidCommand(Color.kRed)))
+            .withName("Intake Coral Command");
+        }
+        else
+        {
+            return Commands.none();
+        }
+    }
+
+    /**
+     * Command to intake a Coral from the Coral Station
+     * @return the command to intake coral
+     * @author Logan Bellinger
+     */
+    public static Command intakeCoralFromStationCommand()
+    {
+        if(elevator != null && pivot != null && grabber != null && leds != null && elevatorProximity != null && grabberProximity != null)
+        {
+            return
+            Commands.waitUntil(elevatorProximity.isDetectedSupplier())
+            .deadlineFor(
+                leds.setColorBlinkCommand(Color.kYellow),
+                elevator.moveToSetPositionCommand(ElevatorPosition.kGrabCoralPosition),
+                pivot.moveToSetPositionCommand(PivotPosition.kGrabCoralPosition),
+                grabber.grabGamePieceCommand())
+            .andThen(
+                Commands.waitUntil(grabberProximity.isDetectedSupplier())
+                .deadlineFor(
+                    grabber.stopCommand(),
+                    elevator.moveToSetPositionCommand(ElevatorPosition.kRestingPosition),
+                    leds.setColorSolidCommand(Color.kRed)))
+            .withName("Intake Coral From Station Command");
         }
         else
         {
@@ -131,20 +165,21 @@ public final class IntakingCommands
      */
     public static Command intakeAlgaeCommand()
     {
-        if(intake != null && intakeWrist != null && leds != null && intakeProximity != null)
+        if(intake != null && intakeWrist != null && leds != null && coralIntakeProximity != null)
         {
             return
-            Commands.waitUntil(intakeProximity.isDetectedSupplier())
+            Commands.waitUntil(algaeIntakeProximity.isDetectedSupplier())
             .deadlineFor(
                 leds.setColorBlinkCommand(Color.kYellow),
                 intakeWrist.moveToSetPositionCommand(Position.kManipAlgaePosition),
-                intake.pickupCommand())
+                intake.pickupCoralCommand())
             .andThen(
                 Commands.waitUntil(intakeWrist.isAtPosition(Position.kAlgaeIntakedPosition))
                 .deadlineFor(
                     intakeWrist.moveToSetPositionCommand(Position.kAlgaeIntakedPosition),
                     intake.stopCommand(),
-                    leds.setColorSolidCommand(Color.kRed)));
+                    leds.setColorSolidCommand(Color.kRed)))
+            .withName("Intake Algae From Ground Command");
         }
         else
         {
@@ -160,7 +195,7 @@ public final class IntakingCommands
      */
     public static Command intakeAlgaeFromReefCommand(TargetPosition targetPosition)
     {
-        if(grabber != null && elevator != null && pivot != null && grabber != null && leds != null && grabberProximity != null)
+        if(grabber != null && elevator != null && pivot != null && leds != null && grabberProximity != null)
         {
             return
             Commands.waitUntil(grabberProximity.isDetectedSupplier())
@@ -175,7 +210,8 @@ public final class IntakingCommands
                     elevator.moveToSetPositionCommand(TargetPosition.kHoldAlgaePosition.elevator),
                     pivot.moveToSetPositionCommand(TargetPosition.kHoldAlgaePosition.pivot),
                     grabber.stopCommand(),
-                    leds.setColorSolidCommand(Color.kRed)));
+                    leds.setColorSolidCommand(Color.kRed)))
+            .withName("Intake Algae From Reef Command");
         }
         else
         {

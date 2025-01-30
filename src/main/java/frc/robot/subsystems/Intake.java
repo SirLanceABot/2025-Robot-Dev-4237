@@ -106,14 +106,24 @@ public class Intake extends SubsystemLance
         motor.setVoltage(voltage);
     }
 
-    public void pickup() 
+    public void pickupCoral() 
     {
         set(0.5);
     }
 
-    public void eject() 
+    public void ejectCoral() 
     {
         set(-0.5);
+    }
+
+    public void pickupAlgae()
+    {
+        set(-0.5);
+    }
+
+    public void ejectAlgae()
+    {
+        set(0.5);
     }
 
     public void stop() 
@@ -121,14 +131,24 @@ public class Intake extends SubsystemLance
         set(0.0);
     }
 
-    public Command pickupCommand() 
+    public Command pickupCoralCommand() 
     {
-        return runOnce(() -> pickup()).withName("Pickup");
+        return runOnce(() -> pickupCoral()).withName("Pickup Coral");
     }
 
-    public Command ejectCommand() 
+    public Command ejectCoralCommand() 
     {
-        return runOnce(() -> eject()).withName("Eject");
+        return runOnce(() -> ejectCoral()).withName("Eject Coral");
+    }
+
+    public Command pickupAlgaeCommand()
+    {
+        return runOnce(() -> pickupAlgae()).withName("Pickup Algae");
+    }
+
+    public Command ejectAlgaeCommand()
+    {
+        return runOnce(() -> ejectAlgae()).withName("Eject Algae");
     }
 
     public Command stopCommand() 

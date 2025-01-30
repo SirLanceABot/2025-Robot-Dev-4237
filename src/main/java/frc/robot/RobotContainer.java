@@ -77,7 +77,8 @@ public class RobotContainer
     private final LEDs leds;
 
     private final GyroLance gyro;
-    private final Proximity intakeProximity;
+    private final Proximity coralIntakeProximity;
+    private final Proximity algaeIntakeProximity;
     private final Proximity elevatorProximity;
     private final Proximity grabberProximity;
 
@@ -105,7 +106,8 @@ public class RobotContainer
         pivot                   = (useFullRobot || usePivot)                ? new Pivot()                                                                                                     : null;
         shuttle                 = (useFullRobot || useShuttle)              ? new Shuttle()                                                                                                   : null;
         leds                    = (useFullRobot || useLEDs)                 ? new LEDs()                                                                                                      : null;
-        intakeProximity         = (useFullRobot || useProximity)            ? new Proximity(Constants.Proximity.INTAKE_PORT)                                                                  : null;
+        coralIntakeProximity    = (useFullRobot || useProximity)            ? new Proximity(Constants.Proximity.CORAL_INTAKE_PORT)                                                                  : null;
+        algaeIntakeProximity    = (useFullRobot || useProximity)            ? new Proximity(Constants.Proximity.ALGAE_INTAKE_PORT)                                                            : null;
         elevatorProximity       = (useFullRobot || useProximity)            ? new Proximity(Constants.Proximity.ELEVATOR_PORT)                                                                : null;
         grabberProximity        = (useFullRobot || useProximity)            ? new Proximity(Constants.Proximity.GRABBER_PORT)                                                                 : null;              
 
@@ -162,9 +164,14 @@ public class RobotContainer
         return shuttle;
     }
 
-    public Proximity getIntakeProximity()
+    public Proximity getCoralIntakeProximity()
     {
-        return intakeProximity;
+        return coralIntakeProximity;
+    }
+
+    public Proximity getAlgaeIntakeProximity()
+    {
+        return algaeIntakeProximity;
     }
 
     public Proximity getElevatorProximity()
