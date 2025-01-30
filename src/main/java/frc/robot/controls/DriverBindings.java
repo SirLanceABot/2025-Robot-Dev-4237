@@ -62,8 +62,8 @@ public final class DriverBindings {
             configSuppliers();
 
             // configAButton();
-            // configBButton();
-            // configXButton();
+            configBButton();
+            configXButton();
             // configYButton();
             // configLeftBumper();
             // configRightBumper();
@@ -75,8 +75,8 @@ public final class DriverBindings {
             // configRightStick();
             // configDpadUp();
             // configDpadDown();
-            configRumble(10);
-            // configDefaultCommands();
+            configRumble(3);
+            configDefaultCommands();
 
             System.out.println("  Constructor Finished: " + fullClassName);
         }
@@ -88,8 +88,8 @@ public final class DriverBindings {
         leftXAxis = () -> -controller.getRawAxis(0);
         rightXAxis = () -> -controller.getRawAxis(4);
 
-        isTeleop = () -> DriverStation.isTeleopEnabled();
-        matchTime = () -> DriverStation.getMatchTime();
+        // isTeleop = () -> DriverStation.isTeleopEnabled();
+        // matchTime = () -> DriverStation.getMatchTime();
 
     }
 
@@ -187,8 +187,11 @@ public final class DriverBindings {
 
     public static void configRumble(int time)
     {
-        BooleanSupplier isRumbleTime = () -> isTeleop.getAsBoolean() && Math.abs(matchTime.getAsDouble() - time) < 0.5;
-        Commands.either(Commands.run(() -> controller.getHID().setRumble(RumbleType.kBothRumble, 1.0)), Commands.run(() -> controller.getHID().setRumble(RumbleType.kBothRumble, 0.0)), isRumbleTime); 
+        Trigger rumbleDosentWork = controller.leftTrigger(2);
+        BooleanSupplier isRumbleTime = () -> Math.abs(DriverStation.getMatchTime() - time) <= 0.5 && DriverStation.isTeleopEnabled();
+        
+        rumbleDosentWork
+        .onFalse( Commands.runOnce(() -> controller.getHID().setRumble(RumbleType.kBothRumble, isRumbleTime.getAsBoolean() ? 1.0:0.0 ) ));
     }
 
 
