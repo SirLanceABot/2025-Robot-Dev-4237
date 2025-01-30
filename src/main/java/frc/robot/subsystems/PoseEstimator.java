@@ -202,7 +202,35 @@ public class PoseEstimator extends SubsystemLance
 
         // }
 
-        scoringLocationArray = blueLeftBranchLocationArray;
+        for(int i = 0; i < 5; i++)
+        {
+            for(int n = 0; n < 2; n++)
+            {
+                scoringLocationArray[i][n] = blueLeftBranchLocationArray[i][n];
+            }
+        }
+    }
+
+    private double[] chooseClosestBranch()
+    {
+        double distance = 0.0;
+        double closestDistance = Double.MAX_VALUE;
+        double[] closestBranch = {};
+        for(int i = 0; i < 5; i++)
+        {
+            distance = Math.sqrt(Math.pow(estimatedPose.getX() - scoringLocationArray[i][0], 2) + Math.pow(estimatedPose.getY() - scoringLocationArray[i][1], 2));
+
+            if(distance < closestDistance)
+            {
+                closestDistance = distance;
+                for(int n = 0; n < 2; n++)
+                {
+                    closestBranch[n] = scoringLocationArray[i][n];
+                }
+            }
+        }
+
+        return closestBranch;
     }
 
 
