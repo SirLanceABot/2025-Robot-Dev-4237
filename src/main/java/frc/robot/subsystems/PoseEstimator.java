@@ -17,6 +17,7 @@ import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants;
+import frc.robot.RobotContainer;
 import frc.robot.motors.TalonFXLance;
 import frc.robot.sensors.GyroLance;
 import frc.robot.sensors.Camera;
@@ -34,6 +35,12 @@ public class PoseEstimator extends SubsystemLance
     static
     {
         System.out.println("Loading: " + fullClassName);
+    }
+
+    public enum branchSide
+    {
+        kLeft,
+        kRight;
     }
 
     private final GyroLance gyro;
@@ -61,9 +68,44 @@ public class PoseEstimator extends SubsystemLance
     private Pose2d estimatedPose = new Pose2d();
     private DoubleArrayEntry poseEstimatorEntry;
 
+    private final double[][] blueLeftBranchLocationArray = 
+        {{5.889, 3.898, -90.0}, //S1 side
+         {}, //S2 side
+         {3.890, 2.738, 150.0}, //S3 side
+         {3.052, 4.444, 90.0}, //S4 side
+         {4.163, 5.439, -150}, //S5 side
+         {5.255, 5.185, -30.0}}; //S6 side
 
+    private final double[][] blueRightBranchLocationArray = 
+        {{5.889, 3.635, -90.0}, //S1 side
+         {}, //S2 side
+         {3.759, 2.812, 150.0}, //S3 side
+         {3.052, 3.557, 90.0}, //S4 side
+         {3.871, 5.302, -150.0}, //S5 side
+         {5.255, 5.236, -30.0}}; //S6 side
+
+    private final double[][] redRightBranchLocationArray = 
+        {{}, //S1 side
+         {}, //S2 side
+         {}, //S3 side
+         {}, //S4 side
+         {}, //S5 side
+         {}}; //S6 side
+
+    private final double[][] redLeftBranchLocationArray = 
+        {{}, //S1 side
+         {}, //S2 side
+         {}, //S3 side
+         {}, //S4 side
+         {}, //S5 side
+         {}}; //S6 side
+
+    private double[][] scoringLocationArray;
+    private branchSide branchSide;
     // *** CLASS CONSTRUCTORS ***
     // Put all class constructors here
+
+
 
     /** 
      * Creates a new PoseEstimator. 
@@ -151,6 +193,16 @@ public class PoseEstimator extends SubsystemLance
         {
             return false;
         }
+    }
+
+    public void chooseLocationArray()
+    {
+        // if(RobotContainer.isRedAllianceSupplier().getAsBoolean())
+        // {
+
+        // }
+
+        scoringLocationArray = blueLeftBranchLocationArray;
     }
 
 
