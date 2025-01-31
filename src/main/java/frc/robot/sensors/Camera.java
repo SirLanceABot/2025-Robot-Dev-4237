@@ -50,17 +50,18 @@ public class Camera extends SensorLance
     /** 
      * Creates a new ExampleSubsystem. 
      */
-    public Camera()
+    public Camera(String cameraName)
     {   
         super("Camera");
-        System.out.println("  Constructor Started:  " + fullClassName);
+        this.cameraName = cameraName;
+        System.out.println("  Constructor Started:  " + fullClassName + ">>" + cameraName);
 
         poseEntry = ASTable.getDoubleArrayTopic(cameraName + " pose").getEntry(new double[3]);
         yawEntry = ASTable.getDoubleTopic("GyroYaw").getEntry(0.0);
 
         poseEstimate = LimelightHelpers.getBotPoseEstimate_wpiBlue_MegaTag2(cameraName);
 
-        System.out.println("  Constructor Finished: " + fullClassName);
+        System.out.println("  Constructor Finished: " + fullClassName + ">>" + cameraName);
     }
 
 

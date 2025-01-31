@@ -92,8 +92,8 @@ public class LEDs extends SubsystemLance
         blankBuffer = new AddressableLEDBuffer(5);
         setBuffer = new AddressableLEDBuffer(5);
 
-        configLEDs();
         configBuffers();
+        configLEDs();
         System.out.println("  Constructor Finished: " + fullClassName);
     }
 
