@@ -35,6 +35,7 @@ public final class IntakingCommands
 
     // *** INNER ENUMS and INNER CLASSES ***
     // Put all inner enums and inner classes here
+    //BTYG
 
 
 
@@ -77,7 +78,7 @@ public final class IntakingCommands
 
 
     // *** CLASS METHODS & INSTANCE METHODS ***
-    // Put all class methods and instance methods here
+    // Put all class methods and instance methods here BTYG
 
     /**
      * Command to pickup a coral from the ground
@@ -118,8 +119,8 @@ public final class IntakingCommands
                 Commands.waitUntil(intakeWrist.isAtPosition(Position.kRestingPosition))
                 .deadlineFor(
                     grabber.stopCommand(),
-                    intakeWrist.moveToSetPositionCommand(Position.kRestingPosition),
-                    leds.setColorSolidCommand(Color.kRed)))
+                    intakeWrist.moveToSetPositionCommand(Position.kRestingPosition)))
+            .andThen(leds.setColorSolidCommand(Color.kRed))
             .withName("Intake Coral Command");
         }
         else
@@ -148,8 +149,8 @@ public final class IntakingCommands
                 Commands.waitUntil(grabberProximity.isDetectedSupplier())
                 .deadlineFor(
                     grabber.stopCommand(),
-                    elevator.moveToSetPositionCommand(ElevatorPosition.kRestingPosition),
-                    leds.setColorSolidCommand(Color.kRed)))
+                    elevator.moveToSetPositionCommand(ElevatorPosition.kRestingPosition)))
+            .andThen(leds.setColorSolidCommand(Color.kRed))
             .withName("Intake Coral From Station Command");
         }
         else
@@ -177,8 +178,8 @@ public final class IntakingCommands
                 Commands.waitUntil(intakeWrist.isAtPosition(Position.kAlgaeIntakedPosition))
                 .deadlineFor(
                     intakeWrist.moveToSetPositionCommand(Position.kAlgaeIntakedPosition),
-                    intake.stopCommand(),
-                    leds.setColorSolidCommand(Color.kRed)))
+                    intake.stopCommand()))
+            .andThen(leds.setColorSolidCommand(Color.kRed))
             .withName("Intake Algae From Ground Command");
         }
         else
@@ -209,8 +210,8 @@ public final class IntakingCommands
                 .deadlineFor(
                     elevator.moveToSetPositionCommand(TargetPosition.kHoldAlgaePosition.elevator),
                     pivot.moveToSetPositionCommand(TargetPosition.kHoldAlgaePosition.pivot),
-                    grabber.stopCommand(),
-                    leds.setColorSolidCommand(Color.kRed)))
+                    grabber.stopCommand()))
+            .andThen(leds.setColorSolidCommand(Color.kRed))
             .withName("Intake Algae From Reef Command");
         }
         else

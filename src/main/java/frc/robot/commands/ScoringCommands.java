@@ -101,8 +101,8 @@ public final class ScoringCommands
                 .deadlineFor(
                     grabber.stopCommand(),
                     pivot.moveToSetPositionCommand(PivotPosition.kRestingPosition),
-                    elevator.moveToSetPositionCommand(ElevatorPosition.kRestingPosition),
-                    leds.setColorSolidCommand(Color.kRed)))
+                    elevator.moveToSetPositionCommand(ElevatorPosition.kRestingPosition)))
+            .andThen(leds.setColorSolidCommand(Color.kRed))
             .withName("Score Coral on Reef Command");
         }
         else
@@ -111,23 +111,11 @@ public final class ScoringCommands
         }
     }
 
-    // public static Command scoreProcessorWithArmCommand()
-    // {
-    //     if(robotContainer.getElevator() != null && robotContainer.getPivot() != null && robotContainer.getGrabber() != null && robotContainer.getLEDs() != null)
-    //     {
-    //         // NEEDS CHANGED
-    //         return 
-    //         robotContainer.getLEDs().setBlueBlinkCommand()
-    //         .andThen(
-                
-    //         )
-    //     }
-    //     else
-    //     {
-    //         return Commands.none();
-    //     }
-    // }
-
+    /**
+     * Command to score the algae in the processor
+     * @return the command to score in the processor
+     * @author Logan Bellinger
+     */
     public static Command scoreProcessorWithIntakeCommand()
     {
         if(intake != null && intakeWrist != null && leds != null && algaeIntakeProximity != null)
@@ -135,6 +123,7 @@ public final class ScoringCommands
             return
             Commands.waitUntil(() -> (!algaeIntakeProximity.isDetectedSupplier().getAsBoolean()))
             .deadlineFor(
+                leds.setColorBlinkCommand(Color.kBlue),
                 intakeWrist.moveToSetPositionCommand(Position.kManipAlgaePosition),
                 intake.ejectAlgaeCommand())
             .andThen(
@@ -142,6 +131,7 @@ public final class ScoringCommands
                 .deadlineFor(
                     intake.stopCommand(),
                     intakeWrist.moveToSetPositionCommand(Position.kRestingPosition)))
+            .andThen(leds.setColorSolidCommand(Color.kRed))
             .withName("Score Processor With Intake");   
         }
         else
@@ -150,22 +140,94 @@ public final class ScoringCommands
         }
     }
 
-    // public static Command scoreAlgaeInBargeCommand()
-    // {
-    //     if(robotContainer.getElevator() != null && robotContainer.getPivot() != null && robotContainer.getGrabber() != null && robotContainer.getLEDs() != null)
-    //     {
-    //         // NEEDS CHANGED
-    //         return 
-    //         robotContainer.getLEDs().setBlueBlinkCommand()
-    //         .andThen(
-                
-    //         )
-    //     }
-    //     else
-    //     {
-    //         return Commands.none();
-    //     }
-    // }
+    /**
+     * Command to score Algae in the barge
+     * @return the command to score in barge
+     * @author Logan Bellinger
+     */
+    public static Command scoreAlgaeInBargeCommand()
+    {
+        if(elevator != null && pivot != null && grabber != null && leds != null && grabberProximity != null)
+        {
+            return
+            Commands.waitUntil(() -> (elevator.isAtPosition(ElevatorPosition.kL4).getAsBoolean() && pivot.isAtPosition(PivotPosition.kScoreBargePosition).getAsBoolean()))
+            .deadlineFor(
+                leds.setColorBlinkCommand(Color.kBlue),
+                elevator.moveToSetPositionCommand(ElevatorPosition.kL4),
+                pivot.moveToSetPositionCommand(PivotPosition.kScoreBargePosition))
+            .andThen(
+                Commands.waitUntil(() -> (!(grabberProximity.isDetectedSupplier()).getAsBoolean()))
+                .deadlineFor(
+                    grabber.ejectAlgaeCommand()))
+            .andThen(
+                Commands.waitUntil(() -> (elevator.isAtPosition(ElevatorPosition.kRestingPosition).getAsBoolean() && pivot.isAtPosition(PivotPosition.kRestingPosition).getAsBoolean()))
+                .deadlineFor(
+                    grabber.stopCommand(),
+                    elevator.moveToSetPositionCommand(ElevatorPosition.kRestingPosition),
+                    pivot.moveToSetPositionCommand(PivotPosition.kRestingPosition)))
+            .andThen(leds.setColorSolidCommand(Color.kRed))
+            .withName("Score Algae In Barge Command");
+        }
+        else
+        {
+            return Commands.none();
+        }
+    }
+
+    /**
+     * Command to finish scoring coral on the reef
+     * @return the command to finish scoring
+     * @author Logan Bellinger
+     */
+    public static Command finishScoringCoralCommand()
+    {
+        if(elevator != null && pivot != null && grabber != null && leds != null && grabberProximity != null)
+        {
+            return
+            Commands.waitUntil(() -> (!(grabberProximity.isDetectedSupplier()).getAsBoolean()))
+            .deadlineFor(
+                leds.setColorBlinkCommand(Color.kBlue),
+                grabber.ejectAlgaeCommand())
+            .andThen(
+                Commands.waitUntil(() -> (elevator.isAtPosition(ElevatorPosition.kRestingPosition).getAsBoolean() && pivot.isAtPosition(PivotPosition.kRestingPosition).getAsBoolean()))
+                .deadlineFor(
+                    elevator.moveToSetPositionCommand(ElevatorPosition.kRestingPosition),
+                    pivot.moveToSetPositionCommand(PivotPosition.kRestingPosition)))
+            .andThen(leds.setColorSolidCommand(Color.kRed))
+            .withName("Finish Scoring Coral Command");
+        }
+        else
+        {
+            return Commands.none();
+        }
+    }
+
+    /**
+     * This command will spit out the algae into the processor with the grabber and then move the elevator and pivot back to resting position
+     * @return the command to move elevator and pivot and release algae
+     * @author Logan Bellinger
+     */
+    public static Command finishScoringProcessorWithGrabberCommand()
+    {
+        if(elevator != null && pivot != null && grabber != null && leds != null && grabberProximity != null)
+        {
+            return
+            Commands.waitUntil(() -> (!(grabberProximity.isDetectedSupplier()).getAsBoolean()))
+            .deadlineFor(
+                grabber.ejectAlgaeCommand())
+            .andThen(
+                Commands.waitUntil(() -> (elevator.isAtPosition(ElevatorPosition.kRestingPosition).getAsBoolean() && pivot.isAtPosition(PivotPosition.kRestingPosition).getAsBoolean()))
+                .deadlineFor(
+                    elevator.moveToSetPositionCommand(ElevatorPosition.kRestingPosition),
+                    pivot.moveToSetPositionCommand(PivotPosition.kRestingPosition)))
+            .andThen(leds.setColorSolidCommand(Color.kRed))
+            .withName("Finish Scoring in Processor with Grabber Command");
+        }
+        else
+        {
+            return Commands.none();
+        }
+    }
 
     // public static Command exampleCommand()
     // {
@@ -175,5 +237,6 @@ public final class ScoringCommands
     //     }
     //     else
     //         return Commands.none();
+            // BOW TO YOUR GOD
     // }
 }

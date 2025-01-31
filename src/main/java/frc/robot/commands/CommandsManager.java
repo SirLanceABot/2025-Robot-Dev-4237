@@ -32,12 +32,14 @@ public final class CommandsManager
 
     enum TargetPosition
     {
+        kScoreBargePosition(PivotPosition.kScoreBargePosition, ElevatorPosition.kL4),
         kL4(PivotPosition.kL4, ElevatorPosition.kL4),
         kUpperReefAlgae(PivotPosition.kUpperReefAlgae, ElevatorPosition.kUpperReefAlgae),
         kL3(PivotPosition.kL3, ElevatorPosition.kL3),
         kLowerReefAlgae(PivotPosition.kLowerReefAlgae, ElevatorPosition.kLowerReefAlgae),
         kL2(PivotPosition.kL2, ElevatorPosition.kL2),
         kL1(PivotPosition.kL1, ElevatorPosition.kL1),
+        kScoreProcessorWithGrabberPosition(PivotPosition.kScoreProcessorPosition, ElevatorPosition.kL1),
         kHoldAlgaePosition(PivotPosition.kHoldAlgaePosition, ElevatorPosition.kHoldAlgaePosition),
         kGrabCoralPosition(PivotPosition.kGrabCoralPosition, ElevatorPosition.kGrabCoralPosition),
         kRestingPosition(PivotPosition.kRestingPosition, ElevatorPosition.kRestingPosition);
@@ -74,8 +76,17 @@ public final class CommandsManager
 
     private static void createNamedCommands()
     {
+        // Intaking Commands
+        NamedCommands.registerCommand("Intake Coral From Floor", IntakingCommands.intakeCoralCommand());
+        NamedCommands.registerCommand("Intake Coral From Station", IntakingCommands.intakeCoralFromStationCommand());
+        NamedCommands.registerCommand("Intake Algae From Floor", IntakingCommands.intakeAlgaeCommand());
         NamedCommands.registerCommand("Intake Upper Level Algae", IntakingCommands.intakeAlgaeFromReefCommand(TargetPosition.kUpperReefAlgae));
         NamedCommands.registerCommand("Intake Lowel Level Algae", IntakingCommands.intakeAlgaeFromReefCommand(TargetPosition.kLowerReefAlgae));
         
+        // Score Coral Commands
+        NamedCommands.registerCommand("Score Coral on L1", ScoringCommands.scoreCoralCommand(TargetPosition.kL1));
+        NamedCommands.registerCommand("Score Coral on L2", ScoringCommands.scoreCoralCommand(TargetPosition.kL2));
+        NamedCommands.registerCommand("Score Coral on L3", ScoringCommands.scoreCoralCommand(TargetPosition.kL3));
+        NamedCommands.registerCommand("Score Coral on L4", ScoringCommands.scoreCoralCommand(TargetPosition.kL4));
     }
 }

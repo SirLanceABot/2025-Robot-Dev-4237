@@ -3,15 +3,20 @@ package frc.robot.commands;
 import java.lang.invoke.MethodHandles;
 
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.Commands;
 import frc.robot.Constants;
 import frc.robot.RobotContainer;
+import frc.robot.commands.CommandsManager.TargetPosition;
 import frc.robot.sensors.Proximity;
 import frc.robot.subsystems.Elevator;
+import frc.robot.subsystems.Elevator.ElevatorPosition;
 import frc.robot.subsystems.Grabber;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.IntakeWrist;
 import frc.robot.subsystems.LEDs;
+import frc.robot.subsystems.LEDs.Color;
 import frc.robot.subsystems.Pivot;
+import frc.robot.subsystems.Pivot.PivotPosition;
 
 public final class GeneralCommands
 {
@@ -65,6 +70,29 @@ public final class GeneralCommands
         grabberProximity = robotContainer.getGrabberProximity();
 
         System.out.println("  Constructor Finished: " + fullClassName);
+    }
+
+    /**
+     * 
+     * @param targetPosition
+     * @return
+     */
+    public static Command moveScorerToSetPositionCommand(TargetPosition targetPosition)
+    {
+        if(elevator != null && pivot != null && leds != null)
+        {
+            return
+            Commands.waitUntil(() -> (elevator.isAtPosition(targetPosition.elevator).getAsBoolean() && pivot.isAtPosition(targetPosition.pivot).getAsBoolean()))
+            .deadlineFor(
+                leds.setColorBlinkCommand(Color.kBlue),
+                elevator.moveToSetPositionCommand(targetPosition.elevator),
+                pivot.moveToSetPositionCommand(targetPosition.pivot))
+            .withName("Move Scorer to Set Position Command");
+        }
+        else
+        {
+            return Commands.none();
+        }
     }
 
 
