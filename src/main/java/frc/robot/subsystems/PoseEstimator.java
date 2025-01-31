@@ -211,7 +211,7 @@ public class PoseEstimator extends SubsystemLance
         }
     }
 
-    private double[] chooseClosestBranch()
+    public double[] chooseClosestBranch()
     {
         double distance = 0.0;
         double closestDistance = Double.MAX_VALUE;

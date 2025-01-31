@@ -14,6 +14,7 @@ import com.ctre.phoenix6.swerve.SwerveModule.DriveRequestType;
 import com.ctre.phoenix6.swerve.SwerveModuleConstants;
 import com.ctre.phoenix6.swerve.SwerveRequest;
 
+import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.Matrix;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
@@ -54,7 +55,7 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
     private Field2d field = new Field2d();
 
     //Drive the robot
-    public static final SwerveRequest.FieldCentric drive = new SwerveRequest.FieldCentric()
+    private static final SwerveRequest.FieldCentric drive = new SwerveRequest.FieldCentric()
             .withDeadband(TunerConstants.MaxDriveSpeed * 0.1).withRotationalDeadband(TunerConstants.MaxAngularRate * 0.1) // Add a 10% deadband
             .withDriveRequestType(DriveRequestType.OpenLoopVoltage);
 
@@ -62,7 +63,10 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
     public static final SwerveRequest.SwerveDriveBrake lock = new SwerveRequest.SwerveDriveBrake();
 
     //Point the wheels at a specific angle
-    public static final SwerveRequest.PointWheelsAt point = new SwerveRequest.PointWheelsAt();
+    private static final SwerveRequest.PointWheelsAt point = new SwerveRequest.PointWheelsAt();
+
+    private static final SwerveRequest.FieldCentricFacingAngle angleLockDrive = new SwerveRequest.FieldCentricFacingAngle();
+
 
     /* Swerve requests to apply during SysId characterization */
     private final SwerveRequest.SysIdSwerveTranslation m_translationCharacterization = new SwerveRequest.SysIdSwerveTranslation();
@@ -209,9 +213,22 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
 
     }
 
-    private void rotateToNearestBranch(Pose2d getEstimatedPose)
+    private Rotation2d angleToNearestBranch()
     {
-        // double [] nearestBranch = .chooseClosestBranch();
+        double[] nearestBranch = poseEstimator.chooseClosestBranch();
+        Rotation2d targetDirection = new Rotation2d((nearestBranch[2] / 360) * 2 * Math.PI);
+        return targetDirection;
+    }
+
+    private DoubleSupplier xSpeedToNearestBranch()
+    {
+        
+        return () -> (MathUtil.clamp(poseEstimator.chooseClosestBranch()[0] - poseEstimator.getEstimatedPose().getX(), 0.1, 1.0));
+    }
+
+    private DoubleSupplier ySpeedToNearestBranch()
+    {
+        return () -> (MathUtil.clamp(poseEstimator.chooseClosestBranch()[1] - poseEstimator.getEstimatedPose().getY(), 0.1, 1.0));
     }
 
 
@@ -269,6 +286,16 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
             () -> point
                 .withModuleDirection(new Rotation2d(leftYAxis.getAsDouble(), leftXAxis.getAsDouble()))
 
+        );
+    }
+
+    public Command moveToNearestBranch()
+    {
+        return applyRequest(
+            () -> angleLockDrive
+                .withTargetDirection(angleToNearestBranch())
+                .withVelocityX(ySpeedToNearestBranch().getAsDouble()) //y
+                .withVelocityY(xSpeedToNearestBranch().getAsDouble()) //x
         );
     }
 
