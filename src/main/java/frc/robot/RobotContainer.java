@@ -60,6 +60,10 @@ public class RobotContainer
     private boolean usePoseEstimator        = false;
     private boolean useProximity            = false;
 
+    private boolean useLeftCamera           = false;
+    private boolean useRightCamera          = false;
+    private boolean useFrontCamera          = false;
+
     // private boolean useDriverBindings       = false;
     // private boolean useOperatorBindings     = false;
     private boolean useDriverController     = false;
@@ -78,7 +82,7 @@ public class RobotContainer
     private final LEDs leds;
 
     private final GyroLance gyro;
-    public final Camera[] cameraArray = new Camera[4];
+    private final Camera[] cameraArray = new Camera[3];
     private final Proximity coralIntakeProximity;
     private final Proximity algaeIntakeProximity;
     private final Proximity elevatorProximity;
@@ -108,11 +112,14 @@ public class RobotContainer
         pivot                   = (useFullRobot || usePivot)                ? new Pivot()                                                                                                     : null;
         shuttle                 = (useFullRobot || useShuttle)              ? new Shuttle()                                                                                                   : null;
         leds                    = (useFullRobot || useLEDs)                 ? new LEDs()                                                                                                      : null;
-        coralIntakeProximity    = (useFullRobot || useProximity)            ? new Proximity(Constants.Proximity.CORAL_INTAKE_PORT)                                                                  : null;
+        coralIntakeProximity    = (useFullRobot || useProximity)            ? new Proximity(Constants.Proximity.CORAL_INTAKE_PORT)                                                            : null;
         algaeIntakeProximity    = (useFullRobot || useProximity)            ? new Proximity(Constants.Proximity.ALGAE_INTAKE_PORT)                                                            : null;
         elevatorProximity       = (useFullRobot || useProximity)            ? new Proximity(Constants.Proximity.ELEVATOR_PORT)                                                                : null;
-        grabberProximity        = (useFullRobot || useProximity)            ? new Proximity(Constants.Proximity.GRABBER_PORT)                                                                 : null;              
+        grabberProximity        = (useFullRobot || useProximity)            ? new Proximity(Constants.Proximity.GRABBER_PORT)                                                                 : null;  
 
+        cameraArray[0]          = (useFullRobot || useLeftCamera)           ? new Camera("limelight-left")                                                                                    : null;
+        cameraArray[1]          = (useFullRobot || useRightCamera)          ? new Camera("limelight-right")                                                                                   : null;
+        cameraArray[2]          = (useFullRobot || useFrontCamera)          ? new Camera("limelight-front")                                                                                   : null;
 
         driverController        = (useFullRobot || useDriverController)     ? new CommandXboxController(Constants.Controllers.DRIVER_CONTROLLER_PORT)                                         : null;
         operatorController      = (useFullRobot || useOperatorController)   ? new CommandXboxController(Constants.Controllers.OPERATOR_CONTROLLER_PORT)                                       : null;
@@ -199,6 +206,21 @@ public class RobotContainer
     public LEDs getLEDs()
     {
         return leds;
+    }
+
+    public Camera getLeftCamera()
+    {
+        return cameraArray[0];
+    }
+
+    public Camera getRightCamera()
+    {
+        return cameraArray[1];
+    }
+
+    public Camera getFrontCamera()
+    {
+        return cameraArray[2];
     }
 
     public BooleanSupplier isRedAllianceSupplier()
