@@ -187,11 +187,12 @@ public final class DriverBindings {
 
     public static void configRumble(int time)
     {
-        Trigger rumbleDosentWork = controller.leftTrigger(2);
         BooleanSupplier isRumbleTime = () -> Math.abs(DriverStation.getMatchTime() - time) <= 0.5 && DriverStation.isTeleopEnabled();
+        Trigger rumble = new Trigger(isRumbleTime);
         
-        rumbleDosentWork
-        .onFalse( Commands.runOnce(() -> controller.getHID().setRumble(RumbleType.kBothRumble, isRumbleTime.getAsBoolean() ? 1.0:0.0 ) ));
+        rumble
+        .onTrue( Commands.runOnce(() -> controller.getHID().setRumble(RumbleType.kBothRumble, 1.0)))
+        .onFalse( Commands.runOnce(() -> controller.getHID().setRumble(RumbleType.kBothRumble, 0.0)));
     }
 
 

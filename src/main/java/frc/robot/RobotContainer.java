@@ -21,6 +21,7 @@ import frc.robot.controls.DriverBindings;
 import frc.robot.controls.DriverController;
 import frc.robot.controls.OperatorController;
 import frc.robot.generated.TunerConstants;
+import frc.robot.sensors.Camera;
 import frc.robot.sensors.GyroLance;
 import frc.robot.sensors.Proximity;
 // import frc.robot.controls.DriverButtonBindings;
@@ -77,6 +78,7 @@ public class RobotContainer
     private final LEDs leds;
 
     private final GyroLance gyro;
+    public final Camera[] cameraArray = new Camera[4];
     private final Proximity coralIntakeProximity;
     private final Proximity algaeIntakeProximity;
     private final Proximity elevatorProximity;
@@ -99,7 +101,7 @@ public class RobotContainer
         grabber                 = (useFullRobot || useGrabber)              ? new Grabber()                                                                                                   : null;
         climb                   = (useFullRobot || useClimb)                ? new Climb()                                                                                                     : null;
         gyro                    = (useFullRobot || useGyro)                 ? new GyroLance()                                                                                                 : null;
-        drivetrain              = (useFullRobot || useDrivetrain)           ? new CommandSwerveDrivetrain(TunerConstants.DrivetrainConstants, TunerConstants.FrontLeft, TunerConstants.FrontRight, TunerConstants.BackLeft, TunerConstants.BackRight)                                   : null;
+        drivetrain              = (useFullRobot || useDrivetrain)           ? new CommandSwerveDrivetrain(gyro, cameraArray, TunerConstants.DrivetrainConstants, TunerConstants.FrontLeft, TunerConstants.FrontRight, TunerConstants.BackLeft, TunerConstants.BackRight)                                   : null;
         elevator                = (useFullRobot || useElevator)             ? new Elevator()                                                                                                  : null;
         intake                  = (useFullRobot || useIntake)               ? new Intake()                                                                                                    : null;
         intakeWrist             = (useFullRobot || useIntakeWrist)          ? new IntakeWrist()                                                                                               : null;

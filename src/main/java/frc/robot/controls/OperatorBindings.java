@@ -170,9 +170,12 @@ public final class OperatorBindings {
 
     private static void configRumble(int time)
     {
-        BooleanSupplier isRumbleTime = () -> isTeleop.getAsBoolean() && Math.abs(matchTime.getAsDouble() - time) < 0.5;
-        Commands.either(Commands.runOnce(() -> controller.getHID().setRumble(RumbleType.kBothRumble, 1.0)), Commands.runOnce(() -> controller.getHID().setRumble(RumbleType.kBothRumble, 0.0)), isRumbleTime);
-    }
+        BooleanSupplier isRumbleTime = () -> Math.abs(DriverStation.getMatchTime() - time) <= 0.5 && DriverStation.isTeleopEnabled();
+        Trigger rumble = new Trigger(isRumbleTime);
+        
+        rumble
+        .onTrue( Commands.runOnce(() -> controller.getHID().setRumble(RumbleType.kBothRumble, 1.0)))
+        .onFalse( Commands.runOnce(() -> controller.getHID().setRumble(RumbleType.kBothRumble, 0.0)));    }
 
 
     private static void configDefaultCommands()
