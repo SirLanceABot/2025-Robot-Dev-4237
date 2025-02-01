@@ -60,9 +60,9 @@ public class RobotContainer
     private boolean usePoseEstimator        = false;
     private boolean useProximity            = false;
 
-    private boolean useLeftCamera           = false;
-    private boolean useRightCamera          = false;
-    private boolean useFrontCamera          = false;
+    private boolean useScoringSideCamera    = false;
+    private boolean useClimbSideCamera      = false;
+    private boolean useIntakeSideCamera     = false;
 
     // private boolean useDriverBindings       = false;
     // private boolean useOperatorBindings     = false;
@@ -117,9 +117,9 @@ public class RobotContainer
         elevatorProximity       = (useFullRobot || useProximity)            ? new Proximity(Constants.Proximity.ELEVATOR_PORT)                                                                : null;
         grabberProximity        = (useFullRobot || useProximity)            ? new Proximity(Constants.Proximity.GRABBER_PORT)                                                                 : null;  
 
-        cameraArray[0]          = (useFullRobot || useLeftCamera)           ? new Camera("limelight-left")                                                                                    : null;
-        cameraArray[1]          = (useFullRobot || useRightCamera)          ? new Camera("limelight-right")                                                                                   : null;
-        cameraArray[2]          = (useFullRobot || useFrontCamera)          ? new Camera("limelight-front")                                                                                   : null;
+        cameraArray[0]          = (useFullRobot || useScoringSideCamera)           ? new Camera("limelight-scoringSide")                                                                                    : null;
+        cameraArray[1]          = (useFullRobot || useClimbSideCamera)          ? new Camera("limelight-climbSide")                                                                                   : null;
+        cameraArray[2]          = (useFullRobot || useIntakeSideCamera)          ? new Camera("limelight-intakeSide")                                                                                   : null;
 
         driverController        = (useFullRobot || useDriverController)     ? new CommandXboxController(Constants.Controllers.DRIVER_CONTROLLER_PORT)                                         : null;
         operatorController      = (useFullRobot || useOperatorController)   ? new CommandXboxController(Constants.Controllers.OPERATOR_CONTROLLER_PORT)                                       : null;
@@ -208,12 +208,12 @@ public class RobotContainer
         return leds;
     }
 
-    public Camera getLeftCamera()
+    public Camera getScoringSideCamera()
     {
         return cameraArray[0];
     }
 
-    public Camera getRightCamera()
+    public Camera getClimbSideCamera()
     {
         return cameraArray[1];
     }
