@@ -41,7 +41,8 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  * Subsystem so it can easily be used in command-based projects.
  * @author Matthew Fontecchio
  */
-public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Subsystem {
+public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Subsystem 
+{
     private static final double kSimLoopPeriod = 0.005; // 5 ms
     private Notifier m_simNotifier = null;
     private double m_lastSimTime;
@@ -150,7 +151,8 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
     public CommandSwerveDrivetrain(GyroLance gyro, Camera[] cameraArray, SwerveDrivetrainConstants drivetrainConstants, SwerveModuleConstants<?, ?, ?>... modules) 
     {
         super(drivetrainConstants, modules);
-        if (Utils.isSimulation()) {
+        if (Utils.isSimulation()) 
+        {
             startSimThread();
         }
 
@@ -173,7 +175,8 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
     public CommandSwerveDrivetrain(GyroLance gyro, Camera[] cameraArray,SwerveDrivetrainConstants drivetrainConstants,double odometryUpdateFrequency,SwerveModuleConstants<?, ?, ?>... modules)
     {
         super(drivetrainConstants, odometryUpdateFrequency, modules);
-        if (Utils.isSimulation()) {
+        if (Utils.isSimulation()) 
+        {
             startSimThread();
         }
 
@@ -217,18 +220,26 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
     {
         double[] nearestBranch = poseEstimator.chooseClosestBranch();
         Rotation2d targetDirection = new Rotation2d((nearestBranch[2] / 360) * 2 * Math.PI);
-        return targetDirection;
+        return targetDirection; //returns the angle to the nearest branch in radians
     }
 
     private DoubleSupplier xSpeedToNearestBranch()
     {
-        
-        return () -> (MathUtil.clamp(poseEstimator.chooseClosestBranch()[0] - poseEstimator.getEstimatedPose().getX(), 0.1, 1.0));
+        Double originalXDistance = poseEstimator.chooseClosestBranch()[0] - poseEstimator.getEstimatedPose().getX();
+        DoubleSupplier xDistance = () -> poseEstimator.chooseClosestBranch()[0] - poseEstimator.getEstimatedPose().getX();
+        DoubleSupplier yDistance = () -> poseEstimator.chooseClosestBranch()[1] - poseEstimator.getEstimatedPose().getY();
+        //Calculates the speed to move in the X direction based on how far away you are from the desired position on the reef
+        return () -> (xDistance.getAsDouble() > yDistance.getAsDouble() ? (1.0) * (xDistance.getAsDouble() / originalXDistance): (xDistance.getAsDouble()/yDistance.getAsDouble()) * (xDistance.getAsDouble() / originalXDistance)); //TODO Might need to increase the multiplier when close to the desired position
     }
 
     private DoubleSupplier ySpeedToNearestBranch()
     {
-        return () -> (MathUtil.clamp(poseEstimator.chooseClosestBranch()[1] - poseEstimator.getEstimatedPose().getY(), 0.1, 1.0));
+        Double originalXDistance = poseEstimator.chooseClosestBranch()[0] - poseEstimator.getEstimatedPose().getX();
+        DoubleSupplier xDistance = () -> poseEstimator.chooseClosestBranch()[0] - poseEstimator.getEstimatedPose().getX();
+        DoubleSupplier yDistance = () -> poseEstimator.chooseClosestBranch()[1] - poseEstimator.getEstimatedPose().getY();
+
+        //Calculates the speed to move in the Y direction based on how far away you are from the desired position on the reef
+        return () -> (yDistance.getAsDouble() > xDistance.getAsDouble() ? (1.0) * (xDistance.getAsDouble() / originalXDistance): (yDistance.getAsDouble()/xDistance.getAsDouble()) * (xDistance.getAsDouble() / originalXDistance)); //TODO Might need to increase the multiplier when close to the desired position
     }
 
 
@@ -238,7 +249,8 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
      * @param request Function returning the request to apply
      * @return Command to run
      */
-    public Command applyRequest(Supplier<SwerveRequest> requestSupplier) {
+    public Command applyRequest(Supplier<SwerveRequest> requestSupplier) 
+    {
         return run(() -> this.setControl(requestSupplier.get()));
     }
 
@@ -289,15 +301,23 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
         );
     }
 
-    public Command moveToNearestBranch()
+    /**
+     * Returns a command that will drive the robot to the nearest branch using PoseEstimator
+     * 
+     * @return Command to drive to the nearest branch
+     * @author Matthew Fontecchio
+     */
+    public Command driveToNearestBranch()
     {
         return applyRequest(
             () -> angleLockDrive
-                .withTargetDirection(angleToNearestBranch())
-                .withVelocityX(ySpeedToNearestBranch().getAsDouble()) //y
-                .withVelocityY(xSpeedToNearestBranch().getAsDouble()) //x
+                .withTargetDirection(angleToNearestBranch()) //Might need to be offset by 90 degrees because we are scoring from the left and right sides
+                .withVelocityX(xSpeedToNearestBranch().getAsDouble()) //Should slow down the robot speed as it approaches the desired x position
+                .withVelocityY(ySpeedToNearestBranch().getAsDouble()) //Should slow down the robot speed as it approaches the desired y position
         );
     }
+
+
 
     /**
      * Runs the SysId Quasistatic test in the given direction for the routine
@@ -306,7 +326,8 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
      * @param direction Direction of the SysId Quasistatic test
      * @return Command to run
      */
-    public Command sysIdQuasistatic(SysIdRoutine.Direction direction) {
+    public Command sysIdQuasistatic(SysIdRoutine.Direction direction) 
+    {
         return m_sysIdRoutineToApply.quasistatic(direction);
     }
 
@@ -317,12 +338,14 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
      * @param direction Direction of the SysId Dynamic test
      * @return Command to run
      */
-    public Command sysIdDynamic(SysIdRoutine.Direction direction) {
+    public Command sysIdDynamic(SysIdRoutine.Direction direction) 
+    {
         return m_sysIdRoutineToApply.dynamic(direction);
     }
 
     @Override
-    public void periodic() {
+    public void periodic() 
+    {
         /*
          * Periodically try to apply the operator perspective.
          * If we haven't applied the operator perspective before, then we should apply it regardless of DS state.
@@ -330,7 +353,8 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
          * Otherwise, only check and apply the operator perspective if the DS is disabled.
          * This ensures driving behavior doesn't change until an explicit disable event occurs during testing.
          */
-        if (!m_hasAppliedOperatorPerspective || DriverStation.isDisabled()) {
+        if (!m_hasAppliedOperatorPerspective || DriverStation.isDisabled()) 
+        {
             DriverStation.getAlliance().ifPresent(allianceColor -> {
                 setOperatorPerspectiveForward(
                     allianceColor == Alliance.Red
@@ -342,7 +366,8 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
         }
     }
 
-    private void startSimThread() {
+    private void startSimThread() 
+    {
         m_lastSimTime = Utils.getCurrentTimeSeconds();
 
         /* Run simulation at a faster rate so PID gains behave more reasonably */
