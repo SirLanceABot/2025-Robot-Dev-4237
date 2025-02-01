@@ -3,6 +3,7 @@ package frc.robot.subsystems;
 
 import static edu.wpi.first.units.Units.*;
 
+import java.util.List;
 import java.util.concurrent.locks.Lock;
 import java.util.function.DoubleSupplier;
 import java.util.function.Supplier;
@@ -13,6 +14,10 @@ import com.ctre.phoenix6.swerve.SwerveDrivetrainConstants;
 import com.ctre.phoenix6.swerve.SwerveModule.DriveRequestType;
 import com.ctre.phoenix6.swerve.SwerveModuleConstants;
 import com.ctre.phoenix6.swerve.SwerveRequest;
+import com.pathplanner.lib.path.GoalEndState;
+import com.pathplanner.lib.path.PathConstraints;
+import com.pathplanner.lib.path.PathPlannerPath;
+import com.pathplanner.lib.path.Waypoint;
 
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.Matrix;
@@ -225,7 +230,7 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
 
     private DoubleSupplier xSpeedToNearestBranch()
     {
-        Double originalXDistance = poseEstimator.chooseClosestBranch()[0] - poseEstimator.getEstimatedPose().getX();
+        double originalXDistance = poseEstimator.chooseClosestBranch()[0] - poseEstimator.getEstimatedPose().getX();
         DoubleSupplier xDistance = () -> poseEstimator.chooseClosestBranch()[0] - poseEstimator.getEstimatedPose().getX();
         DoubleSupplier yDistance = () -> poseEstimator.chooseClosestBranch()[1] - poseEstimator.getEstimatedPose().getY();
         //Calculates the speed to move in the X direction based on how far away you are from the desired position on the reef
@@ -234,12 +239,22 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
 
     private DoubleSupplier ySpeedToNearestBranch()
     {
-        Double originalXDistance = poseEstimator.chooseClosestBranch()[0] - poseEstimator.getEstimatedPose().getX();
+        double originalXDistance = poseEstimator.chooseClosestBranch()[0] - poseEstimator.getEstimatedPose().getX();
         DoubleSupplier xDistance = () -> poseEstimator.chooseClosestBranch()[0] - poseEstimator.getEstimatedPose().getX();
         DoubleSupplier yDistance = () -> poseEstimator.chooseClosestBranch()[1] - poseEstimator.getEstimatedPose().getY();
 
         //Calculates the speed to move in the Y direction based on how far away you are from the desired position on the reef
         return () -> (yDistance.getAsDouble() > xDistance.getAsDouble() ? (1.0) * (xDistance.getAsDouble() / originalXDistance): (yDistance.getAsDouble()/xDistance.getAsDouble()) * (xDistance.getAsDouble() / originalXDistance)); //TODO Might need to increase the multiplier when close to the desired position
+    }
+    public PathConstraints constraints = new PathConstraints(3.0, 3.0, 2 * Math.PI, 4 * Math.PI);
+
+    //TODO send this to a new autobuilder to run the path
+    //Creates a path to run to get from one spot on the field to another
+    private PathPlannerPath createOnTheFlyPath(Pose2d... pose)
+    {
+        List<Waypoint> waypoints = PathPlannerPath.waypointsFromPoses(pose);
+        PathPlannerPath path = new PathPlannerPath(waypoints, constraints, null, new GoalEndState(0.0,pose[pose.length - 1].getRotation()));
+        return path;
     }
 
 
@@ -307,7 +322,7 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
      * @return Command to drive to the nearest branch
      * @author Matthew Fontecchio
      */
-    public Command driveToNearestBranch()
+    public Command driveToNearestBranchCommand()
     {
         return applyRequest(
             () -> angleLockDrive
