@@ -12,7 +12,9 @@ import frc.robot.motors.TalonFXLance;
  * This class creates the grabber subsystem and setsup related practice commands
  * The grabber will handle coral and algae, it intakes and outakes both game pieces
  * 
- * @author Robbie Frank, Robbie Jeffery, Logan Bellinger
+ * @author Robbie Frank
+ * @author Robbie Jeffery
+ * @author Logan Bellinger
  */
 public class Grabber extends SubsystemLance
 {
@@ -43,7 +45,7 @@ public class Grabber extends SubsystemLance
     // Put all class constructors here
 
     /** 
-     * Creates a new Grabber and congures the motors. 
+     * Creates a new Grabber and configures the motors. 
      */
     public Grabber()
     {
