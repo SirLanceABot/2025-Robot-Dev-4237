@@ -94,43 +94,43 @@ public class GretaHTest implements Test
         //     leds.stopCommand();
         // }
 
-        // if(joystick.getRawButton(1))
-        // {
-        //     leds.setColorSolidCommand(LEDs.Color.kYellow);
-        // }
-        // else if(joystick.getRawButton(2))
-        // {
-        //     leds.setColorBlinkCommand(LEDs.Color.kBlue).schedule();
-        // }
-        // else if(joystick.getRawButton(3))
-        // {
-        //     leds.setColorBlinkCommand(LEDs.Color.kGreen).schedule();
-        // }
-        // else if(joystick.getRawButton(4))
-        // {
-        //     leds.setColorBlinkCommand(LEDs.Color.kPurple).schedule();
-        // }
-        // else
-        // {
-        //     leds.setColorSolidCommand(LEDs.Color.kOff).schedule();
-        // }
-
         if(joystick.getRawButton(1))
         {
-            leds.setColorBlinkCommand(LEDs.Color.kRed).schedule();
+            leds.setColorSolidCommand(LEDs.Color.kYellow).schedule();
         }
         else if(joystick.getRawButton(2))
         {
-            leds.setColorBlinkCommand(LEDs.Color.kYellow).schedule();
+            leds.setColorBlinkCommand(LEDs.Color.kBlue).schedule();
         }
         else if(joystick.getRawButton(3))
         {
-            leds.setColorRainbowCommand(LEDs.Color.kRed).schedule();
+            leds.setColorBlinkCommand(LEDs.Color.kGreen).schedule();
+        }
+        else if(joystick.getRawButton(4))
+        {
+            leds.setColorBlinkCommand(LEDs.Color.kPurple).schedule();
         }
         else
         {
-            leds.stopCommand();
+            leds.setColorSolidCommand(LEDs.Color.kOff).schedule();
         }
+
+        // if(joystick.getRawButton(1))
+        // {
+        //     leds.setColorBlinkCommand(LEDs.Color.kRed).schedule();
+        // }
+        // else if(joystick.getRawButton(2))
+        // {
+        //     leds.setColorBlinkCommand(LEDs.Color.kYellow).schedule();
+        // }
+        // else if(joystick.getRawButton(3))
+        // {
+        //     leds.setColorRainbowCommand(LEDs.Color.kRed).schedule();
+        // }
+        // else
+        // {
+        //     leds.stopCommand();
+        // }
     }
     
     /**
