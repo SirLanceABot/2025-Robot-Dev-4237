@@ -88,5 +88,11 @@ public final class CommandsManager
         NamedCommands.registerCommand("Score Coral on L2", ScoringCommands.scoreCoralCommand(TargetPosition.kL2));
         NamedCommands.registerCommand("Score Coral on L3", ScoringCommands.scoreCoralCommand(TargetPosition.kL3));
         NamedCommands.registerCommand("Score Coral on L4", ScoringCommands.scoreCoralCommand(TargetPosition.kL4));
+
+        NamedCommands.registerCommand("Finish Scoring Coral", ScoringCommands.finishScoringCoralCommand());
+
+        // Score Algae Commands
+        NamedCommands.registerCommand("Score Algae in Processor", ScoringCommands.scoreProcessorWithIntakeCommand());
+        NamedCommands.registerCommand("Score Algae in Barge", ScoringCommands.scoreAlgaeInBargeCommand());
     }
 }

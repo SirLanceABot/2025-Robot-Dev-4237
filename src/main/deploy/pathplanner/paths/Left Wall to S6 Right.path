@@ -8,8 +8,8 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 7.333583906275624,
-        "y": 7.7447042362895075
+        "x": 6.649500000000001,
+        "y": 6.716
       },
       "isLocked": false,
       "linkedName": "Left Wall"
@@ -20,8 +20,8 @@
         "y": 5.093009868421053
       },
       "prevControl": {
-        "x": 5.335932839030626,
-        "y": 4.805882996033331
+        "x": 5.840250000000001,
+        "y": 5.3705
       },
       "nextControl": null,
       "isLocked": false,

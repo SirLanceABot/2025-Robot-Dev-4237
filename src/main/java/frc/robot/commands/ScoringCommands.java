@@ -207,20 +207,26 @@ public final class ScoringCommands
      * @return the command to move elevator and pivot and release algae
      * @author Logan Bellinger
      */
-    public static Command finishScoringProcessorWithGrabberCommand()
+    public static Command scoreProcessorWithGrabberCommand()
     {
         if(elevator != null && pivot != null && grabber != null && leds != null && grabberProximity != null)
         {
             return
-            Commands.waitUntil(() -> (!(grabberProximity.isDetectedSupplier()).getAsBoolean()))
+            Commands.waitUntil(() -> (elevator.isAtPosition(ElevatorPosition.kScoreProcessorPosition).getAsBoolean() && pivot.isAtPosition(PivotPosition.kScoreProcessorPosition).getAsBoolean()))
             .deadlineFor(
-                grabber.ejectAlgaeCommand())
+                leds.setColorBlinkCommand(Color.kBlue),
+                elevator.moveToSetPositionCommand(ElevatorPosition.kScoreProcessorPosition),
+                pivot.moveToSetPositionCommand(PivotPosition.kScoreProcessorPosition))
             .andThen(
-                Commands.waitUntil(() -> (elevator.isAtPosition(ElevatorPosition.kRestingPosition).getAsBoolean() && pivot.isAtPosition(PivotPosition.kRestingPosition).getAsBoolean()))
+                Commands.waitUntil(() -> (!(grabberProximity.isDetectedSupplier()).getAsBoolean()))
                 .deadlineFor(
-                    elevator.moveToSetPositionCommand(ElevatorPosition.kRestingPosition),
-                    pivot.moveToSetPositionCommand(PivotPosition.kRestingPosition)))
-            .andThen(leds.setColorSolidCommand(Color.kRed))
+                    grabber.ejectAlgaeCommand()))
+                .andThen(
+                    Commands.waitUntil(() -> (elevator.isAtPosition(ElevatorPosition.kRestingPosition).getAsBoolean() && pivot.isAtPosition(PivotPosition.kRestingPosition).getAsBoolean()))
+                    .deadlineFor(
+                        elevator.moveToSetPositionCommand(ElevatorPosition.kRestingPosition),
+                        pivot.moveToSetPositionCommand(PivotPosition.kRestingPosition)))
+                .andThen(leds.setColorSolidCommand(Color.kRed))
             .withName("Finish Scoring in Processor with Grabber Command");
         }
         else

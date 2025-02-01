@@ -163,11 +163,17 @@ public class GyroLance extends SensorLance
         return rotation2d;
     }
 
+    public Command resetYawCommand()
+    {
+        return Commands.runOnce(() -> setYaw(0.0)).withName("Reset Yaw");
+    }
+
     // public Command setYawRedCommand()
     // {
     //     return Commands.runOnce(() -> setYaw(   ));
     // }
 
+    // BOW TO YOUR GOD
     // public Command setYawBlueCommand()
     // {
     //     return Commands.runOnce(() -> setYaw(   ));
