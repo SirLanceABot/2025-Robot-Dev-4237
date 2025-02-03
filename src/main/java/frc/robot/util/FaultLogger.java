@@ -5,7 +5,7 @@ package frc.robot.util;
 
 //import com.kauailabs.navx.frc.AHRS;
 import com.revrobotics.spark.SparkMax;
-import com.revrobotics.spark.SparkMax.FaultID;
+// import com.revrobotics.spark.SparkMax.FaultID;
 import com.revrobotics.REVLibError;
 import edu.wpi.first.hal.PowerDistributionFaults;
 import edu.wpi.first.networktables.NetworkTable;
@@ -89,7 +89,7 @@ public final class FaultLogger {
   private static final Alerts activeAlerts = new Alerts(base, "Active Faults");
   private static final Alerts totalAlerts = new Alerts(base, "Total Faults");
 
-  private static final FaultID[] sparkFaultIDS = FaultID.values();
+  // private static final FaultID[] sparkFaultIDS = FaultID.values();
 
   /** Polls registered fallibles. This method should be called periodically. */
   public static void update() {
@@ -221,21 +221,21 @@ public final class FaultLogger {
    *
    * @param spark The Spark Max or Spark Flex to manage.
    */
-  public static void register(SparkMax spark) {
-    faultReporters.add(
-        () -> {
-          for (FaultID fault : sparkFaultIDS) {
-            if (spark.getFault(fault)) {
-              report(SparkMaxUtil.name(spark), fault.name(), FaultType.ERROR);
-            }
-          }
-        });
-    register(
-        () -> spark.getMotorTemperature() > 100,
-        SparkMaxUtil.name(spark),
-        "motor above 100°C",
-        FaultType.WARNING);
-  }
+  // public static void register(SparkMax spark) {
+  //   faultReporters.add(
+  //       () -> {
+  //         // for (FaultID fault : sparkFaultIDS) {
+  //           if (spark.getFault(fault)) {
+  //             report(SparkMaxUtil.name(spark), fault.name(), FaultType.ERROR);
+  //           }
+  //         }
+  //       });
+  //   register(
+  //       () -> spark.getMotorTemperature() > 100,
+  //       SparkMaxUtil.name(spark),
+  //       "motor above 100°C",
+  //       FaultType.WARNING);
+  // }
 
   /**
    * Registers fault suppliers for a duty cycle encoder.
@@ -300,12 +300,12 @@ public final class FaultLogger {
    *
    * @param spark The spark to report REVLibErrors from.
    */
-  public static void check(CANSparkBase spark) {
-    REVLibError error = spark.getLastError();
-    if (error != REVLibError.kOk) {
-      report(SparkMaxUtil.name(spark), error.name(), FaultType.ERROR);
-    }
-  }
+  // public static void check(CANSparkBase spark) {
+  //   REVLibError error = spark.getLastError();
+  //   if (error != REVLibError.kOk) {
+  //     report(SparkMaxUtil.name(spark), error.name(), FaultType.ERROR);
+  //   }
+  // }
 
   /**
    * Returns an array of descriptions of all faults that match the specified type.
