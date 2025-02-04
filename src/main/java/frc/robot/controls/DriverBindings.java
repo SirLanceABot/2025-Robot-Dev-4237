@@ -57,7 +57,7 @@ public final class DriverBindings {
         {
             System.out.println("  Constructor Started:  " + fullClassName);
 
-            drivetrain = robotContainer.getDrivetrain();
+            drivetrain = robotContainer.getCommandSwerveDrivetrain();
 
             configSuppliers();
 

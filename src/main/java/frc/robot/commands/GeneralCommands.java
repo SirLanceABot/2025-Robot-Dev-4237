@@ -1,7 +1,16 @@
 package frc.robot.commands;
 
 import java.lang.invoke.MethodHandles;
+import java.util.List;
 
+import com.pathplanner.lib.auto.AutoBuilder;
+import com.pathplanner.lib.path.GoalEndState;
+import com.pathplanner.lib.path.PathConstraints;
+import com.pathplanner.lib.path.PathPlannerPath;
+import com.pathplanner.lib.path.Waypoint;
+
+import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import frc.robot.Constants;
@@ -10,6 +19,7 @@ import frc.robot.commands.CommandsManager.TargetPosition;
 import frc.robot.sensors.GyroLance;
 import frc.robot.sensors.Proximity;
 import frc.robot.subsystems.Climb;
+import frc.robot.subsystems.CommandSwerveDrivetrain;
 import frc.robot.subsystems.Elevator;
 import frc.robot.subsystems.Elevator.ElevatorPosition;
 import frc.robot.subsystems.IntakeWrist.Position;
@@ -52,6 +62,7 @@ public final class GeneralCommands
     private static Proximity intakeProximity;
     private static Proximity elevatorProximity;
     private static Proximity grabberProximity;
+    private static CommandSwerveDrivetrain commandSwerveDrivetrain;
    
 
 
@@ -75,6 +86,7 @@ public final class GeneralCommands
         intakeProximity = robotContainer.getCoralIntakeProximity();
         elevatorProximity = robotContainer.getElevatorProximity();
         grabberProximity = robotContainer.getGrabberProximity();
+        commandSwerveDrivetrain = robotContainer.getCommandSwerveDrivetrain();
 
         System.out.println("  Constructor Finished: " + fullClassName);
     }
@@ -172,6 +184,31 @@ public final class GeneralCommands
             return Commands.none();
         }
     }
+
+    // public static Comamand determineLocationCommand()
+    // {
+
+    // }
+
+    public static Command driveToPositionCommand(Pose2d targetPose)
+    {
+
+        List<Waypoint> waypoint = PathPlannerPath.waypointsFromPoses(
+                                    new Pose2d(targetPose.getX(), targetPose.getY(), targetPose.getRotation()));          
+
+
+        PathPlannerPath path = new PathPlannerPath(
+                                    waypoint,
+                                    PathConstraints.unlimitedConstraints(12.0),
+                                    null,
+                                    new GoalEndState(0.0, targetPose.getRotation()));
+        path.preventFlipping = true;
+
+
+        return AutoBuilder.followPath(path);
+        // PathPlanner path = new PathPlannerPath(null, null, null, null)
+    }
+
 
     // *** CLASS METHODS & INSTANCE METHODS ***
     // Put all class methods and instance methods here
