@@ -221,31 +221,32 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
 
     }
 
-    private Rotation2d angleToNearestBranch()
-    {
-        double[] nearestBranch = poseEstimator.chooseClosestBranch();
-        Rotation2d targetDirection = new Rotation2d((nearestBranch[2] / 360) * 2 * Math.PI);
-        return targetDirection; //returns the angle to the nearest branch in radians
-    }
+    // private Rotation2d angleToNearestBranch()
+    // {
+    //     double[] nearestBranch = poseEstimator.chooseClosestBranch();
+    //     Rotation2d targetDirection = new Rotation2d((nearestBranch[2] / 360) * 2 * Math.PI);
+    //     return targetDirection; //returns the angle to the nearest branch in radians
+    // }
 
-    private DoubleSupplier xSpeedToNearestBranch()
-    {
-        double originalXDistance = poseEstimator.chooseClosestBranch()[0] - poseEstimator.getEstimatedPose().getX();
-        DoubleSupplier xDistance = () -> poseEstimator.chooseClosestBranch()[0] - poseEstimator.getEstimatedPose().getX();
-        DoubleSupplier yDistance = () -> poseEstimator.chooseClosestBranch()[1] - poseEstimator.getEstimatedPose().getY();
-        //Calculates the speed to move in the X direction based on how far away you are from the desired position on the reef
-        return () -> (xDistance.getAsDouble() > yDistance.getAsDouble() ? (1.0) * (xDistance.getAsDouble() / originalXDistance): (xDistance.getAsDouble()/yDistance.getAsDouble()) * (xDistance.getAsDouble() / originalXDistance)); //TODO Might need to increase the multiplier when close to the desired position
-    }
+    // private DoubleSupplier xSpeedToNearestBranch()
+    // {
+    //     double originalXDistance = poseEstimator.chooseClosestBranch()[0] - poseEstimator.getEstimatedPose().getX();
+    //     DoubleSupplier xDistance = () -> poseEstimator.chooseClosestBranch()[0] - poseEstimator.getEstimatedPose().getX();
+    //     DoubleSupplier yDistance = () -> poseEstimator.chooseClosestBranch()[1] - poseEstimator.getEstimatedPose().getY();
+    //     //Calculates the speed to move in the X direction based on how far away you are from the desired position on the reef
+    //     return () -> (xDistance.getAsDouble() > yDistance.getAsDouble() ? (1.0) * (xDistance.getAsDouble() / originalXDistance): (xDistance.getAsDouble()/yDistance.getAsDouble()) * (xDistance.getAsDouble() / originalXDistance)); //TODO Might need to increase the multiplier when close to the desired position
+    // }
 
-    private DoubleSupplier ySpeedToNearestBranch()
-    {
-        double originalXDistance = poseEstimator.chooseClosestBranch()[0] - poseEstimator.getEstimatedPose().getX();
-        DoubleSupplier xDistance = () -> poseEstimator.chooseClosestBranch()[0] - poseEstimator.getEstimatedPose().getX();
-        DoubleSupplier yDistance = () -> poseEstimator.chooseClosestBranch()[1] - poseEstimator.getEstimatedPose().getY();
+    // private DoubleSupplier ySpeedToNearestBranch()
+    // {
+    //     double originalXDistance = poseEstimator.chooseClosestBranch()[0] - poseEstimator.getEstimatedPose().getX();
+    //     DoubleSupplier xDistance = () -> poseEstimator.chooseClosestBranch()[0] - poseEstimator.getEstimatedPose().getX();
+    //     DoubleSupplier yDistance = () -> poseEstimator.chooseClosestBranch()[1] - poseEstimator.getEstimatedPose().getY();
 
-        //Calculates the speed to move in the Y direction based on how far away you are from the desired position on the reef
-        return () -> (yDistance.getAsDouble() > xDistance.getAsDouble() ? (1.0) * (xDistance.getAsDouble() / originalXDistance): (yDistance.getAsDouble()/xDistance.getAsDouble()) * (xDistance.getAsDouble() / originalXDistance)); //TODO Might need to increase the multiplier when close to the desired position
-    }
+    //     //Calculates the speed to move in the Y direction based on how far away you are from the desired position on the reef
+    //     return () -> (yDistance.getAsDouble() > xDistance.getAsDouble() ? (1.0) * (xDistance.getAsDouble() / originalXDistance): (yDistance.getAsDouble()/xDistance.getAsDouble()) * (xDistance.getAsDouble() / originalXDistance)); //TODO Might need to increase the multiplier when close to the desired position
+    // }
+
     public PathConstraints constraints = new PathConstraints(3.0, 3.0, 2 * Math.PI, 4 * Math.PI);
 
     //TODO send this to a new autobuilder to run the path
@@ -315,23 +316,6 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
 
         );
     }
-
-    /**
-     * Returns a command that will drive the robot to the nearest branch using PoseEstimator
-     * 
-     * @return Command to drive to the nearest branch
-     * @author Matthew Fontecchio
-     */
-    public Command driveToNearestBranchCommand()
-    {
-        return applyRequest(
-            () -> angleLockDrive
-                .withTargetDirection(angleToNearestBranch()) //Might need to be offset by 90 degrees because we are scoring from the left and right sides
-                .withVelocityX(xSpeedToNearestBranch().getAsDouble()) //Should slow down the robot speed as it approaches the desired x position
-                .withVelocityY(ySpeedToNearestBranch().getAsDouble()) //Should slow down the robot speed as it approaches the desired y position
-        );
-    }
-
 
 
     /**

@@ -72,36 +72,52 @@ public class PoseEstimator extends SubsystemLance
     private DoubleArrayEntry poseEstimatorEntry;
 
     private final double[][] blueLeftBranchLocationArray = 
-        {{5.889, 3.898, -90.0}, //S1 side
-         {}, //S2 side
-         {3.890, 2.738, 150.0}, //S3 side
-         {3.052, 4.444, 90.0}, //S4 side
-         {4.163, 5.439, -150}, //S5 side
-         {5.255, 5.185, -30.0}}; //S6 side
+    {{5.889, 3.898, -90.0}, //S1 side
+     {5.128, 2.738, -60.0}, //S2 side
+     {3.890, 2.738, 150.0}, //S3 side
+     {3.052, 4.444, 180.0}, //S4 side
+     {4.163, 5.439, -150}, //S5 side
+     {5.255, 5.185, -30.0}}; //S6 side
 
     private final double[][] blueRightBranchLocationArray = 
-        {{5.889, 3.635, -90.0}, //S1 side
-         {}, //S2 side
-         {3.759, 2.812, 150.0}, //S3 side
-         {3.052, 3.557, 90.0}, //S4 side
-         {3.871, 5.302, -150.0}, //S5 side
-         {5.255, 5.236, -30.0}}; //S6 side
+    {{5.889, 3.635, -90.0}, //S1 side
+     {4.972, 2.447, -60.0}, //S2 side
+     {3.750, 2.812, 150.0}, //S3 side
+     {3.052, 4.150, 180.0}, //S4 side
+     {3.871, 5.302, -150.0}, //S5 side
+     {5.600, 5.093, -30.0}}; //S6 side
+
+    private final double[][] blueMiddleReefLocationArray = 
+    {{5.889, 3.850, -90.0}, //S1 side
+     {5.050, 2.592, -60.0}, //S2 side
+     {3.820, 2.775, 150.0}, //S3 side
+     {3.052, 4.297, 180.0}, //S4 side
+     {4.017, 5.371, -150.0}, //S5 side
+     {5.343, 5.146, -30.0}}; //S6 side
 
     private final double[][] redRightBranchLocationArray = 
-        {{}, //S1 side
-         {}, //S2 side
-         {}, //S3 side
-         {}, //S4 side
-         {}, //S5 side
-         {}}; //S6 side
+    {{}, //S1 side
+     {}, //S2 side
+     {}, //S3 side
+     {}, //S4 side
+     {}, //S5 side
+     {}}; //S6 side
 
     private final double[][] redLeftBranchLocationArray = 
-        {{}, //S1 side
-         {}, //S2 side
-         {}, //S3 side
-         {}, //S4 side
-         {}, //S5 side
-         {}}; //S6 side
+    {{}, //S1 side
+     {}, //S2 side
+     {}, //S3 side
+     {}, //S4 side
+     {}, //S5 side
+     {}}; //S6 side
+
+    private final double[][] redMiddleReefLocationArray = 
+    {{}, //S1 side
+     {}, //S2 side
+     {}, //S3 side
+     {}, //S4 side
+     {}, //S5 side
+     {}}; //S6 side
 
     private List<Pose2d> aprilTagLocations = new ArrayList<Pose2d>(){{
         new Pose2d(new Translation2d(5.321046, 4.0259), new Rotation2d(Math.toRadians(0.0))); // Blue S1
@@ -124,7 +140,7 @@ public class PoseEstimator extends SubsystemLance
     // aprilTagLocations.add(new Pose2d(5.321046, 4.0259, Math.degreesToRadians(0)));
 
 
-    private double[][] scoringLocationArray;
+    private double[][][] scoringLocationArray = {blueLeftBranchLocationArray, blueRightBranchLocationArray, redLeftBranchLocationArray, redRightBranchLocationArray};
     private branchSide branchSide;
     // *** CLASS CONSTRUCTORS ***
     // Put all class constructors here
@@ -230,29 +246,47 @@ public class PoseEstimator extends SubsystemLance
         {
             for(int n = 0; n < 2; n++)
             {
-                scoringLocationArray[i][n] = blueLeftBranchLocationArray[i][n];
+                // scoringLocationArray[i][n] = blueLeftBranchLocationArray[i][n];
             }
         }
     }
 
-    public double[] chooseClosestBranch()
+    public double[] chooseClosestBranch(Pose2d aprilTag)
     {
-        double distance = 0.0;
-        double closestDistance = Double.MAX_VALUE;
+        double distance;
         double[] closestBranch = {};
-        for(int i = 0; i < 5; i++)
+        double distanceToClosestBranch = Double.MAX_VALUE;
+        if(isPoseInsideField(aprilTag))
         {
-            distance = Math.sqrt(Math.pow(estimatedPose.getX() - scoringLocationArray[i][0], 2) + Math.pow(estimatedPose.getY() - scoringLocationArray[i][1], 2));
-
-            if(distance < closestDistance)
+            for(int a = 0; a < 4; a++)
             {
-                closestDistance = distance;
-                for(int n = 0; n < 2; n++)
+                for(int b = 0; b < 6; b++)
                 {
-                    closestBranch[n] = scoringLocationArray[i][n];
+                    distance = Math.sqrt(Math.pow(scoringLocationArray[a][b][0] - aprilTag.getX(), 2.0) + Math.pow(scoringLocationArray[a][b][1] - aprilTag.getY(), 2.0));
+                    if(distance < distanceToClosestBranch)
+                    {
+                        distanceToClosestBranch = distance;
+                        closestBranch = scoringLocationArray[a][b];
+                    }
                 }
             }
         }
+        // double distance = 0.0;
+        // double closestDistance = Double.MAX_VALUE;
+        // double[] closestBranch = {};
+        // for(int i = 0; i < 5; i++)
+        // {
+        //     distance = Math.sqrt(Math.pow(estimatedPose.getX() - scoringLocationArray[i][0], 2) + Math.pow(estimatedPose.getY() - scoringLocationArray[i][1], 2));
+
+        //     if(distance < closestDistance)
+        //     {
+        //         closestDistance = distance;
+        //         for(int n = 0; n < 2; n++)
+        //         {
+        //             closestBranch[n] = scoringLocationArray[i][n];
+        //         }
+        //     }
+        
 
         return closestBranch;
     }
