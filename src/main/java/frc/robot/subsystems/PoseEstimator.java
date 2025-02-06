@@ -1,6 +1,8 @@
 package frc.robot.subsystems;
 
 import java.lang.invoke.MethodHandles;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.function.DoubleSupplier;
 
 import edu.wpi.first.math.MathUtil;
@@ -9,6 +11,7 @@ import edu.wpi.first.math.Nat;
 import edu.wpi.first.math.estimator.SwerveDrivePoseEstimator;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.numbers.N1;
 import edu.wpi.first.math.numbers.N3;
@@ -99,6 +102,27 @@ public class PoseEstimator extends SubsystemLance
          {}, //S4 side
          {}, //S5 side
          {}}; //S6 side
+
+    private List<Pose2d> aprilTagLocations = new ArrayList<Pose2d>(){{
+        new Pose2d(new Translation2d(5.321046, 4.0259), new Rotation2d(Math.toRadians(0.0))); // Blue S1
+        new Pose2d(new Translation2d(4.90474, 3.306318), new Rotation2d(Math.toRadians(300.0))); // Blue S2
+        new Pose2d(new Translation2d(4.073906, 3.306318), new Rotation2d(Math.toRadians(240.0))); // Blue S3
+        new Pose2d(new Translation2d(3.6576, 4.0259), new Rotation2d(Math.toRadians(180.0))); // Blue S4
+        new Pose2d(new Translation2d(4.073906, 4.745482), new Rotation2d(Math.toRadians(120.0))); // Blue S5
+        new Pose2d(new Translation2d(4.90474, 4.745482), new Rotation2d(Math.toRadians(60.0))); // Blue S6
+        new Pose2d(new Translation2d(12.227306, 4.0259), new Rotation2d(Math.toRadians(180.0))); // Red S1
+        new Pose2d(new Translation2d(12.643358, 4.745482), new Rotation2d(Math.toRadians(120.0))); // Red S2
+        new Pose2d(new Translation2d(13.474446, 4.745482), new Rotation2d(Math.toRadians(60.0))); // Red S3
+        new Pose2d(new Translation2d(13.890498, 4.0259), new Rotation2d(Math.toRadians(0.0))); // Red S4
+        new Pose2d(new Translation2d(13.474446, 3.306318), new Rotation2d(Math.toRadians(300.0))); // Red S5
+        new Pose2d(new Translation2d(12.643358, 3.306318), new Rotation2d(Math.toRadians(240.0))); // Red S6
+    
+    }};
+
+    // blah
+    // blah.add();
+    // aprilTagLocations.add(new Pose2d(5.321046, 4.0259, Math.degreesToRadians(0)));
+
 
     private double[][] scoringLocationArray;
     private branchSide branchSide;
@@ -232,6 +256,11 @@ public class PoseEstimator extends SubsystemLance
 
         return closestBranch;
     }
+
+    // public Pose2d closestAprilTag()
+    // {
+    //     Pose2d closest = Pose2d.nearest(aprilTagLocations);
+    // }
 
 
     // *** CLASS METHODS & INSTANCE METHODS ***
