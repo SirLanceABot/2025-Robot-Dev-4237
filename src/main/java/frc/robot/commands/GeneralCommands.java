@@ -9,6 +9,7 @@ import com.pathplanner.lib.path.PathConstraints;
 import com.pathplanner.lib.path.PathPlannerPath;
 import com.pathplanner.lib.path.Waypoint;
 
+import edu.wpi.first.math.estimator.PoseEstimator;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -62,6 +63,7 @@ public final class GeneralCommands
     private static Proximity intakeProximity;
     private static Proximity elevatorProximity;
     private static Proximity grabberProximity;
+    private static PoseEstimator poseEstimate;
     private static CommandSwerveDrivetrain commandSwerveDrivetrain;
    
 
@@ -190,15 +192,16 @@ public final class GeneralCommands
 
     // }
 
-    public static Command driveToPositionCommand(Pose2d targetPose)
+    public static Command driveToPositionCommand(Pose2d targetPose, Pose2d currentPose)
     {
 
-        List<Waypoint> waypoint = PathPlannerPath.waypointsFromPoses(
+        List<Waypoint> waypoints = PathPlannerPath.waypointsFromPoses(
+                                    new Pose2d(currentPose.getX(), currentPose.getY(), currentPose.getRotation()),
                                     new Pose2d(targetPose.getX(), targetPose.getY(), targetPose.getRotation()));          
 
 
         PathPlannerPath path = new PathPlannerPath(
-                                    waypoint,
+                                    waypoints,
                                     PathConstraints.unlimitedConstraints(12.0),
                                     null,
                                     new GoalEndState(0.0, targetPose.getRotation()));
@@ -206,7 +209,6 @@ public final class GeneralCommands
 
 
         return AutoBuilder.followPath(path);
-        // PathPlanner path = new PathPlannerPath(null, null, null, null)
     }
 
 

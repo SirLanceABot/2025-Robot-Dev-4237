@@ -7,6 +7,8 @@ package frc.robot.commands;
 import java.lang.invoke.MethodHandles;
 
 import com.pathplanner.lib.auto.NamedCommands;
+import com.pathplanner.lib.path.GoalEndState;
+import com.pathplanner.lib.path.PathPlannerPath;
 
 import frc.robot.RobotContainer;
 import frc.robot.subsystems.Elevator.ElevatorPosition;
