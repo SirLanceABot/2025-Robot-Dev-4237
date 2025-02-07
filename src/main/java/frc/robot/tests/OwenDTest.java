@@ -1,6 +1,8 @@
 package frc.robot.tests;
 
 import java.lang.invoke.MethodHandles;
+
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 
 import frc.robot.RobotContainer;
@@ -65,7 +67,12 @@ public class OwenDTest implements Test
      * This method runs periodically (every 20ms).
      */
     public void periodic()
-    {}
+    {
+        // if(DriverStation.getAlliance() == DriverStation.Alliance.Blue)
+        // {
+
+        // }
+    }
     
     /**
      * This method runs one time after the periodic() method.
