@@ -2,29 +2,24 @@ package frc.robot.motors;
 
 import java.lang.invoke.MethodHandles;
 
-import com.ctre.phoenix6.configs.SlotConfigs;
 import com.revrobotics.REVLibError;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.spark.ClosedLoopSlot;
 import com.revrobotics.spark.SparkAbsoluteEncoder;
-import com.revrobotics.spark.SparkLimitSwitch;
-import com.revrobotics.spark.SparkMax;
 import com.revrobotics.spark.SparkBase.ControlType;
 import com.revrobotics.spark.SparkBase.Faults;
 import com.revrobotics.spark.SparkBase.PersistMode;
 import com.revrobotics.spark.SparkBase.ResetMode;
 import com.revrobotics.spark.SparkBase.Warnings;
 import com.revrobotics.spark.SparkClosedLoopController;
-import com.revrobotics.spark.config.SparkBaseConfig;
-import com.revrobotics.spark.config.SparkBaseConfigAccessor;
-import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
-import com.revrobotics.spark.config.SparkMaxConfig;
-import com.revrobotics.spark.config.SparkMaxConfigAccessor;
+import com.revrobotics.spark.SparkLimitSwitch;
+import com.revrobotics.spark.SparkLowLevel;
+import com.revrobotics.spark.SparkMax;
 import com.revrobotics.spark.config.ClosedLoopConfig.FeedbackSensor;
 import com.revrobotics.spark.config.LimitSwitchConfig.Type;
-import com.revrobotics.spark.SparkLowLevel;
+import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
+import com.revrobotics.spark.config.SparkMaxConfig;
 
-import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.networktables.StringEntry;
@@ -723,14 +718,14 @@ public class SparkMaxLance extends MotorControllerLance
         return motor.get();
     }
 
-    /**
-     * @deprecated Use <b>setupInverted()</b> instead
-     */
-    @Override
-    public void setInverted(boolean isInverted)
-    {
-        setupInverted(isInverted);
-    }
+    // /**
+    //  * @deprecated Use <b>setupInverted()</b> instead
+    //  */
+    // @Override
+    // public void setInverted(boolean isInverted)
+    // {
+    //     setupInverted(isInverted);
+    // }
 
     @Override
     public boolean getInverted()
