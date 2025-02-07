@@ -18,6 +18,8 @@ import edu.wpi.first.math.numbers.N3;
 import edu.wpi.first.networktables.DoubleArrayEntry;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableInstance;
+import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants;
 import frc.robot.RobotContainer;
@@ -140,7 +142,7 @@ public class PoseEstimator extends SubsystemLance
     // aprilTagLocations.add(new Pose2d(5.321046, 4.0259, Math.degreesToRadians(0)));
 
 
-    private double[][][] scoringLocationArray = {blueLeftBranchLocationArray, blueRightBranchLocationArray, redLeftBranchLocationArray, redRightBranchLocationArray};
+    private double[][] scoringLocationArray;
     private branchSide branchSide;
     // *** CLASS CONSTRUCTORS ***
     // Put all class constructors here
@@ -251,45 +253,27 @@ public class PoseEstimator extends SubsystemLance
         }
     }
 
-    public double[] chooseClosestBranch(Pose2d aprilTag)
+    public double[] chooseClosestBranch(Pose2d aprilTag, boolean isRight)
     {
+        scoringLocationArray = (isRight ?  (DriverStation.getAlliance().get() == DriverStation.Alliance.Blue ? blueRightBranchLocationArray : redRightBranchLocationArray) : (DriverStation.getAlliance().get() == DriverStation.Alliance.Blue ? blueLeftBranchLocationArray : redLeftBranchLocationArray));
         double distance;
         double[] closestBranch = {};
         double distanceToClosestBranch = Double.MAX_VALUE;
         if(isPoseInsideField(aprilTag))
         {
-            for(int a = 0; a < 4; a++)
+            for(int b = 0; b < 6; b++)
             {
-                for(int b = 0; b < 6; b++)
+                distance = Math.sqrt(Math.pow(scoringLocationArray[b][0] - aprilTag.getX(), 2.0) + Math.pow(scoringLocationArray[b][1] - aprilTag.getY(), 2.0));
+                if(distance < distanceToClosestBranch)
                 {
-                    distance = Math.sqrt(Math.pow(scoringLocationArray[a][b][0] - aprilTag.getX(), 2.0) + Math.pow(scoringLocationArray[a][b][1] - aprilTag.getY(), 2.0));
-                    if(distance < distanceToClosestBranch)
-                    {
-                        distanceToClosestBranch = distance;
-                        closestBranch = scoringLocationArray[a][b];
-                    }
+                    distanceToClosestBranch = distance;
+                    closestBranch = scoringLocationArray[b];
                 }
             }
         }
-        // double distance = 0.0;
-        // double closestDistance = Double.MAX_VALUE;
-        // double[] closestBranch = {};
-        // for(int i = 0; i < 5; i++)
-        // {
-        //     distance = Math.sqrt(Math.pow(estimatedPose.getX() - scoringLocationArray[i][0], 2) + Math.pow(estimatedPose.getY() - scoringLocationArray[i][1], 2));
-
-        //     if(distance < closestDistance)
-        //     {
-        //         closestDistance = distance;
-        //         for(int n = 0; n < 2; n++)
-        //         {
-        //             closestBranch[n] = scoringLocationArray[i][n];
-        //         }
-        //     }
-        
-
         return closestBranch;
     }
+       
 
     // public Pose2d closestAprilTag()
     // {
