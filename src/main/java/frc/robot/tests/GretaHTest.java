@@ -5,6 +5,7 @@ import java.lang.invoke.MethodHandles;
 import javax.lang.model.util.ElementScanner14;
 
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.util.Color;
 import frc.robot.RobotContainer;
 import frc.robot.subsystems.LEDs;
 
@@ -96,25 +97,28 @@ public class GretaHTest implements Test
 
         if(joystick.getRawButton(1))
         {
-            leds.setColorSolidCommand(LEDs.Color.kYellow).schedule();
+            leds.setColorGradientCommand(Color.kFuchsia, Color.kGold).schedule();
         }
         else if(joystick.getRawButton(2))
         {
-            leds.setColorBlinkCommand(LEDs.Color.kBlue).schedule();
+            leds.offCommand().schedule();
         }
         else if(joystick.getRawButton(3))
         {
-            leds.setColorBlinkCommand(LEDs.Color.kGreen).schedule();
+            leds.setColorRainbowCommand().schedule();
         }
         else if(joystick.getRawButton(4))
         {
-            leds.setColorBlinkCommand(LEDs.Color.kPurple).schedule();
+            leds.setColorSolidCommand(Color.kMediumOrchid).schedule();
         }
-        else
+        else if(joystick.getRawButton(5))
         {
-            leds.setColorSolidCommand(LEDs.Color.kOff).schedule();
+            leds.setColorBlinkCommand(Color.kRed, Color.kFuchsia).schedule();
         }
-
+        else if(joystick.getRawButton(6))
+        {
+            leds.setColorBreatheCommand(Color.kOrange, Color.kAliceBlue).schedule();
+        }
         // if(joystick.getRawButton(1))
         // {
         //     leds.setColorBlinkCommand(LEDs.Color.kRed).schedule();

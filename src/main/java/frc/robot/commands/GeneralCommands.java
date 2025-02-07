@@ -12,6 +12,7 @@ import com.pathplanner.lib.path.Waypoint;
 import edu.wpi.first.math.estimator.PoseEstimator;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import frc.robot.Constants;
@@ -28,7 +29,7 @@ import frc.robot.subsystems.Grabber;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.IntakeWrist;
 import frc.robot.subsystems.LEDs;
-import frc.robot.subsystems.LEDs.Color;
+import frc.robot.subsystems.LEDs;
 import frc.robot.subsystems.Pivot;
 import frc.robot.subsystems.Pivot.PivotPosition;
 
@@ -129,7 +130,7 @@ public final class GeneralCommands
             return
             Commands.waitUntil(intakeWrist.isAtPosition(Position.kRestingPosition))
             .deadlineFor(
-                leds.setColorRainbowCommand(Color.kHotPink),
+                leds.setColorRainbowCommand(),
                 elevator.moveToSetPositionCommand(ElevatorPosition.kRestingPosition),
                 pivot.moveToSetPositionCommand(PivotPosition.kRestingPosition),
                 intakeWrist.moveToSetPositionCommand(Position.kRestingPosition))
@@ -155,7 +156,7 @@ public final class GeneralCommands
             return
             Commands.waitUntil(intakeWrist.isAtPosition(Position.kRestingPosition))
             .deadlineFor(
-                leds.setColorRainbowCommand(Color.kHotPink),
+                leds.setColorRainbowCommand(),
                 elevator.moveToSetPositionCommand(ElevatorPosition.kRestingPosition),
                 pivot.moveToSetPositionCommand(PivotPosition.kRestingPosition),
                 intakeWrist.moveToSetPositionCommand(Position.kRestingPosition))

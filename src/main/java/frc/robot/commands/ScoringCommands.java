@@ -2,6 +2,7 @@ package frc.robot.commands;
 
 import java.lang.invoke.MethodHandles;
 
+import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import frc.robot.Constants;
@@ -14,7 +15,7 @@ import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.IntakeWrist;
 import frc.robot.subsystems.IntakeWrist.Position;
 import frc.robot.subsystems.LEDs;
-import frc.robot.subsystems.LEDs.Color;
+import frc.robot.subsystems.LEDs;
 import frc.robot.subsystems.Pivot.PivotPosition;
 import frc.robot.subsystems.Pivot;
 import frc.robot.subsystems.Elevator.ElevatorPosition;

@@ -2,6 +2,7 @@ package frc.robot.commands;
 
 import java.lang.invoke.MethodHandles;
 
+import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import frc.robot.Constants;
@@ -16,7 +17,7 @@ import frc.robot.subsystems.IntakeWrist;
 import frc.robot.subsystems.LEDs;
 import frc.robot.subsystems.Elevator.ElevatorPosition;
 import frc.robot.subsystems.Grabber;
-import frc.robot.subsystems.LEDs.Color;
+import frc.robot.subsystems.LEDs;
 import frc.robot.subsystems.Pivot;
 import frc.robot.subsystems.Pivot.PivotPosition;
 
@@ -171,7 +172,7 @@ public final class IntakingCommands
             return
             Commands.waitUntil(algaeIntakeProximity.isDetectedSupplier())
             .deadlineFor(
-                leds.setColorBlinkCommand(Color.kYellow),
+                leds.setColorBlinkCommand(edu.wpi.first.wpilibj.util.Color.kYellow),
                 intakeWrist.moveToSetPositionCommand(Position.kManipAlgaePosition),
                 intake.pickupCoralCommand())
             .andThen(

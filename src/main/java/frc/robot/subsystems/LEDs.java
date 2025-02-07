@@ -9,6 +9,8 @@ import edu.wpi.first.wpilibj.AddressableLED;
 import edu.wpi.first.wpilibj.AddressableLEDBuffer;
 import edu.wpi.first.wpilibj.LEDPattern;
 import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.units.Units;
+import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import frc.robot.Constants;
@@ -32,48 +34,52 @@ public class LEDs extends SubsystemLance
     // *** INNER ENUMS and INNER CLASSES ***
     // Put all inner enums and inner classes here
 
-    public enum Color
-    {
-        kRed(255, 0, 0),
-        kGreen(0, 255, 0),
-        kBlue(0, 0, 255),
-        kYellow(255, 255, 0),
-        kPurple(255, 0, 255),
-        kHotPink(255, 105, 180),
-        kOff(0, 0, 0);
+    // public enum Color
+    // {
+    //     kRed(255, 0, 0),
+    //     kGreen(0, 255, 0),
+    //     kBlue(0, 0, 255),
+    //     kYellow(255, 255, 0),
+    //     kPurple(255, 0, 255),
+    //     kHotPink(255, 105, 180),
+    //     kOff(0, 0, 0);
 
-        int r;
-        int g;
-        int b;
+    //     int r;
+    //     int g;
+    //     int b;
 
-        private Color(int r, int g, int b)
-        {
-            this.r = r;
-            this.g = g;
-            this.b = b;
-        }
+    //     private Color(int r, int g, int b)
+    //     {
+    //         this.r = r;
+    //         this.g = g;
+    //         this.b = b;
+    //     }
 
-    }
+    // }
 
 
     
     // *** CLASS VARIABLES & INSTANCE VARIABLES ***
     // Put all class variables and instance variables here
-    private final AddressableLED ledStrip = new AddressableLED(1);
-    private final AddressableLEDBuffer blankBuffer;
-    private final AddressableLEDBuffer setBuffer;
+    private LEDPattern gradient;
+    
+    private final AddressableLED led = new AddressableLED(1);
+    private final AddressableLEDBuffer ledBuffer = new AddressableLEDBuffer(5);
+    // private final AddressableLEDBuffer setBuffer;
     // private final AddressableLEDBuffer greenBuffer = new AddressableLEDBuffer(60);
     // private final AddressableLEDBuffer blueBuffer = new AddressableLEDBuffer(60);
     // private final AddressableLEDBuffer yellowBuffer = new AddressableLEDBuffer(60);
     // private final AddressableLEDBuffer purpleBuffer = new AddressableLEDBuffer(60);
-    private final Timer timer = new Timer();
+    // private final Timer timer = new Timer();
     // private final LEDPattern rainbow = LEDPattern.rainbow(255, 100);
     // private static final Distance LEDSpacing = Meters.of(1/ 120.0);
+    private LEDPattern solid;
+    private final LEDPattern rainbow = LEDPattern.rainbow(255, 255);
+    private LEDPattern off = LEDPattern.solid(Color.kBlack);
 
-    
-
-    
-
+    private LEDPattern base;
+    private LEDPattern breathePattern;
+    private LEDPattern blinkPattern;
 
     // *** CLASS CONSTRUCTORS ***
     // Put all class constructors here
@@ -86,110 +92,120 @@ public class LEDs extends SubsystemLance
         super("LEDs");
         System.out.println("  Constructor Started:  " + fullClassName);
         
-        timer.start();
+        // timer.start();
         
-        ledStrip.setLength(5);
-        blankBuffer = new AddressableLEDBuffer(5);
-        setBuffer = new AddressableLEDBuffer(5);
+        led.setLength(49);
+        // blankBuffer = new AddressableLEDBuffer(5);
+        // setBuffer = new AddressableLEDBuffer(5);
 
-        configBuffers();
+        // configBuffers();
         configLEDs();
         System.out.println("  Constructor Finished: " + fullClassName);
     }
 
     private void configLEDs()
     {
-        ledStrip.setData(blankBuffer);
-        ledStrip.start();
+        // led.setData(ledBuffer);
+        led.start();
     }
 
-    private void configBuffers()
-    {
-        for(int i = 0; i < blankBuffer.getLength(); i++)
-        {
-            blankBuffer.setRGB(i, 0, 0, 0);
-        }
-    }
+    // private void configBuffers()
+    // {
+    //     for(int i = 0; i < ledBuffer.getLength(); i++)
+    //     {
+    //         ledBuffer.setRGB(i, 0, 0, 0);
+    //     }
+    // }
 
     // *** CLASS METHODS & INSTANCE METHODS ***
     // Put all class methods and instance methods here
 
     private void off()
     {
-        ledStrip.setData(blankBuffer);
+        // led.setData(ledBuffer);
         // setColorSolidCommand(Color.kOff);
+        off.applyTo(ledBuffer);
+        led.setData(ledBuffer);
     }
 
-    private void setColorSolid(int r, int g, int b)
+    private void setColorSolid(Color color)
     {
-        for(int i = 0; i < blankBuffer.getLength(); i++)
-        {
-            setBuffer.setRGB(i, r, g, b);
-        }
-
-        ledStrip.setData(setBuffer);
+        solid = LEDPattern.solid(color);
+        solid.applyTo(ledBuffer);
     }
 
-    private void setColorBlink(int r, int g, int b)
-    {
-        for(int i = 0; i < blankBuffer.getLength(); i++)
-        {
-            setBuffer.setRGB(i, r, g, b);
-        }
+    // private void setColorBlink(int r, int g, int b)
+    // {
+    //     for(int i = 0; i < ledBuffer.getLength(); i++)
+    //     {
+    //         setBuffer.setRGB(i, r, g, b);
+    //     }
 
-        if(timer.get() % 0.4 < 0.2)
-        {
-            ledStrip.setData(setBuffer);
-        }
-        else
-        {
-            ledStrip.setData(blankBuffer);
-        }
+    //     if(timer.get() % 0.4 < 0.2)
+    //     {
+    //         led.setData(setBuffer);
+    //     }
+    //     else
+    //     {
+    //         led.setData(ledBuffer);
+    //     }
+    // }
+
+    private void setColorRainbow()
+    {
+        rainbow.applyTo(ledBuffer);
     }
 
-    private void setColorRainbow(int r, int g, int b)
+    private void setColorGradient(Color... colors)
     {
-        // for(int c = 0; c < blankBuffer.getLength(); c++)
-        // {
-        //     for(int i = 0; i < blankBuffer.getLength(); i++)
-        //     {
-        //         setBuffer.setRGB(i, r, g, b);
-        //     }
-        // }
-     
-        for(int i = 0; i < blankBuffer.getLength(); i++)
-        {
-            setBuffer.setRGB(i, r, g, b);
+        gradient = LEDPattern.gradient(LEDPattern.GradientType.kContinuous, colors);
+        gradient.applyTo(ledBuffer);
+    }
 
-            r += 25;
-            g += 25;
-            b += 25;
+    private void setColorBreathe(Color... colors)
+    {
+        base = LEDPattern.gradient(LEDPattern.GradientType.kDiscontinuous, colors);
+        breathePattern = base.breathe(Units.Seconds.of(2));
+        breathePattern.applyTo(ledBuffer);
+    }
 
-        }
-        
-
+    private void setColorBlink(Color... colors)
+    {
+        base = LEDPattern.gradient(LEDPattern.GradientType.kDiscontinuous, colors);
+        blinkPattern = base.breathe(Units.Seconds.of(0.5));
+        blinkPattern.applyTo(ledBuffer);
     }
 
     //COMMANDS
 
-    public Command stopCommand()
+    public Command offCommand()
     {
         return runOnce(() -> off()).withName("Turn Off LED");
     }
 
     public Command setColorSolidCommand(Color color)
     {
-        return runOnce(() -> setColorSolid(color.r, color.g, color.b)).withName("Set LED Solid");
+        return runOnce(() -> setColorSolid(color)).withName("Set LED Solid");
     }
 
-    public Command setColorBlinkCommand(Color color)
+    public Command setColorGradientCommand(Color... colors)
     {
-        return run(() -> setColorBlink(color.r, color.g, color.b)).withName("Set LED Blink");
+        return runOnce(() -> setColorGradient(colors)).withName("Set LED Gradient");
     }
 
-    public Command setColorRainbowCommand(Color color)
+    public Command setColorRainbowCommand()
     {
-        return run(() -> setColorRainbow(color.r, color.g, color.b)).withName("Set LED Rainbow");
+        return run(() -> setColorRainbow()).withName("Set LED Rainbow");
+    }
+
+    public Command setColorBreatheCommand(Color... colors)
+    {
+        return run(() -> setColorBreathe(colors)).withName("Set LED Breathe");
+    }
+
+    public Command setColorBlinkCommand(Color... colors)
+    {
+        return run(() -> setColorBlink(colors)).withName("Set LED Blink");
     }
 
     
@@ -208,6 +224,7 @@ public class LEDs extends SubsystemLance
     @Override
     public void periodic()
     {
+        led.setData(ledBuffer);
         // This method will be called once per scheduler run
         // Use this for sensors that need to be read periodically.
         // Use this for data that needs to be logged.
