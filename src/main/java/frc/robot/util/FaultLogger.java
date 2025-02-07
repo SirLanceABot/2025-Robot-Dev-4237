@@ -9,6 +9,7 @@
 // // import com.revrobotics.CANSparkBase.FaultID;
 // import com.revrobotics.spark.SparkMax;
 // import com.revrobotics.spark.SparkBase;
+// import com.revrobotics.spark.SparkBase.Faults;
 
 
 // import com.revrobotics.REVLibError;
