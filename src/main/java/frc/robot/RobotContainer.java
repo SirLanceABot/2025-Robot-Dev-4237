@@ -15,6 +15,7 @@ import frc.robot.subsystems.Elevator;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.IntakeWrist;
 import frc.robot.subsystems.Pivot;
+import frc.robot.subsystems.PoseEstimator;
 import frc.robot.subsystems.Shuttle;
 import frc.robot.subsystems.LEDs;
 import frc.robot.controls.DriverBindings;
@@ -82,6 +83,7 @@ public class RobotContainer
 
     private final GyroLance gyro;
     private final Camera[] cameraArray = new Camera[2];
+    private final PoseEstimator poseEstimator;
     private final Proximity coralIntakeProximity;
     private final Proximity algaeIntakeProximity;
     private final Proximity elevatorProximity;
@@ -118,6 +120,7 @@ public class RobotContainer
 
         cameraArray[0]          = (useFullRobot || useScoringSideCamera)           ? new Camera("limelight-scoringSide")                                                                                    : null;
         cameraArray[1]          = (useFullRobot || useClimbSideCamera)          ? new Camera("limelight-climbSide")                                                                                   : null;
+        poseEstimator           = (useFullRobot || usePoseEstimator)        ? new PoseEstimator(drivetrain, gyro, cameraArray)                                                                : null;
 
         driverController        = (useFullRobot || useDriverController)     ? new CommandXboxController(Constants.Controllers.DRIVER_CONTROLLER_PORT)                                         : null;
         operatorController      = (useFullRobot || useOperatorController)   ? new CommandXboxController(Constants.Controllers.OPERATOR_CONTROLLER_PORT)                                       : null;
@@ -169,6 +172,11 @@ public class RobotContainer
     public Shuttle getShuttle()
     {
         return shuttle;
+    }
+
+    public PoseEstimator getPoseEstimator()
+    {
+        return poseEstimator;
     }
 
     public Proximity getCoralIntakeProximity()

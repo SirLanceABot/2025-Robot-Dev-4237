@@ -222,6 +222,11 @@ public class PoseEstimator extends SubsystemLance
         }
     }
 
+    public Pose2d getAprilTagPose(int index)
+    {
+        return aprilTagLocations.get(index);
+    }
+
     public boolean isReefTag(double tagID)
     {
         if((tagID >= 6 && tagID <= 11) || (tagID >= 17 && tagID <= 22))

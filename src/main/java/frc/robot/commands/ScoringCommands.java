@@ -3,6 +3,7 @@ package frc.robot.commands;
 import java.lang.invoke.MethodHandles;
 
 import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
@@ -263,11 +264,13 @@ public final class ScoringCommands
         }
     }
 
-    public static Command scoreCoralAutonomouslyReallyCoolAndAwesomeCommand(boolean isL)
+    public static Command scoreCoralAutonomouslyReallyCoolAndAwesomeCommand(boolean isRight)
     {
+        // TODO: fix this.  idk why owen wrote this the choose closest branch like this.  feels wrong at best
         if(drivetrain != null && gyro != null)
         {
-            
+            Pose2d currentPose = poseEstimator.getEstimatedPose();
+            // Pose2d targetPose = new Pose2d(poseEstimator.chooseClosestBranch(poseEstimator.getAprilTagPose(0), isRight));
 
             return
             leds.setColorBlinkCommand(Color.kBlue)
