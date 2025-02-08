@@ -2,7 +2,9 @@ package frc.robot.subsystems;
 
 import java.lang.invoke.MethodHandles;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.function.BooleanSupplier;
 import java.util.function.DoubleSupplier;
 
@@ -75,55 +77,44 @@ public class PoseEstimator extends SubsystemLance
     private Pose2d estimatedPose = new Pose2d();
     private DoubleArrayEntry poseEstimatorEntry;
 
-    private final double[][] blueLeftBranchLocationArray = 
-    {{5.447446, 4.1859}, //S1 side
-     {5.06044, 3.1693908}, //S2 side
-     {3.888206, 3.1693908}, //S3 side
-     {3.5312, 4.1859}, //S4 side
-     {3.9381227, 4.9124092}, //S5 side
-     {5.255, 5.185}}; //S6 side
+    // private final double[][] blueLeftBranchLocationArray = 
+    // {{5.447446, 4.1859}, //S1 side
+    //  {5.06044, 3.1693908}, //S2 side
+    //  {3.888206, 3.1693908}, //S3 side
+    //  {3.5312, 4.1859}, //S4 side
+    //  {3.9381227, 4.9124092}, //S5 side
+    //  {5.0405233, 4.9124092}}; //S6 side
 
-    private final double[][] blueRightBranchLocationArray = 
-    {{5.447446, 3.8659}, //S1 side
-     {5.0405233, 3.1393908}, //S2 side
-     {3.9381227, 3.1393908}, //S3 side
-     {3.5312, 3.8659}, //S4 side
-     {3.871, 5.302}, //S5 side
-     {5.600, 5.093}}; //S6 side
+    // private final double[][] blueRightBranchLocationArray = 
+    // {{5.447446, 3.8659}, //S1 side
+    //  {5.0405233, 3.1393908}, //S2 side
+    //  {3.9381227, 3.1393908}, //S3 side
+    //  {3.5312, 3.8659}, //S4 side
+    //  {3.888206, 4.8824092}, //S5 side
+    //  {5.09044, 4.8824092}}; //S6 side
 
-    private final double[][] blueMiddleReefLocationArray = 
-    {{5.889, 3.850}, //S1 side
-     {5.050, 2.592}, //S2 side
-     {3.820, 2.775}, //S3 side
-     {3.052, 4.297}, //S4 side
-     {4.017, 5.371}, //S5 side
-     {5.343, 5.146}}; //S6 side
+    //  private final double[][] redLeftBranchLocationArray = 
+    // {{12.100906, 3.8659}, //S1 side
+    //  {12.457658, 4.8827472}, //S2 side
+    //  {13.660146, 4.8824092}, //S3 side
+    //  {14.016898, 3.8659}, //S4 side
+    //  {13.6102433, 3.1393908}, //S5 side
+    //  {12.5075747, 3.1393908}}; //S6 side
 
-    private final double[][] redRightBranchLocationArray = 
-    {{}, //S1 side
-     {}, //S2 side
-     {}, //S3 side
-     {}, //S4 side
-     {}, //S5 side
-     {}}; //S6 side
+    // private final double[][] redRightBranchLocationArray = 
+    // {{12.100906, 4.1859}, //S1 side
+    //  {12.5075747, 4.9124092}, //S2 side
+    //  {13.6102293, 4.9124092}, //S3 side
+    //  {14.016898, 4.1859}, //S4 side
+    //  {13.660146, 3.1693908}, //S5 side
+    //  {12.457658, 3.1693908}}; //S6 side
 
-    private final double[][] redLeftBranchLocationArray = 
-    {{}, //S1 side
-     {}, //S2 side
-     {}, //S3 side
-     {}, //S4 side
-     {}, //S5 side
-     {}}; //S6 side
-
-    private final double[][] redMiddleReefLocationArray = 
-    {{}, //S1 side
-     {}, //S2 side
-     {}, //S3 side
-     {}, //S4 side
-     {}, //S5 side
-     {}}; //S6 side
-
-    private List<Pose2d> aprilTagLocations = new ArrayList<Pose2d>(){{
+     private final HashMap<Integer, Pose2d> leftBranchMap = new HashMap<Integer, Pose2d>();
+     private final HashMap<Integer, Pose2d> rightBranchMap = new HashMap<Integer, Pose2d>();
+     
+    //  left.put(6, new Pose2d( new Translation2d(13.6102433, 3.1393908), new Rotation2d(Math.toRadians(30))));
+ 
+    private final List<Pose2d> aprilTagLocations = new ArrayList<Pose2d>(){{
         new Pose2d(new Translation2d(5.321046, 4.0259), new Rotation2d(Math.toRadians(0.0))); // Blue S1
         new Pose2d(new Translation2d(4.90474, 3.306318), new Rotation2d(Math.toRadians(300.0))); // Blue S2
         new Pose2d(new Translation2d(4.073906, 3.306318), new Rotation2d(Math.toRadians(240.0))); // Blue S3
@@ -169,6 +160,8 @@ public class PoseEstimator extends SubsystemLance
 
         double[] doubleArray = {0.0, 0.0, 0.0};
 
+        fillMaps();
+
         visionStdDevs = new Matrix<N3, N1>(Nat.N3(), Nat.N1(), doubleArray);
         stateStdDevs = new Matrix<N3, N1>(Nat.N3(), Nat.N1(), doubleArray);
 
@@ -204,6 +197,39 @@ public class PoseEstimator extends SubsystemLance
         visionStdDevs.set(0, 0, 0.9); // x in meters
         visionStdDevs.set(1, 0, 0.9); // y in meters
         visionStdDevs.set(2, 0, 0.95); // heading in radians
+    }
+
+    private void fillMaps()
+    {
+        //Red Left
+        leftBranchMap.put(6, new Pose2d( new Translation2d(13.6102433, 3.1393908), new Rotation2d(Math.toRadians(30)))); //S5
+        leftBranchMap.put(7, new Pose2d( new Translation2d(14.016898, 3.8659), new Rotation2d(Math.toRadians(90)))); //S4
+        leftBranchMap.put(8, new Pose2d( new Translation2d(13.660146, 4.8824092), new Rotation2d(Math.toRadians(150)))); //S3
+        leftBranchMap.put(9, new Pose2d( new Translation2d(12.457658, 4.8827472), new Rotation2d(Math.toRadians(210)))); //S2
+        leftBranchMap.put(10, new Pose2d( new Translation2d(12.100906, 3.8659), new Rotation2d(Math.toRadians(270)))); //S1
+        leftBranchMap.put(11, new Pose2d( new Translation2d(12.5075747, 3.1393908), new Rotation2d(Math.toRadians(-30)))); //S6
+        //Blue Left
+        leftBranchMap.put(17, new Pose2d( new Translation2d(3.888206, 3.1693908), new Rotation2d(Math.toRadians(-30)))); //S3
+        leftBranchMap.put(18, new Pose2d( new Translation2d(3.5312, 4.1859), new Rotation2d(Math.toRadians(270)))); //S4
+        leftBranchMap.put(19, new Pose2d( new Translation2d(3.9381227, 4.9124092), new Rotation2d(Math.toRadians(210)))); //S5
+        leftBranchMap.put(20, new Pose2d( new Translation2d(5.0405233, 4.9124092), new Rotation2d(Math.toRadians(150)))); //S6
+        leftBranchMap.put(21, new Pose2d( new Translation2d(5.447446, 4.1859), new Rotation2d(Math.toRadians(90)))); //S2
+        leftBranchMap.put(22, new Pose2d( new Translation2d(5.06044, 3.1693908), new Rotation2d(Math.toRadians(30)))); //S1
+
+        //Red Right
+        rightBranchMap.put(6, new Pose2d( new Translation2d(13.660146, 3.1693908), new Rotation2d(Math.toRadians(30)))); //S5
+        rightBranchMap.put(7, new Pose2d( new Translation2d(14.016898, 4.1859), new Rotation2d(Math.toRadians(90)))); //S4
+        rightBranchMap.put(8, new Pose2d( new Translation2d(13.6102293, 4.9124092), new Rotation2d(Math.toRadians(150)))); //S3
+        rightBranchMap.put(9, new Pose2d( new Translation2d(12.5075747, 4.9124092), new Rotation2d(Math.toRadians(210)))); //S2
+        rightBranchMap.put(10, new Pose2d( new Translation2d(12.100906, 4.1859), new Rotation2d(Math.toRadians(270)))); //S1
+        rightBranchMap.put(11, new Pose2d( new Translation2d(12.457658, 3.1693908), new Rotation2d(Math.toRadians(-30)))); //S6
+        //Blue Right
+        rightBranchMap.put(17, new Pose2d( new Translation2d(3.9381227, 3.1393908), new Rotation2d(Math.toRadians(-30)))); //S3
+        rightBranchMap.put(18, new Pose2d( new Translation2d(3.5312, 3.8659), new Rotation2d(Math.toRadians(270)))); //S4
+        rightBranchMap.put(19, new Pose2d( new Translation2d(3.888206, 4.8824092), new Rotation2d(Math.toRadians(210)))); //S5
+        rightBranchMap.put(20, new Pose2d( new Translation2d(5.09044, 4.8824092), new Rotation2d(Math.toRadians(150)))); //S6
+        rightBranchMap.put(21, new Pose2d( new Translation2d(5.447446, 3.8659), new Rotation2d(Math.toRadians(90)))); //S2
+        rightBranchMap.put(22, new Pose2d( new Translation2d(5.0405233, 3.1393908), new Rotation2d(Math.toRadians(30)))); //S1
     }
 
     /**
@@ -284,25 +310,37 @@ public class PoseEstimator extends SubsystemLance
         }
     }
 
-    public double[] chooseClosestBranch(Pose2d aprilTag, boolean isRight)
+    // public double[] chooseClosestBranch(Pose2d aprilTag, boolean isRight)
+    // {
+    //     scoringLocationArray = (isRight ?  (DriverStation.getAlliance().get() == DriverStation.Alliance.Blue ? blueRightBranchLocationArray : redRightBranchLocationArray) : (DriverStation.getAlliance().get() == DriverStation.Alliance.Blue ? blueLeftBranchLocationArray : redLeftBranchLocationArray));
+    //     double distance;
+    //     double[] closestBranch = {};
+    //     double distanceToClosestBranch = Double.MAX_VALUE;
+    //     if(isPoseInsideField(aprilTag))
+    //     {
+    //         for(int b = 0; b < 6; b++)
+    //         {
+    //             distance = Math.sqrt(Math.pow(scoringLocationArray[b][0] - aprilTag.getX(), 2.0) + Math.pow(scoringLocationArray[b][1] - aprilTag.getY(), 2.0));
+    //             if(distance < distanceToClosestBranch)
+    //             {
+    //                 distanceToClosestBranch = distance;
+    //                 closestBranch = scoringLocationArray[b];
+    //             }
+    //         }
+    //     }
+    //     return closestBranch;
+    // }
+
+    public Pose2d closestBranchLocation(int aprilTagID, boolean isRight)
     {
-        scoringLocationArray = (isRight ?  (DriverStation.getAlliance().get() == DriverStation.Alliance.Blue ? blueRightBranchLocationArray : redRightBranchLocationArray) : (DriverStation.getAlliance().get() == DriverStation.Alliance.Blue ? blueLeftBranchLocationArray : redLeftBranchLocationArray));
-        double distance;
-        double[] closestBranch = {};
-        double distanceToClosestBranch = Double.MAX_VALUE;
-        if(isPoseInsideField(aprilTag))
+        if(isRight)
         {
-            for(int b = 0; b < 6; b++)
-            {
-                distance = Math.sqrt(Math.pow(scoringLocationArray[b][0] - aprilTag.getX(), 2.0) + Math.pow(scoringLocationArray[b][1] - aprilTag.getY(), 2.0));
-                if(distance < distanceToClosestBranch)
-                {
-                    distanceToClosestBranch = distance;
-                    closestBranch = scoringLocationArray[b];
-                }
-            }
+            return rightBranchMap.get(aprilTagID);
         }
-        return closestBranch;
+        else
+        {
+            return leftBranchMap.get(aprilTagID);
+        }
     }
        
 
