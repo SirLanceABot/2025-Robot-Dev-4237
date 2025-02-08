@@ -86,31 +86,25 @@ public class RobbieFTest implements Test
     //  */
     public void periodic()
     {
-        System.out.println("Position" + elevator.getLeftPosition());
+        // System.out.println("Position" + elevator.getLeftPosition());
 
         if (joystick.getRawButton(1))
         {
-            // elevator.manualMove(0.1);
-            System.out.println("A Button Pressed");
+        
+            grabber.grabGamePieceCommand().schedule();
 
-            // elevator.moveToSetPositionCommand(Constants.TargetPosition.kL2).schedule();
-            elevator.moveToSetPositionCommand(Elevator.ElevatorPosition.kL2).schedule();
         }
         else if (joystick.getRawButton(2))
         {
-            // elevator.manualMove(-0.1);
-            System.out.println("B Button Pressed");
-
-            // elevator.moveToSetPositionCommand(Constants.TargetPosition.kL4).schedule();
-            elevator.stopCommand().schedule();;
+            grabber.stopCommand().schedule();
         }
         else if (joystick.getRawButton(3))
         {
-            // elevator.manualMoveCommand(0.3).schedule();
+           grabber.ejectAlgaeCommand().schedule();
         }
-        else if(joystick.getRawButton(4))
+        else 
         {
-            // elevator.manualMoveCommand(-0.3).schedule();
+            grabber.stopCommand().schedule();
         }
     }
     
