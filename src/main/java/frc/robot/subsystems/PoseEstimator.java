@@ -345,6 +345,11 @@ public class PoseEstimator extends SubsystemLance
         }
     }
 
+    private boolean getIsRightBranch()
+    {
+        return isRightBranch;
+    }
+
     private void setPlacingSideToLeft()
     {
         isRightBranch = false;
