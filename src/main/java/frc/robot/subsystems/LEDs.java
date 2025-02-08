@@ -16,7 +16,9 @@ import edu.wpi.first.wpilibj2.command.Commands;
 import frc.robot.Constants;
 
 /**
- * This is an example of what a subsystem should look like.
+ * LEDs :)
+ * @author Greta
+ * @author Niyati
  */
 public class LEDs extends SubsystemLance
 {
@@ -120,6 +122,9 @@ public class LEDs extends SubsystemLance
     // *** CLASS METHODS & INSTANCE METHODS ***
     // Put all class methods and instance methods here
 
+    /**
+     * Turns LEDs off
+     */
     private void off()
     {
         // led.setData(ledBuffer);
@@ -128,6 +133,10 @@ public class LEDs extends SubsystemLance
         led.setData(ledBuffer);
     }
 
+    /**
+     * Makes LEDs a solid color
+     * @param color
+     */
     private void setColorSolid(Color color)
     {
         solid = LEDPattern.solid(color);
@@ -151,17 +160,29 @@ public class LEDs extends SubsystemLance
     //     }
     // }
 
+    /**
+     * Turns LEDs rainbow
+     */
     private void setColorRainbow()
     {
         rainbow.applyTo(ledBuffer);
     }
 
+    /**
+     * Creates gradient with specified colors
+     * @param colors
+     */
     private void setColorGradient(Color... colors)
     {
         gradient = LEDPattern.gradient(LEDPattern.GradientType.kContinuous, colors);
         gradient.applyTo(ledBuffer);
     }
 
+    /**
+     * Creates a gradient or solid color
+     * Blinks slowly - like breathing
+     * @param colors
+     */
     private void setColorBreathe(Color... colors)
     {
         base = LEDPattern.gradient(LEDPattern.GradientType.kDiscontinuous, colors);
@@ -169,6 +190,10 @@ public class LEDs extends SubsystemLance
         breathePattern.applyTo(ledBuffer);
     }
 
+    /**
+     * Creates a gradient or solid blink pattern
+     * @param colors
+     */
     private void setColorBlink(Color... colors)
     {
         base = LEDPattern.gradient(LEDPattern.GradientType.kDiscontinuous, colors);
