@@ -38,12 +38,12 @@ public class Elevator extends SubsystemLance
         kUpperReefAlgae(80.0),
         kL3(60.0),
         kLowerReefAlgae(40.0),
+        kRestingPosition(20.0),
         kL2(20.0),
+        kGrabCoralPosition(15.0),
         kL1(10.0),
         kScoreProcessorPosition(8.0),
-        kHoldAlgaePosition(7.0),
-        kGrabCoralPosition(5.0),
-        kRestingPosition(2.0);
+        kHoldingPosition(0.0);
 
         public final double elevatorPosition;
 

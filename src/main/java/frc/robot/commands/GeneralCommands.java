@@ -197,8 +197,8 @@ public final class GeneralCommands
     {
 
         List<Waypoint> waypoints = PathPlannerPath.waypointsFromPoses(
-                                    new Pose2d(currentPose.getX(), currentPose.getY(), currentPose.getRotation()),
-                                    new Pose2d(targetPose.getX(), targetPose.getY(), targetPose.getRotation()));          
+                                    new Pose2d(currentPose.getTranslation(), currentPose.getRotation()),
+                                    new Pose2d(targetPose.getTranslation(), targetPose.getRotation()));          
 
 
         PathPlannerPath path = new PathPlannerPath(

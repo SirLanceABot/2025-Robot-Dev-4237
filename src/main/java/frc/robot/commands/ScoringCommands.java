@@ -2,13 +2,16 @@ package frc.robot.commands;
 
 import java.lang.invoke.MethodHandles;
 
+import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import frc.robot.Constants;
 import frc.robot.RobotContainer;
 import frc.robot.commands.CommandsManager.TargetPosition;
+import frc.robot.sensors.GyroLance;
 import frc.robot.sensors.Proximity;
+import frc.robot.subsystems.CommandSwerveDrivetrain;
 import frc.robot.subsystems.Elevator;
 import frc.robot.subsystems.Grabber;
 import frc.robot.subsystems.Intake;
@@ -18,6 +21,7 @@ import frc.robot.subsystems.LEDs;
 import frc.robot.subsystems.LEDs;
 import frc.robot.subsystems.Pivot.PivotPosition;
 import frc.robot.subsystems.Pivot;
+import frc.robot.subsystems.PoseEstimator;
 import frc.robot.subsystems.Elevator.ElevatorPosition;
 
 public final class ScoringCommands
@@ -39,12 +43,15 @@ public final class ScoringCommands
 
     // *** CLASS VARIABLES & INSTANCE VARIABLES ***
     // Put all class variables and instance variables here
+    private static CommandSwerveDrivetrain drivetrain;
     private static Intake intake;
     private static IntakeWrist intakeWrist;
     private static Pivot pivot;
     private static Elevator elevator;
     private static Grabber grabber;
     private static LEDs leds;
+    private static GyroLance gyro;
+    private static PoseEstimator poseEstimator;
     private static Proximity algaeIntakeProximity;
     private static Proximity elevatorProximity;
     private static Proximity grabberProximity;
@@ -60,12 +67,14 @@ public final class ScoringCommands
     {
         System.out.println("  Constructor Started:  " + fullClassName);
 
+        drivetrain = robotContainer.getCommandSwerveDrivetrain();
         intake = robotContainer.getIntake();
         intakeWrist = robotContainer.getIntakeWrist();
         pivot = robotContainer.getPivot();
         elevator = robotContainer.getElevator();
         grabber = robotContainer.getGrabber();
         leds = robotContainer.getLEDs();
+        gyro = robotContainer.getGyro();
         algaeIntakeProximity = robotContainer.getAlgaeIntakeProximity();
         elevatorProximity = robotContainer.getElevatorProximity();
         grabberProximity = robotContainer.getGrabberProximity();
@@ -203,6 +212,24 @@ public final class ScoringCommands
         }
     }
 
+    public static Command flipScorerCommand()
+    {
+        if(elevator != null && pivot != null)
+        {
+            return
+            Commands.waitUntil(pivot.isAtPosition(PivotPosition.kFlippedPosition))
+            .deadlineFor(pivot.moveToSetPositionCommand(PivotPosition.kFlippedPosition))
+            .andThen(
+                Commands.waitUntil(elevator.isAtPosition(ElevatorPosition.kHoldingPosition))
+                .deadlineFor(elevator.moveToSetPositionCommand(ElevatorPosition.kHoldingPosition)))
+            .withName("Flip Scorer");
+        }
+        else
+        {
+            return Commands.none();
+        }
+    }
+
     /**
      * This command will spit out the algae into the processor with the grabber and then move the elevator and pivot back to resting position
      * @return the command to move elevator and pivot and release algae
@@ -229,6 +256,24 @@ public final class ScoringCommands
                         pivot.moveToSetPositionCommand(PivotPosition.kRestingPosition)))
                 .andThen(leds.setColorSolidCommand(Color.kRed))
             .withName("Finish Scoring in Processor with Grabber Command");
+        }
+        else
+        {
+            return Commands.none();
+        }
+    }
+
+    public static Command scoreCoralAutonomouslyReallyCoolAndAwesomeCommand(boolean isL)
+    {
+        if(drivetrain != null && gyro != null)
+        {
+            
+
+            return
+            leds.setColorBlinkCommand(Color.kBlue)
+            .andThen(
+                
+            );
         }
         else
         {

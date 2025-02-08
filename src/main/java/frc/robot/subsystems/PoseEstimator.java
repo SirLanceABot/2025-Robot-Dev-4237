@@ -3,6 +3,7 @@ package frc.robot.subsystems;
 import java.lang.invoke.MethodHandles;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.BooleanSupplier;
 import java.util.function.DoubleSupplier;
 
 import edu.wpi.first.math.MathUtil;
@@ -22,6 +23,7 @@ import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants;
+import frc.robot.LimelightHelpers;
 import frc.robot.RobotContainer;
 import frc.robot.motors.TalonFXLance;
 import frc.robot.sensors.GyroLance;
@@ -220,6 +222,30 @@ public class PoseEstimator extends SubsystemLance
         }
     }
 
+    public boolean isReefTag(double tagID)
+    {
+        if((tagID >= 6 && tagID <= 11) || (tagID >= 17 && tagID <= 22))
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    public BooleanSupplier isReefTagSupplier(int tagID)
+    {
+        if((tagID >= 6 && tagID <= 11) || (tagID >= 17 && tagID <= 22))
+        {
+            return () -> true;
+        }
+        else
+        {
+            return () -> false;
+        }
+    }
+
     /**
      * checks if the pose given is within the field boundaries in meters
      * @param pose
@@ -307,21 +333,22 @@ public class PoseEstimator extends SubsystemLance
         //does this for each camera in the camera array
         for(Camera camera : cameraArray)
         {
-            if(camera.getTagCount() > 0)
+            if(camera.getTagCount() > 0 && camera != null)
             {
-                if(camera != null)
-                {
-                    Pose2d visionPose = camera.getPose();
+                Pose2d visionPose = camera.getPose();
 
-                    // only updates the pose with the cameras if the pose shown by the vision is within the field limits
-                    if(isPoseInsideField(visionPose)) // maybe don't check if inside field in order to make pose more accurate or find different solution later
-                    {
-                        totalTagCount += camera.getTagCount();
-                        poseEstimator.addVisionMeasurement(
-                            visionPose,
-                            camera.getTimestamp(),
-                            visionStdDevs);//visionStdDevs.times(camera.getAverageTagDistance() * 0.5));
-                    }
+                // only updates the pose with the cameras if the pose shown by the vision is within the field limits
+                if(isPoseInsideField(visionPose)) // maybe don't check if inside field in order to make pose more accurate or find different solution later
+                {
+                    totalTagCount += camera.getTagCount();
+                    poseEstimator.addVisionMeasurement(
+                        visionPose,
+                        camera.getTimestamp(),
+                        visionStdDevs);//visionStdDevs.times(camera.getAverageTagDistance() * 0.5));
+                }
+                if(isReefTag(NetworkTableInstance.getDefault().getTable("limelight").getEntry("tid").getDouble(0))) // TODO: add if distance is less than x meters
+                {
+                    estimatedPose = visionPose;
                 }
             }
         }
