@@ -41,7 +41,7 @@ public final class CommandsManager
         kLowerReefAlgae(PivotPosition.kLowerReefAlgae, ElevatorPosition.kLowerReefAlgae),
         kL2(PivotPosition.kL2, ElevatorPosition.kL2),
         kL1(PivotPosition.kL1, ElevatorPosition.kL1),
-        kScoreProcessorWithGrabberPosition(PivotPosition.kScoreProcessorPosition, ElevatorPosition.kL1),
+        kScoreProcessorWithClawPosition(PivotPosition.kScoreProcessorPosition, ElevatorPosition.kL1),
         kHoldAlgaePosition(PivotPosition.kHoldAlgaePosition, ElevatorPosition.kRestingPosition),
         kGrabCoralPosition(PivotPosition.kGrabCoralPosition, ElevatorPosition.kGrabCoralPosition),
         kRestingPosition(PivotPosition.kRestingPosition, ElevatorPosition.kRestingPosition);

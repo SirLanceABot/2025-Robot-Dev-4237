@@ -9,12 +9,13 @@ import frc.robot.motors.SparkMaxLance;
 import frc.robot.motors.TalonFXLance;
 
 /**
- * This class creates the grabber subsystem and setsup related practice commands
- * The grabber will handle coral and algae, it intakes and outakes both game pieces
+ * This class creates the claw subsystem and setsup related practice commands
+ * The claw will handle coral and algae, it intakes and outakes both game pieces
  * 
  * @author Robbie Frank
  * @author Robbie Jeffery
  * @author Logan Bellinger
+ * @authod Matthew Fontecchio (I changed the java docs to say claw instead of grabber)
  */
 public class Claw extends SubsystemLance
 {
@@ -37,15 +38,15 @@ public class Claw extends SubsystemLance
     // *** CLASS VARIABLES & INSTANCE VARIABLES ***
     // Put all class variables and instance variables here
 
-    private final SparkMaxLance kickMotor = new SparkMaxLance(Constants.Grabber.KICK_MOTOR_PORT, Constants.Grabber.KICK_MOTOR_CAN_BUS, "Claw Kick Motor");
-    private final TalonFXLance grabMotor = new TalonFXLance(Constants.Grabber.GRAB_MOTOR_PORT, Constants.Grabber.GRAB_MOTOR_CAN_BUS, "Claw Grab Motor");
-    // private final SparkMaxLance backMotor = new SparkMaxLance(Constants.Grabber.BACK_MOTOR_PORT, Constants.Grabber.BACK_MOTOR_CAN_BUS, "Back Grabber Motor");
+    private final SparkMaxLance kickMotor = new SparkMaxLance(Constants.Claw.KICK_MOTOR_PORT, Constants.Claw.KICK_MOTOR_CAN_BUS, "Claw Kick Motor");
+    private final TalonFXLance grabMotor = new TalonFXLance(Constants.Claw.GRAB_MOTOR_PORT, Constants.Claw.GRAB_MOTOR_CAN_BUS, "Claw Grab Motor");
+    // private final SparkMaxLance backMotor = new SparkMaxLance(Constants.Grabber.BACK_MOTOR_PORT, Constants.Grabber.BACK_MOTOR_CAN_BUS, "Back Claw Motor");
 
     // *** CLASS CONSTRUCTORS ***
     // Put all class constructors here
 
     /** 
-     * Creates a new Grabber and configures the motors. 
+     * Creates a new Claw and configures the motors. 
      */
     public Claw()
     {
@@ -127,7 +128,7 @@ public class Claw extends SubsystemLance
     }
 
     /**
-     * ejects the algae held by the grabber
+     * ejects the algae held by the claw
      * @return the command lol
      */
     public Command ejectAlgaeCommand()

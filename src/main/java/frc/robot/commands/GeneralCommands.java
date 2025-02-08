@@ -57,13 +57,13 @@ public final class GeneralCommands
     private static IntakeWrist intakeWrist;
     private static Pivot pivot;
     private static Elevator elevator;
-    private static Claw grabber;
+    private static Claw claw;
     private static Climb climb;
     private static LEDs leds;
     private static GyroLance gyro;
     private static Proximity intakeProximity;
     private static Proximity elevatorProximity;
-    private static Proximity grabberProximity;
+    private static Proximity clawProximity;
     private static PoseEstimator poseEstimate;
     private static CommandSwerveDrivetrain commandSwerveDrivetrain;
    
@@ -82,13 +82,13 @@ public final class GeneralCommands
         intakeWrist = robotContainer.getIntakeWrist();
         pivot = robotContainer.getPivot();
         elevator = robotContainer.getElevator();
-        grabber = robotContainer.getClaw();
+        claw = robotContainer.getClaw();
         climb = robotContainer.getClimb();
         leds = robotContainer.getLEDs();
         gyro = robotContainer.getGyro();
         intakeProximity = robotContainer.getCoralIntakeProximity();
         elevatorProximity = robotContainer.getElevatorProximity();
-        grabberProximity = robotContainer.getGrabberProximity();
+        clawProximity = robotContainer.getClawProximity();
         commandSwerveDrivetrain = robotContainer.getCommandSwerveDrivetrain();
 
         System.out.println("  Constructor Finished: " + fullClassName);

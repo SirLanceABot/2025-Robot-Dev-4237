@@ -87,7 +87,7 @@ public class RobotContainer
     private final Proximity coralIntakeProximity;
     private final Proximity algaeIntakeProximity;
     private final Proximity elevatorProximity;
-    private final Proximity grabberProximity;
+    private final Proximity clawProximity;
 
     // private final DriverButtonBindings driverButtonBindings;
     // private final OperatorButtonBindings operatorButtonBindings;
@@ -116,7 +116,7 @@ public class RobotContainer
         coralIntakeProximity    = (useFullRobot || useProximity)            ? new Proximity(Constants.Proximity.CORAL_INTAKE_PORT)                                                            : null;
         algaeIntakeProximity    = (useFullRobot || useProximity)            ? new Proximity(Constants.Proximity.ALGAE_INTAKE_PORT)                                                            : null;
         elevatorProximity       = (useFullRobot || useProximity)            ? new Proximity(Constants.Proximity.ELEVATOR_PORT)                                                                : null;
-        grabberProximity        = (useFullRobot || useProximity)            ? new Proximity(Constants.Proximity.GRABBER_PORT)                                                                 : null;  
+        clawProximity        = (useFullRobot || useProximity)            ? new Proximity(Constants.Proximity.CLAW_PORT)                                                                 : null;  
 
         cameraArray[0]          = (useFullRobot || useScoringSideCamera)           ? new Camera("limelight-scoringSide")                                                                                    : null;
         cameraArray[1]          = (useFullRobot || useClimbSideCamera)          ? new Camera("limelight-climbSide")                                                                                   : null;
@@ -194,9 +194,9 @@ public class RobotContainer
         return elevatorProximity;
     }
 
-    public Proximity getGrabberProximity()
+    public Proximity getClawProximity()
     {
-        return grabberProximity;
+        return clawProximity;
     }
 
     public CommandXboxController getDriverController()

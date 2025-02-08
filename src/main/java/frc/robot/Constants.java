@@ -95,7 +95,7 @@ public final class Constants
         // public static final double RESTING_POSITION                     = 0.0;
     }
 
-    public static class Grabber
+    public static class Claw
     {
         public static final int KICK_MOTOR_PORT                         = 0;
         public static final int GRAB_MOTOR_PORT                         = 0;
@@ -137,7 +137,7 @@ public final class Constants
         public static final int CORAL_INTAKE_PORT                             = 0;
         public static final int ALGAE_INTAKE_PORT                       = 0;
         public static final int ELEVATOR_PORT                           = 0;
-        public static final int GRABBER_PORT                            = 0;
+        public static final int CLAW_PORT                            = 0;
     }
 
     public static class Shuttle

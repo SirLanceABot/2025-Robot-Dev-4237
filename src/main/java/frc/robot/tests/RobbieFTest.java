@@ -36,7 +36,7 @@ public class RobbieFTest implements Test
     // *** CLASS & INSTANCE VARIABLES ***
     // Put all class and instance variables here.
     private final RobotContainer robotContainer;
-    private final Claw grabber;
+    private final Claw claw;
     private final Shuttle shuttle;
     private final IntakeWrist intakeWrist;
     private final Elevator elevator;
@@ -57,7 +57,7 @@ public class RobbieFTest implements Test
         System.out.println("  Constructor Started:  " + fullClassName);
 
         this.robotContainer = robotContainer;
-        grabber = robotContainer.getClaw();
+        claw = robotContainer.getClaw();
         shuttle = robotContainer.getShuttle();
         intakeWrist = robotContainer.getIntakeWrist();
         elevator = robotContainer.getElevator();
@@ -91,20 +91,20 @@ public class RobbieFTest implements Test
         if (joystick.getRawButton(1))
         {
         
-            grabber.grabGamePieceCommand().schedule();
+            claw.grabGamePieceCommand().schedule();
 
         }
         else if (joystick.getRawButton(2))
         {
-            grabber.stopCommand().schedule();
+            claw.stopCommand().schedule();
         }
         else if (joystick.getRawButton(3))
         {
-           grabber.ejectAlgaeCommand().schedule();
+           claw.ejectAlgaeCommand().schedule();
         }
         else 
         {
-            grabber.stopCommand().schedule();
+            claw.stopCommand().schedule();
         }
     }
     

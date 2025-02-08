@@ -49,13 +49,13 @@ public final class ScoringCommands
     private static IntakeWrist intakeWrist;
     private static Pivot pivot;
     private static Elevator elevator;
-    private static Claw grabber;
+    private static Claw claw;
     private static LEDs leds;
     private static GyroLance gyro;
     private static PoseEstimator poseEstimator;
     private static Proximity algaeIntakeProximity;
     private static Proximity elevatorProximity;
-    private static Proximity grabberProximity;
+    private static Proximity clawProximity;
    
 
 
@@ -73,12 +73,12 @@ public final class ScoringCommands
         intakeWrist = robotContainer.getIntakeWrist();
         pivot = robotContainer.getPivot();
         elevator = robotContainer.getElevator();
-        grabber = robotContainer.getClaw();
+        claw = robotContainer.getClaw();
         leds = robotContainer.getLEDs();
         gyro = robotContainer.getGyro();
         algaeIntakeProximity = robotContainer.getAlgaeIntakeProximity();
         elevatorProximity = robotContainer.getElevatorProximity();
-        grabberProximity = robotContainer.getGrabberProximity();
+        clawProximity = robotContainer.getClawProximity();
 
         System.out.println("  Constructor Finished: " + fullClassName);
     }
@@ -95,7 +95,7 @@ public final class ScoringCommands
      */
     public static Command scoreCoralCommand(TargetPosition targetPosition)
     {
-        if(elevator != null && pivot != null && grabber != null && leds != null && grabberProximity != null)
+        if(elevator != null && pivot != null && claw != null && leds != null && clawProximity != null)
         {
             return
             Commands.waitUntil(() -> (elevator.isAtPosition(targetPosition.elevator).getAsBoolean() && pivot.isAtPosition(targetPosition.pivot).getAsBoolean()))
@@ -104,13 +104,13 @@ public final class ScoringCommands
                 elevator.moveToSetPositionCommand(targetPosition.elevator),
                 pivot.moveToSetPositionCommand(targetPosition.pivot))
             .andThen(
-                Commands.waitUntil(() -> (!(grabberProximity.isDetectedSupplier().getAsBoolean())))
+                Commands.waitUntil(() -> (!(clawProximity.isDetectedSupplier().getAsBoolean())))
                 .deadlineFor(
-                    grabber.placeCoralCommand()))
+                    claw.placeCoralCommand()))
             .andThen(
                 Commands.waitUntil(() -> (elevator.isAtPosition(targetPosition.elevator).getAsBoolean() && pivot.isAtPosition(targetPosition.pivot).getAsBoolean()))
                 .deadlineFor(
-                    grabber.stopCommand(),
+                    claw.stopCommand(),
                     pivot.moveToSetPositionCommand(PivotPosition.kRestingPosition),
                     elevator.moveToSetPositionCommand(ElevatorPosition.kRestingPosition)))
             .andThen(leds.setColorSolidCommand(Color.kRed))
@@ -158,7 +158,7 @@ public final class ScoringCommands
      */
     public static Command scoreAlgaeInBargeCommand()
     {
-        if(elevator != null && pivot != null && grabber != null && leds != null && grabberProximity != null)
+        if(elevator != null && pivot != null && claw != null && leds != null && clawProximity != null)
         {
             return
             Commands.waitUntil(() -> (elevator.isAtPosition(ElevatorPosition.kL4).getAsBoolean() && pivot.isAtPosition(PivotPosition.kScoreBargePosition).getAsBoolean()))
@@ -167,13 +167,13 @@ public final class ScoringCommands
                 elevator.moveToSetPositionCommand(ElevatorPosition.kL4),
                 pivot.moveToSetPositionCommand(PivotPosition.kScoreBargePosition))
             .andThen(
-                Commands.waitUntil(() -> (!(grabberProximity.isDetectedSupplier()).getAsBoolean()))
+                Commands.waitUntil(() -> (!(clawProximity.isDetectedSupplier()).getAsBoolean()))
                 .deadlineFor(
-                    grabber.ejectAlgaeCommand()))
+                    claw.ejectAlgaeCommand()))
             .andThen(
                 Commands.waitUntil(() -> (elevator.isAtPosition(ElevatorPosition.kRestingPosition).getAsBoolean() && pivot.isAtPosition(PivotPosition.kRestingPosition).getAsBoolean()))
                 .deadlineFor(
-                    grabber.stopCommand(),
+                    claw.stopCommand(),
                     elevator.moveToSetPositionCommand(ElevatorPosition.kRestingPosition),
                     pivot.moveToSetPositionCommand(PivotPosition.kRestingPosition)))
             .andThen(leds.setColorSolidCommand(Color.kRed))
@@ -192,13 +192,13 @@ public final class ScoringCommands
      */
     public static Command finishScoringCoralCommand()
     {
-        if(elevator != null && pivot != null && grabber != null && leds != null && grabberProximity != null)
+        if(elevator != null && pivot != null && claw != null && leds != null && clawProximity != null)
         {
             return
-            Commands.waitUntil(() -> (!(grabberProximity.isDetectedSupplier()).getAsBoolean()))
+            Commands.waitUntil(() -> (!(clawProximity.isDetectedSupplier()).getAsBoolean()))
             .deadlineFor(
                 leds.setColorBlinkCommand(Color.kBlue),
-                grabber.ejectAlgaeCommand())
+                claw.ejectAlgaeCommand())
             .andThen(
                 Commands.waitUntil(() -> (elevator.isAtPosition(ElevatorPosition.kRestingPosition).getAsBoolean() && pivot.isAtPosition(PivotPosition.kRestingPosition).getAsBoolean()))
                 .deadlineFor(
@@ -232,13 +232,13 @@ public final class ScoringCommands
     }
 
     /**
-     * This command will spit out the algae into the processor with the grabber and then move the elevator and pivot back to resting position
+     * This command will spit out the algae into the processor with the claw and then move the elevator and pivot back to resting position
      * @return the command to move elevator and pivot and release algae
      * @author Logan Bellinger
      */
-    public static Command scoreProcessorWithGrabberCommand()
+    public static Command scoreProcessorWithClawCommand()
     {
-        if(elevator != null && pivot != null && grabber != null && leds != null && grabberProximity != null)
+        if(elevator != null && pivot != null && claw != null && leds != null && clawProximity != null)
         {
             return
             Commands.waitUntil(() -> (elevator.isAtPosition(ElevatorPosition.kScoreProcessorPosition).getAsBoolean() && pivot.isAtPosition(PivotPosition.kScoreProcessorPosition).getAsBoolean()))
@@ -247,16 +247,16 @@ public final class ScoringCommands
                 elevator.moveToSetPositionCommand(ElevatorPosition.kScoreProcessorPosition),
                 pivot.moveToSetPositionCommand(PivotPosition.kScoreProcessorPosition))
             .andThen(
-                Commands.waitUntil(() -> (!(grabberProximity.isDetectedSupplier()).getAsBoolean()))
+                Commands.waitUntil(() -> (!(clawProximity.isDetectedSupplier()).getAsBoolean()))
                 .deadlineFor(
-                    grabber.ejectAlgaeCommand()))
+                    claw.ejectAlgaeCommand()))
                 .andThen(
                     Commands.waitUntil(() -> (elevator.isAtPosition(ElevatorPosition.kRestingPosition).getAsBoolean() && pivot.isAtPosition(PivotPosition.kRestingPosition).getAsBoolean()))
                     .deadlineFor(
                         elevator.moveToSetPositionCommand(ElevatorPosition.kRestingPosition),
                         pivot.moveToSetPositionCommand(PivotPosition.kRestingPosition)))
                 .andThen(leds.setColorSolidCommand(Color.kRed))
-            .withName("Finish Scoring in Processor with Grabber Command");
+            .withName("Finish Scoring in Processor with Claw Command");
         }
         else
         {

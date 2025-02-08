@@ -38,7 +38,7 @@ public class LoganBTest implements Test
     private final Pivot pivot;
     private final Intake intake;
     private final IntakeWrist intakeWrist;
-    private final Claw grabber;
+    private final Claw claw;
     private final Elevator elevator;
     private final Joystick joystick = new Joystick(0);
     // private final ExampleSubsystem exampleSubsystem;
@@ -61,7 +61,7 @@ public class LoganBTest implements Test
         pivot = robotContainer.getPivot();
         intake = robotContainer.getIntake();
         intakeWrist = robotContainer.getIntakeWrist();
-        grabber = robotContainer.getClaw();
+        claw = robotContainer.getClaw();
         elevator = robotContainer.getElevator();
         System.out.println("  Constructor Finished: " + fullClassName);
     }
@@ -92,7 +92,7 @@ public class LoganBTest implements Test
             // pivot.moveToSetPositionCommand(TargetPosition.kL1).schedule(); // value of 100.0 from motor encoder
             // intake.pickupCommand().schedule();
             // intakeWrist.moveToSetPositionCommand(Position.kStartingPosition).schedule(); // 10.0
-            // grabber.grabGamePieceCommand().schedule();
+            // claw.grabGamePieceCommand().schedule();
             // elevator.moveToSetPositionCommand(TargetPosition.kGrabCoralPosition).schedule(); // 0.0
         }
         // else if(joystick.getRawButton(2)) // B button
@@ -101,7 +101,7 @@ public class LoganBTest implements Test
         //     // pivot.moveToSetPositionCommand(TargetPosition.kL2).schedule(); // value of 1.0 from motor encoder
         //     // intake.ejectCommand().schedule();
         //     // intakeWrist.moveToSetPositionCommand(Position.kShootingPosition).schedule(); // 20.0
-        //     // grabber.ejectAlgaeCommand().schedule();
+            // claw.ejectAlgaeCommand().schedule();
         //     // elevator.moveToSetPositionCommand(TargetPosition.kStartingPosition).schedule(); // 20.0
         // }
         // else if(joystick.getRawButton(3)) // X button

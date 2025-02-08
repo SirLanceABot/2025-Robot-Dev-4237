@@ -33,7 +33,7 @@ public class IntakeWrist extends SubsystemLance
         kManipAlgaePosition(1.0),
         kAlgaeIntakedPosition(5.0),
         kRestingPosition(10.0),
-        kPassToGrabberPosition(30.0);
+        kPassToClawPosition(30.0);
 
         double value;
 
