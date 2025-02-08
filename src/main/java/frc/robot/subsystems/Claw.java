@@ -15,7 +15,6 @@ import frc.robot.motors.TalonFXLance;
  * @author Robbie Frank
  * @author Robbie Jeffery
  * @author Logan Bellinger
- * @authod Matthew Fontecchio (I changed the java docs to say claw instead of grabber)
  */
 public class Claw extends SubsystemLance
 {
