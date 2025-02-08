@@ -399,22 +399,25 @@ public class PoseEstimator extends SubsystemLance
         //does this for each camera in the camera array
         for(Camera camera : cameraArray)
         {
-            if(camera.getTagCount() > 0 && camera != null)
+            if(camera != null)
             {
-                Pose2d visionPose = camera.getPose();
+                if(camera.getTagCount() > 0 && camera != null)
+                {
+                    Pose2d visionPose = camera.getPose();
 
-                // only updates the pose with the cameras if the pose shown by the vision is within the field limits
-                if(isPoseInsideField(visionPose)) // maybe don't check if inside field in order to make pose more accurate or find different solution later
-                {
-                    totalTagCount += camera.getTagCount();
-                    poseEstimator.addVisionMeasurement(
-                        visionPose,
-                        camera.getTimestamp(),
-                        visionStdDevs);//visionStdDevs.times(camera.getAverageTagDistance() * 0.5));
-                }
-                if(isReefTag(NetworkTableInstance.getDefault().getTable("limelight").getEntry("tid").getDouble(0))) // TODO: add if distance is less than x meters
-                {
-                    estimatedPose = visionPose;
+                    // only updates the pose with the cameras if the pose shown by the vision is within the field limits
+                    if(isPoseInsideField(visionPose)) // maybe don't check if inside field in order to make pose more accurate or find different solution later
+                    {
+                        totalTagCount += camera.getTagCount();
+                        poseEstimator.addVisionMeasurement(
+                            visionPose,
+                            camera.getTimestamp(),
+                            visionStdDevs);//visionStdDevs.times(camera.getAverageTagDistance() * 0.5));
+                    }
+                    if(isReefTag(NetworkTableInstance.getDefault().getTable("limelight").getEntry("tid").getDouble(0))) // TODO: add if distance is less than x meters
+                    {
+                        estimatedPose = visionPose;
+                    }
                 }
             }
         }
