@@ -1,4 +1,4 @@
-package frc.robot;
+package frc.robot.loggers;
 
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableInstance;

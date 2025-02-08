@@ -62,7 +62,6 @@ public class RobotContainer
 
     private boolean useScoringSideCamera    = false;
     private boolean useClimbSideCamera      = false;
-    private boolean useIntakeSideCamera     = false;
 
     // private boolean useDriverBindings       = false;
     // private boolean useOperatorBindings     = false;
@@ -82,7 +81,7 @@ public class RobotContainer
     private final LEDs leds;
 
     private final GyroLance gyro;
-    private final Camera[] cameraArray = new Camera[3];
+    private final Camera[] cameraArray = new Camera[2];
     private final Proximity coralIntakeProximity;
     private final Proximity algaeIntakeProximity;
     private final Proximity elevatorProximity;
@@ -119,7 +118,6 @@ public class RobotContainer
 
         cameraArray[0]          = (useFullRobot || useScoringSideCamera)           ? new Camera("limelight-scoringSide")                                                                                    : null;
         cameraArray[1]          = (useFullRobot || useClimbSideCamera)          ? new Camera("limelight-climbSide")                                                                                   : null;
-        cameraArray[2]          = (useFullRobot || useIntakeSideCamera)          ? new Camera("limelight-intakeSide")                                                                                   : null;
 
         driverController        = (useFullRobot || useDriverController)     ? new CommandXboxController(Constants.Controllers.DRIVER_CONTROLLER_PORT)                                         : null;
         operatorController      = (useFullRobot || useOperatorController)   ? new CommandXboxController(Constants.Controllers.OPERATOR_CONTROLLER_PORT)                                       : null;

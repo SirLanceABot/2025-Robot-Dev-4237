@@ -15,9 +15,6 @@ public final class Constants
     // This string gets the full name of the class, including the package name
     private static final String fullClassName = MethodHandles.lookup().lookupClass().getCanonicalName();
 
-    public static final double MAX_BATTERY_VOLTAGE          = 12.0;
-    public static final double END_OF_MATCH_BATTERY_VOLTAGE = 11.5; // This is the estimated voltage at the end of each match, used in subsystems with setVoltage()
-    
     // *** STATIC INITIALIZATION BLOCK ***
     // This block of code is run first when the class is loaded
     static
@@ -25,6 +22,9 @@ public final class Constants
         System.out.println("Loading: " + fullClassName);
     }
 
+    public static final double MAX_BATTERY_VOLTAGE          = 12.0;
+    public static final double END_OF_MATCH_BATTERY_VOLTAGE = 11.5; // This is the estimated voltage at the end of each match, used in subsystems with setVoltage()
+    
     public static final String NETWORK_TABLE_NAME = "TeamLHS";
     public static final String ADVANTAGE_SCOPE_TABLE_NAME = "ASTable";
 
@@ -32,31 +32,18 @@ public final class Constants
     public static final String CANIVORE = "CANivore";
     public static final String ROBORIO  = "rio";
 
-    public static class Elevator
-    {
-        public static final int LEFT_MOTOR_PORT                         = 0;
-        public static final int RIGHT_MOTOR_PORT                        = 0;
-        public static final String LEFT_MOTOR_CAN_BUS                   = CANIVORE;
-        public static final String RIGHT_MOTOR_CAN_BUS                  = CANIVORE;
 
-        // public static final double L4                                   = 100.0;
-        // public static final double UPPER_REEF_ALGAE                     = 90.0;
-        // public static final double L3                                   = 80.0;
-        // public static final double LOWER_REEF_ALGAE                     = 70.0;
-        // public static final double L2                                   = 60.0;
-        // public static final double L1                                   = 40.0;
-        // public static final double GRAB_CORAL_POSITION                  = 20.0;
-        // public static final double RESTING_POSITION                     = 0.0;
+    public static class Camera
+    {
+        public static final String CAMERA_1 = "limelight-one"; // Inside robot, on the right
+        public static final String CAMERA_2 = "limelight-two";  // Inside robot, on the left
+
+        public static final String BOT_POSE = "botpose_wpiblue";
+
+        public static final String CAMERA_1_BOT_POSE = CAMERA_1 + "/" + BOT_POSE;
+        public static final String CAMERA_2_BOT_POSE = CAMERA_2 + "/" + BOT_POSE;
     }
 
-    public static class Intake
-    {
-        public static final int MOTOR_PORT                              = 0;
-        // public static final int BOTTOM_MOTOR_PORT                       = 0;
-        public static final String MOTOR_CAN_BUS                        = ROBORIO;
-        // public static final String BOTTOM_MOTOR_CAN_BUS                 = CANIVORE;
-    }
-    
     public static class Climb
     {
         public static final int MOTOR_PORT                              = 0;
@@ -66,27 +53,10 @@ public final class Constants
         public static final double CLIMB_DOWN_CAGE_POSITION                  = 10.0;      // Check value once we have robot
     }
 
-    public static class Pivot
+    public static class Controllers
     {
-        // public static final int LEFT_MOTOR_PORT                         = 0;
-        public static final int MOTOR_PORT                              = 0;
-        public static final String MOTOR_CAN_BUS                        = ROBORIO;
-
-    //     public static final double L4                                   = 40.0;
-    //     public static final double L3                                   = 30.0;
-    //     public static final double GRAB_REEF_ALGAE                      = 25.0;
-    //     public static final double L2                                   = 20.0;
-    //     public static final double L1                                   = 10.0;
-    //     public static final double HOLD_ALGAE_POSITION                  = 5.0;
-    //     public static final double RESTING_POSITION                     = 0.0;
-    }
-
-    public static class Grabber
-    {
-        public static final int KICK_MOTOR_PORT                         = 0;
-        public static final int GRAB_MOTOR_PORT                         = 0;
-        public static final String KICK_MOTOR_CAN_BUS                   = ROBORIO;
-        public static final String GRAB_MOTOR_CAN_BUS                   = ROBORIO;
+        public static final int DRIVER_CONTROLLER_PORT                  = 0;
+        public static final int OPERATOR_CONTROLLER_PORT                = 1;
     }
 
     public static class Drivetrain
@@ -108,16 +78,58 @@ public final class Constants
         public static int BACK_RIGHT_ENCODER_PORT                       = 0;
     }
 
+    public static class Elevator
+    {
+        public static final int LEFT_MOTOR_PORT                         = 0;
+        public static final int RIGHT_MOTOR_PORT                        = 0;
+        public static final String LEFT_MOTOR_CAN_BUS                   = CANIVORE;
+        public static final String RIGHT_MOTOR_CAN_BUS                  = CANIVORE;
+
+        // public static final double L4                                   = 100.0;
+        // public static final double UPPER_REEF_ALGAE                     = 90.0;
+        // public static final double L3                                   = 80.0;
+        // public static final double LOWER_REEF_ALGAE                     = 70.0;
+        // public static final double L2                                   = 60.0;
+        // public static final double L1                                   = 40.0;
+        // public static final double GRAB_CORAL_POSITION                  = 20.0;
+        // public static final double RESTING_POSITION                     = 0.0;
+    }
+
+    public static class Grabber
+    {
+        public static final int KICK_MOTOR_PORT                         = 0;
+        public static final int GRAB_MOTOR_PORT                         = 0;
+        public static final String KICK_MOTOR_CAN_BUS                   = ROBORIO;
+        public static final String GRAB_MOTOR_CAN_BUS                   = ROBORIO;
+    }
+
+    public static class Intake
+    {
+        public static final int MOTOR_PORT                              = 0;
+        // public static final int BOTTOM_MOTOR_PORT                       = 0;
+        public static final String MOTOR_CAN_BUS                        = ROBORIO;
+        // public static final String BOTTOM_MOTOR_CAN_BUS                 = CANIVORE;
+    }
+
     public static class IntakeWrist
     {
         public static final int MOTOR_PORT                              = 0;
         public static final String MOTOR_CAN_BUS                        = ROBORIO;
     }
 
-    public static class Shuttle
+    public static class Pivot
     {
+        // public static final int LEFT_MOTOR_PORT                         = 0;
         public static final int MOTOR_PORT                              = 0;
         public static final String MOTOR_CAN_BUS                        = ROBORIO;
+
+    //     public static final double L4                                   = 40.0;
+    //     public static final double L3                                   = 30.0;
+    //     public static final double GRAB_REEF_ALGAE                      = 25.0;
+    //     public static final double L2                                   = 20.0;
+    //     public static final double L1                                   = 10.0;
+    //     public static final double HOLD_ALGAE_POSITION                  = 5.0;
+    //     public static final double RESTING_POSITION                     = 0.0;
     }
 
     public static class Proximity
@@ -128,10 +140,10 @@ public final class Constants
         public static final int GRABBER_PORT                            = 0;
     }
 
-    public static class Controllers
+    public static class Shuttle
     {
-        public static final int DRIVER_CONTROLLER_PORT                  = 0;
-        public static final int OPERATOR_CONTROLLER_PORT                = 1;
+        public static final int MOTOR_PORT                              = 0;
+        public static final String MOTOR_CAN_BUS                        = ROBORIO;
     }
 
     // public enum TargetPosition
