@@ -77,6 +77,8 @@ public class PoseEstimator extends SubsystemLance
     private Pose2d estimatedPose = new Pose2d();
     private DoubleArrayEntry poseEstimatorEntry;
 
+    private boolean isRightBranch;
+
     // private final double[][] blueLeftBranchLocationArray = 
     // {{5.447446, 4.1859}, //S1 side
     //  {5.06044, 3.1693908}, //S2 side
@@ -342,7 +344,28 @@ public class PoseEstimator extends SubsystemLance
             return leftBranchMap.get(aprilTagID);
         }
     }
+
+    private void setPlacingSideToLeft()
+    {
+        isRightBranch = false;
+    }
+
+    private void setPlacingSideToRight()
+    {
+        isRightBranch = true;
+    }
        
+    public Command setSideToLeftCommand()
+    {
+        return runOnce(() -> setPlacingSideToLeft()).withName("Set Placing Side To Left");
+    }
+
+    public Command setPlacingSideToRightCommand()
+    {
+        return runOnce(() -> setPlacingSideToRight()).withName("Set Placing Side To Right");
+    }
+        
+    
 
     // public Pose2d closestAprilTag()
     // {
