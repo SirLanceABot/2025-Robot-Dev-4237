@@ -14,7 +14,7 @@ import frc.robot.sensors.GyroLance;
 import frc.robot.sensors.Proximity;
 import frc.robot.subsystems.CommandSwerveDrivetrain;
 import frc.robot.subsystems.Elevator;
-import frc.robot.subsystems.Grabber;
+import frc.robot.subsystems.Claw;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.IntakeWrist;
 import frc.robot.subsystems.IntakeWrist.Position;
@@ -49,7 +49,7 @@ public final class ScoringCommands
     private static IntakeWrist intakeWrist;
     private static Pivot pivot;
     private static Elevator elevator;
-    private static Grabber grabber;
+    private static Claw grabber;
     private static LEDs leds;
     private static GyroLance gyro;
     private static PoseEstimator poseEstimator;
@@ -73,7 +73,7 @@ public final class ScoringCommands
         intakeWrist = robotContainer.getIntakeWrist();
         pivot = robotContainer.getPivot();
         elevator = robotContainer.getElevator();
-        grabber = robotContainer.getGrabber();
+        grabber = robotContainer.getClaw();
         leds = robotContainer.getLEDs();
         gyro = robotContainer.getGyro();
         algaeIntakeProximity = robotContainer.getAlgaeIntakeProximity();

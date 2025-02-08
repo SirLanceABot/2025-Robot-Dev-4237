@@ -4,7 +4,7 @@ import java.lang.invoke.MethodHandles;
 
 import edu.wpi.first.wpilibj.Joystick;
 import frc.robot.RobotContainer;
-import frc.robot.subsystems.Grabber;
+import frc.robot.subsystems.Claw;
 // import frc.robot.Constants.TargetPosition;
 import frc.robot.subsystems.Climb;
 import frc.robot.subsystems.Elevator;
@@ -38,7 +38,7 @@ public class LoganBTest implements Test
     private final Pivot pivot;
     private final Intake intake;
     private final IntakeWrist intakeWrist;
-    private final Grabber grabber;
+    private final Claw grabber;
     private final Elevator elevator;
     private final Joystick joystick = new Joystick(0);
     // private final ExampleSubsystem exampleSubsystem;
@@ -61,7 +61,7 @@ public class LoganBTest implements Test
         pivot = robotContainer.getPivot();
         intake = robotContainer.getIntake();
         intakeWrist = robotContainer.getIntakeWrist();
-        grabber = robotContainer.getGrabber();
+        grabber = robotContainer.getClaw();
         elevator = robotContainer.getElevator();
         System.out.println("  Constructor Finished: " + fullClassName);
     }

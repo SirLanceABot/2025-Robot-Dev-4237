@@ -8,7 +8,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 
-import frc.robot.subsystems.Grabber;
+import frc.robot.subsystems.Claw;
 import frc.robot.subsystems.Climb;
 import frc.robot.subsystems.CommandSwerveDrivetrain;
 import frc.robot.subsystems.Elevator;
@@ -47,7 +47,7 @@ public class RobotContainer
 
     private boolean useFullRobot            = false;
 
-    private boolean useGrabber              = false;
+    private boolean useClaw                 = false;
     private boolean useClimb                = false;
     private boolean useDrivetrain           = false;
     private boolean useElevator             = false;
@@ -71,7 +71,7 @@ public class RobotContainer
 
     public final boolean fullRobot;
 
-    private final Grabber grabber;
+    private final Claw claw;
     private final Climb climb;
     private final CommandSwerveDrivetrain drivetrain;
     private final Elevator elevator;
@@ -103,7 +103,7 @@ public class RobotContainer
     {
         fullRobot          = (useFullRobot);
         
-        grabber                 = (useFullRobot || useGrabber)              ? new Grabber()                                                                                                   : null;
+        claw                    = (useFullRobot || useClaw)                 ? new Claw()                                                                                                      : null;
         climb                   = (useFullRobot || useClimb)                ? new Climb()                                                                                                     : null;
         gyro                    = (useFullRobot || useGyro)                 ? new GyroLance()                                                                                                 : null;
         drivetrain              = (useFullRobot || useDrivetrain)           ? new CommandSwerveDrivetrain(gyro, cameraArray, TunerConstants.DrivetrainConstants, TunerConstants.FrontLeft, TunerConstants.FrontRight, TunerConstants.BackLeft, TunerConstants.BackRight)                                   : null;
@@ -129,9 +129,9 @@ public class RobotContainer
 
     }
 
-    public Grabber getGrabber()
+    public Claw getClaw()
     {
-        return grabber;
+        return claw;
     }
 
     public Climb getClimb()

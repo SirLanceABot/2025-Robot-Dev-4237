@@ -25,7 +25,7 @@ import frc.robot.subsystems.CommandSwerveDrivetrain;
 import frc.robot.subsystems.Elevator;
 import frc.robot.subsystems.Elevator.ElevatorPosition;
 import frc.robot.subsystems.IntakeWrist.Position;
-import frc.robot.subsystems.Grabber;
+import frc.robot.subsystems.Claw;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.IntakeWrist;
 import frc.robot.subsystems.LEDs;
@@ -57,7 +57,7 @@ public final class GeneralCommands
     private static IntakeWrist intakeWrist;
     private static Pivot pivot;
     private static Elevator elevator;
-    private static Grabber grabber;
+    private static Claw grabber;
     private static Climb climb;
     private static LEDs leds;
     private static GyroLance gyro;
@@ -82,7 +82,7 @@ public final class GeneralCommands
         intakeWrist = robotContainer.getIntakeWrist();
         pivot = robotContainer.getPivot();
         elevator = robotContainer.getElevator();
-        grabber = robotContainer.getGrabber();
+        grabber = robotContainer.getClaw();
         climb = robotContainer.getClimb();
         leds = robotContainer.getLEDs();
         gyro = robotContainer.getGyro();

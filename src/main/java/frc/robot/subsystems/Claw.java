@@ -16,7 +16,7 @@ import frc.robot.motors.TalonFXLance;
  * @author Robbie Jeffery
  * @author Logan Bellinger
  */
-public class Grabber extends SubsystemLance
+public class Claw extends SubsystemLance
 {
     // This string gets the full name of the class, including the package name
     private static final String fullClassName = MethodHandles.lookup().lookupClass().getCanonicalName();
@@ -37,8 +37,8 @@ public class Grabber extends SubsystemLance
     // *** CLASS VARIABLES & INSTANCE VARIABLES ***
     // Put all class variables and instance variables here
 
-    private final SparkMaxLance kickMotor = new SparkMaxLance(Constants.Grabber.KICK_MOTOR_PORT, Constants.Grabber.KICK_MOTOR_CAN_BUS, "Grabber Kick Motor");
-    private final TalonFXLance grabMotor = new TalonFXLance(Constants.Grabber.GRAB_MOTOR_PORT, Constants.Grabber.GRAB_MOTOR_CAN_BUS, "Grabber Grab Motor");
+    private final SparkMaxLance kickMotor = new SparkMaxLance(Constants.Grabber.KICK_MOTOR_PORT, Constants.Grabber.KICK_MOTOR_CAN_BUS, "Claw Kick Motor");
+    private final TalonFXLance grabMotor = new TalonFXLance(Constants.Grabber.GRAB_MOTOR_PORT, Constants.Grabber.GRAB_MOTOR_CAN_BUS, "Claw Grab Motor");
     // private final SparkMaxLance backMotor = new SparkMaxLance(Constants.Grabber.BACK_MOTOR_PORT, Constants.Grabber.BACK_MOTOR_CAN_BUS, "Back Grabber Motor");
 
     // *** CLASS CONSTRUCTORS ***
@@ -47,9 +47,9 @@ public class Grabber extends SubsystemLance
     /** 
      * Creates a new Grabber and configures the motors. 
      */
-    public Grabber()
+    public Claw()
     {
-        super("Grabber");
+        super("Claw");
         System.out.println("  Constructor Started:  " + fullClassName);
 
         configMotors();
@@ -159,6 +159,6 @@ public class Grabber extends SubsystemLance
     @Override
     public String toString()
     {
-        return "Grabber Kick Motor Speed: " + kickMotor.get() + "Grabber Grab Motor Speed: " + grabMotor.get();
+        return "Claw Kick Motor Speed: " + kickMotor.get() + "Claw Grab Motor Speed: " + grabMotor.get();
     }
 }

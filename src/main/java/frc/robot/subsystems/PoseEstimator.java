@@ -76,28 +76,28 @@ public class PoseEstimator extends SubsystemLance
     private DoubleArrayEntry poseEstimatorEntry;
 
     private final double[][] blueLeftBranchLocationArray = 
-    {{5.889, 3.898, -90.0}, //S1 side
-     {5.128, 2.738, -60.0}, //S2 side
-     {3.890, 2.738, 150.0}, //S3 side
-     {3.052, 4.444, 180.0}, //S4 side
-     {4.163, 5.439, -150}, //S5 side
-     {5.255, 5.185, -30.0}}; //S6 side
+    {{5.447446, 4.1859}, //S1 side
+     {5.06044, 3.1693908}, //S2 side
+     {3.888206, 3.1693908}, //S3 side
+     {3.5312, 4.1859}, //S4 side
+     {3.9381227, 4.9124092}, //S5 side
+     {5.255, 5.185}}; //S6 side
 
     private final double[][] blueRightBranchLocationArray = 
-    {{5.889, 3.635, -90.0}, //S1 side
-     {4.972, 2.447, -60.0}, //S2 side
-     {3.750, 2.812, 150.0}, //S3 side
-     {3.052, 4.150, 180.0}, //S4 side
-     {3.871, 5.302, -150.0}, //S5 side
-     {5.600, 5.093, -30.0}}; //S6 side
+    {{5.447446, 3.8659}, //S1 side
+     {5.0405233, 3.1393908}, //S2 side
+     {3.9381227, 3.1393908}, //S3 side
+     {3.5312, 3.8659}, //S4 side
+     {3.871, 5.302}, //S5 side
+     {5.600, 5.093}}; //S6 side
 
     private final double[][] blueMiddleReefLocationArray = 
-    {{5.889, 3.850, -90.0}, //S1 side
-     {5.050, 2.592, -60.0}, //S2 side
-     {3.820, 2.775, 150.0}, //S3 side
-     {3.052, 4.297, 180.0}, //S4 side
-     {4.017, 5.371, -150.0}, //S5 side
-     {5.343, 5.146, -30.0}}; //S6 side
+    {{5.889, 3.850}, //S1 side
+     {5.050, 2.592}, //S2 side
+     {3.820, 2.775}, //S3 side
+     {3.052, 4.297}, //S4 side
+     {4.017, 5.371}, //S5 side
+     {5.343, 5.146}}; //S6 side
 
     private final double[][] redRightBranchLocationArray = 
     {{}, //S1 side

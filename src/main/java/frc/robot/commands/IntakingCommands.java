@@ -16,7 +16,7 @@ import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.IntakeWrist;
 import frc.robot.subsystems.LEDs;
 import frc.robot.subsystems.Elevator.ElevatorPosition;
-import frc.robot.subsystems.Grabber;
+import frc.robot.subsystems.Claw;
 import frc.robot.subsystems.LEDs;
 import frc.robot.subsystems.Pivot;
 import frc.robot.subsystems.Pivot.PivotPosition;
@@ -46,7 +46,7 @@ public final class IntakingCommands
     private static IntakeWrist intakeWrist;
     private static Pivot pivot;
     private static Elevator elevator;
-    private static Grabber grabber;
+    private static Claw grabber;
     private static LEDs leds;
     private static Proximity coralIntakeProximity;
     private static Proximity algaeIntakeProximity;
@@ -67,7 +67,7 @@ public final class IntakingCommands
         intakeWrist = robotContainer.getIntakeWrist();
         pivot = robotContainer.getPivot();
         elevator = robotContainer.getElevator();
-        grabber = robotContainer.getGrabber();
+        grabber = robotContainer.getClaw();
         leds = robotContainer.getLEDs();
         coralIntakeProximity = robotContainer.getCoralIntakeProximity();
         algaeIntakeProximity = robotContainer.getAlgaeIntakeProximity();
