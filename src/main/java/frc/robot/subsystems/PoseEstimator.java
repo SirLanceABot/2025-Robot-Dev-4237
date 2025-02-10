@@ -4,11 +4,8 @@ import java.lang.invoke.MethodHandles;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.function.BooleanSupplier;
-import java.util.function.DoubleSupplier;
 
-import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.Matrix;
 import edu.wpi.first.math.Nat;
 import edu.wpi.first.math.estimator.SwerveDrivePoseEstimator;
@@ -21,15 +18,11 @@ import edu.wpi.first.math.numbers.N3;
 import edu.wpi.first.networktables.DoubleArrayEntry;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableInstance;
-import edu.wpi.first.wpilibj.DriverStation;
-import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants;
 import frc.robot.LimelightHelpers;
-import frc.robot.RobotContainer;
-import frc.robot.motors.TalonFXLance;
-import frc.robot.sensors.GyroLance;
 import frc.robot.sensors.Camera;
+import frc.robot.sensors.GyroLance;
 
 /**
  * This is an example of what a subsystem should look like.
@@ -410,15 +403,14 @@ public class PoseEstimator extends SubsystemLance
     // *** OVERRIDEN METHODS ***
     // Put all methods that are Overridden here
 
+    /*
+     * This method will be called once per scheduler run
+     * Use this for sensors that need to be read periodically.
+     * Use this for data that needs to be logged.
+     */
     @Override
     public void periodic()
     {
-        // This method will be called once per scheduler run
-        // Use this for sensors that need to be read periodically.
-        // Use this for data that needs to be logged.
-        LimelightHelpers.SetRobotOrientation("limelight", estimatedPose.getRotation().getDegrees(), 0, 0, 0, 0, 0);
-
-        totalTagCount = 0;
         if (drivetrain != null && gyro != null) 
         {
             gyroRotation = gyro.getRotation2d();
@@ -428,43 +420,48 @@ public class PoseEstimator extends SubsystemLance
             estimatedPose = poseEstimator.update(gyroRotation, swerveModulePositions);
         }
 
-        //does this for each camera in the camera array
-        for(Camera camera : cameraArray)
+        // TODO: You will have to set the robot orientation for EACH limelight (for
+        // testing we only have 1)
+        LimelightHelpers.SetRobotOrientation("limelight", estimatedPose.getRotation().getDegrees(), 0, 0, 0, 0, 0);
+        for (Camera camera : cameraArray) 
         {
-         
-            if(camera.getTagCount() > 0 && camera != null)
+            if (camera.getTagCount() > 0 && camera != null) 
             {
                 Pose2d visionPose = camera.getPose();
 
-                // only updates the pose with the cameras if the pose shown by the vision is within the field limits
-                // if(isPoseInsideField(visionPose)) // maybe don't check if inside field in order to make pose more accurate or find different solution later
-                // {
-                //     totalTagCount += camera.getTagCount();
-                //     poseEstimator.addVisionMeasurement(
-                //         visionPose,
-                //         camera.getTimestamp(),
-                //         visionStdDevs.times(getDistanceToReefTag(NetworkTableInstance.getDefault().getTable("limelight").getEntry("tid").getDouble(0))));
-                // }
-                // if(isReefTag(NetworkTableInstance.getDefault().getTable("limelight").getEntry("tid").getDouble(0)) && getDistanceToReefTag(NetworkTableInstance.getDefault().getTable("limelight").getEntry("tid").getDouble(0)) <= 1.5) // TODO: add if distance is less than x meters
-                // {
-                //     estimatedPose = visionPose;
-                // }
-                if(isReefTag(NetworkTableInstance.getDefault().getTable("limelight").getEntry("tid").getDouble(0)) && getDistanceToReefTag(NetworkTableInstance.getDefault().getTable("limelight").getEntry("tid").getDouble(0)) <= 1.5)
+                // variables for pose estimator logic
+                boolean rejectUpdate = false;
+                boolean reefTag = isReefTag(
+                        NetworkTableInstance.getDefault().getTable("limelight").getEntry("tid").getDouble(0));
+                double distToTag = getDistanceToReefTag(
+                        NetworkTableInstance.getDefault().getTable("limelight").getEntry("tid").getDouble(0));
+
+                if (!reefTag) 
                 {
-                    totalTagCount += camera.getTagCount();
+                    rejectUpdate = true;
+                }
+
+                if (distToTag < 1.5) 
+                {
+                    rejectUpdate = true;
+                }
+
+                // TODO: add another check for velocity ( we don't want to update pose if we are
+                // moving quickly)
+
+                // TODO: add another check for angular velocity ( we don't want to update pose
+                // if we are spinning quickly )
+
+                // if any of the conditions above are true, do NOT add the mt2 pose as a vision
+                // measurement
+                if (!rejectUpdate)
+                {
                     poseEstimator.addVisionMeasurement(
-                        visionPose,
-                        camera.getTimestamp(),
-                        visionStdDevs);//.times(getDistanceToReefTag(NetworkTableInstance.getDefault().getTable("limelight").getEntry("tid").getDouble(0))));
+                            visionPose,
+                            camera.getTimestamp(),
+                            visionStdDevs);
                 }
             }
-        }
-
-        // maybe combine this if statement with the one above
-        if(totalTagCount >= 2)
-        {
-            //TODO: Updating the drivetrain's odometry might not be necessary
-            // drivetrain.resetOdometryOnly(poseEstimator.getEstimatedPosition());
         }
 
         //OUTPUTS
