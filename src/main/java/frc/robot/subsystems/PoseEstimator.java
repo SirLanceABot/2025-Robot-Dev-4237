@@ -378,7 +378,7 @@ public class PoseEstimator extends SubsystemLance
         isRightBranch = true;
     }
        
-    public Command setSideToLeftCommand()
+    public Command setPlacingSideToLeftCommand()
     {
         return runOnce(() -> setPlacingSideToLeft()).withName("Set Placing Side To Left");
     }
