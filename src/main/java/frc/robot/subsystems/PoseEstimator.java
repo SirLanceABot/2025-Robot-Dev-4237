@@ -416,6 +416,8 @@ public class PoseEstimator extends SubsystemLance
         // This method will be called once per scheduler run
         // Use this for sensors that need to be read periodically.
         // Use this for data that needs to be logged.
+        LimelightHelpers.SetRobotOrientation("limelight", estimatedPose.getRotation().getDegrees(), 0, 0, 0, 0, 0);
+
         totalTagCount = 0;
         if (drivetrain != null && gyro != null) 
         {
@@ -429,25 +431,31 @@ public class PoseEstimator extends SubsystemLance
         //does this for each camera in the camera array
         for(Camera camera : cameraArray)
         {
-            if(camera != null)
+         
+            if(camera.getTagCount() > 0 && camera != null)
             {
-                if(camera.getTagCount() > 0 && camera != null)
-                {
-                    Pose2d visionPose = camera.getPose();
+                Pose2d visionPose = camera.getPose();
 
-                    // only updates the pose with the cameras if the pose shown by the vision is within the field limits
-                    if(isPoseInsideField(visionPose)) // maybe don't check if inside field in order to make pose more accurate or find different solution later
-                    {
-                        totalTagCount += camera.getTagCount();
-                        poseEstimator.addVisionMeasurement(
-                            visionPose,
-                            camera.getTimestamp(),
-                            visionStdDevs);//visionStdDevs.times(camera.getAverageTagDistance() * 0.5));
-                    }
-                    if(isReefTag(NetworkTableInstance.getDefault().getTable("limelight").getEntry("tid").getDouble(0)) && getDistanceToReefTag(NetworkTableInstance.getDefault().getTable("limelight").getEntry("tid").getDouble(0)) <= 1.5) // TODO: add if distance is less than x meters
-                    {
-                        estimatedPose = visionPose;
-                    }
+                // only updates the pose with the cameras if the pose shown by the vision is within the field limits
+                // if(isPoseInsideField(visionPose)) // maybe don't check if inside field in order to make pose more accurate or find different solution later
+                // {
+                //     totalTagCount += camera.getTagCount();
+                //     poseEstimator.addVisionMeasurement(
+                //         visionPose,
+                //         camera.getTimestamp(),
+                //         visionStdDevs.times(getDistanceToReefTag(NetworkTableInstance.getDefault().getTable("limelight").getEntry("tid").getDouble(0))));
+                // }
+                // if(isReefTag(NetworkTableInstance.getDefault().getTable("limelight").getEntry("tid").getDouble(0)) && getDistanceToReefTag(NetworkTableInstance.getDefault().getTable("limelight").getEntry("tid").getDouble(0)) <= 1.5) // TODO: add if distance is less than x meters
+                // {
+                //     estimatedPose = visionPose;
+                // }
+                if(isReefTag(NetworkTableInstance.getDefault().getTable("limelight").getEntry("tid").getDouble(0)) && getDistanceToReefTag(NetworkTableInstance.getDefault().getTable("limelight").getEntry("tid").getDouble(0)) <= 1.5)
+                {
+                    totalTagCount += camera.getTagCount();
+                    poseEstimator.addVisionMeasurement(
+                        visionPose,
+                        camera.getTimestamp(),
+                        visionStdDevs);//.times(getDistanceToReefTag(NetworkTableInstance.getDefault().getTable("limelight").getEntry("tid").getDouble(0))));
                 }
             }
         }
@@ -462,7 +470,7 @@ public class PoseEstimator extends SubsystemLance
         //OUTPUTS
         if(drivetrain != null && gyro != null && poseEstimator != null)
         {
-            estimatedPose = poseEstimator.getEstimatedPosition(); // Dont think we need this.  goes off of odometry
+            estimatedPose = poseEstimator.getEstimatedPosition();
 
             //puts pose onto AdvantageScope
             double[] pose = {estimatedPose.getX(), estimatedPose.getY(), estimatedPose.getRotation().getDegrees()};
