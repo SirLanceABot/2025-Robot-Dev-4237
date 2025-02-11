@@ -137,7 +137,8 @@ public class Claw extends SubsystemLance
     }
 
     /**
-     * runs place coral method
+     * TODO Might have to decide which side of the robot the coral will be placed on, and depending on that invert the kickMotor speed
+     * @return runs place coral method
     */
     public Command placeCoralCommand()
     {
