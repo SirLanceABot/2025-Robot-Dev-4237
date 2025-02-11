@@ -2,6 +2,7 @@ package frc.robot.tests;
 
 import java.lang.invoke.MethodHandles;
 
+import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.Joystick;
 import frc.robot.RobotContainer;
 import frc.robot.subsystems.Claw;
@@ -12,6 +13,7 @@ import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.IntakeWrist;
 import frc.robot.subsystems.IntakeWrist.Position;
 import frc.robot.subsystems.Pivot;
+import frc.robot.subsystems.PoseEstimator;
 
 public class LoganBTest implements Test
 {
@@ -40,6 +42,7 @@ public class LoganBTest implements Test
     private final IntakeWrist intakeWrist;
     private final Claw claw;
     private final Elevator elevator;
+    private final PoseEstimator poseEstimator;
     private final Joystick joystick = new Joystick(0);
     // private final ExampleSubsystem exampleSubsystem;
 
@@ -63,6 +66,7 @@ public class LoganBTest implements Test
         intakeWrist = robotContainer.getIntakeWrist();
         claw = robotContainer.getClaw();
         elevator = robotContainer.getElevator();
+        poseEstimator = robotContainer.getPoseEstimator();
         System.out.println("  Constructor Finished: " + fullClassName);
     }
 
@@ -83,17 +87,41 @@ public class LoganBTest implements Test
 
     /**
      * This method runs periodically (every 20ms).
+     * BOW TO YOUR GOD
      */
     public void periodic()
     {
         if(joystick.getRawButton(1)) // A button
         {
-            climb.climbUpCommand().schedule();
+            // climb.climbUpCommand().schedule();
             // pivot.moveToSetPositionCommand(TargetPosition.kL1).schedule(); // value of 100.0 from motor encoder
             // intake.pickupCommand().schedule();
             // intakeWrist.moveToSetPositionCommand(Position.kStartingPosition).schedule(); // 10.0
             // claw.grabGamePieceCommand().schedule();
             // elevator.moveToSetPositionCommand(TargetPosition.kGrabCoralPosition).schedule(); // 0.0
+            poseEstimator.setPlacingSideToLeftCommand().schedule();
+            System.out.println("Placing side set to Left");
+        }
+        else if(joystick.getRawButton(2))
+        {
+            poseEstimator.setPlacingSideToRightCommand().schedule();
+            System.out.println("Placing side set to Right");
+        }
+        else if(joystick.getRawButton(3))
+        {
+            System.out.println("X: " + poseEstimator.getEstimatedPose().getX());
+            System.out.println("Y: " + poseEstimator.getEstimatedPose().getY());
+            System.out.println();
+
+            double branchX = poseEstimator.closestBranchLocation((int) NetworkTableInstance.getDefault().getTable("limelight").getEntry("tid").getDouble(0), poseEstimator.getIsRightBranch()).getX();
+            double branchY = poseEstimator.closestBranchLocation((int) NetworkTableInstance.getDefault().getTable("limelight").getEntry("tid").getDouble(0), poseEstimator.getIsRightBranch()).getY();
+
+            System.out.println("Scoring Node X: " + branchX);
+            System.out.println("Scoring Node Y: " + branchY);
+            System.out.println("Scoring Node Rotation: " + poseEstimator.closestBranchLocation((int) NetworkTableInstance.getDefault().getTable("limelight").getEntry("tid").getDouble(0), poseEstimator.getIsRightBranch()).getRotation());
+
+            System.out.println();
+            System.out.println("Total Distance between camera and tag: " + Math.sqrt(Math.pow(branchX, 2) + Math.pow(branchY, 2)));
         }
         // else if(joystick.getRawButton(2)) // B button
         // {

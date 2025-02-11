@@ -363,7 +363,7 @@ public class PoseEstimator extends SubsystemLance
         }
     }
 
-    private boolean getIsRightBranch()
+    public boolean getIsRightBranch()
     {
         return isRightBranch;
     }
@@ -423,6 +423,7 @@ public class PoseEstimator extends SubsystemLance
         // TODO: You will have to set the robot orientation for EACH limelight (for
         // testing we only have 1)
         LimelightHelpers.SetRobotOrientation("limelight", estimatedPose.getRotation().getDegrees(), 0, 0, 0, 0, 0);
+
         for (Camera camera : cameraArray) 
         {
             if (camera.getTagCount() > 0 && camera != null) 
@@ -435,22 +436,32 @@ public class PoseEstimator extends SubsystemLance
                         NetworkTableInstance.getDefault().getTable("limelight").getEntry("tid").getDouble(0));
                 double distToTag = getDistanceToReefTag(
                         NetworkTableInstance.getDefault().getTable("limelight").getEntry("tid").getDouble(0));
+                double robotVelo = Math.sqrt(Math.pow(drivetrain.getState().Speeds.vxMetersPerSecond, 2) + Math.pow(drivetrain.getState().Speeds.vyMetersPerSecond, 2));
+                double robotRotation = Math.toDegrees(drivetrain.getState().Speeds.omegaRadiansPerSecond);
 
                 if (!reefTag) 
                 {
                     rejectUpdate = true;
                 }
 
-                if (distToTag < 1.5) 
+                if (distToTag > 1.5) 
                 {
                     rejectUpdate = true;
                 }
 
                 // TODO: add another check for velocity ( we don't want to update pose if we are
                 // moving quickly)
+                if(robotVelo > 2.5)
+                {
+                    rejectUpdate = true;
+                }
 
                 // TODO: add another check for angular velocity ( we don't want to update pose
                 // if we are spinning quickly )
+                if(robotRotation > 720.0)
+                {
+                    rejectUpdate = true;
+                }
 
                 // if any of the conditions above are true, do NOT add the mt2 pose as a vision
                 // measurement
@@ -458,8 +469,7 @@ public class PoseEstimator extends SubsystemLance
                 {
                     poseEstimator.addVisionMeasurement(
                             visionPose,
-                            camera.getTimestamp(),
-                            visionStdDevs);
+                            camera.getTimestamp());
                 }
             }
         }
