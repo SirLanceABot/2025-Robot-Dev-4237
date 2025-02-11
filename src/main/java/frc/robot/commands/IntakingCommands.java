@@ -117,10 +117,16 @@ public final class IntakingCommands
                 .deadlineFor(
                     elevator.moveToSetPositionCommand(TargetPosition.kRestingPosition.elevator)))
             .andThen(
-                Commands.waitUntil(intakeWrist.isAtPosition(Position.kRestingPosition))
+                Commands.waitUntil(pivot.isAtPosition(PivotPosition.kFlippedPosition))
                 .deadlineFor(
                     claw.stopCommand(),
-                    intakeWrist.moveToSetPositionCommand(Position.kRestingPosition)))
+                    intakeWrist.moveToSetPositionCommand(Position.kRestingPosition),
+                    pivot.moveToSetPositionCommand(PivotPosition.kFlippedPosition),
+                    elevator.moveToSetPositionCommand(ElevatorPosition.kGrabCoralPosition)))
+            .andThen(
+                Commands.waitUntil(elevator.isAtPosition(ElevatorPosition.kHoldingPosition))
+                .deadlineFor(
+                    elevator.moveToSetPositionCommand(ElevatorPosition.kHoldingPosition)))
             .andThen(leds.setColorSolidCommand(Color.kRed))
             .withName("Intake Coral Command");
         }
@@ -151,6 +157,15 @@ public final class IntakingCommands
                 .deadlineFor(
                     claw.stopCommand(),
                     elevator.moveToSetPositionCommand(ElevatorPosition.kRestingPosition)))
+            .andThen(
+                Commands.waitUntil(pivot.isAtPosition(PivotPosition.kFlippedPosition))
+                .deadlineFor(
+                    pivot.moveToSetPositionCommand(PivotPosition.kFlippedPosition),
+                    elevator.moveToSetPositionCommand(ElevatorPosition.kGrabCoralPosition)))
+            .andThen(
+                Commands.waitUntil(elevator.isAtPosition(ElevatorPosition.kHoldingPosition))
+                .deadlineFor(
+                    elevator.moveToSetPositionCommand(ElevatorPosition.kHoldingPosition)))
             .andThen(leds.setColorSolidCommand(Color.kRed))
             .withName("Intake Coral From Station Command");
         }
