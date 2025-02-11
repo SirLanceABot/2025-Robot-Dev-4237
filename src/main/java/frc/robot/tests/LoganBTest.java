@@ -2,6 +2,9 @@ package frc.robot.tests;
 
 import java.lang.invoke.MethodHandles;
 
+import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Transform2d;
+import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.Joystick;
 import frc.robot.RobotContainer;
@@ -93,12 +96,6 @@ public class LoganBTest implements Test
     {
         if(joystick.getRawButton(1)) // A button
         {
-            // climb.climbUpCommand().schedule();
-            // pivot.moveToSetPositionCommand(TargetPosition.kL1).schedule(); // value of 100.0 from motor encoder
-            // intake.pickupCommand().schedule();
-            // intakeWrist.moveToSetPositionCommand(Position.kStartingPosition).schedule(); // 10.0
-            // claw.grabGamePieceCommand().schedule();
-            // elevator.moveToSetPositionCommand(TargetPosition.kGrabCoralPosition).schedule(); // 0.0
             poseEstimator.setPlacingSideToLeftCommand().schedule();
             System.out.println("Placing side set to Left");
         }
@@ -109,19 +106,32 @@ public class LoganBTest implements Test
         }
         else if(joystick.getRawButton(3))
         {
-            System.out.println("X: " + poseEstimator.getEstimatedPose().getX());
-            System.out.println("Y: " + poseEstimator.getEstimatedPose().getY());
-            System.out.println();
+            // Retrieve the current estimated pose and the nearest scoring pose
+            Pose2d currentPose = poseEstimator.getEstimatedPose();
+            int tagId = (int) NetworkTableInstance.getDefault()
+                    .getTable("limelight")
+                    .getEntry("tid")
+                    .getDouble(0);
 
-            double branchX = poseEstimator.closestBranchLocation((int) NetworkTableInstance.getDefault().getTable("limelight").getEntry("tid").getDouble(0), poseEstimator.getIsRightBranch()).getX();
-            double branchY = poseEstimator.closestBranchLocation((int) NetworkTableInstance.getDefault().getTable("limelight").getEntry("tid").getDouble(0), poseEstimator.getIsRightBranch()).getY();
+            if(tagId != 0)
+            {
+                boolean isRightBranch = poseEstimator.getIsRightBranch();
+                Pose2d scoringPose = poseEstimator.closestBranchLocation(tagId, isRightBranch);
 
-            System.out.println("Scoring Node X: " + branchX);
-            System.out.println("Scoring Node Y: " + branchY);
-            System.out.println("Scoring Node Rotation: " + poseEstimator.closestBranchLocation((int) NetworkTableInstance.getDefault().getTable("limelight").getEntry("tid").getDouble(0), poseEstimator.getIsRightBranch()).getRotation());
+                // Calculate the total distance between the current pose and the scoring pose
+                Transform2d poseDifference = scoringPose.minus(currentPose);
+                double distance = Math.hypot(poseDifference.getX(), poseDifference.getY());
 
-            System.out.println();
-            System.out.println("Total Distance between camera and tag: " + Math.sqrt(Math.pow(branchX, 2) + Math.pow(branchY, 2)));
+                // Print all relevant info on one line
+                System.out.printf("Pose: (X: %.2f, Y: %.2f) | Scoring Node: (X: %.2f, Y: %.2f, Rot: %s) | Distance: %.2f%n",
+                        currentPose.getX(), currentPose.getY(),
+                        scoringPose.getX(), scoringPose.getY(), scoringPose.getRotation(),
+                        distance);
+            }
+            else 
+            {
+                System.out.print("No tags found");
+            }
         }
         // else if(joystick.getRawButton(2)) // B button
         // {

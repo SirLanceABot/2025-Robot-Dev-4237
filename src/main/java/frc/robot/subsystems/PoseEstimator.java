@@ -191,9 +191,9 @@ public class PoseEstimator extends SubsystemLance
         stateStdDevs.set(1, 0, 0.1); // y in meters
         stateStdDevs.set(2, 0, 0.05); // heading in radians
 
-        visionStdDevs.set(0, 0, 0.9); // x in meters
-        visionStdDevs.set(1, 0, 0.9); // y in meters
-        visionStdDevs.set(2, 0, 0.95); // heading in radians
+        visionStdDevs.set(0, 0, 0.5); // x in meters
+        visionStdDevs.set(1, 0, 0.5); // y in meters
+        visionStdDevs.set(2, 0, 0.55); // heading in radians
     }
 
     private void fillMaps()
@@ -420,8 +420,7 @@ public class PoseEstimator extends SubsystemLance
             estimatedPose = poseEstimator.update(gyroRotation, swerveModulePositions);
         }
 
-        // TODO: You will have to set the robot orientation for EACH limelight (for
-        // testing we only have 1)
+        // TODO: Remove this when done testing, it is already done for any Camera.java object (check the camera class)j
         LimelightHelpers.SetRobotOrientation("limelight", estimatedPose.getRotation().getDegrees(), 0, 0, 0, 0, 0);
 
         for (Camera camera : cameraArray) 
@@ -450,15 +449,11 @@ public class PoseEstimator extends SubsystemLance
                     rejectUpdate = true;
                 }
 
-                // TODO: add another check for velocity ( we don't want to update pose if we are
-                // moving quickly)
                 if(robotVelo > 2.5)
                 {
                     rejectUpdate = true;
                 }
 
-                // TODO: add another check for angular velocity ( we don't want to update pose
-                // if we are spinning quickly )
                 if(robotRotation > 720.0)
                 {
                     rejectUpdate = true;
@@ -470,7 +465,8 @@ public class PoseEstimator extends SubsystemLance
                 {
                     poseEstimator.addVisionMeasurement(
                             visionPose,
-                            camera.getTimestamp());
+                            camera.getTimestamp(),
+                            visionStdDevs);
                 }
             }
         }
