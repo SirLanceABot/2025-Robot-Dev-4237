@@ -2,7 +2,9 @@ package frc.robot.tests;
 
 import java.lang.invoke.MethodHandles;
 
+import edu.wpi.first.wpilibj.Joystick;
 import frc.robot.RobotContainer;
+import frc.robot.subsystems.Intake;
 
 public class MatthewFTest implements Test
 {
@@ -26,6 +28,9 @@ public class MatthewFTest implements Test
     // Put all class and instance variables here.
     private final RobotContainer robotContainer;
     // private final ExampleSubsystem exampleSubsystem;
+    private final Joystick joystick = new Joystick(0);
+    private final Intake intake;
+    
 
 
     // *** CLASS CONSTRUCTORS ***
@@ -40,6 +45,7 @@ public class MatthewFTest implements Test
         System.out.println("  Constructor Started:  " + fullClassName);
 
         this.robotContainer = robotContainer;
+        this.intake = robotContainer.getIntake();
         // this.exampleSubsystem = robotContainer.exampleSubsystem;
 
         System.out.println("  Constructor Finished: " + fullClassName);
@@ -64,12 +70,35 @@ public class MatthewFTest implements Test
      * This method runs periodically (every 20ms).
      */
     public void periodic()
-    {}
+    {
+        // if(joystick.getRawButton(1))
+        // {
+        //     intake.pickupCoralCommand().schedule();
+        // }
+        if(joystick.getRawButton(2))
+        {
+            intake.ejectCoralCommand().schedule();
+        }
+        // if(joystick.getRawButton(2))
+        // {
+        //     intake.pickupAlgaeCommand().schedule();;
+        // }
+        // if(joystick.getRawButton(2))
+        // {
+        //     intake.ejectAlgaeCommand().schedule();;
+        // }
+        else
+        {
+            intake.stopCommand().schedule();
+        }
+    }
     
     /**
      * This method runs one time after the periodic() method.
      */
     public void exit()
-    {} 
+    {
+        intake.stopCommand().schedule();
+    } 
 }
 
