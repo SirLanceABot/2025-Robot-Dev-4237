@@ -32,7 +32,7 @@ public class Intake extends SubsystemLance
     // *** CLASS VARIABLES & INSTANCE VARIABLES ***
     // Put all class variables and instance variables here
     // private final TalonFXLance motor = new TalonFXLance(Constants.Intake.MOTOR_PORT, Constants.Intake.MOTOR_CAN_BUS, "Intake Motor");
-    private final SparkMaxLance motor = new SparkMaxLance(16, Constants.Intake.MOTOR_CAN_BUS, "Intake Motor");
+    private final SparkMaxLance motor = new SparkMaxLance(Constants.Intake.MOTOR_PORT, Constants.Intake.MOTOR_CAN_BUS, "Intake Motor");
     //private final TalonFXLance bottomMotor = new TalonFXLance(12, Constants.ROBORIO, "Bottom Motor");
 
     private final double GEAR_RATIO = 1.0 / 5.0; // previously 1.0 / 25.0
