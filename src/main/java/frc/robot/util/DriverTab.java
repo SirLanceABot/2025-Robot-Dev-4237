@@ -68,7 +68,7 @@ public class DriverTab
         // this.intakePositioning = robotContainer.intakePositioning;
         this.drivetrain = robotContainer.getCommandSwerveDrivetrain();
         SmartDashboard.putData("Field", field);
-        field.setRobotPose(drivetrain.getEstimatedPose());
+        field.setRobotPose(robotContainer.getPoseEstimator().getEstimatedPose());
         // return driverTab.add("Field", field)
         // .withWidget(BuiltInWidgets.kField) //specifies type of widget: "kField
         // .withPosition(7,1) // sets position of widget

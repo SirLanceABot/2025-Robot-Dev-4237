@@ -426,7 +426,8 @@ public class PoseEstimator extends SubsystemLance
 
         for (Camera camera : cameraArray) 
         {
-            if (camera.getTagCount() > 0 && camera != null) 
+
+            if (camera != null && camera.getTagCount() > 0) 
             {
                 Pose2d visionPose = camera.getPose();
 

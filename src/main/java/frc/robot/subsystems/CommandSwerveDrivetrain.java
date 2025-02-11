@@ -80,8 +80,6 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
     private final SwerveRequest.SysIdSwerveSteerGains m_steerCharacterization = new SwerveRequest.SysIdSwerveSteerGains();
     private final SwerveRequest.SysIdSwerveRotation m_rotationCharacterization = new SwerveRequest.SysIdSwerveRotation();
 
-    private final PoseEstimator poseEstimator; 
-
     /* SysId routine for characterizing translation. This is used to find PID gains for the drive motors. */
     private final SysIdRoutine m_sysIdRoutineTranslation = new SysIdRoutine(
         new SysIdRoutine.Config(
@@ -154,7 +152,7 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
      * @param drivetrainConstants   Drivetrain-wide constants for the swerve drive
      * @param modules               Constants for each specific module
      */
-    public CommandSwerveDrivetrain(GyroLance gyro, Camera[] cameraArray, SwerveDrivetrainConstants drivetrainConstants, SwerveModuleConstants<?, ?, ?>... modules) 
+    public CommandSwerveDrivetrain(GyroLance gyro, SwerveDrivetrainConstants drivetrainConstants, SwerveModuleConstants<?, ?, ?>... modules) 
     {
         super(drivetrainConstants, modules);
         if (Utils.isSimulation()) 
@@ -162,7 +160,6 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
             startSimThread();
         }
 
-        poseEstimator = new PoseEstimator(this, gyro, cameraArray);
     }
 
     /**
@@ -178,7 +175,7 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
      *                                CAN FD, and 100 Hz on CAN 2.0.
      * @param modules                 Constants for each specific module
      */
-    public CommandSwerveDrivetrain(GyroLance gyro, Camera[] cameraArray,SwerveDrivetrainConstants drivetrainConstants,double odometryUpdateFrequency,SwerveModuleConstants<?, ?, ?>... modules)
+    public CommandSwerveDrivetrain(GyroLance gyro, SwerveDrivetrainConstants drivetrainConstants,double odometryUpdateFrequency,SwerveModuleConstants<?, ?, ?>... modules)
     {
         super(drivetrainConstants, odometryUpdateFrequency, modules);
         if (Utils.isSimulation()) 
@@ -186,7 +183,6 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
             startSimThread();
         }
 
-        poseEstimator = new PoseEstimator(this, gyro, cameraArray);
 
     }
 
@@ -209,7 +205,7 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
      *                                  and radians
      * @param modules                   Constants for each specific module
      */
-    public CommandSwerveDrivetrain(GyroLance gyro, Camera[] cameraArray,SwerveDrivetrainConstants drivetrainConstants,double odometryUpdateFrequency,Matrix<N3, N1> odometryStandardDeviation,Matrix<N3, N1> visionStandardDeviation,SwerveModuleConstants<?, ?, ?>... modules) 
+    public CommandSwerveDrivetrain(GyroLance gyro, SwerveDrivetrainConstants drivetrainConstants,double odometryUpdateFrequency,Matrix<N3, N1> odometryStandardDeviation,Matrix<N3, N1> visionStandardDeviation,SwerveModuleConstants<?, ?, ?>... modules) 
     {
         super(drivetrainConstants, odometryUpdateFrequency, odometryStandardDeviation, visionStandardDeviation, modules);
         if (Utils.isSimulation()) 
@@ -217,8 +213,6 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
             startSimThread();
         }
         SmartDashboard.putData("Swerve/Field", field);
-
-        poseEstimator = new PoseEstimator(this, gyro, cameraArray);
 
     }
 
@@ -264,10 +258,7 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
         //return periodicData.odometry.getPoseMeters();
     }
 
-    public Pose2d getEstimatedPose()
-    {
-        return poseEstimator.getEstimatedPose();
-    }
+   
 
 
     /**
