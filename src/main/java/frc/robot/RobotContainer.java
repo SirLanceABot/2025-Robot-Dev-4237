@@ -101,32 +101,97 @@ public class RobotContainer
      */
     RobotContainer()
     {
-        fullRobot          = (useFullRobot);
-        
-        claw                    = (useFullRobot || useClaw)                 ? new Claw()                                                                                                      : null;
-        climb                   = (useFullRobot || useClimb)                ? new Climb()                                                                                                     : null;
-        gyro                    = (useFullRobot || useGyro)                 ? new GyroLance()                                                                                                 : null;
-        drivetrain              = (useFullRobot || useDrivetrain)           ? new CommandSwerveDrivetrain(gyro, TunerConstants.DrivetrainConstants, TunerConstants.FrontLeft, TunerConstants.FrontRight, TunerConstants.BackLeft, TunerConstants.BackRight)                                   : null;
-        elevator                = (useFullRobot || useElevator)             ? new Elevator()                                                                                                  : null;
-        intake                  = (useFullRobot || useIntake)               ? new Intake()                                                                                                    : null;
-        intakeWrist             = (useFullRobot || useIntakeWrist)          ? new IntakeWrist()                                                                                               : null;
-        pivot                   = (useFullRobot || usePivot)                ? new Pivot()                                                                                                     : null;
-        shuttle                 = (useFullRobot || useShuttle)              ? new Shuttle()                                                                                                   : null;
-        leds                    = (useFullRobot || useLEDs)                 ? new LEDs()                                                                                                      : null;
-        coralIntakeProximity    = (useFullRobot || useProximity)            ? new Proximity(Constants.Proximity.CORAL_INTAKE_PORT)                                                            : null;
-        algaeIntakeProximity    = (useFullRobot || useProximity)            ? new Proximity(Constants.Proximity.ALGAE_INTAKE_PORT)                                                            : null;
-        elevatorProximity       = (useFullRobot || useProximity)            ? new Proximity(Constants.Proximity.ELEVATOR_PORT)                                                                : null;
-        clawProximity        = (useFullRobot || useProximity)            ? new Proximity(Constants.Proximity.CLAW_PORT)                                                                 : null;  
+        fullRobot = useFullRobot;
 
-        cameraArray[0]          = (useFullRobot || useScoringSideCamera)           ? new Camera("limelight-scoringSide")                                                                                    : null;
-        cameraArray[1]          = (useFullRobot || useClimbSideCamera)          ? new Camera("limelight-climbSide")                                                                                   : null;
-        poseEstimator           = (useFullRobot || usePoseEstimator)        ? new PoseEstimator(drivetrain, gyro, cameraArray)                                                                : null;
+        claw = (useFullRobot || useClaw)
+                ? new Claw()
+                : null;
 
-        driverController        = (useFullRobot || useDriverController)     ? new CommandXboxController(Constants.Controllers.DRIVER_CONTROLLER_PORT)                                         : null;
-        operatorController      = (useFullRobot || useOperatorController)   ? new CommandXboxController(Constants.Controllers.OPERATOR_CONTROLLER_PORT)                                       : null;
-        // operatorButtonBindings  = (useFullRobot || useBindings)             ? new OperatorButtonBindings(this)                                                                                : null;
-        // driverButtonBindings    = (useFullRobot || useBindings)             ? new DriverButtonBindings(this)                                                                                  : null;
+        climb = (useFullRobot || useClimb)
+                ? new Climb()
+                : null;
 
+        gyro = (useFullRobot || useGyro)
+                ? new GyroLance()
+                : null;
+
+        drivetrain = (useFullRobot || useDrivetrain)
+                ? new CommandSwerveDrivetrain(
+                        gyro,
+                        TunerConstants.DrivetrainConstants,
+                        TunerConstants.FrontLeft,
+                        TunerConstants.FrontRight,
+                        TunerConstants.BackLeft,
+                        TunerConstants.BackRight)
+                : null;
+
+        elevator = (useFullRobot || useElevator)
+                ? new Elevator()
+                : null;
+
+        intake = (useFullRobot || useIntake)
+                ? new Intake()
+                : null;
+
+        intakeWrist = (useFullRobot || useIntakeWrist)
+                ? new IntakeWrist()
+                : null;
+
+        pivot = (useFullRobot || usePivot)
+                ? new Pivot()
+                : null;
+
+        shuttle = (useFullRobot || useShuttle)
+                ? new Shuttle()
+                : null;
+
+        leds = (useFullRobot || useLEDs)
+                ? new LEDs()
+                : null;
+
+        coralIntakeProximity = (useFullRobot || useProximity)
+                ? new Proximity(Constants.Proximity.CORAL_INTAKE_PORT)
+                : null;
+
+        algaeIntakeProximity = (useFullRobot || useProximity)
+                ? new Proximity(Constants.Proximity.ALGAE_INTAKE_PORT)
+                : null;
+
+        elevatorProximity = (useFullRobot || useProximity)
+                ? new Proximity(Constants.Proximity.ELEVATOR_PORT)
+                : null;
+
+        clawProximity = (useFullRobot || useProximity)
+                ? new Proximity(Constants.Proximity.CLAW_PORT)
+                : null;
+
+        cameraArray[0] = (useFullRobot || useScoringSideCamera)
+                ? new Camera("limelight-scoringSide")
+                : null;
+
+        cameraArray[1] = (useFullRobot || useClimbSideCamera)
+                ? new Camera("limelight-climbSide")
+                : null;
+
+        poseEstimator = (useFullRobot || usePoseEstimator)
+                ? new PoseEstimator(drivetrain, gyro, cameraArray)
+                : null;
+
+        driverController = (useFullRobot || useDriverController)
+                ? new CommandXboxController(Constants.Controllers.DRIVER_CONTROLLER_PORT)
+                : null;
+
+        operatorController = (useFullRobot || useOperatorController)
+                ? new CommandXboxController(Constants.Controllers.OPERATOR_CONTROLLER_PORT)
+                : null;
+
+        // operatorButtonBindings = (useFullRobot || useBindings)
+        // ? new OperatorButtonBindings(this)
+        // : null;
+
+        // driverButtonBindings = (useFullRobot || useBindings)
+        // ? new DriverButtonBindings(this)
+        // : null;
     }
 
     public Claw getClaw()
@@ -222,11 +287,6 @@ public class RobotContainer
     public Camera getClimbSideCamera()
     {
         return cameraArray[1];
-    }
-
-    public Camera getFrontCamera()
-    {
-        return cameraArray[2];
     }
 
     public BooleanSupplier isRedAllianceSupplier()
