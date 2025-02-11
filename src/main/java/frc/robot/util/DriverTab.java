@@ -24,6 +24,8 @@ import frc.robot.RobotContainer;
 import frc.robot.subsystems.Shuttle;
 import frc.robot.subsystems.Intake;
 import frc.robot.sensors.Proximity;
+import edu.wpi.first.util.sendable.SendableBuilder;
+import edu.wpi.first.util.sendable.Sendable;
 
 public class DriverTab
 {
@@ -74,7 +76,7 @@ public class DriverTab
         // .withPosition(7,1) // sets position of widget
         // .withSize(19,12);  // sets size of widget
         
-
+    //    createSwerveWidget();
         
         
         
@@ -101,8 +103,30 @@ public class DriverTab
         System.out.println("  Constructor Finished: " + fullClassName);
     }
  
+    // private void createSwerveWidget()
+    // {
+    //     SmartDashboard.putData("Swerve Drive", new Sendable()
+    //     {
+    //         @Override
+    //         public void initSendable(SendableBuilder builder) {
+    //             builder.setSmartDashboardType("SwerveDriver");
 
-
+    //             builder.addDoubleProperty("Front Left Angle", () -> drivetrain.frontLeftModule.getAngle().getRadians(), null);
+    //             builder.addDoubleProperty("Front Left Velocity", () -> frontLeftModule.getVelocity(), null);
+                
+    //             builder.addDoubleProperty("Front Right Angle", () -> frontRightModule.getAngle().getRadians(), null);
+    //             builder.addDoubleProperty("Front Right Velocity", () -> frontRightModule.getVelocity(), null);
+            
+    //             builder.addDoubleProperty("Back Left Angle", () -> backLeftModule.getAngle().getRadians(), null);
+    //             builder.addDoubleProperty("Back Left Velocity", () -> backLeftModule.getVelocity(), null);
+            
+    //             builder.addDoubleProperty("Back Right Angle", () -> backRightModule.getAngle().getRadians(), null);
+    //             builder.addDoubleProperty("Back Right Velocity", () -> backRightModule.getVelocity(), null);
+            
+    //             builder.addDoubleProperty("Robot Angle", () -> getRotation().getRadians(), null);
+    //         }
+    //     });
+    // }
     
 
     // private GenericEntry createPivotAngleBox()
