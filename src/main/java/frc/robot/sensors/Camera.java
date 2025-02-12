@@ -49,7 +49,7 @@ public class Camera extends SensorLance
     // Put all class constructors here
 
     /** 
-     * Creates a new ExampleSubsystem. 
+     * Creates a new Camera. 
      */
     public Camera(String cameraName)
     {   
@@ -102,11 +102,11 @@ public class Camera extends SensorLance
     {
         poseEstimate = LimelightHelpers.getBotPoseEstimate_wpiBlue_MegaTag2(cameraName);
 
-        poseArray[0] = poseEstimate.pose.getX();
-        poseArray[1] = poseEstimate.pose.getY();
-        poseArray[2] = poseEstimate.pose.getRotation().getDegrees();
+        // poseArray[0] = poseEstimate.pose.getX();
+        // poseArray[1] = poseEstimate.pose.getY();
+        // poseArray[2] = poseEstimate.pose.getRotation().getDegrees();
 
-        poseEntry.set(poseArray);
+        // poseEntry.set(poseArray);
 
         LimelightHelpers.SetRobotOrientation(cameraName, yawEntry.get(), 0.0, 0.0, 0.0, 0.0, 0.0);
     }

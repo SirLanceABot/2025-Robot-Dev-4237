@@ -421,7 +421,7 @@ public class PoseEstimator extends SubsystemLance
         }
 
         // TODO: Remove this when done testing, it is already done for any Camera.java object (check the camera class)j
-        LimelightHelpers.SetRobotOrientation("limelight", estimatedPose.getRotation().getDegrees(), 0, 0, 0, 0, 0);
+        LimelightHelpers.SetRobotOrientation("limelight-climb", estimatedPose.getRotation().getDegrees(), 0, 0, 0, 0, 0);
 
         for (Camera camera : cameraArray) 
         {
@@ -433,9 +433,9 @@ public class PoseEstimator extends SubsystemLance
                 // variables for pose estimator logic
                 boolean rejectUpdate = false;
                 boolean reefTag = isReefTag(
-                        NetworkTableInstance.getDefault().getTable("limelight").getEntry("tid").getDouble(0));
+                        NetworkTableInstance.getDefault().getTable("limelight-climb").getEntry("tid").getDouble(0));
                 double distToTag = getDistanceToReefTag(
-                        NetworkTableInstance.getDefault().getTable("limelight").getEntry("tid").getDouble(0));
+                        NetworkTableInstance.getDefault().getTable("limelight-climb").getEntry("tid").getDouble(0));
                 double robotVelo = Math.sqrt(Math.pow(drivetrain.getState().Speeds.vxMetersPerSecond, 2) + Math.pow(drivetrain.getState().Speeds.vyMetersPerSecond, 2));
                 double robotRotation = Math.toDegrees(drivetrain.getState().Speeds.omegaRadiansPerSecond);
 

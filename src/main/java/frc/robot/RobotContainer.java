@@ -166,11 +166,11 @@ public class RobotContainer
                 : null;
 
         cameraArray[0] = (useFullRobot || useScoringSideCamera)
-                ? new Camera("limelight-scoringSide")
+                ? new Camera("limelight-scoring")
                 : null;
 
         cameraArray[1] = (useFullRobot || useClimbSideCamera)
-                ? new Camera("limelight-climbSide")
+                ? new Camera("limelight-climb")
                 : null;
 
         poseEstimator = (useFullRobot || usePoseEstimator)
