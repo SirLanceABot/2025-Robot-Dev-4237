@@ -47,7 +47,7 @@ public class LoganBTest implements Test
     private final Claw claw;
     private final Elevator elevator;
     private final PoseEstimator poseEstimator;
-    private final Camera camera;
+    private final Camera climbSideLimelight;
     private final Joystick joystick = new Joystick(0);
     // private final ExampleSubsystem exampleSubsystem;
 
@@ -72,7 +72,7 @@ public class LoganBTest implements Test
         claw = robotContainer.getClaw();
         elevator = robotContainer.getElevator();
         poseEstimator = robotContainer.getPoseEstimator();
-        camera = robotContainer.getScoringSideCamera();
+        climbSideLimelight = robotContainer.getClimbSideCamera();
         System.out.println("  Constructor Finished: " + fullClassName);
     }
 
@@ -111,13 +111,7 @@ public class LoganBTest implements Test
         {
             // Retrieve the current estimated pose and the nearest scoring pose
             Pose2d currentPose = poseEstimator.getEstimatedPose();
-            int tagId = (int) NetworkTableInstance.getDefault()
-                    .getTable("limelight")
-                    .getEntry("tid")
-                    .getDouble(0);
-
-            System.out.println("X: " + currentPose.getX());
-            System.out.println("Y: " + currentPose.getY());
+            int tagId = (int) climbSideLimelight.getTagId();
 
             if(tagId != 0)
             {
@@ -140,7 +134,7 @@ public class LoganBTest implements Test
             }
             
         }
-        System.out.println(camera.getTagCount());
+        System.out.println(climbSideLimelight.getTagCount());
         // else if(joystick.getRawButton(2)) // B button
         // {
         //     // climb.climbDown();

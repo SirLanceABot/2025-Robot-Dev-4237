@@ -433,11 +433,9 @@ public class PoseEstimator extends SubsystemLance
 
                     // variables for pose estimator logic
                     boolean rejectUpdate = false;
-                    boolean reefTag = isReefTag(
-                            NetworkTableInstance.getDefault().getTable("limelight-climb").getEntry("tid").getDouble(0));
-                    double distToTag = getDistanceToReefTag(
-                            NetworkTableInstance.getDefault().getTable("limelight-climb").getEntry("tid").getDouble(0));
-                    double robotVelo = Math.sqrt(Math.pow(drivetrain.getState().Speeds.vxMetersPerSecond, 2) + Math.pow(drivetrain.getState().Speeds.vyMetersPerSecond, 2));
+                    boolean reefTag = isReefTag(camera.getTagId());
+                    double distToTag = getDistanceToReefTag(camera.getTagId());
+                    double robotVelo = Math.hypot(drivetrain.getState().Speeds.vxMetersPerSecond, drivetrain.getState().Speeds.vyMetersPerSecond);
                     double robotRotation = Math.toDegrees(drivetrain.getState().Speeds.omegaRadiansPerSecond);
 
                     if(visionPose != null)
@@ -481,6 +479,7 @@ public class PoseEstimator extends SubsystemLance
         //OUTPUTS
         if(drivetrain != null && gyro != null && poseEstimator != null)
         {
+            // grabs the newest estimated pose
             estimatedPose = poseEstimator.getEstimatedPosition();
 
             //puts pose onto AdvantageScope

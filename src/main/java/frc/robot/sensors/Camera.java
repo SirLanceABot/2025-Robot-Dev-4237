@@ -120,6 +120,11 @@ public class Camera extends SensorLance
             return -1.00;
         }
     }
+
+    public double getTagId()
+    {
+        return LimelightHelpers.getFiducialID(cameraName);
+    }
     
 
     // *** OVERRIDEN METHODS ***
@@ -138,7 +143,7 @@ public class Camera extends SensorLance
 
             poseEntry.set(poseArray);
         }
-        LimelightHelpers.SetRobotOrientation(cameraName, yawEntry.get(), 0.0, 0.0, 0.0, 0.0, 0.0);
+        //LimelightHelpers.SetRobotOrientation(cameraName, yawEntry.get(), 0.0, 0.0, 0.0, 0.0, 0.0);
     }
 
     @Override
