@@ -108,22 +108,22 @@ public class Intake extends SubsystemLance
 
     public void pickupCoral() 
     {
-        set(0.5);
+        set(0.25);
     }
 
     public void ejectCoral() 
     {
-        set(-0.5);
+        set(-0.25);
     }
 
     public void pickupAlgae()
     {
-        set(-0.5);
+        set(-0.4);
     }
 
     public void ejectAlgae()
     {
-        set(0.5);
+        set(0.4);
     }
 
     public void stop() 

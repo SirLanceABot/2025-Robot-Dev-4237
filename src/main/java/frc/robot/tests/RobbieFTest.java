@@ -6,6 +6,7 @@ import java.lang.invoke.MethodHandles;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.Commands;
 import frc.robot.subsystems.Elevator;
+import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Claw;
 import frc.robot.subsystems.Shuttle;
 import frc.robot.subsystems.IntakeWrist;
@@ -38,6 +39,7 @@ public class RobbieFTest implements Test
     private final RobotContainer robotContainer;
     private final Claw claw;
     private final Shuttle shuttle;
+    private final Intake intake;
     private final IntakeWrist intakeWrist;
     private final Elevator elevator;
 
@@ -61,6 +63,7 @@ public class RobbieFTest implements Test
         shuttle = robotContainer.getShuttle();
         intakeWrist = robotContainer.getIntakeWrist();
         elevator = robotContainer.getElevator();
+        intake = robotContainer.getIntake();
         // this.exampleSubsystem = robotContainer.exampleSubsystem;
 
         System.out.println("  Constructor Finished: " + fullClassName);
@@ -90,22 +93,18 @@ public class RobbieFTest implements Test
 
         if (joystick.getRawButton(1))
         {
-        
-            claw.grabGamePieceCommand().schedule();
-
+            // intake.pickupCoralCommand().schedule();
+            intake.pickupAlgaeCommand().schedule();
         }
         else if (joystick.getRawButton(2))
         {
-            claw.stopCommand().schedule();
+            intake.ejectAlgaeCommand().schedule();
+            // intake.ejectCoralCommand().schedule();
         }
         else if (joystick.getRawButton(3))
         {
-           claw.ejectAlgaeCommand().schedule();
-        }
-        else 
-        {
-            claw.stopCommand().schedule();
-        }
+            intake.stopCommand().schedule();
+        } 
     }
     
     /**
