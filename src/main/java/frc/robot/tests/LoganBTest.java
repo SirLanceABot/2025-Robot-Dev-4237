@@ -8,6 +8,7 @@ import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.Joystick;
 import frc.robot.RobotContainer;
+import frc.robot.sensors.Camera;
 import frc.robot.subsystems.Claw;
 // import frc.robot.Constants.TargetPosition;
 import frc.robot.subsystems.Climb;
@@ -46,6 +47,7 @@ public class LoganBTest implements Test
     private final Claw claw;
     private final Elevator elevator;
     private final PoseEstimator poseEstimator;
+    private final Camera camera;
     private final Joystick joystick = new Joystick(0);
     // private final ExampleSubsystem exampleSubsystem;
 
@@ -70,6 +72,7 @@ public class LoganBTest implements Test
         claw = robotContainer.getClaw();
         elevator = robotContainer.getElevator();
         poseEstimator = robotContainer.getPoseEstimator();
+        camera = robotContainer.getScoringSideCamera();
         System.out.println("  Constructor Finished: " + fullClassName);
     }
 
@@ -113,6 +116,9 @@ public class LoganBTest implements Test
                     .getEntry("tid")
                     .getDouble(0);
 
+            System.out.println("X: " + currentPose.getX());
+            System.out.println("Y: " + currentPose.getY());
+
             if(tagId != 0)
             {
                 boolean isRightBranch = poseEstimator.getIsRightBranch();
@@ -130,9 +136,11 @@ public class LoganBTest implements Test
             }
             else 
             {
-                System.out.print("No tags found");
+                System.out.println("No tags found");
             }
+            
         }
+        System.out.println(camera.getTagCount());
         // else if(joystick.getRawButton(2)) // B button
         // {
         //     // climb.climbDown();
