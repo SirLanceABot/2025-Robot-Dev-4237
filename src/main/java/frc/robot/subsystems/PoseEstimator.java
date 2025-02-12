@@ -191,9 +191,9 @@ public class PoseEstimator extends SubsystemLance
         stateStdDevs.set(1, 0, 0.1); // y in meters
         stateStdDevs.set(2, 0, 0.05); // heading in radians
 
-        visionStdDevs.set(0, 0, 0.5); // x in meters
-        visionStdDevs.set(1, 0, 0.5); // y in meters
-        visionStdDevs.set(2, 0, 0.55); // heading in radians
+        visionStdDevs.set(0, 0, 0.2); // x in meters
+        visionStdDevs.set(1, 0, 0.2); // y in meters
+        visionStdDevs.set(2, 0, 0.25); // heading in radians
     }
 
     private void fillMaps()
@@ -420,17 +420,19 @@ public class PoseEstimator extends SubsystemLance
             estimatedPose = poseEstimator.update(gyroRotation, swerveModulePositions);
         }
 
-        // TODO: Remove this when done testing, it is already done for any Camera.java object (check the camera class)j
-        LimelightHelpers.SetRobotOrientation("limelight-climb", estimatedPose.getRotation().getDegrees(), 0, 0, 0, 0, 0);
-
         for (Camera camera : cameraArray) 
         {
             if (camera != null)
             {
+                if(gyro != null)
+                {
+                    LimelightHelpers.SetRobotOrientation(camera.getCameraName(), gyro.getYaw(), 0.0, 0.0, 0.0, 0.0, 0.0);
+                }
+
                 if(camera.getTagCount() > 0)
                 {
                     Pose2d visionPose = camera.getPose();
-
+                    gyro.getYaw();
                     // variables for pose estimator logic
                     boolean rejectUpdate = false;
                     boolean reefTag = isReefTag(camera.getTagId());
