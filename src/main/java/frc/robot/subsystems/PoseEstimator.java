@@ -425,48 +425,55 @@ public class PoseEstimator extends SubsystemLance
 
         for (Camera camera : cameraArray) 
         {
-
-            if (camera != null && camera.getTagCount() > 0) 
+            if (camera != null)
             {
-                Pose2d visionPose = camera.getPose();
-
-                // variables for pose estimator logic
-                boolean rejectUpdate = false;
-                boolean reefTag = isReefTag(
-                        NetworkTableInstance.getDefault().getTable("limelight-climb").getEntry("tid").getDouble(0));
-                double distToTag = getDistanceToReefTag(
-                        NetworkTableInstance.getDefault().getTable("limelight-climb").getEntry("tid").getDouble(0));
-                double robotVelo = Math.sqrt(Math.pow(drivetrain.getState().Speeds.vxMetersPerSecond, 2) + Math.pow(drivetrain.getState().Speeds.vyMetersPerSecond, 2));
-                double robotRotation = Math.toDegrees(drivetrain.getState().Speeds.omegaRadiansPerSecond);
-
-                if (!reefTag) 
+                if(camera.getTagCount() > 0)
                 {
-                    rejectUpdate = true;
-                }
+                    Pose2d visionPose = camera.getPose();
 
-                if (distToTag > 1.5) 
-                {
-                    rejectUpdate = true;
-                }
+                    // variables for pose estimator logic
+                    boolean rejectUpdate = false;
+                    boolean reefTag = isReefTag(
+                            NetworkTableInstance.getDefault().getTable("limelight-climb").getEntry("tid").getDouble(0));
+                    double distToTag = getDistanceToReefTag(
+                            NetworkTableInstance.getDefault().getTable("limelight-climb").getEntry("tid").getDouble(0));
+                    double robotVelo = Math.sqrt(Math.pow(drivetrain.getState().Speeds.vxMetersPerSecond, 2) + Math.pow(drivetrain.getState().Speeds.vyMetersPerSecond, 2));
+                    double robotRotation = Math.toDegrees(drivetrain.getState().Speeds.omegaRadiansPerSecond);
 
-                if(robotVelo > 2.5)
-                {
-                    rejectUpdate = true;
-                }
+                    if(visionPose != null)
+                    {
+                        rejectUpdate = true;
+                    }
 
-                if(robotRotation > 720.0)
-                {
-                    rejectUpdate = true;
-                }
+                    if (!reefTag) 
+                    {
+                        rejectUpdate = true;
+                    }
 
-                // if any of the conditions above are true, do NOT add the mt2 pose as a vision
-                // measurement
-                if (!rejectUpdate)
-                {
-                    poseEstimator.addVisionMeasurement(
-                            visionPose,
-                            camera.getTimestamp(),
-                            visionStdDevs);
+                    if (distToTag > 1.5) 
+                    {
+                        rejectUpdate = true;
+                    }
+
+                    if(robotVelo > 2.5)
+                    {
+                        rejectUpdate = true;
+                    }
+
+                    if(robotRotation > 720.0)
+                    {
+                        rejectUpdate = true;
+                    }
+
+                    // if any of the conditions above are true, do NOT add the mt2 pose as a vision
+                    // measurement
+                    if (!rejectUpdate)
+                    {
+                        poseEstimator.addVisionMeasurement(
+                                visionPose,
+                                camera.getTimestamp(),
+                                visionStdDevs);
+                    }
                 }
             }
         }
