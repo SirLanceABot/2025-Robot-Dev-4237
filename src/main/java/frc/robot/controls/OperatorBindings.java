@@ -35,6 +35,8 @@ public final class OperatorBindings {
     private static BooleanSupplier isTeleop;
     private static DoubleSupplier matchTime;
 
+    private static RobotContainer robotContainer;
+
     // *** CLASS CONSTRUCTOR ***
     private OperatorBindings()
     {}
@@ -58,8 +60,8 @@ public final class OperatorBindings {
             // configRightBumper();
             // configBackButton();
             // configStartButton();
-            // configLeftTrigger();
-            // configRightTrigger();
+            configLeftTrigger();
+            configRightTrigger();
             // configLeftStick();
             // configRightStick();
             // configDpadUp();
@@ -135,12 +137,20 @@ public final class OperatorBindings {
     private static void configLeftTrigger()
     {
         Trigger leftTrigger = controller.leftTrigger();
+        leftTrigger
+            .onTrue(robotContainer.getPoseEstimator().setPlacingSideToLeftCommand()
+            .andThen(Commands.runOnce(() -> controller.getHID().setRumble(RumbleType.kLeftRumble, 1.0)))
+            .withTimeout(0.25));
     }
 
 
     private static void configRightTrigger()
     {
         Trigger rightTrigger = controller.rightTrigger();
+        rightTrigger
+            .onTrue(robotContainer.getPoseEstimator().setPlacingSideToRightCommand()
+            .andThen(Commands.runOnce(() -> controller.getHID().setRumble(RumbleType.kRightRumble, 1.0)))
+            .withTimeout(0.25));
     }
 
 
