@@ -108,7 +108,7 @@ public class Claw extends SubsystemLance
     */
     public void placeCoral()
     {
-        setKickSpeed(0.1);
+        setKickSpeed(1.0); //0.1 was too slow
     }
 
     public void stop()
