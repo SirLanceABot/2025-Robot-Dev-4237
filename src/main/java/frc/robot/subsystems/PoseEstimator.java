@@ -440,6 +440,11 @@ public class PoseEstimator extends SubsystemLance
                     double robotVelo = Math.sqrt(Math.pow(drivetrain.getState().Speeds.vxMetersPerSecond, 2) + Math.pow(drivetrain.getState().Speeds.vyMetersPerSecond, 2));
                     double robotRotation = Math.toDegrees(drivetrain.getState().Speeds.omegaRadiansPerSecond);
 
+                    if(visionPose != null)
+                    {
+                        rejectUpdate = true;
+                    }
+
                     if (!reefTag) 
                     {
                         rejectUpdate = true;
