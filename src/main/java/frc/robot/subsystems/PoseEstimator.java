@@ -432,7 +432,6 @@ public class PoseEstimator extends SubsystemLance
                 if(camera.getTagCount() > 0)
                 {
                     Pose2d visionPose = camera.getPose();
-                    gyro.getYaw();
                     // variables for pose estimator logic
                     boolean rejectUpdate = false;
                     boolean reefTag = isReefTag(camera.getTagId());
