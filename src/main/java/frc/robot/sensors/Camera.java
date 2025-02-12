@@ -75,22 +75,50 @@ public class Camera extends SensorLance
     */
     public Pose2d getPose()
     {
-        return poseEstimate.pose;
+        if(poseEstimate != null)
+        {
+            return poseEstimate.pose;
+        }
+        else
+        {
+            return null;
+        }
     }
 
     public double getTimestamp()
     {
-        return poseEstimate.timestampSeconds;
+        if(poseEstimate != null)
+        {
+            return poseEstimate.timestampSeconds;
+        }
+        else
+        {
+            return -1.00;
+        }
     }
 
     public int getTagCount()
     {
-        return poseEstimate.tagCount;
+        if(poseEstimate != null)
+        {
+            return poseEstimate.tagCount;
+        }
+        else
+        {
+            return -1;
+        }
     }
 
     public double avgTagDistance()
     {
-        return poseEstimate.avgTagDist;
+        if(poseEstimate != null)
+        {
+            return poseEstimate.avgTagDist;
+        }
+        else
+        {
+            return -1.00;
+        }
     }
     
 
@@ -102,12 +130,14 @@ public class Camera extends SensorLance
     {
         poseEstimate = LimelightHelpers.getBotPoseEstimate_wpiBlue_MegaTag2(cameraName);
 
-        // poseArray[0] = poseEstimate.pose.getX();
-        // poseArray[1] = poseEstimate.pose.getY();
-        // poseArray[2] = poseEstimate.pose.getRotation().getDegrees();
+        if(poseEstimate != null)
+        {
+            poseArray[0] = poseEstimate.pose.getX();
+            poseArray[1] = poseEstimate.pose.getY();
+            poseArray[2] = poseEstimate.pose.getRotation().getDegrees();
 
-        // poseEntry.set(poseArray);
-
+            poseEntry.set(poseArray);
+        }
         LimelightHelpers.SetRobotOrientation(cameraName, yawEntry.get(), 0.0, 0.0, 0.0, 0.0, 0.0);
     }
 
