@@ -191,9 +191,9 @@ public class PoseEstimator extends SubsystemLance
         stateStdDevs.set(1, 0, 0.1); // y in meters
         stateStdDevs.set(2, 0, 0.05); // heading in radians
 
-        visionStdDevs.set(0, 0, 0.5); // x in meters
-        visionStdDevs.set(1, 0, 0.5); // y in meters
-        visionStdDevs.set(2, 0, 0.55); // heading in radians
+        visionStdDevs.set(0, 0, 0.2); // x in meters
+        visionStdDevs.set(1, 0, 0.2); // y in meters
+        visionStdDevs.set(2, 0, 0.25); // heading in radians
     }
 
     private void fillMaps()
@@ -420,24 +420,23 @@ public class PoseEstimator extends SubsystemLance
             estimatedPose = poseEstimator.update(gyroRotation, swerveModulePositions);
         }
 
-        // TODO: Remove this when done testing, it is already done for any Camera.java object (check the camera class)j
-        LimelightHelpers.SetRobotOrientation("limelight-climb", estimatedPose.getRotation().getDegrees(), 0, 0, 0, 0, 0);
-
         for (Camera camera : cameraArray) 
         {
             if (camera != null)
             {
+                if(gyro != null)
+                {
+                    LimelightHelpers.SetRobotOrientation(camera.getCameraName(), gyro.getYaw(), 0.0, 0.0, 0.0, 0.0, 0.0);
+                }
+
                 if(camera.getTagCount() > 0)
                 {
                     Pose2d visionPose = camera.getPose();
-
                     // variables for pose estimator logic
                     boolean rejectUpdate = false;
-                    boolean reefTag = isReefTag(
-                            NetworkTableInstance.getDefault().getTable("limelight-climb").getEntry("tid").getDouble(0));
-                    double distToTag = getDistanceToReefTag(
-                            NetworkTableInstance.getDefault().getTable("limelight-climb").getEntry("tid").getDouble(0));
-                    double robotVelo = Math.sqrt(Math.pow(drivetrain.getState().Speeds.vxMetersPerSecond, 2) + Math.pow(drivetrain.getState().Speeds.vyMetersPerSecond, 2));
+                    boolean reefTag = isReefTag(camera.getTagId());
+                    double distToTag = getDistanceToReefTag(camera.getTagId());
+                    double robotVelo = Math.hypot(drivetrain.getState().Speeds.vxMetersPerSecond, drivetrain.getState().Speeds.vyMetersPerSecond);
                     double robotRotation = Math.toDegrees(drivetrain.getState().Speeds.omegaRadiansPerSecond);
 
                     if(visionPose != null)
@@ -481,6 +480,7 @@ public class PoseEstimator extends SubsystemLance
         //OUTPUTS
         if(drivetrain != null && gyro != null && poseEstimator != null)
         {
+            // grabs the newest estimated pose
             estimatedPose = poseEstimator.getEstimatedPosition();
 
             //puts pose onto AdvantageScope

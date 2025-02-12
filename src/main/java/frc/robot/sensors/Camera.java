@@ -60,8 +60,6 @@ public class Camera extends SensorLance
         poseEntry = ASTable.getDoubleArrayTopic(cameraName + " pose").getEntry(new double[3]);
         yawEntry = ASTable.getDoubleTopic("GyroYaw").getEntry(0.0);
 
-        poseEstimate = LimelightHelpers.getBotPoseEstimate_wpiBlue_MegaTag2(cameraName);
-
         System.out.println("  Constructor Finished: " + fullClassName + ">>" + cameraName);
     }
 
@@ -120,7 +118,36 @@ public class Camera extends SensorLance
             return -1.00;
         }
     }
-    
+
+    public double getTagId()
+    {
+        return LimelightHelpers.getFiducialID(cameraName);
+    }
+
+    public double getTX()
+    {
+        return LimelightHelpers.getTX(cameraName);
+    }
+
+     public double getTY()
+    {
+        return LimelightHelpers.getTY(cameraName);
+    }   
+
+    public double getTA()
+    {
+        return LimelightHelpers.getTA(cameraName);
+    }
+
+    public boolean isValidTagInFrame()
+    {
+        return LimelightHelpers.getTV(cameraName);
+    }
+
+    public String getCameraName()
+    {
+        return cameraName;
+    }
 
     // *** OVERRIDEN METHODS ***
     // Put all methods that are Overridden here
@@ -138,7 +165,6 @@ public class Camera extends SensorLance
 
             poseEntry.set(poseArray);
         }
-        LimelightHelpers.SetRobotOrientation(cameraName, yawEntry.get(), 0.0, 0.0, 0.0, 0.0, 0.0);
     }
 
     @Override

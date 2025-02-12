@@ -47,7 +47,8 @@ public class LoganBTest implements Test
     private final Claw claw;
     private final Elevator elevator;
     private final PoseEstimator poseEstimator;
-    private final Camera camera;
+    private final Camera climbSideLimelight;
+    private final Camera scoringSideLimelight;
     private final Joystick joystick = new Joystick(0);
     // private final ExampleSubsystem exampleSubsystem;
 
@@ -72,7 +73,8 @@ public class LoganBTest implements Test
         claw = robotContainer.getClaw();
         elevator = robotContainer.getElevator();
         poseEstimator = robotContainer.getPoseEstimator();
-        camera = robotContainer.getScoringSideCamera();
+        climbSideLimelight = robotContainer.getClimbSideCamera();
+        scoringSideLimelight = robotContainer.getScoringSideCamera();
         System.out.println("  Constructor Finished: " + fullClassName);
     }
 
@@ -109,15 +111,20 @@ public class LoganBTest implements Test
         }
         else if(joystick.getRawButton(3))
         {
+            // TODO: SET THE CLIMB SIDE LL IN ROBOOTCONTAINER TO TRUE (OR SCORING SIDE IF
+            // WE ARE USING THE OTHER ONE. MAKE SURE YOU USE THE RIGHT CAMERA OBJECT!!!!
+            // TODO: DOUBLE CHECK THE LL IS NAMED CORRECTLY
+            // TODO: DOUBLE CHECK LL IS ON MOST RECENT 2024 FIRMWARE
+
             // Retrieve the current estimated pose and the nearest scoring pose
             Pose2d currentPose = poseEstimator.getEstimatedPose();
-            int tagId = (int) NetworkTableInstance.getDefault()
-                    .getTable("limelight")
-                    .getEntry("tid")
-                    .getDouble(0);
+            int tagId = (int) climbSideLimelight.getTagId();
+            boolean validTagInFrame = climbSideLimelight.isValidTagInFrame();
+            int tagCount = climbSideLimelight.getTagCount();
 
-            System.out.println("X: " + currentPose.getX());
-            System.out.println("Y: " + currentPose.getY());
+            // print out the primary tagId as well as the number of tags from the mt2 pose
+            System.out.printf("Primary Tag ID: %d | Valid Tag: %b | Tag Count: %d%n",
+                    tagId, validTagInFrame, tagCount);
 
             if(tagId != 0)
             {
@@ -140,7 +147,6 @@ public class LoganBTest implements Test
             }
             
         }
-        System.out.println(camera.getTagCount());
         // else if(joystick.getRawButton(2)) // B button
         // {
         //     // climb.climbDown();
