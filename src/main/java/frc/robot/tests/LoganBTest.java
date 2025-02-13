@@ -7,6 +7,7 @@ import edu.wpi.first.math.geometry.Transform2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.Joystick;
+import frc.robot.LimelightHelpers;
 import frc.robot.RobotContainer;
 import frc.robot.sensors.Camera;
 import frc.robot.subsystems.Claw;
@@ -91,7 +92,9 @@ public class LoganBTest implements Test
      * This method runs one time before the periodic() method.
      */
     public void init()
-    {}
+    {
+        
+    }
 
     /**
      * This method runs periodically (every 20ms).
@@ -147,6 +150,9 @@ public class LoganBTest implements Test
             }
             
         }
+        System.out.println(LimelightHelpers.getTV("limelight-climb"));
+        // System.out.println(climbSideLimelight.g);
+        // System.out.println(climbSideLimelight.getCameraName());
         // else if(joystick.getRawButton(2)) // B button
         // {
         //     // climb.climbDown();
