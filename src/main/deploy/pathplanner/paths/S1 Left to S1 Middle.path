@@ -4,12 +4,12 @@
     {
       "anchor": {
         "x": 5.889,
-        "y": 3.898
+        "y": 4.4
       },
       "prevControl": null,
       "nextControl": {
         "x": 6.357,
-        "y": 3.947
+        "y": 4.449
       },
       "isLocked": false,
       "linkedName": "S1 Left"
@@ -17,11 +17,11 @@
     {
       "anchor": {
         "x": 5.889,
-        "y": 3.85
+        "y": 4.1
       },
       "prevControl": {
         "x": 6.34725,
-        "y": 3.80125
+        "y": 4.05125
       },
       "nextControl": null,
       "isLocked": false,

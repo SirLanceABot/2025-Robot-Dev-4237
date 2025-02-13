@@ -3,13 +3,13 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 5.343,
-        "y": 5.146
+        "x": 5.1,
+        "y": 5.4
       },
       "prevControl": null,
       "nextControl": {
-        "x": 6.343,
-        "y": 5.146
+        "x": 6.1,
+        "y": 5.4
       },
       "isLocked": false,
       "linkedName": "S6 Middle"
@@ -42,7 +42,7 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 90.0
+    "rotation": -90.0
   },
   "reversed": false,
   "folder": "Reef Starts",

@@ -16,12 +16,12 @@
     },
     {
       "anchor": {
-        "x": 5.128371710526316,
-        "y": 2.738
+        "x": 5.528,
+        "y": 2.888
       },
       "prevControl": {
-        "x": 4.128371710526316,
-        "y": 2.738
+        "x": 4.9822500000000005,
+        "y": 2.4065
       },
       "nextControl": null,
       "isLocked": false,
@@ -48,7 +48,7 @@
   "folder": "Right Station Starts",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 50.767944790584394
+    "rotation": -129.232
   },
   "useDefaultConstraints": true
 }

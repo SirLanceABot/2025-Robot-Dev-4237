@@ -8,8 +8,8 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 6.427302631580045,
-        "y": 7.652384868417159
+        "x": 4.953,
+        "y": 7.651999999999999
       },
       "isLocked": false,
       "linkedName": "Left Wall"
@@ -17,11 +17,11 @@
     {
       "anchor": {
         "x": 3.052,
-        "y": 4.444
+        "y": 4.0
       },
       "prevControl": {
-        "x": 2.1355237682442048,
-        "y": 4.7563789632711915
+        "x": 2.33025,
+        "y": 4.727
       },
       "nextControl": null,
       "isLocked": false,
@@ -56,7 +56,7 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -89.26547896582521
+    "rotation": -89.26499999999999
   },
   "reversed": false,
   "folder": "Left Wall Starts",

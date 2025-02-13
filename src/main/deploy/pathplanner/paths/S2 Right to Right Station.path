@@ -3,13 +3,13 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 4.791611842105263,
-        "y": 2.4470394736842103
+        "x": 5.2,
+        "y": 2.747
       },
       "prevControl": null,
       "nextControl": {
-        "x": 5.136073885733462,
-        "y": 2.53048543300119
+        "x": 4.279138157894738,
+        "y": 2.140960526315789
       },
       "isLocked": false,
       "linkedName": "S2 Right"
@@ -20,8 +20,8 @@
         "y": 0.759
       },
       "prevControl": {
-        "x": 1.3671982548686172,
-        "y": 0.5905414483776845
+        "x": 3.0614999999999997,
+        "y": 1.5875000000000001
       },
       "nextControl": null,
       "isLocked": false,
@@ -42,7 +42,7 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 50.767944790584394
+    "rotation": -129.232
   },
   "reversed": false,
   "folder": "Reef Starts",

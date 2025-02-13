@@ -4,12 +4,12 @@
     {
       "anchor": {
         "x": 3.052,
-        "y": 4.15
+        "y": 3.65
       },
       "prevControl": null,
       "nextControl": {
         "x": 3.299986894740242,
-        "y": 4.181662280983724
+        "y": 3.681662280983723
       },
       "isLocked": false,
       "linkedName": "S4 Right"
@@ -42,7 +42,7 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 50.767944790584394
+    "rotation": -129.232
   },
   "reversed": false,
   "folder": "Reef Starts",
