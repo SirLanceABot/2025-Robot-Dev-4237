@@ -411,7 +411,7 @@ public class PoseEstimator extends SubsystemLance
     @Override
     public void periodic()
     {
-        if (drivetrain != null && gyro != null) 
+        if (drivetrain != null && gyro != null && poseEstimator != null) 
         {
             gyroRotation = gyro.getRotation2d();
             swerveModulePositions = drivetrain.getState().ModulePositions;
@@ -466,7 +466,7 @@ public class PoseEstimator extends SubsystemLance
 
                     // if any of the conditions above are true, do NOT add the mt2 pose as a vision
                     // measurement
-                    if (!rejectUpdate)
+                    if (!rejectUpdate && poseEstimator != null)
                     {
                         poseEstimator.addVisionMeasurement(
                                 visionPose,

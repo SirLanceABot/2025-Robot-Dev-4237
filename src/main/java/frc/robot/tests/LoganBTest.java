@@ -120,7 +120,8 @@ public class LoganBTest implements Test
             // TODO: DOUBLE CHECK LL IS ON MOST RECENT 2024 FIRMWARE
 
             // Retrieve the current estimated pose and the nearest scoring pose
-            Pose2d currentPose = poseEstimator.getEstimatedPose();
+            // Pose2d currentPose = poseEstimator.getEstimatedPose();
+            Pose2d currentPose = climbSideLimelight.getPose();
             int tagId = (int) climbSideLimelight.getTagId();
             boolean validTagInFrame = climbSideLimelight.isValidTagInFrame();
             int tagCount = climbSideLimelight.getTagCount();
