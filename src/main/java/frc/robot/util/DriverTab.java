@@ -110,9 +110,10 @@ public class DriverTab
     //         @Override
     //         public void initSendable(SendableBuilder builder) {
     //             builder.setSmartDashboardType("SwerveDriver");
-
-    //             builder.addDoubleProperty("Front Left Angle", () -> drivetrain.frontLeftModule.getAngle().getRadians(), null);
-    //             builder.addDoubleProperty("Front Left Velocity", () -> frontLeftModule.getVelocity(), null);
+                
+    //             drivetrain.getState().SwerveDriveState.
+    //             builder.addDoubleProperty("Front Left Angle", () -> drivetrain.getState().getAngle().getRadians(), null);
+    //             builder.addDoubleProperty("Front Left Velocity", () -> drivetrain.getState(ChassisSpeeds.Speeds), null);
                 
     //             builder.addDoubleProperty("Front Right Angle", () -> frontRightModule.getAngle().getRadians(), null);
     //             builder.addDoubleProperty("Front Right Velocity", () -> frontRightModule.getVelocity(), null);
@@ -123,7 +124,7 @@ public class DriverTab
     //             builder.addDoubleProperty("Back Right Angle", () -> backRightModule.getAngle().getRadians(), null);
     //             builder.addDoubleProperty("Back Right Velocity", () -> backRightModule.getVelocity(), null);
             
-    //             builder.addDoubleProperty("Robot Angle", () -> getRotation().getRadians(), null);
+    //             builder.addDoubleProperty("Robot Angle", () -> drivetrain.getState().Rotation2d.getRadians(), null);
     //         }
     //     });
     // }
