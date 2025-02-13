@@ -111,18 +111,19 @@ public class RobotContainer
                 ? new Climb()
                 : null;
 
-        gyro = (useFullRobot || useGyro)
-                ? new GyroLance()
-                : null;
-
         drivetrain = (useFullRobot || useDrivetrain)
                 ? new CommandSwerveDrivetrain(
-                        gyro,
                         TunerConstants.DrivetrainConstants,
                         TunerConstants.FrontLeft,
                         TunerConstants.FrontRight,
                         TunerConstants.BackLeft,
                         TunerConstants.BackRight)
+                : null;
+
+        gyro = (useFullRobot || useGyro) 
+                ? (drivetrain != null) 
+                        ? new GyroLance(drivetrain.getPigeon2()) 
+                        : new GyroLance() 
                 : null;
 
         elevator = (useFullRobot || useElevator)

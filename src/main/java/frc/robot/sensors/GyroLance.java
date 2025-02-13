@@ -54,17 +54,35 @@ public class GyroLance extends SensorLance
 
 
     //TODO find out gyro port
-    private final Pigeon2 gyro = new Pigeon2(0, "CANivore");
+    private final Pigeon2 gyro;// = new Pigeon2(0, "CANivore");
     private ResetState resetState = ResetState.kDone;
     private Timer timer = new Timer();
 
     private NetworkTable ASTable;// = NetworkTableInstance.getDefault().getTable("ASTable");
+
+    public GyroLance(Pigeon2 gyro)
+    {
+        super("Gyro4237");
+        System.out.println("  Constructor Started:  " + fullClassName);
+        this.gyro = gyro;
+
+        ASTable = NetworkTableInstance.getDefault().getTable(Constants.ADVANTAGE_SCOPE_TABLE_NAME);
+        yawEntry = ASTable.getDoubleTopic("GyroYaw").getEntry(0.0);
+        xAxisEntry = ASTable.getDoubleTopic("accelXAxis").getEntry(0.0);
+        yAxisEntry = ASTable.getDoubleTopic("accelYAxis").getEntry(0.0);
+
+        configGyro();
+        rotation2d = gyro.getRotation2d();
+
+        System.out.println("  Constructor Finished: " + fullClassName);
+    }
 
 
     public GyroLance()
     {
         super("Gyro4237");
         System.out.println("  Constructor Started:  " + fullClassName);
+        gyro = new Pigeon2(0, "CANivore");
 
         ASTable = NetworkTableInstance.getDefault().getTable(Constants.ADVANTAGE_SCOPE_TABLE_NAME);
         yawEntry = ASTable.getDoubleTopic("GyroYaw").getEntry(0.0);
