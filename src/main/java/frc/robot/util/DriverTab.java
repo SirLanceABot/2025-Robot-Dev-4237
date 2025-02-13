@@ -76,7 +76,7 @@ public class DriverTab
         // .withPosition(7,1) // sets position of widget
         // .withSize(19,12);  // sets size of widget
         
-    //    createSwerveWidget();
+       createSwerveWidget();
         
         
         
@@ -103,31 +103,34 @@ public class DriverTab
         System.out.println("  Constructor Finished: " + fullClassName);
     }
  
-    // private void createSwerveWidget()
-    // {
-    //     SmartDashboard.putData("Swerve Drive", new Sendable()
-    //     {
-    //         @Override
-    //         public void initSendable(SendableBuilder builder) {
-    //             builder.setSmartDashboardType("SwerveDriver");
+    double speed = drivetrain.getState().ModuleStates[0].speedMetersPerSecond;
+    double angle = drivetrain.getState().ModuleStates[0].angle.getRadians();
+
+    private void createSwerveWidget()
+    {
+        SmartDashboard.putData("Swerve Drive", new Sendable()
+        {
+            @Override
+            public void initSendable(SendableBuilder builder) {
+                builder.setSmartDashboardType("SwerveDriver");
+                // check values for array ModuleStates to correspond to the correct position on the robot 
+                // shouldn't be 0 for actual code
+                builder.addDoubleProperty("Front Left Angle", () -> drivetrain.getState().ModuleStates[0].angle.getRadians(), null);
+                builder.addDoubleProperty("Front Left Velocity", () -> drivetrain.getState().ModuleStates[0].speedMetersPerSecond, null);
                 
-    //             drivetrain.getState().SwerveDriveState.
-    //             builder.addDoubleProperty("Front Left Angle", () -> drivetrain.getState().getAngle().getRadians(), null);
-    //             builder.addDoubleProperty("Front Left Velocity", () -> drivetrain.getState(ChassisSpeeds.Speeds), null);
-                
-    //             builder.addDoubleProperty("Front Right Angle", () -> frontRightModule.getAngle().getRadians(), null);
-    //             builder.addDoubleProperty("Front Right Velocity", () -> frontRightModule.getVelocity(), null);
+                builder.addDoubleProperty("Front Right Angle", () -> drivetrain.getState().ModuleStates[0].angle.getRadians(), null);
+                builder.addDoubleProperty("Front Right Velocity", () -> drivetrain.getState().ModuleStates[0].speedMetersPerSecond, null);
             
-    //             builder.addDoubleProperty("Back Left Angle", () -> backLeftModule.getAngle().getRadians(), null);
-    //             builder.addDoubleProperty("Back Left Velocity", () -> backLeftModule.getVelocity(), null);
+                builder.addDoubleProperty("Back Left Angle", () -> drivetrain.getState().ModuleStates[0].angle.getRadians(), null);
+                builder.addDoubleProperty("Back Left Velocity", () -> drivetrain.getState().ModuleStates[0].speedMetersPerSecond, null);
             
-    //             builder.addDoubleProperty("Back Right Angle", () -> backRightModule.getAngle().getRadians(), null);
-    //             builder.addDoubleProperty("Back Right Velocity", () -> backRightModule.getVelocity(), null);
+                builder.addDoubleProperty("Back Right Angle", () -> drivetrain.getState().ModuleStates[0].angle.getRadians(), null);
+                builder.addDoubleProperty("Back Right Velocity", () -> drivetrain.getState().ModuleStates[0].speedMetersPerSecond, null);
             
-    //             builder.addDoubleProperty("Robot Angle", () -> drivetrain.getState().Rotation2d.getRadians(), null);
-    //         }
-    //     });
-    // }
+                builder.addDoubleProperty("Robot Angle", () -> drivetrain.getState().RawHeading.getRadians(), null);
+            }
+        });
+    }
     
 
     // private GenericEntry createPivotAngleBox()
