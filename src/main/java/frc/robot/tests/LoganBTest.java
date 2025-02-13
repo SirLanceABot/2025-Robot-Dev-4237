@@ -129,7 +129,7 @@ public class LoganBTest implements Test
             System.out.printf("Primary Tag ID: %d | Valid Tag: %b | Tag Count: %d%n",
                     tagId, validTagInFrame, tagCount);
 
-            if(tagId != 0)
+            if(tagCount != 0 && tagId != -1)
             {
                 boolean isRightBranch = poseEstimator.getIsRightBranch();
                 Pose2d scoringPose = poseEstimator.closestBranchLocation(tagId, isRightBranch);
@@ -150,7 +150,7 @@ public class LoganBTest implements Test
             }
             
         }
-        System.out.println(LimelightHelpers.getTV("limelight-climb"));
+        // System.out.println(climbSideLimelight.getTagId());
         // System.out.println(climbSideLimelight.g);
         // System.out.println(climbSideLimelight.getCameraName());
         // else if(joystick.getRawButton(2)) // B button

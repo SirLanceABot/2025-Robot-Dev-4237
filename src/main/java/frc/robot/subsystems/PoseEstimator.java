@@ -109,20 +109,20 @@ public class PoseEstimator extends SubsystemLance
      
     //  left.put(6, new Pose2d( new Translation2d(13.6102433, 3.1393908), new Rotation2d(Math.toRadians(30))));
  
-    private final List<Pose2d> aprilTagLocations = new ArrayList<Pose2d>(){{
-        new Pose2d(new Translation2d(13.474446, 3.306318), new Rotation2d(Math.toRadians(300.0))); // Red S5
-        new Pose2d(new Translation2d(13.890498, 4.0259), new Rotation2d(Math.toRadians(0.0))); // Red S4
-        new Pose2d(new Translation2d(13.474446, 4.745482), new Rotation2d(Math.toRadians(60.0))); // Red S3
-        new Pose2d(new Translation2d(12.643358, 4.745482), new Rotation2d(Math.toRadians(120.0))); // Red S2
-        new Pose2d(new Translation2d(12.227306, 4.0259), new Rotation2d(Math.toRadians(180.0))); // Red S1
-        new Pose2d(new Translation2d(12.643358, 3.306318), new Rotation2d(Math.toRadians(240.0))); // Red S6
+    private final List<Pose2d> aprilTagLocations = new ArrayList<Pose2d>(12){{
+        add(new Pose2d(new Translation2d(13.474446, 3.306318), new Rotation2d(Math.toRadians(300.0)))); // Red S5
+        add(new Pose2d(new Translation2d(13.890498, 4.0259), new Rotation2d(Math.toRadians(0.0)))); // Red S4
+        add(new Pose2d(new Translation2d(13.474446, 4.745482), new Rotation2d(Math.toRadians(60.0)))); // Red S3
+        add(new Pose2d(new Translation2d(12.643358, 4.745482), new Rotation2d(Math.toRadians(120.0)))); // Red S2
+        add(new Pose2d(new Translation2d(12.227306, 4.0259), new Rotation2d(Math.toRadians(180.0)))); // Red S1
+        add(new Pose2d(new Translation2d(12.643358, 3.306318), new Rotation2d(Math.toRadians(240.0)))); // Red S6
 
-        new Pose2d(new Translation2d(4.073906, 3.306318), new Rotation2d(Math.toRadians(240.0))); // Blue S3
-        new Pose2d(new Translation2d(3.6576, 4.0259), new Rotation2d(Math.toRadians(180.0))); // Blue S4
-        new Pose2d(new Translation2d(4.073906, 4.745482), new Rotation2d(Math.toRadians(120.0))); // Blue S5
-        new Pose2d(new Translation2d(4.90474, 4.745482), new Rotation2d(Math.toRadians(60.0))); // Blue S6
-        new Pose2d(new Translation2d(5.321046, 4.0259), new Rotation2d(Math.toRadians(0.0))); // Blue S1
-        new Pose2d(new Translation2d(4.90474, 3.306318), new Rotation2d(Math.toRadians(300.0))); // Blue S2
+        add(new Pose2d(new Translation2d(4.073906, 3.306318), new Rotation2d(Math.toRadians(240.0)))); // Blue S3
+        add(new Pose2d(new Translation2d(3.6576, 4.0259), new Rotation2d(Math.toRadians(180.0)))); // Blue S4
+        add(new Pose2d(new Translation2d(4.073906, 4.745482), new Rotation2d(Math.toRadians(120.0)))); // Blue S5
+        add(new Pose2d(new Translation2d(4.90474, 4.745482), new Rotation2d(Math.toRadians(60.0)))); // Blue S6
+        add(new Pose2d(new Translation2d(5.321046, 4.0259), new Rotation2d(Math.toRadians(0.0)))); // Blue S1
+        add(new Pose2d(new Translation2d(4.90474, 3.306318), new Rotation2d(Math.toRadians(300.0)))); // Blue S2
 
         // DO NOT CHANGE ORDER -- will mess up getDistanceToReefTag()
     }};
@@ -268,14 +268,14 @@ public class PoseEstimator extends SubsystemLance
         {
             if(tagID >= 6 && tagID <= 11)
             {
-                double x = estimatedPose.getX() - aprilTagLocations.get((int) tagID - 6).getX();
-                double y = estimatedPose.getY() - aprilTagLocations.get((int) tagID - 6).getY();
+                double x = estimatedPose.getX() - (aprilTagLocations.get((int) tagID - 6).getX());
+                double y = estimatedPose.getY() - (aprilTagLocations.get((int) tagID - 6).getY());
                 return Math.sqrt(Math.pow(x, 2) + Math.pow(y, 2));
             }
             else
             {
-                double x = estimatedPose.getX() - aprilTagLocations.get((int) tagID - 11).getX();
-                double y = estimatedPose.getY() - aprilTagLocations.get((int) tagID - 11).getY();
+                double x = estimatedPose.getX() - (aprilTagLocations.get((int) tagID - 11).getX());
+                double y = estimatedPose.getY() - (aprilTagLocations.get((int) tagID - 11).getY());
                 return Math.sqrt(Math.pow(x, 2) + Math.pow(y, 2));
             }
         }
