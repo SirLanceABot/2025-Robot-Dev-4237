@@ -9,6 +9,8 @@ import java.lang.invoke.MethodHandles;
 import com.pathplanner.lib.auto.NamedCommands;
 import com.pathplanner.lib.path.GoalEndState;
 import com.pathplanner.lib.path.PathPlannerPath;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj2.command.CommandScheduler;
 
 import frc.robot.RobotContainer;
 import frc.robot.subsystems.Elevator.ElevatorPosition;
@@ -96,5 +98,7 @@ public final class CommandsManager
         // Score Algae Commands
         NamedCommands.registerCommand("Score Algae in Processor", ScoringCommands.scoreProcessorWithIntakeCommand());
         NamedCommands.registerCommand("Score Algae in Barge", ScoringCommands.scoreAlgaeInBargeCommand());
+
+        SmartDashboard.putData("Command Scheduler", CommandScheduler.getInstance());
     }
 }

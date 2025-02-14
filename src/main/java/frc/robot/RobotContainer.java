@@ -25,6 +25,7 @@ import frc.robot.generated.TunerConstants;
 import frc.robot.sensors.Camera;
 import frc.robot.sensors.GyroLance;
 import frc.robot.sensors.Proximity;
+import frc.robot.util.PersistentSendableChooser;
 // import frc.robot.controls.DriverButtonBindings;
 // import frc.robot.controls.OperatorButtonBindings;
 
