@@ -4,10 +4,7 @@ import java.lang.invoke.MethodHandles;
 
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Transform2d;
-import edu.wpi.first.math.geometry.Translation2d;
-import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.Joystick;
-import frc.robot.LimelightHelpers;
 import frc.robot.RobotContainer;
 import frc.robot.sensors.Camera;
 import frc.robot.subsystems.Claw;
@@ -16,10 +13,10 @@ import frc.robot.subsystems.Climb;
 import frc.robot.subsystems.Elevator;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.IntakeWrist;
-import frc.robot.subsystems.IntakeWrist.Position;
 import frc.robot.subsystems.Pivot;
 import frc.robot.subsystems.PoseEstimator;
 
+@SuppressWarnings("unused")
 public class LoganBTest implements Test
 {
     // This string gets the full name of the class, including the package name
@@ -41,6 +38,7 @@ public class LoganBTest implements Test
     // *** CLASS & INSTANCE VARIABLES ***
     // Put all class and instance variables here.
     private final RobotContainer robotContainer;
+
     private final Climb climb;
     private final Pivot pivot;
     private final Intake intake;

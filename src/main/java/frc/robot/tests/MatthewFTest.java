@@ -6,6 +6,7 @@ import edu.wpi.first.wpilibj.Joystick;
 import frc.robot.RobotContainer;
 import frc.robot.subsystems.Intake;
 
+@SuppressWarnings("unused")
 public class MatthewFTest implements Test
 {
     // This string gets the full name of the class, including the package name
@@ -27,6 +28,7 @@ public class MatthewFTest implements Test
     // *** CLASS & INSTANCE VARIABLES ***
     // Put all class and instance variables here.
     private final RobotContainer robotContainer;
+
     // private final ExampleSubsystem exampleSubsystem;
     private final Joystick joystick = new Joystick(0);
     private final Intake intake;

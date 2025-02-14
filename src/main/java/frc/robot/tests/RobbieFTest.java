@@ -16,6 +16,7 @@ import frc.robot.Constants;
 // import frc.robot.Constants.TargetPosition;
 // import frc.robot.subsystems.IntakeWrist.TargetPosition;
 
+@SuppressWarnings("unused")
 public class RobbieFTest implements Test
 {
     // This string gets the full name of the class, including the package name

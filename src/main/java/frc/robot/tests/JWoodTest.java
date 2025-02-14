@@ -6,6 +6,7 @@ import frc.robot.Constants;
 import frc.robot.RobotContainer;
 import frc.robot.motors.SparkMaxLance;
 
+@SuppressWarnings("unused")
 public class JWoodTest implements Test
 {
     // This string gets the full name of the class, including the package name
@@ -27,6 +28,7 @@ public class JWoodTest implements Test
     // *** CLASS & INSTANCE VARIABLES ***
     // Put all class and instance variables here.
     private final RobotContainer robotContainer;
+
     // private final ExampleSubsystem exampleSubsystem;
     private final SparkMaxLance motor = new SparkMaxLance(5, Constants.ROBORIO, "Test Motor");
 

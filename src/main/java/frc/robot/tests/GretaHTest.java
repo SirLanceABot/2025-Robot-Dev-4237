@@ -2,13 +2,12 @@ package frc.robot.tests;
 
 import java.lang.invoke.MethodHandles;
 
-import javax.lang.model.util.ElementScanner14;
-
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.util.Color;
 import frc.robot.RobotContainer;
 import frc.robot.subsystems.LEDs;
 
+@SuppressWarnings("unused")
 public class GretaHTest implements Test
 {
     // This string gets the full name of the class, including the package name
@@ -29,7 +28,8 @@ public class GretaHTest implements Test
 
     // *** CLASS & INSTANCE VARIABLES ***
     // Put all class and instance variables here.
-    // private final RobotContainer robotContainer;
+    private final RobotContainer robotContainer;
+
     private final Joystick joystick = new Joystick(0);
     private final LEDs leds;
     // private final ExampleSubsystem exampleSubsystem;
@@ -46,7 +46,7 @@ public class GretaHTest implements Test
     {
         System.out.println("  Constructor Started:  " + fullClassName);
 
-        // this.robotContainer = robotContainer;
+        this.robotContainer = robotContainer;
         // this.exampleSubsystem = robotContainer.exampleSubsystem;
 
         leds = robotContainer.getLEDs();

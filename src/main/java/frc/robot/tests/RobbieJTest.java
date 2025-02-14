@@ -4,6 +4,7 @@ import java.lang.invoke.MethodHandles;
 
 import frc.robot.RobotContainer;
 
+@SuppressWarnings("unused")
 public class RobbieJTest implements Test
 {
     // This string gets the full name of the class, including the package name

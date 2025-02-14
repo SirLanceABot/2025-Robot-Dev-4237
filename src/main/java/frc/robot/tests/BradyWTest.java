@@ -2,14 +2,12 @@ package frc.robot.tests;
 
 import java.lang.invoke.MethodHandles;
 
-import javax.lang.model.util.ElementScanner14;
-
 import edu.wpi.first.wpilibj.Joystick;
 import frc.robot.RobotContainer;
 import frc.robot.subsystems.Elevator;
-import frc.robot.Constants;
 import frc.robot.subsystems.Pivot;
 
+@SuppressWarnings("unused")
 public class BradyWTest implements Test
 {
     // This string gets the full name of the class, including the package name
@@ -31,6 +29,7 @@ public class BradyWTest implements Test
     // *** CLASS & INSTANCE VARIABLES ***
     // Put all class and instance variables here.
     private final RobotContainer robotContainer;
+
     private final Elevator elevator;
     private final Joystick joystick = new Joystick(0);
     private final Pivot pivot;

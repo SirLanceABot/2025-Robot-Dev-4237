@@ -7,32 +7,20 @@ import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
-
+import frc.robot.generated.TunerConstants;
+import frc.robot.sensors.Camera;
+import frc.robot.sensors.GyroLance;
+import frc.robot.sensors.Proximity;
 import frc.robot.subsystems.Claw;
 import frc.robot.subsystems.Climb;
 import frc.robot.subsystems.CommandSwerveDrivetrain;
 import frc.robot.subsystems.Elevator;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.IntakeWrist;
+import frc.robot.subsystems.LEDs;
 import frc.robot.subsystems.Pivot;
 import frc.robot.subsystems.PoseEstimator;
 import frc.robot.subsystems.Shuttle;
-import frc.robot.subsystems.LEDs;
-import frc.robot.controls.DriverBindings;
-import frc.robot.controls.DriverController;
-import frc.robot.controls.OperatorController;
-import frc.robot.generated.TunerConstants;
-import frc.robot.sensors.Camera;
-import frc.robot.sensors.GyroLance;
-import frc.robot.sensors.Proximity;
-import frc.robot.util.PersistentSendableChooser;
-// import frc.robot.controls.DriverButtonBindings;
-// import frc.robot.controls.OperatorButtonBindings;
-
-
-
-
-
 
 public class RobotContainer 
 {
