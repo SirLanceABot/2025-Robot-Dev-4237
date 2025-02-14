@@ -270,7 +270,7 @@ public final class ScoringCommands
         if(drivetrain != null && gyro != null)
         {
             Pose2d currentPose = poseEstimator.getEstimatedPose();
-            // Pose2d targetPose = new Pose2d(poseEstimator.chooseClosestBranch(poseEstimator.getAprilTagPose(0), isRight));
+            Pose2d targetPose = poseEstimator.closestBranchLocation(poseEstimator.getPrimaryTagID(), isRight);
 
             return
             leds.setColorBlinkCommand(Color.kBlue)

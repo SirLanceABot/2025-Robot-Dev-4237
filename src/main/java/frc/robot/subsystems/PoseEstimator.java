@@ -71,6 +71,7 @@ public class PoseEstimator extends SubsystemLance
     private DoubleArrayEntry poseEstimatorEntry;
 
     private boolean isRightBranch;
+    private int primaryReefTag = 0;
 
     // private final double[][] blueLeftBranchLocationArray = 
     // {{5.447446, 4.1859}, //S1 side
@@ -264,6 +265,11 @@ public class PoseEstimator extends SubsystemLance
         }
     }
 
+    public int getPrimaryTagID()
+    {
+        return primaryReefTag;
+    }
+
     public double getDistanceToReefTag(double tagID)
     {
         if(isReefTag(tagID))
@@ -434,6 +440,7 @@ public class PoseEstimator extends SubsystemLance
                 if(camera.getTagCount() > 0)
                 {
                     Pose2d visionPose = camera.getPose();
+                    int tagID = (int) camera.getTagId();
                     // variables for pose estimator logic
                     boolean rejectUpdate = false;
                     boolean reefTag = isReefTag(camera.getTagId());
@@ -470,6 +477,7 @@ public class PoseEstimator extends SubsystemLance
                     // measurement
                     if (!rejectUpdate && poseEstimator != null)
                     {
+                        primaryReefTag = tagID;
                         poseEstimator.addVisionMeasurement(
                                 visionPose,
                                 camera.getTimestamp(),
