@@ -199,34 +199,36 @@ public class PoseEstimator extends SubsystemLance
     private void fillMaps()
     {
         //Red Left
-        leftBranchMap.put(6, new Pose2d( new Translation2d(13.6102433, 3.1393908), new Rotation2d(Math.toRadians(30)))); //S5
-        leftBranchMap.put(7, new Pose2d( new Translation2d(14.016898, 3.8659), new Rotation2d(Math.toRadians(90)))); //S4
-        leftBranchMap.put(8, new Pose2d( new Translation2d(13.660146, 4.8824092), new Rotation2d(Math.toRadians(150)))); //S3
-        leftBranchMap.put(9, new Pose2d( new Translation2d(12.457658, 4.8827472), new Rotation2d(Math.toRadians(210)))); //S2
-        leftBranchMap.put(10, new Pose2d( new Translation2d(12.100906, 3.8659), new Rotation2d(Math.toRadians(270)))); //S1
-        leftBranchMap.put(11, new Pose2d( new Translation2d(12.5075747, 3.1393908), new Rotation2d(Math.toRadians(-30)))); //S6
+        leftBranchMap.put(6, new Pose2d( new Translation2d(13.474446 + 0.153035, 3.306318 - 0.53581757), new Rotation2d(Math.toRadians(30)))); //S5
+        leftBranchMap.put(7, new Pose2d( new Translation2d(13.890498 + 0.578104, 4.0259 - 0.164338), new Rotation2d(Math.toRadians(90)))); //S4
+        leftBranchMap.put(8, new Pose2d( new Translation2d(13.474446 + 0.284861, 4.745482 + 0.30748824), new Rotation2d(Math.toRadians(150)))); //S3
+        leftBranchMap.put(9, new Pose2d( new Translation2d(12.643358 - 0.284861, 4.745482 + 0.30748824), new Rotation2d(Math.toRadians(210)))); //S2
+        leftBranchMap.put(10, new Pose2d( new Translation2d(12.227306 - 0.578104, 4.0259 - 0.164338), new Rotation2d(Math.toRadians(270)))); //S1
+        leftBranchMap.put(11, new Pose2d( new Translation2d(12.643358 - 0.153035, 3.306318 - 0.53581757), new Rotation2d(Math.toRadians(-30)))); //S6
         //Blue Left
-        leftBranchMap.put(17, new Pose2d( new Translation2d(3.888206, 3.1693908), new Rotation2d(Math.toRadians(-30)))); //S3
-        leftBranchMap.put(18, new Pose2d( new Translation2d(3.5312, 4.1859), new Rotation2d(Math.toRadians(270)))); //S4
-        leftBranchMap.put(19, new Pose2d( new Translation2d(3.9381227, 4.9124092), new Rotation2d(Math.toRadians(210)))); //S5
-        leftBranchMap.put(20, new Pose2d( new Translation2d(5.0405233, 4.9124092), new Rotation2d(Math.toRadians(150)))); //S6
-        leftBranchMap.put(21, new Pose2d( new Translation2d(5.447446, 4.1859), new Rotation2d(Math.toRadians(90)))); //S2
-        leftBranchMap.put(22, new Pose2d( new Translation2d(5.06044, 3.1693908), new Rotation2d(Math.toRadians(30)))); //S1
+        leftBranchMap.put(17, new Pose2d( new Translation2d(4.073906 - 0.284861, 3.306318 - 0.30748824), new Rotation2d(Math.toRadians(-30)))); //S3
+        leftBranchMap.put(18, new Pose2d( new Translation2d(3.6576 - 0.578104, 4.0259 + 0.164338), new Rotation2d(Math.toRadians(270)))); //S4
+        leftBranchMap.put(19, new Pose2d( new Translation2d(4.073906 - 0.153035, 4.745482 + 0.53581757), new Rotation2d(Math.toRadians(210)))); //S5
+        leftBranchMap.put(20, new Pose2d( new Translation2d(4.90474 + 0.153035, 4.745482 + 0.53581757), new Rotation2d(Math.toRadians(150)))); //S6
+        leftBranchMap.put(21, new Pose2d( new Translation2d(5.321046 + 0.578104, 4.0259 + 0.164338), new Rotation2d(Math.toRadians(90)))); //S1
+        leftBranchMap.put(22, new Pose2d( new Translation2d(4.90474 + 0.284861, 3.306318 - 0.30748824), new Rotation2d(Math.toRadians(30)))); //S2
+        
 
         //Red Right
-        rightBranchMap.put(6, new Pose2d( new Translation2d(13.660146, 3.1693908), new Rotation2d(Math.toRadians(30)))); //S5
-        rightBranchMap.put(7, new Pose2d( new Translation2d(14.016898, 4.1859), new Rotation2d(Math.toRadians(90)))); //S4
-        rightBranchMap.put(8, new Pose2d( new Translation2d(13.6102293, 4.9124092), new Rotation2d(Math.toRadians(150)))); //S3
-        rightBranchMap.put(9, new Pose2d( new Translation2d(12.5075747, 4.9124092), new Rotation2d(Math.toRadians(210)))); //S2
-        rightBranchMap.put(10, new Pose2d( new Translation2d(12.100906, 4.1859), new Rotation2d(Math.toRadians(270)))); //S1
-        rightBranchMap.put(11, new Pose2d( new Translation2d(12.457658, 3.1693908), new Rotation2d(Math.toRadians(-30)))); //S6
+        rightBranchMap.put(6, new Pose2d( new Translation2d(13.474446 + 0.284861, 3.306318 - 0.30748824), new Rotation2d(Math.toRadians(30)))); //S5
+        rightBranchMap.put(7, new Pose2d( new Translation2d(13.890498 + 0.578104, 4.0259 + 0.164338), new Rotation2d(Math.toRadians(90)))); //S4
+        rightBranchMap.put(8, new Pose2d( new Translation2d(13.474446 + 0.153035, 4.745482 + 0.53581757), new Rotation2d(Math.toRadians(150)))); //S3
+        rightBranchMap.put(9, new Pose2d( new Translation2d(12.643358 - 0.153035, 4.745482 + 0.53581757), new Rotation2d(Math.toRadians(210)))); //S2
+        rightBranchMap.put(10, new Pose2d( new Translation2d(12.227306 - 0.578104, 4.0259 + 0.164338), new Rotation2d(Math.toRadians(270)))); //S1
+        rightBranchMap.put(11, new Pose2d( new Translation2d(12.643358 - 0.284861, 3.306318 - 0.30748824), new Rotation2d(Math.toRadians(-30)))); //S6
         //Blue Right
-        rightBranchMap.put(17, new Pose2d( new Translation2d(3.9381227, 3.1393908), new Rotation2d(Math.toRadians(-30)))); //S3
-        rightBranchMap.put(18, new Pose2d( new Translation2d(3.5312, 3.8659), new Rotation2d(Math.toRadians(270)))); //S4
-        rightBranchMap.put(19, new Pose2d( new Translation2d(3.888206, 4.8824092), new Rotation2d(Math.toRadians(210)))); //S5
-        rightBranchMap.put(20, new Pose2d( new Translation2d(5.09044, 4.8824092), new Rotation2d(Math.toRadians(150)))); //S6
-        rightBranchMap.put(21, new Pose2d( new Translation2d(5.447446, 3.8659), new Rotation2d(Math.toRadians(90)))); //S2
-        rightBranchMap.put(22, new Pose2d( new Translation2d(5.0405233, 3.1393908), new Rotation2d(Math.toRadians(30)))); //S1
+        rightBranchMap.put(17, new Pose2d( new Translation2d(4.073906 - 0.153035, 3.306318 - 0.53581757), new Rotation2d(Math.toRadians(-30)))); //S3
+        rightBranchMap.put(18, new Pose2d( new Translation2d(3.6576 - 0.578104, 4.0259 - 0.164338), new Rotation2d(Math.toRadians(270)))); //S4
+        rightBranchMap.put(19, new Pose2d( new Translation2d(4.073906 - 0.284861, 4.745482 + 0.30748824), new Rotation2d(Math.toRadians(210)))); //S5
+        rightBranchMap.put(20, new Pose2d( new Translation2d(4.90474 + 0.284861, 4.745482 + 0.30748824), new Rotation2d(Math.toRadians(150)))); //S6
+        rightBranchMap.put(21, new Pose2d( new Translation2d(5.321046 + 0.578104, 4.0259 - 0.164338), new Rotation2d(Math.toRadians(90)))); //S1
+        rightBranchMap.put(22, new Pose2d( new Translation2d(4.90474 + 0.153035, 3.306318 - 0.53581757), new Rotation2d(Math.toRadians(30)))); //S2
+        
     }
 
     /**
