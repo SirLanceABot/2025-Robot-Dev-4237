@@ -137,7 +137,7 @@ public class LoganBTest implements Test
 
                 // Calculate the total distance between the current pose and the scoring pose
                 Transform2d poseDifference = scoringPose.minus(currentPose);
-                double distance = Math.hypot(poseDifference.getX(), poseDifference.getY());
+                double distance = climbSideLimelight.avgTagDistance();
 
                 // Print all relevant info on one line
                 System.out.printf("Pose: (X: %.2f, Y: %.2f) | Scoring Node: (X: %.2f, Y: %.2f, Rot: %s) | Distance: %.2f%n",
