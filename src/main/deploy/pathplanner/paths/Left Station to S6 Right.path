@@ -20,8 +20,8 @@
         "y": 5.35
       },
       "prevControl": {
-        "x": 3.7426644736842105,
-        "y": 6.017490131578946
+        "x": 5.04075,
+        "y": 6.7452499999999995
       },
       "nextControl": null,
       "isLocked": false,
@@ -48,7 +48,7 @@
   "folder": "Left Station Starts",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 125.298
+    "rotation": 35.298
   },
   "useDefaultConstraints": true
 }

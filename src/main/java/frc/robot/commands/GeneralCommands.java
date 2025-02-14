@@ -95,7 +95,7 @@ public final class GeneralCommands
     }
 
     /**
-     * Moves the scorer to the position passed to the command
+     * Moves the scorer to the position passed to the command  **USE moveScorerTo(insert position here) instead, uses logic to make sure we don't assassinate our claw on our source intake**
      * @param targetPosition position to move scorer to
      * @return the command to do the thing
      * @author Logan Bellinger
@@ -118,6 +118,164 @@ public final class GeneralCommands
         }
     }
 
+    public static Command moveScorerToL1Command()
+    {
+        if(elevator != null && pivot != null)
+        {
+            return
+            Commands.either(
+                Commands.waitUntil(() -> (elevator.isAtPosition(ElevatorPosition.kL1).getAsBoolean() && pivot.isAtPosition(PivotPosition.kL1).getAsBoolean()))
+                .deadlineFor(
+                    elevator.moveToSetPositionCommand(ElevatorPosition.kL1),
+                    pivot.moveToSetPositionCommand(PivotPosition.kL1)),
+
+                    Commands.waitUntil(elevator.isAtPosition(ElevatorPosition.kSafeSwingPosition))
+                    .deadlineFor(
+                        elevator.moveToSetPositionCommand(ElevatorPosition.kSafeSwingPosition))
+                    .andThen(
+                        Commands.waitUntil(pivot.isAtPosition(PivotPosition.kL1))
+                        .deadlineFor(
+                            pivot.moveToSetPositionCommand(PivotPosition.kL1)))
+                    .andThen(
+                        Commands.waitUntil(elevator.isAtPosition(ElevatorPosition.kL1))
+                        .deadlineFor(
+                            elevator.moveToSetPositionCommand(ElevatorPosition.kL1))),
+
+                () -> (elevator.isAtPosition(ElevatorPosition.kHoldingPosition).getAsBoolean() && pivot.isAtPosition(PivotPosition.kFlippedPosition).getAsBoolean()))
+                .withName("Move Scorer to L1 Command");  
+        }
+        else
+        {
+            return Commands.none();
+        }
+    }
+
+    public static Command moveScorerToL2Commmand()
+    {
+        if(elevator != null && pivot != null)
+        {
+            return
+            Commands.either(
+                Commands.waitUntil(() -> (elevator.isAtPosition(ElevatorPosition.kL2).getAsBoolean() && pivot.isAtPosition(PivotPosition.kL2).getAsBoolean()))
+                .deadlineFor(
+                    elevator.moveToSetPositionCommand(ElevatorPosition.kL2),
+                    pivot.moveToSetPositionCommand(PivotPosition.kL2)),
+
+                    Commands.waitUntil(elevator.isAtPosition(ElevatorPosition.kSafeSwingPosition))
+                    .deadlineFor(
+                        elevator.moveToSetPositionCommand(ElevatorPosition.kSafeSwingPosition))
+                    .andThen(
+                        Commands.waitUntil(pivot.isAtPosition(PivotPosition.kL2))
+                        .deadlineFor(
+                            pivot.moveToSetPositionCommand(PivotPosition.kL2)))
+                    .andThen(
+                        Commands.waitUntil(elevator.isAtPosition(ElevatorPosition.kL2))
+                        .deadlineFor(
+                            elevator.moveToSetPositionCommand(ElevatorPosition.kL2))),
+
+                () -> (elevator.isAtPosition(ElevatorPosition.kHoldingPosition).getAsBoolean() && pivot.isAtPosition(PivotPosition.kFlippedPosition).getAsBoolean()))
+                .withName("Move Scorer to L2 Command");  
+        }
+        else
+        {
+            return Commands.none();
+        }
+    }
+
+    public static Command moveScorerToL3Command()
+    {
+        if(elevator != null && pivot != null)
+        {
+            return
+            Commands.either(
+                Commands.waitUntil(() -> (elevator.isAtPosition(ElevatorPosition.kL3).getAsBoolean() && pivot.isAtPosition(PivotPosition.kL3).getAsBoolean()))
+                .deadlineFor(
+                    elevator.moveToSetPositionCommand(ElevatorPosition.kL3),
+                    pivot.moveToSetPositionCommand(PivotPosition.kL3)),
+
+                    Commands.waitUntil(elevator.isAtPosition(ElevatorPosition.kSafeSwingPosition))
+                    .deadlineFor(
+                        elevator.moveToSetPositionCommand(ElevatorPosition.kSafeSwingPosition))
+                    .andThen(
+                        Commands.waitUntil(pivot.isAtPosition(PivotPosition.kL3))
+                        .deadlineFor(
+                            pivot.moveToSetPositionCommand(PivotPosition.kL3)))
+                    .andThen(
+                        Commands.waitUntil(elevator.isAtPosition(ElevatorPosition.kL3))
+                        .deadlineFor(
+                            elevator.moveToSetPositionCommand(ElevatorPosition.kL3))),
+
+                () -> (elevator.isAtPosition(ElevatorPosition.kHoldingPosition).getAsBoolean() && pivot.isAtPosition(PivotPosition.kFlippedPosition).getAsBoolean()))
+                .withName("Move Scorer to L3 Command");  
+        }
+        else
+        {
+            return Commands.none();
+        }
+    }
+
+    public static Command moveScorerToL4Command()
+    {
+        if(elevator != null && pivot != null)
+        {
+            return
+            Commands.either(
+                Commands.waitUntil(() -> (elevator.isAtPosition(ElevatorPosition.kL4).getAsBoolean() && pivot.isAtPosition(PivotPosition.kL4).getAsBoolean()))
+                .deadlineFor(
+                    elevator.moveToSetPositionCommand(ElevatorPosition.kL4),
+                    pivot.moveToSetPositionCommand(PivotPosition.kL4)),
+
+                    Commands.waitUntil(() -> (elevator.isAtPosition(ElevatorPosition.kL4).getAsBoolean() && pivot.isAtPosition(PivotPosition.kL4).getAsBoolean()))
+                    .deadlineFor(
+                        elevator.moveToSetPositionCommand(ElevatorPosition.kL4),
+                        Commands.waitUntil(elevator.isAtPosition(ElevatorPosition.kSafeSwingPosition))
+                        .deadlineFor(
+                            pivot.moveToSetPositionCommand(PivotPosition.kL4))),
+
+                () -> (elevator.isAtPosition(ElevatorPosition.kHoldingPosition).getAsBoolean() && pivot.isAtPosition(PivotPosition.kFlippedPosition).getAsBoolean()))
+                .withName("Move Scorer to L4 Command");  
+        }
+        else
+        {
+            return Commands.none();
+        }
+    }
+
+    public static Command moveScorerToIntakingPositionCommand()
+    {
+        if(elevator != null && pivot != null)
+        {
+            return
+            Commands.either(
+                Commands.waitUntil(pivot.isAtPosition(PivotPosition.kGrabCoralPosition))
+                .deadlineFor(
+                    pivot.moveToSetPositionCommand(PivotPosition.kGrabCoralPosition))
+                .andThen(
+                    Commands.waitUntil(elevator.isAtPosition(ElevatorPosition.kGrabCoralPosition))
+                    .deadlineFor(
+                        elevator.moveToSetPositionCommand(ElevatorPosition.kGrabCoralPosition))),
+
+                    Commands.waitUntil(elevator.isAtPosition(ElevatorPosition.kSafeSwingPosition))
+                    .deadlineFor(
+                        elevator.moveToSetPositionCommand(ElevatorPosition.kSafeSwingPosition))
+                    .andThen(
+                        Commands.waitUntil(pivot.isAtPosition(PivotPosition.kL3))
+                        .deadlineFor(
+                            pivot.moveToSetPositionCommand(PivotPosition.kL3)))
+                    .andThen(
+                        Commands.waitUntil(elevator.isAtPosition(ElevatorPosition.kL3))
+                        .deadlineFor(
+                            elevator.moveToSetPositionCommand(ElevatorPosition.kL3))),
+
+                () -> (elevator.getLeftPosition() > 60.0))
+                .withName("Move Scorer to Intaking Position Command");  
+        }
+        else
+        {
+            return Commands.none();
+        }
+    }
+    
     /**
      * Command that only turns on kicker motor to score coral, done here so it can be registered for PathPlanner
      * @return BTYG

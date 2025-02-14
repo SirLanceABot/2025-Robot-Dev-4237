@@ -88,10 +88,7 @@ public final class CommandsManager
         NamedCommands.registerCommand("Intake Lowel Level Algae", IntakingCommands.intakeAlgaeFromReefCommand(TargetPosition.kLowerReefAlgae));
         
         // Score Coral Commands
-        NamedCommands.registerCommand("Score Coral on L1", ScoringCommands.scoreCoralCommand(TargetPosition.kL1));
-        NamedCommands.registerCommand("Score Coral on L2", ScoringCommands.scoreCoralCommand(TargetPosition.kL2));
-        NamedCommands.registerCommand("Score Coral on L3", ScoringCommands.scoreCoralCommand(TargetPosition.kL3));
-        NamedCommands.registerCommand("Score Coral on L4", ScoringCommands.scoreCoralCommand(TargetPosition.kL4));
+        NamedCommands.registerCommand(("Move Scorer to L4"), GeneralCommands.moveScorerToL4Command());
 
         NamedCommands.registerCommand("Finish Scoring Coral", ScoringCommands.finishScoringCoralCommand());
         NamedCommands.registerCommand("Score Coral Only", GeneralCommands.scoreCoralOnlyCommand());

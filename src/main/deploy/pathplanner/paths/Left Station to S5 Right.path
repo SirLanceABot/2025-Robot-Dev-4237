@@ -8,8 +8,8 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.212538393851097,
-        "y": 6.852124957703488
+        "x": 2.301,
+        "y": 6.55025
       },
       "isLocked": false,
       "linkedName": "Left Station"
@@ -20,8 +20,8 @@
         "y": 5.102
       },
       "prevControl": {
-        "x": 2.402180479614654,
-        "y": 6.101100805407781
+        "x": 2.4765,
+        "y": 6.27725
       },
       "nextControl": null,
       "isLocked": false,
@@ -62,7 +62,7 @@
   "folder": "Left Station Starts",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 125.298
+    "rotation": 35.298
   },
   "useDefaultConstraints": true
 }

@@ -8,8 +8,8 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 3.2773470860366025,
-        "y": 3.5417470978919634
+        "x": 2.7104999999999997,
+        "y": 4.161499999999999
       },
       "isLocked": false,
       "linkedName": "S4 Right"
@@ -20,8 +20,8 @@
         "y": 7.262
       },
       "prevControl": {
-        "x": 1.576986467128067,
-        "y": 7.561142056095823
+        "x": 1.90125,
+        "y": 6.86225
       },
       "nextControl": null,
       "isLocked": false,
@@ -42,7 +42,7 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 125.298
+    "rotation": 35.298
   },
   "reversed": false,
   "folder": "Reef Starts",
