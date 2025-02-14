@@ -74,7 +74,8 @@ public class Robot extends TimedRobot
         SmartDashboard.putNumber("Match Time", DriverStation.getMatchTime());
 
         // SmartDashboard.putNumber("Speed", drivetrain.getState().Speeds.getVelocity());
-        SmartDashboard.putNumber("Speed", robotContainer.getCommandSwerveDrivetrain().getState().Speeds.vxMetersPerSecond);
+        if(robotContainer.getCommandSwerveDrivetrain() != null)
+            SmartDashboard.putNumber("Speed", robotContainer.getCommandSwerveDrivetrain().getState().Speeds.vxMetersPerSecond);
 
         // Runs the Scheduler.  This is responsible for polling buttons, adding newly-scheduled
         // commands, running already-scheduled commands, removing finished or interrupted commands,

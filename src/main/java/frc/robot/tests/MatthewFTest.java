@@ -71,26 +71,21 @@ public class MatthewFTest implements Test
      */
     public void periodic()
     {
-        // if(joystick.getRawButton(1))
-        // {
-        //     intake.pickupCoralCommand().schedule();
-        // }
-        if(joystick.getRawButton(2))
+        
+        if (joystick.getRawButton(1))
         {
-            intake.ejectCoralCommand().schedule();
+            // intake.pickupCoralCommand().schedule();
+            intake.pickupAlgaeCommand().schedule();
         }
-        // if(joystick.getRawButton(2))
-        // {
-        //     intake.pickupAlgaeCommand().schedule();;
-        // }
-        // if(joystick.getRawButton(2))
-        // {
-        //     intake.ejectAlgaeCommand().schedule();;
-        // }
-        else
+        else if (joystick.getRawButton(2))
+        {
+            intake.ejectAlgaeCommand().schedule();
+            // intake.ejectCoralCommand().schedule();
+        }
+        else if (joystick.getRawButton(3))
         {
             intake.stopCommand().schedule();
-        }
+        } 
     }
     
     /**
