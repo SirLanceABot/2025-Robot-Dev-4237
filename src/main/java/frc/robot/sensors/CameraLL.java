@@ -52,7 +52,7 @@ import edu.wpi.first.wpilibj.Alert.AlertType;
       LL1.update();
 
       // some methods we might use
-      if (LL1.fresh())
+      if (LL1.isFresh())
       {
           LL1.publishPose3d();
 
@@ -97,7 +97,7 @@ import edu.wpi.first.wpilibj.Alert.AlertType;
 public class CameraLL extends CameraLance {
 
     private final String name;
-    private boolean fresh;
+    private boolean isFresh;
 
     // fields associated with Megatag2 blue pose
     private Pose2d pose;
@@ -311,9 +311,9 @@ public class CameraLL extends CameraLance {
      * 
      * @return freshness of the last acquisition
      */
-    public boolean fresh()
+    public boolean isFresh()
     {
-      return fresh;
+      return isFresh;
     }
 
     /**
@@ -441,10 +441,10 @@ public class CameraLL extends CameraLance {
         var stats = t2d.getAtomic();
 
         // check if new data
-        fresh = stats.timestamp == previousTimestamp && 17 == stats.value.length && 1.0 == stats.value[0];
+        isFresh = stats.timestamp == previousTimestamp && 17 == stats.value.length && 1.0 == stats.value[0];
         previousTimestamp = stats.timestamp;
 
-        if (fresh())
+        if (isFresh())
         {
             var poseTemp = botpose_orb_wpiblue.getAtomic(); // get the LL MegaTag2 pose data
 
