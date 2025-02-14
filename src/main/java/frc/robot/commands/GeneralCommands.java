@@ -119,6 +119,24 @@ public final class GeneralCommands
     }
 
     /**
+     * Command that only turns on kicker motor to score coral, done here so it can be registered for PathPlanner
+     * @return BTYG
+     * @author Logan Bellinger
+     */
+    public static Command scoreCoralOnlyCommand()
+    {
+        if(claw != null)
+        {
+            return 
+            claw.placeCoralCommand().withTimeout(0.5).withName("Score Coral Only Command");
+        }
+        else
+        {
+            return Commands.none();
+        }
+    }
+
+    /**
      * Command to climb up the cage
      * @return the command to climb up cage
      * @author Logan Bellinger

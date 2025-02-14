@@ -11,7 +11,7 @@ import com.pathplanner.lib.path.GoalEndState;
 import com.pathplanner.lib.path.PathPlannerPath;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
-
+import frc.robot.Robot;
 import frc.robot.RobotContainer;
 import frc.robot.subsystems.Elevator.ElevatorPosition;
 import frc.robot.subsystems.Pivot.PivotPosition;
@@ -94,6 +94,7 @@ public final class CommandsManager
         NamedCommands.registerCommand("Score Coral on L4", ScoringCommands.scoreCoralCommand(TargetPosition.kL4));
 
         NamedCommands.registerCommand("Finish Scoring Coral", ScoringCommands.finishScoringCoralCommand());
+        NamedCommands.registerCommand("Score Coral Only", GeneralCommands.scoreCoralOnlyCommand());
 
         // Score Algae Commands
         NamedCommands.registerCommand("Score Algae in Processor", ScoringCommands.scoreProcessorWithIntakeCommand());

@@ -483,6 +483,10 @@ public class PoseEstimator extends SubsystemLance
                                 camera.getTimestamp(),
                                 visionStdDevs);
                     }
+                    else
+                    {
+                        primaryReefTag = 0;
+                    }
                 }
             }
         }
