@@ -264,10 +264,10 @@ public final class ScoringCommands
         }
     }
 
-    public static Command scoreCoralAutonomouslyReallyCoolAndAwesomeCommand(boolean isRight)
+    public static Command scoreCoralAutonomouslyReallyCoolAndAwesomeCommand(boolean isRight, TargetPosition targetPosition)
     {
         // TODO: fix this.  idk why owen wrote this the choose closest branch like this.  feels wrong at best
-        if(drivetrain != null && gyro != null)
+        if(drivetrain != null && gyro != null && elevator != null && pivot != null && claw != null)
         {
             Pose2d currentPose = poseEstimator.getEstimatedPose();
             Pose2d targetPose = poseEstimator.closestBranchLocation(poseEstimator.getPrimaryTagID(), isRight);
@@ -275,14 +275,38 @@ public final class ScoringCommands
             return
             leds.setColorBlinkCommand(Color.kBlue)
             .andThen(
-                
-            );
+                GeneralCommands.driveToPositionCommand(targetPose, currentPose)
+                .alongWith(
+                    GeneralCommands.moveScorerToSetPositionCommand(targetPosition))
+            .andThen(
+                finishScoringCoralCommand()));
         }
         else
         {
             return Commands.none();
         }
     }
+
+    // public static Command scoreCoralAutonomouslyReallyCoolAndAwesomeCommand(boolean isRight)
+    // {
+    //     // TODO: fix this.  idk why owen wrote this the choose closest branch like this.  feels wrong at best
+    //     if(drivetrain != null && gyro != null && elevator != null && pivot != null && claw != null)
+    //     {
+    //         Pose2d currentPose = poseEstimator.getEstimatedPose();
+    //         Pose2d targetPose = poseEstimator.closestBranchLocation(camera.getTagID(), isRight)
+    //         // Pose2d targetPose = new Pose2d(poseEstimator.chooseClosestBranch(poseEstimator.getAprilTagPose(0), isRight));
+
+    //         return
+    //         leds.setColorBlinkCommand(Color.kBlue)
+    //         .andThen(
+    //             GeneralCommands.driveToPositionCommand()
+    //         );
+    //     }
+    //     else
+    //     {
+    //         return Commands.none();
+    //     }
+    // }
 
     // public static Command exampleCommand()
     // {
