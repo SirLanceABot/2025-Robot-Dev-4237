@@ -12,6 +12,8 @@ import frc.robot.commands.CommandsManager;
 import frc.robot.commands.GeneralCommands;
 import frc.robot.commands.ScoringCommands;
 import frc.robot.commands.CommandsManager.TargetPosition;
+import frc.robot.commands.IntakingCommands;
+import frc.robot.subsystems.Pivot.PivotPosition;
 
 import frc.robot.RobotContainer;
 
@@ -64,12 +66,14 @@ public final class OperatorBindings {
             // configRightBumper();
             // configBackButton();
             // configStartButton();
-            configLeftTrigger();
-            configRightTrigger();
+            // configLeftTrigger();
+            // configRightTrigger();
             // configLeftStick();
             // configRightStick();
             // configDpadUp();
             // configDpadDown();
+            // configDpadLeft();
+            // configDpadRight();
             // configRumble(30);
             // configDefaultCommands();
 
@@ -136,12 +140,17 @@ public final class OperatorBindings {
     private static void configLeftBumper()
     {
         Trigger leftBumper = controller.leftBumper();
+
+        leftBumper.onTrue(IntakingCommands.intakeAlgaeFromReefCommand(TargetPosition.kLowerReefAlgae));
+
     }
 
 
     private static void configRightBumper()
     {
         Trigger rightBumper = controller.rightBumper();
+
+        rightBumper.onTrue(IntakingCommands.intakeAlgaeFromReefCommand(TargetPosition.kUpperReefAlgae));
     }
 
 
@@ -154,8 +163,9 @@ public final class OperatorBindings {
     private static void configStartButton()
     {
         Trigger startButton = controller.start();
-    }
 
+        startButton.onTrue( (robotContainer.getPivot().isAtPosition(PivotPosition.kDownPosition)).getAsBoolean() ? ScoringCommands.flipScorerCommand() : GeneralCommands.moveScorerToIntakingPositionCommand());
+    }
 
     private static void configLeftTrigger()
     {
@@ -202,6 +212,20 @@ public final class OperatorBindings {
         Trigger dpadDown = controller.povDown();
 
         dpadDown.onTrue(GeneralCommands.climbDownCageCommand());
+    }
+
+    private static void configDpadLeft()
+    {
+        Trigger dpadLeft = controller.povLeft();
+
+        dpadLeft.onTrue(ScoringCommands.scoreProcessorWithClawCommand());
+    }
+
+    private static void configDpadRight()
+    {
+        Trigger dpadRight = controller.povRight();
+
+        dpadRight.onTrue(ScoringCommands.scoreAlgaeInBargeCommand());
     }
 
 
