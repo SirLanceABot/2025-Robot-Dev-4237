@@ -42,9 +42,16 @@ public final class DriverBindings {
     private static DoubleSupplier leftYAxis;
     private static DoubleSupplier leftXAxis;
     private static DoubleSupplier rightXAxis;
+    private static DoubleSupplier scaleFactorSupplier;
+    private static double scaleFactor = 0.5;
 
     private static BooleanSupplier isTeleop;
     private static DoubleSupplier matchTime;
+
+    private static final double CRAWL_SPEED = 0.4;
+    private static final double WALK_SPEED = 0.65;
+    private static final double RUN_SPEED = 1.0;
+
 
     // *** CLASS CONSTRUCTOR ***
     private DriverBindings()
@@ -88,6 +95,7 @@ public final class DriverBindings {
         leftYAxis = () -> -controller.getRawAxis(1);
         leftXAxis = () -> -controller.getRawAxis(0);
         rightXAxis = () -> -controller.getRawAxis(4);
+        scaleFactorSupplier = () -> scaleFactor;
 
         // isTeleop = () -> DriverStation.isTeleopEnabled();
         // matchTime = () -> DriverStation.getMatchTime();
@@ -128,10 +136,13 @@ public final class DriverBindings {
     }
 
 
-
+    //When Left Bumper is pressed Speed is WALK_SPEED
     private static void configLeftBumper()
     {
         Trigger leftBumper = controller.leftBumper();
+
+        leftBumper.onTrue(Commands.runOnce(() -> scaleFactor = (scaleFactor > (CRAWL_SPEED + WALK_SPEED) / 2.0) ? CRAWL_SPEED : RUN_SPEED));
+
     }
 
 
@@ -153,9 +164,13 @@ public final class DriverBindings {
     }
 
 
+    //Toggles between RUN_SPEED and WALK_SPEED
     private static void configLeftTrigger()
     {
         Trigger leftTrigger = controller.leftTrigger();
+
+        leftTrigger.onTrue(Commands.runOnce(() -> scaleFactor = (scaleFactor > (WALK_SPEED + RUN_SPEED) / 2.0) ? WALK_SPEED : RUN_SPEED));
+
     }
 
 
@@ -205,7 +220,7 @@ public final class DriverBindings {
     {
         if(drivetrain != null)
         {
-            drivetrain.setDefaultCommand(drivetrain.driveCommand(leftYAxis, leftXAxis, rightXAxis));
+            drivetrain.setDefaultCommand(drivetrain.driveCommand(leftYAxis, leftXAxis, rightXAxis, scaleFactorSupplier));
                
             //.applyRequest(() ->
             //         CommandSwerveDrivetrain.drive.withVelocityX(leftYAxis.getAsDouble() * (TunerConstants.MaxDriveSpeed / 4.0))// Drive forward with negative Y (forward)
