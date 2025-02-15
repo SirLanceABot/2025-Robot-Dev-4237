@@ -16,6 +16,7 @@ import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.RobotContainer;
+import frc.robot.commands.ScoringCommands;
 import frc.robot.controls.Xbox.RumbleEvent;
 import frc.robot.generated.TunerConstants;
 import frc.robot.subsystems.CommandSwerveDrivetrain;
@@ -61,20 +62,20 @@ public final class DriverBindings {
 
             configSuppliers();
 
-            // configAButton();
+            configAButton();
             configBButton();
             configXButton();
-            // configYButton();
-            // configLeftBumper();
-            // configRightBumper();
-            // configBackButton();
-            // configStartButton();
-            // configLeftTrigger();
-            // configRightTrigger();
-            // configLeftStick();
-            // configRightStick();
-            // configDpadUp();
-            // configDpadDown();
+            configYButton();
+            configLeftBumper();
+            configRightBumper();
+            configBackButton();
+            configStartButton();
+            configLeftTrigger();
+            configRightTrigger();
+            configLeftStick();
+            configRightStick();
+            configDpadUp();
+            configDpadDown();
             configRumble(3);
             configDefaultCommands();
 
@@ -96,6 +97,8 @@ public final class DriverBindings {
     private static void configAButton()
     {
         Trigger aButton = controller.a();
+        aButton
+            .onTrue(ScoringCommands.scoreProcessorWithIntakeCommand());
     }
 
 
@@ -165,6 +168,8 @@ public final class DriverBindings {
     private static void configLeftStick()
     {
         Trigger leftStick = controller.leftStick();
+        // leftStick
+            // .onTrue(robotContainer.getCommandSwerveDrivetrain())
     }
 
 
