@@ -3,12 +3,15 @@ package frc.robot.controls;
 import java.lang.invoke.MethodHandles;
 import java.util.function.BooleanSupplier;
 import java.util.function.DoubleSupplier;
-
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.GenericHID.RumbleType;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
+import frc.robot.commands.CommandsManager;
+import frc.robot.commands.ScoringCommands;
+import frc.robot.commands.CommandsManager.TargetPosition;
+
 import frc.robot.RobotContainer;
 
 public final class OperatorBindings {
@@ -89,24 +92,39 @@ public final class OperatorBindings {
     private static void configAButton()
     {
         Trigger aButton = controller.a();
+
+        //Create a path on the fly and score on L1 level
+        aButton.onTrue(Commands.runOnce(() -> ScoringCommands.scoreCoralAutonomouslyReallyCoolAndAwesomeCommand(robotContainer.getPoseEstimator().getIsRightBranch(), TargetPosition.kL1)));
     }
 
 
     private static void configBButton()
     {
         Trigger bButton = controller.b();
+
+        //Create a path on the fly and score on L3 level
+        bButton.onTrue(Commands.runOnce(() -> ScoringCommands.scoreCoralAutonomouslyReallyCoolAndAwesomeCommand(robotContainer.getPoseEstimator().getIsRightBranch(), TargetPosition.kL3)));
+
     }
 
 
     private static void configXButton()
     {
         Trigger xButton = controller.x();
+
+        //Create a path on the fly and score on L2 level
+        xButton.onTrue(Commands.runOnce(() -> ScoringCommands.scoreCoralAutonomouslyReallyCoolAndAwesomeCommand(robotContainer.getPoseEstimator().getIsRightBranch(), TargetPosition.kL2)));
+
     }
 
 
     private static void configYButton()
     {
         Trigger yButton = controller.y();
+
+        //Create a path on the fly and score on L4 level
+        yButton.onTrue(Commands.runOnce(() -> ScoringCommands.scoreCoralAutonomouslyReallyCoolAndAwesomeCommand(robotContainer.getPoseEstimator().getIsRightBranch(), TargetPosition.kL4)));
+
     }
 
 

@@ -292,13 +292,13 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
      * @return Command to Drive
      * @author Matthew Fontecchio
      */
-    public Command driveCommand(DoubleSupplier leftYAxis, DoubleSupplier leftXAxis, DoubleSupplier rightXAxis)
+    public Command driveCommand(DoubleSupplier leftYAxis, DoubleSupplier leftXAxis, DoubleSupplier rightXAxis, DoubleSupplier setScaleFactor)
     {
         return applyRequest(
             () -> drive
-                .withVelocityX(leftYAxis.getAsDouble() * (TunerConstants.MaxDriveSpeed / 4.0))
-                .withVelocityY(leftXAxis.getAsDouble() * (TunerConstants.MaxDriveSpeed / 4.0))
-                .withRotationalRate(rightXAxis.getAsDouble() * TunerConstants.MaxAngularRate)
+                .withVelocityX(leftYAxis.getAsDouble() * (TunerConstants.MaxDriveSpeed * setScaleFactor.getAsDouble()))
+                .withVelocityY(leftXAxis.getAsDouble() * (TunerConstants.MaxDriveSpeed * setScaleFactor.getAsDouble()))
+                .withRotationalRate(rightXAxis.getAsDouble() * TunerConstants.MaxAngularRate * setScaleFactor.getAsDouble())
         );
     }
 

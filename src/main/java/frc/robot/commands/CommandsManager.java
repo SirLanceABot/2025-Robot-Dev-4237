@@ -34,7 +34,7 @@ public final class CommandsManager
     // *** CLASS AND INSTANCE VARIABLES ***
     // private final ExampleSubsystem exampleSubsystem;
 
-    enum TargetPosition
+    public enum TargetPosition
     {
         kScoreBargePosition(PivotPosition.kScoreBargePosition, ElevatorPosition.kL4),
         kL4(PivotPosition.kL4, ElevatorPosition.kL4),
