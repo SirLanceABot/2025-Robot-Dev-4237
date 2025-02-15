@@ -21,6 +21,8 @@ import frc.robot.subsystems.LEDs;
 import frc.robot.subsystems.Pivot;
 import frc.robot.subsystems.PoseEstimator;
 import frc.robot.subsystems.Shuttle;
+import frc.robot.util.AutonomousTab;
+import frc.robot.util.DriverTab;
 
 public class RobotContainer 
 {
@@ -58,6 +60,9 @@ public class RobotContainer
     private boolean useDriverController     = false;
     private boolean useOperatorController   = false;
 
+    private boolean useAutonomousTab        = true;
+    private boolean useDriverTab            = true;
+
     public final boolean fullRobot;
 
     private final Claw claw;
@@ -78,10 +83,14 @@ public class RobotContainer
     private final Proximity elevatorProximity;
     private final Proximity clawProximity;
 
+
     // private final DriverButtonBindings driverButtonBindings;
     // private final OperatorButtonBindings operatorButtonBindings;
     private final CommandXboxController driverController;
     private final CommandXboxController operatorController;
+
+    public final AutonomousTab autonomousTab;
+    public final DriverTab driverTab;
     
 
     /** 
@@ -173,8 +182,16 @@ public class RobotContainer
 
         operatorController = (useFullRobot || useOperatorController)
                 ? new CommandXboxController(Constants.Controllers.OPERATOR_CONTROLLER_PORT)
+                : null; 
+
+
+        autonomousTab      = (useFullRobot || useAutonomousTab)
+                ? new AutonomousTab()
                 : null;
 
+        driverTab      = (useFullRobot || useDriverTab)
+        ? new DriverTab()
+        : null;
         // operatorButtonBindings = (useFullRobot || useBindings)
         // ? new OperatorButtonBindings(this)
         // : null;

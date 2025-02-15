@@ -22,9 +22,10 @@ public class AutonomousTabData
 
     public static enum Left_Wall
     {
-        kCoral1("Left_Wall"),
-        kRightWall("Right_Wall"),
-        kMiddle("Middle");
+        kCoral3Algae0FarSide(" -- Score_Coral_3 -- Score_Algae_0 -- Far_Side"),
+        kCoral3Algae0(" -- Score_Coral_3 -- Score_Algae_0"),
+        kCoral4Algae0(" -- Score_Coral_4 -- Score_Algae_0"),
+        kNo("");
 
         private final String name;
 
@@ -40,17 +41,18 @@ public class AutonomousTabData
         }
     }
 
-    public static enum SitPretty
+    public static enum Right_Wall
     {
-        kYes("Do_Nothing"), 
-        kNo("Run_Autonomous"); 
-
+        kCoral3Algae0FarSide(" -- Score_Coral_3 -- Score_Algae_0 -- Far_Side"),
+        kCoral3Algae0(" -- Score_Coral_3 -- Score_Algae_0"),
+        kCoral4Algae0(" -- Score_Coral_4 -- Score_Algae_0"),
+        kNo("");
 
         private final String name;
 
-        private SitPretty(String name)
+        private Right_Wall(String name)
         {
-            this.name = " -- " + name;
+            this.name = "Right_Wall_" + name;
         }
 
         @Override
@@ -60,20 +62,66 @@ public class AutonomousTabData
         }
     }
 
-    // public static enum StagePositioning
-    // {
-    //     // kNone(""),
-    //     // // kAroundStage(" -- Around_Stage"),
-    //     // kThroughStage(" -- Through_Stage");
+    public static enum Middle
+    {
+        kCoral1Algae2FarSide(" -- Score_Coral_1 -- Score_Algae_2"),
+        kNo("");
 
-    //     kNone(""),
-    //     kThroughStage(" -- Through_Stage");
+        private final String name;
+
+        private Middle(String name)
+        {
+            this.name = "Middle" + name;
+        }
+
+        @Override
+        public String toString()
+        {
+            return name;
+        }
+    }
+
+    
+
+    // public static enum SitPretty
+    // {
+    //     kYes("Do_Nothing"), 
+    //     kNo("Run_Autonomous"); 
+
 
     //     private final String name;
 
-    //     private StagePositioning(String name)
+    //     private SitPretty(String name)
     //     {
-    //         this.name = name;
+    //         this.name = " -- " + name;
+    //     }
+
+    //     @Override
+    //     public String toString()
+    //     {
+    //         return name;
+    //     }
+    // }
+
+    
+    // public static enum Score_Coral_
+    // {
+    //     // k0(" -- ScoreExtraNotes_0"), 
+    //     // k1(" -- ScoreExtraNotes_1"), 
+    //     // k2(" -- ScoreExtraNotes_2"), 
+    //     // k3(" -- ScoreExtraNotes_3"),
+    //     // k4(" -- ScoreExtraNotes_4");
+    //     k0("0"), 
+    //     k1("1"), 
+    //     k2("2"), 
+    //     k3("3"),
+    //     k4("4");
+
+    //     private final String name;
+
+    //     private Score_Coral_(String name)
+    //     {
+    //         this.name = " -- ScoreExtraNotes_" + name;
     //     }
 
     //     @Override
@@ -84,51 +132,15 @@ public class AutonomousTabData
     // }
 
 
-    public static enum Score_Coral_
-    {
-        // k0(" -- ScoreExtraNotes_0"), 
-        // k1(" -- ScoreExtraNotes_1"), 
-        // k2(" -- ScoreExtraNotes_2"), 
-        // k3(" -- ScoreExtraNotes_3"),
-        // k4(" -- ScoreExtraNotes_4");
-        k0("0"), 
-        k1("1"), 
-        k2("2"), 
-        k3("3"),
-        k4("4");
-
-        private final String name;
-
-        private Score_Coral_(String name)
-        {
-            this.name = " -- ScoreExtraNotes_" + name;
-        }
-
-        @Override
-        public String toString()
-        {
-            return name;
-        }
-    }
-
-
-    // public static enum ContainingPreload
-    // {
-    //     kYes, kNo;
-    // }
-
-    // public static enum DriveOutOfStartZone
-    // {
-    //     kYes, kNo;
-    // }
-
 
 
     //-------------------------------------------------------------------//
 
     // IMPORTANT: Any variables added here must be initialized in the copy constructor below
-    public Left_Wall leftWall = Left_Wall.kRightWall;
-    public SitPretty sitPretty = SitPretty.kNo;
+    public Left_Wall leftWall = Left_Wall.kNo;
+    public Right_Wall rightWall = Right_Wall.kNo;
+    public Middle middle = Middle.kNo;
+    //public SitPretty sitPretty = SitPretty.kNo;
     // public DriveOutOfStartZone driveOutOfStartZone = DriveOutOfStartZone.kYes;
     // private String commandString = "\n***** AUTONOMOUS COMMAND LIST *****\n";
     private String pathPlannerString = "";
@@ -143,7 +155,9 @@ public class AutonomousTabData
     public AutonomousTabData(AutonomousTabData atd)
     {
         leftWall = atd.leftWall;
-        sitPretty = atd.sitPretty;
+        rightWall = atd.rightWall;
+        middle = atd.middle;
+        //sitPretty = atd.sitPretty;
         pathPlannerString = atd.pathPlannerString;
         pathPlannerCommand = atd.pathPlannerCommand;
     }
@@ -195,95 +209,10 @@ public class AutonomousTabData
         boolean isValid = true;
         //autonomousNameBox.setString(AutoCommandList.pathPlannerString);
         
-        // boolean isContainingPreload = (containingPreloadBox.getSelected() == AutonomousTabData.ContainingPreload.kYes);
-        // boolean isScorePreload = (scorePreloadBox.getSelected() == AutonomousTabData.ScorePreload.kYes);
-        // boolean isShootDelay = 
-        // (shootDelayBox.getSelected() == AutonomousTabData.ShootDelay.k0 ||
-        // //  shootDelayBox.getSelected() == AutonomousTabData.ShootDelay.k1 ||
-        // //  shootDelayBox.getSelected() == AutonomousTabData.ShootDelay.k2 ||
-        //  shootDelayBox.getSelected() == AutonomousTabData.ShootDelay.k3 );
-        //  shootDelayBox.getSelected() == AutonomousTabData.ShootDelay.k4 ||
-        //  shootDelayBox.getSelected() == AutonomousTabData.ShootDelay.k5 )
-        // boolean isPickupSecondNote = (pickupNotesBox.getSelected() == AutonomousTabData.PickupSecondNote.kYes);
-        // boolean isScoreMoreNotes = 
-        // (//scoreExtraNotesBox.getSelected() == AutonomousTabData.ScoreExtraNotes.k0 ||
-        //  scoreCoral == AutonomousTabData.Score_Coral_.k1 ||
-        //  scoreCoral == AutonomousTabData.Score_Coral_.k2 ||
-        //  scoreCoral == AutonomousTabData.Score_Coral_.k3 ||
-        //  scoreCoral == AutonomousTabData.Score_Coral_.k4);
-        // boolean isDriveDelay = 
-        //  (driveDelayBox.getSelected() == AutonomousTabData.DriveDelay.k0 ||
-        // //  shootDelayBox.getSelected() == AutonomousTabData.ShootDelay.k1 ||
-        // //  shootDelayBox.getSelected() == AutonomousTabData.ShootDelay.k2 ||
-        //  driveDelayBox.getSelected() == AutonomousTabData.DriveDelay.k3 );
-        //  shootDelayBox.getSelected() == AutonomousTabData.ShootDelay.k4 ||
-        //  shootDelayBox.getSelected() == AutonomousTabData.ShootDelay.k5 )
-        // boolean isStartingLocation =
-        // (startingSide == AutonomousTabData.StartingSide.kLeftWall ||
-        // startingSide == AutonomousTabData.StartingSide.kRightWall ||
-        // startingSide == AutonomousTabData.StartingSide.kMiddle);
-
-        boolean isSitPretty =
-        (sitPretty == AutonomousTabData.SitPretty.kYes);
+       
+        // boolean isSitPretty =
+        // (sitPretty == AutonomousTabData.SitPretty.kYes);
         
-        // boolean isOverDelay = 
-        // (shootDelayBox.getSelected() == AutonomousTabData.ShootDelay.k3 && 
-        // driveDelayBox.getSelected() == AutonomousTabData.DriveDelay.k3);
-
-
-        // boolean isStage = 
-        // (stageBox.getSelected() == AutonomousTabData.StagePositioning.kThroughStage || 
-        // stageBox.getSelected() == AutonomousTabData.StagePositioning.kAroundStage );
-
-        
-
-        // if(!isContainingPreload && isScorePreload) :)
-        // {
-        //     isValid = false;
-            
-        //     msg += "[ Not Possible ] - Cannot Score without containing Preload \n";
-
-        // }
-
-        // if(!isPickupSecondNote && isScoreSecondNote)
-        // {
-        //     isValid = false;
-            
-        //     msg += "[ Not Possible ] - Cannot Score Second Note without Picking It up \n";
-
-        // }
-
-        
-        // if(isShootDelay && isScorePreload) :)
-        // {
-        //     isValid = false;
-            
-        //     msg += "[ Not Possible ] - Cannot Score without containing Preload \n";
-
-        // }
-
-
-        // if(isScoreManyMoreNotes && isOverDelay) 
-        // {
-        //     isValid = false;
-            
-        //     msg += "[Not Possible] - Cannot score 2+ extra Notes with double 3 second delays \n";
-
-        // }
-
-        // if(isSitPretty && isScoreMoreNotes)
-        // {
-        //     isValid = false;
-
-        //     msgValid = " [Backup Option Selected] - Cannot complete any other tasks \n";
-        // }
-
-//         if(isNotSub && isStage)
-//         {
-//             isValid = false;
-// //:)
-//             msgValid = " [Stage Not Available] - Non-Sub Start selected \n";
-//         }
 
         
         
@@ -358,8 +287,11 @@ public class AutonomousTabData
         str += "\n*****  AUTONOMOUS SELECTION  *****\n";
 
 
-        str += "Starting Side             : " + leftWall   + "\n";
-        str += "Sit Pretty                     : " + sitPretty + "\n";
+    
+        str += "Left Wall             : " + leftWall   + "\n";
+        str += "Right Wall             : " + rightWall   + "\n"; 
+        str += "Middle             : " + middle   + "\n";   
+        //str += "Sit Pretty                     : " + sitPretty + "\n";
 
         // str += "Drive Out Of Start Zone     : " + driveOutOfStartZone  + "\n";
         // str += "Containing Preload          : " + containingPreload + "\n";

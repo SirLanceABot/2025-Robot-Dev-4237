@@ -57,7 +57,7 @@ public class DriverTab
  
 
     // *** CLASS CONSTRUCTOR ***
-    DriverTab(RobotContainer robotContainer)
+    public DriverTab()
     {
         System.out.println("  Constructor Started:  " + fullClassName);
 
@@ -68,9 +68,9 @@ public class DriverTab
         // this.pivot = robotContainer.pivot;
         // this.intake = robotContainer.intake;
         // this.intakePositioning = robotContainer.intakePositioning;
-        this.drivetrain = robotContainer.getCommandSwerveDrivetrain();
+       // this.drivetrain = robotContainer.getCommandSwerveDrivetrain();
         SmartDashboard.putData("Field", field);
-        field.setRobotPose(robotContainer.getPoseEstimator().getEstimatedPose());
+        //field.setRobotPose(robotContainer.getPoseEstimator().getEstimatedPose());
         // return driverTab.add("Field", field)
         // .withWidget(BuiltInWidgets.kField) //specifies type of widget: "kField
         // .withPosition(7,1) // sets position of widget
