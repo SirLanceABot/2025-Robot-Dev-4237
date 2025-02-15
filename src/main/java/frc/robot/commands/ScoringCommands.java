@@ -217,13 +217,36 @@ public final class ScoringCommands
         }
     }
 
-    // public static Command finishScoringAlgaeCommand()
-    // {
-    //     if(elevator != null && pivot != null && claw != null && leds != null && clawProximity != null)
-    //     {
-    //         return
-    //     }
-    // }
+    public static Command finishScoringAlgaeCommand()
+    {
+        if(elevator != null && pivot != null && claw != null && leds != null && clawProximity != null)
+        {
+            return
+            Commands.waitUntil(() -> (!(clawProximity.isDetectedSupplier()).getAsBoolean()))
+            .deadlineFor(
+                leds.setColorBlinkCommand(Color.kBlue),
+                claw.ejectAlgaeCommand())
+            .andThen(
+                Commands.waitUntil(elevator.isAtPosition(ElevatorPosition.kSafeSwingPosition))
+                .deadlineFor(
+                    elevator.moveToSetPositionCommand(ElevatorPosition.kSafeSwingPosition)))
+            .andThen(
+                Commands.waitUntil(pivot.isAtPosition(PivotPosition.kDownPosition))
+                .deadlineFor(
+                    pivot.moveToSetPositionCommand(PivotPosition.kDownPosition)))
+            .andThen(
+                Commands.waitUntil(elevator.isAtPosition(ElevatorPosition.kReadyToGrabCoralPosition))
+                .deadlineFor(
+                    elevator.moveToSetPositionCommand(ElevatorPosition.kReadyToGrabCoralPosition)))
+            .andThen(
+                leds.setColorSolidCommand(Color.kRed))
+            .withName("Finish Scoring Algae Command");
+        }
+        else
+        {
+            return Commands.none();
+        }
+    }
 
     public static Command flipScorerCommand()
     {
@@ -278,7 +301,7 @@ public final class ScoringCommands
 
     public static Command scoreCoralAutonomouslyReallyCoolAndAwesomeCommand(boolean isRight, TargetPosition targetPosition)
     {
-        // TODO: fix this.  idk why owen wrote this the choose closest branch like this.  feels wrong at best
+        // TODO: YIPPEE
         if(drivetrain != null && gyro != null && elevator != null && pivot != null && claw != null)
         {
             Pose2d currentPose = poseEstimator.getEstimatedPose();
@@ -287,38 +310,18 @@ public final class ScoringCommands
             return
             leds.setColorBlinkCommand(Color.kBlue)
             .andThen(
-                GeneralCommands.driveToPositionCommand(targetPose, currentPose)
-                .alongWith(
-                    GeneralCommands.moveScorerToSetPositionCommand(targetPosition))
+                GeneralCommands.chooseLevelCommand(targetPosition))
             .andThen(
-                finishScoringCoralCommand()));
+                GeneralCommands.driveToPositionCommand(targetPose, currentPose))
+            .andThen(
+                finishScoringCoralCommand())
+            .withName("Autonomous Score Command");
         }
         else
         {
             return Commands.none();
         }
     }
-
-    // public static Command scoreCoralAutonomouslyReallyCoolAndAwesomeCommand(boolean isRight)
-    // {
-    //     // TODO: fix this.  idk why owen wrote this the choose closest branch like this.  feels wrong at best
-    //     if(drivetrain != null && gyro != null && elevator != null && pivot != null && claw != null)
-    //     {
-    //         Pose2d currentPose = poseEstimator.getEstimatedPose();
-    //         Pose2d targetPose = poseEstimator.closestBranchLocation(camera.getTagID(), isRight)
-    //         // Pose2d targetPose = new Pose2d(poseEstimator.chooseClosestBranch(poseEstimator.getAprilTagPose(0), isRight));
-
-    //         return
-    //         leds.setColorBlinkCommand(Color.kBlue)
-    //         .andThen(
-    //             GeneralCommands.driveToPositionCommand()
-    //         );
-    //     }
-    //     else
-    //     {
-    //         return Commands.none();
-    //     }
-    // }
 
     // public static Command exampleCommand()
     // {

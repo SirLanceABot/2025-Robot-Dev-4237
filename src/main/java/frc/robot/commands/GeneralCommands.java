@@ -152,6 +152,23 @@ public final class GeneralCommands
         }
     }
 
+    public static Command chooseLevelCommand(TargetPosition targetPosition)
+    {
+        switch(targetPosition)
+        {
+        case kL1:
+            return moveScorerToL1Command();
+        case kL2:
+            return moveScorerToL2Commmand();
+        case kL3:
+            return moveScorerToL3Command();
+        case kL4:
+            return moveScorerToL4Command();
+        default:
+            return Commands.none();
+        }
+    }
+
     public static Command moveScorerToL2Commmand()
     {
         if(elevator != null && pivot != null && leds != null)
