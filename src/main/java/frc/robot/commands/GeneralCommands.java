@@ -401,7 +401,7 @@ public final class GeneralCommands
     /**
      * The command to climb down the cage to the down set position
      * @return The command to go down
-     * @author Logan Bellinger
+     * @author Biggie Cheese
      */
     public static Command climbDownCageCommand()
     {
@@ -442,11 +442,13 @@ public final class GeneralCommands
         }
     }
 
-    // public static Comamand determineLocationCommand()
-    // {
-
-    // }
-
+    /**
+     * Drives autonomously from the given pose to the target pose
+     * @param targetPose
+     * @param currentPose
+     * @return
+     * @author Biggie Cheese
+     */
     public static Command driveToPositionCommand(Pose2d targetPose, Pose2d currentPose)
     {
 
