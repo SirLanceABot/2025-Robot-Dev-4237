@@ -16,6 +16,8 @@ import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.RobotContainer;
+import frc.robot.commands.GeneralCommands;
+import frc.robot.commands.IntakingCommands;
 import frc.robot.commands.ScoringCommands;
 import frc.robot.controls.Xbox.RumbleEvent;
 import frc.robot.generated.TunerConstants;
@@ -113,7 +115,9 @@ public final class DriverBindings {
     private static void configBButton()
     {
         Trigger bButton = controller.b();
-        bButton.whileTrue(drivetrain.pointCommand(leftYAxis, leftXAxis));
+        // bButton.whileTrue(drivetrain.pointCommand(leftYAxis, leftXAxis));
+        bButton
+            .onTrue(IntakingCommands.intakeCoralFromStationCommand());
         
         //applyRequest(() -> 
         //CommandSwerveDrivetrain.point.withModuleDirection(new Rotation2d(-leftYAxis.getAsDouble(), -leftXAxis.getAsDouble()))));
@@ -149,6 +153,8 @@ public final class DriverBindings {
     private static void configRightBumper()
     {
         Trigger rightBumper = controller.rightBumper();
+        rightBumper
+            .onTrue(IntakingCommands.intakeCoralCommand());
     }
 
 
@@ -161,6 +167,8 @@ public final class DriverBindings {
     private static void configStartButton()
     {
         Trigger startButton = controller.start();
+        startButton
+            .onTrue(GeneralCommands.resetGyroCommand());
     }
 
 
@@ -177,6 +185,8 @@ public final class DriverBindings {
     private static void configRightTrigger()
     {
         Trigger rightTrigger = controller.rightTrigger();
+        rightTrigger
+            .onTrue(IntakingCommands.intakeAlgaeCommand());
     }
 
 
