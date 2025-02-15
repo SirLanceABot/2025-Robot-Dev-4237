@@ -65,8 +65,8 @@ public class LEDs extends SubsystemLance
     // Put all class variables and instance variables here
     private LEDPattern gradient;
     
-    private final AddressableLED led = new AddressableLED(1);
-    private final AddressableLEDBuffer ledBuffer = new AddressableLEDBuffer(5);
+    private final AddressableLED led = new AddressableLED(Constants.LEDs.LED_PORT);
+    private final AddressableLEDBuffer ledBuffer = new AddressableLEDBuffer(Constants.LEDs.LED_LENGTH);
     // private final AddressableLEDBuffer setBuffer;
     // private final AddressableLEDBuffer greenBuffer = new AddressableLEDBuffer(60);
     // private final AddressableLEDBuffer blueBuffer = new AddressableLEDBuffer(60);
