@@ -9,6 +9,7 @@ import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.commands.CommandsManager;
+import frc.robot.commands.GeneralCommands;
 import frc.robot.commands.ScoringCommands;
 import frc.robot.commands.CommandsManager.TargetPosition;
 
@@ -93,8 +94,9 @@ public final class OperatorBindings {
     {
         Trigger aButton = controller.a();
 
-        //Create a path on the fly and score on L1 level
-        aButton.onTrue(Commands.runOnce(() -> ScoringCommands.scoreCoralAutonomouslyReallyCoolAndAwesomeCommand(robotContainer.getPoseEstimator().getIsRightBranch(), TargetPosition.kL1)));
+        //Create a path on the fly and score on L1 level, (stops the path if it takes over 10 seconds - probably not needed)
+        aButton.onTrue(Commands.runOnce(() -> 
+            ScoringCommands.scoreCoralAutonomouslyReallyCoolAndAwesomeCommand(robotContainer.getPoseEstimator().getIsRightBranch(), TargetPosition.kL1)).withTimeout(10.0));
     }
 
 
@@ -102,8 +104,9 @@ public final class OperatorBindings {
     {
         Trigger bButton = controller.b();
 
-        //Create a path on the fly and score on L3 level
-        bButton.onTrue(Commands.runOnce(() -> ScoringCommands.scoreCoralAutonomouslyReallyCoolAndAwesomeCommand(robotContainer.getPoseEstimator().getIsRightBranch(), TargetPosition.kL3)));
+        //Create a path on the fly and score on L3 level, (stops the path if it takes over 10 seconds - probably not needed)
+        bButton.onTrue(Commands.runOnce(() -> 
+            ScoringCommands.scoreCoralAutonomouslyReallyCoolAndAwesomeCommand(robotContainer.getPoseEstimator().getIsRightBranch(), TargetPosition.kL3)).withTimeout(10.0));
 
     }
 
@@ -112,8 +115,9 @@ public final class OperatorBindings {
     {
         Trigger xButton = controller.x();
 
-        //Create a path on the fly and score on L2 level
-        xButton.onTrue(Commands.runOnce(() -> ScoringCommands.scoreCoralAutonomouslyReallyCoolAndAwesomeCommand(robotContainer.getPoseEstimator().getIsRightBranch(), TargetPosition.kL2)));
+        //Create a path on the fly and score on L2 level, (stops the path if it takes over 10 seconds - probably not needed)
+        xButton.onTrue(Commands.runOnce(() -> 
+            ScoringCommands.scoreCoralAutonomouslyReallyCoolAndAwesomeCommand(robotContainer.getPoseEstimator().getIsRightBranch(), TargetPosition.kL2)).withTimeout(10.0));
 
     }
 
@@ -122,8 +126,9 @@ public final class OperatorBindings {
     {
         Trigger yButton = controller.y();
 
-        //Create a path on the fly and score on L4 level
-        yButton.onTrue(Commands.runOnce(() -> ScoringCommands.scoreCoralAutonomouslyReallyCoolAndAwesomeCommand(robotContainer.getPoseEstimator().getIsRightBranch(), TargetPosition.kL4)));
+        //Create a path on the fly and score on L4 level, (stops the path if it takes over 10 seconds - probably not needed)
+        yButton.onTrue(Commands.runOnce(() -> 
+            ScoringCommands.scoreCoralAutonomouslyReallyCoolAndAwesomeCommand(robotContainer.getPoseEstimator().getIsRightBranch(), TargetPosition.kL4)).withTimeout(10.0));
 
     }
 
@@ -186,13 +191,17 @@ public final class OperatorBindings {
 
     private static void configDpadUp()
     {
-        Trigger dpadDown = controller.povUp();
+        Trigger dpadUp = controller.povUp();
+
+        dpadUp.onTrue(GeneralCommands.climbUpCageCommand());
     }
 
 
     private static void configDpadDown()
     {
         Trigger dpadDown = controller.povDown();
+
+        dpadDown.onTrue(GeneralCommands.climbDownCageCommand());
     }
 
 
