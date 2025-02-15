@@ -97,15 +97,15 @@ public class NiyatiPTest implements Test
 
         if (joystick.getRawButton(1))
         {
-            pivot.moveToSetPositionCommand(Pivot.PivotPosition.kL1).schedule();
+            pivot.moveToSetPositionCommand(Pivot.PivotPosition.kLowLevelCoralPosition).schedule();
         }
         else if(joystick.getRawButton(2))
         {
-            pivot.moveToSetPositionCommand(Pivot.PivotPosition.kL2).schedule();
+            pivot.moveToSetPositionCommand(Pivot.PivotPosition.kLowLevelCoralPosition).schedule();
         }
         else if(joystick.getRawButton(3))
         {
-            pivot.moveToSetPositionCommand(Pivot.PivotPosition.kL3).schedule();
+            pivot.moveToSetPositionCommand(Pivot.PivotPosition.kLowLevelCoralPosition).schedule();
         }
         else if(joystick.getRawButton(4))
         {

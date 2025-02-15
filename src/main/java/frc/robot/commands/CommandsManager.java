@@ -38,15 +38,16 @@ public final class CommandsManager
     {
         kScoreBargePosition(PivotPosition.kScoreBargePosition, ElevatorPosition.kL4),
         kL4(PivotPosition.kL4, ElevatorPosition.kL4),
-        kUpperReefAlgae(PivotPosition.kUpperReefAlgae, ElevatorPosition.kUpperReefAlgae),
-        kL3(PivotPosition.kL3, ElevatorPosition.kL3),
-        kLowerReefAlgae(PivotPosition.kLowerReefAlgae, ElevatorPosition.kLowerReefAlgae),
-        kL2(PivotPosition.kL2, ElevatorPosition.kL2),
-        kL1(PivotPosition.kL1, ElevatorPosition.kL1),
-        kScoreProcessorWithClawPosition(PivotPosition.kScoreProcessorPosition, ElevatorPosition.kL1),
-        kHoldAlgaePosition(PivotPosition.kHoldAlgaePosition, ElevatorPosition.kRestingPosition),
-        kGrabCoralPosition(PivotPosition.kGrabCoralPosition, ElevatorPosition.kGrabCoralPosition),
-        kRestingPosition(PivotPosition.kRestingPosition, ElevatorPosition.kRestingPosition);
+        kUpperReefAlgae(PivotPosition.kReefAlgaePosition, ElevatorPosition.kUpperReefAlgae),
+        kL3(PivotPosition.kLowLevelCoralPosition, ElevatorPosition.kL3),
+        kLowerReefAlgae(PivotPosition.kReefAlgaePosition, ElevatorPosition.kLowerReefAlgae),
+        kL2(PivotPosition.kLowLevelCoralPosition, ElevatorPosition.kL2),
+        kL1(PivotPosition.kLowLevelCoralPosition, ElevatorPosition.kL1),
+        kScoreProcessorWithClawPosition(PivotPosition.kScoreProcessorPosition, ElevatorPosition.kScoreProcessorPosition),
+        kHoldAlgaePosition(PivotPosition.kHoldAlgaePosition, ElevatorPosition.kScoreProcessorPosition),
+        kReadyToGrabCoralPosition(PivotPosition.kDownPosition, ElevatorPosition.kReadyToGrabCoralPosition),
+        kGrabCoralPosition(PivotPosition.kDownPosition, ElevatorPosition.kGrabCoralPosition),
+        kRestingPosition(PivotPosition.kFlippedPosition, ElevatorPosition.kHoldingPosition);
 
         public final PivotPosition pivot;
         public final ElevatorPosition elevator;

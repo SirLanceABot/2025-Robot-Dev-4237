@@ -111,8 +111,8 @@ public final class ScoringCommands
                 Commands.waitUntil(() -> (elevator.isAtPosition(targetPosition.elevator).getAsBoolean() && pivot.isAtPosition(targetPosition.pivot).getAsBoolean()))
                 .deadlineFor(
                     claw.stopCommand(),
-                    pivot.moveToSetPositionCommand(PivotPosition.kRestingPosition),
-                    elevator.moveToSetPositionCommand(ElevatorPosition.kRestingPosition)))
+                    pivot.moveToSetPositionCommand(PivotPosition.kDownPosition),
+                    elevator.moveToSetPositionCommand(ElevatorPosition.kReadyToGrabCoralPosition)))
             .andThen(leds.setColorSolidCommand(Color.kRed))
             .withName("Score Coral on Reef Command");
         }
@@ -171,11 +171,11 @@ public final class ScoringCommands
                 .deadlineFor(
                     claw.ejectAlgaeCommand()))
             .andThen(
-                Commands.waitUntil(() -> (elevator.isAtPosition(ElevatorPosition.kRestingPosition).getAsBoolean() && pivot.isAtPosition(PivotPosition.kRestingPosition).getAsBoolean()))
+                Commands.waitUntil(() -> (elevator.isAtPosition(ElevatorPosition.kReadyToGrabCoralPosition).getAsBoolean() && pivot.isAtPosition(PivotPosition.kDownPosition).getAsBoolean()))
                 .deadlineFor(
                     claw.stopCommand(),
-                    elevator.moveToSetPositionCommand(ElevatorPosition.kRestingPosition),
-                    pivot.moveToSetPositionCommand(PivotPosition.kRestingPosition)))
+                    elevator.moveToSetPositionCommand(ElevatorPosition.kReadyToGrabCoralPosition),
+                    pivot.moveToSetPositionCommand(PivotPosition.kDownPosition)))
             .andThen(leds.setColorSolidCommand(Color.kRed))
             .withName("Score Algae In Barge Command");
         }
@@ -200,10 +200,10 @@ public final class ScoringCommands
                 leds.setColorBlinkCommand(Color.kBlue),
                 claw.ejectAlgaeCommand())
             .andThen(
-                Commands.waitUntil(() -> (elevator.isAtPosition(ElevatorPosition.kRestingPosition).getAsBoolean() && pivot.isAtPosition(PivotPosition.kRestingPosition).getAsBoolean()))
+                Commands.waitUntil(() -> (elevator.isAtPosition(ElevatorPosition.kReadyToGrabCoralPosition).getAsBoolean() && pivot.isAtPosition(PivotPosition.kDownPosition).getAsBoolean()))
                 .deadlineFor(
-                    elevator.moveToSetPositionCommand(ElevatorPosition.kRestingPosition),
-                    pivot.moveToSetPositionCommand(PivotPosition.kRestingPosition)))
+                    elevator.moveToSetPositionCommand(ElevatorPosition.kReadyToGrabCoralPosition),
+                    pivot.moveToSetPositionCommand(PivotPosition.kDownPosition)))
             .andThen(leds.setColorSolidCommand(Color.kRed))
             .withName("Finish Scoring Coral Command");
         }
@@ -251,10 +251,10 @@ public final class ScoringCommands
                 .deadlineFor(
                     claw.ejectAlgaeCommand()))
                 .andThen(
-                    Commands.waitUntil(() -> (elevator.isAtPosition(ElevatorPosition.kRestingPosition).getAsBoolean() && pivot.isAtPosition(PivotPosition.kRestingPosition).getAsBoolean()))
+                    Commands.waitUntil(() -> (elevator.isAtPosition(ElevatorPosition.kReadyToGrabCoralPosition).getAsBoolean() && pivot.isAtPosition(PivotPosition.kDownPosition).getAsBoolean()))
                     .deadlineFor(
-                        elevator.moveToSetPositionCommand(ElevatorPosition.kRestingPosition),
-                        pivot.moveToSetPositionCommand(PivotPosition.kRestingPosition)))
+                        elevator.moveToSetPositionCommand(ElevatorPosition.kReadyToGrabCoralPosition),
+                        pivot.moveToSetPositionCommand(PivotPosition.kDownPosition)))
                 .andThen(leds.setColorSolidCommand(Color.kRed))
             .withName("Finish Scoring in Processor with Claw Command");
         }

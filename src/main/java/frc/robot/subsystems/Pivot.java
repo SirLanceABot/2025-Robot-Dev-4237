@@ -40,18 +40,14 @@ public class Pivot extends SubsystemLance
 
     public enum PivotPosition
     {
-        kFlippedPosition(180.0),
-        kScoreBargePosition(120.0),
-        kL4(100.0),
-        kUpperReefAlgae(90.0),
-        kL3(80.0),
-        kLowerReefAlgae(65.0),
-        kL2(60.0),
-        kL1(50.0),
-        kScoreProcessorPosition(40.0),
-        kHoldAlgaePosition(30.0),
-        kGrabCoralPosition(0.0),
-        kRestingPosition(0.0);
+        kDownPosition(180.0),
+        kHoldAlgaePosition(150.0),
+        kScoreProcessorPosition(130.0),
+        kReefAlgaePosition(90.0),
+        kL4(20.0),
+        kScoreBargePosition(15.0),
+        kLowLevelCoralPosition(10.0),
+        kFlippedPosition(0.0);
 
         public final double pivotPosition;
 

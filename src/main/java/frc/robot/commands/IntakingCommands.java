@@ -150,13 +150,13 @@ public final class IntakingCommands
             .deadlineFor(
                 leds.setColorBlinkCommand(Color.kYellow),
                 elevator.moveToSetPositionCommand(ElevatorPosition.kGrabCoralPosition),
-                pivot.moveToSetPositionCommand(PivotPosition.kGrabCoralPosition),
+                pivot.moveToSetPositionCommand(PivotPosition.kDownPosition),
                 claw.grabGamePieceCommand())
             .andThen(
                 Commands.waitUntil(clawProximity.isDetectedSupplier())
                 .deadlineFor(
                     claw.stopCommand(),
-                    elevator.moveToSetPositionCommand(ElevatorPosition.kRestingPosition)))
+                    elevator.moveToSetPositionCommand(ElevatorPosition.kReadyToGrabCoralPosition)))
             .andThen(
                 Commands.waitUntil(pivot.isAtPosition(PivotPosition.kFlippedPosition))
                 .deadlineFor(

@@ -124,18 +124,18 @@ public final class GeneralCommands
         {
             return
             Commands.either(
-                Commands.waitUntil(() -> (elevator.isAtPosition(ElevatorPosition.kL1).getAsBoolean() && pivot.isAtPosition(PivotPosition.kL1).getAsBoolean()))
+                Commands.waitUntil(() -> (elevator.isAtPosition(ElevatorPosition.kL1).getAsBoolean() && pivot.isAtPosition(PivotPosition.kLowLevelCoralPosition).getAsBoolean()))
                 .deadlineFor(
                     elevator.moveToSetPositionCommand(ElevatorPosition.kL1),
-                    pivot.moveToSetPositionCommand(PivotPosition.kL1)),
+                    pivot.moveToSetPositionCommand(PivotPosition.kLowLevelCoralPosition)),
 
                     Commands.waitUntil(elevator.isAtPosition(ElevatorPosition.kSafeSwingPosition))
                     .deadlineFor(
                         elevator.moveToSetPositionCommand(ElevatorPosition.kSafeSwingPosition))
                     .andThen(
-                        Commands.waitUntil(pivot.isAtPosition(PivotPosition.kL1))
+                        Commands.waitUntil(pivot.isAtPosition(PivotPosition.kLowLevelCoralPosition))
                         .deadlineFor(
-                            pivot.moveToSetPositionCommand(PivotPosition.kL1)))
+                            pivot.moveToSetPositionCommand(PivotPosition.kLowLevelCoralPosition)))
                     .andThen(
                         Commands.waitUntil(elevator.isAtPosition(ElevatorPosition.kL1))
                         .deadlineFor(
@@ -156,18 +156,18 @@ public final class GeneralCommands
         {
             return
             Commands.either(
-                Commands.waitUntil(() -> (elevator.isAtPosition(ElevatorPosition.kL2).getAsBoolean() && pivot.isAtPosition(PivotPosition.kL2).getAsBoolean()))
+                Commands.waitUntil(() -> (elevator.isAtPosition(ElevatorPosition.kL2).getAsBoolean() && pivot.isAtPosition(PivotPosition.kLowLevelCoralPosition).getAsBoolean()))
                 .deadlineFor(
                     elevator.moveToSetPositionCommand(ElevatorPosition.kL2),
-                    pivot.moveToSetPositionCommand(PivotPosition.kL2)),
+                    pivot.moveToSetPositionCommand(PivotPosition.kLowLevelCoralPosition)),
 
                     Commands.waitUntil(elevator.isAtPosition(ElevatorPosition.kSafeSwingPosition))
                     .deadlineFor(
                         elevator.moveToSetPositionCommand(ElevatorPosition.kSafeSwingPosition))
                     .andThen(
-                        Commands.waitUntil(pivot.isAtPosition(PivotPosition.kL2))
+                        Commands.waitUntil(pivot.isAtPosition(PivotPosition.kLowLevelCoralPosition))
                         .deadlineFor(
-                            pivot.moveToSetPositionCommand(PivotPosition.kL2)))
+                            pivot.moveToSetPositionCommand(PivotPosition.kLowLevelCoralPosition)))
                     .andThen(
                         Commands.waitUntil(elevator.isAtPosition(ElevatorPosition.kL2))
                         .deadlineFor(
@@ -188,18 +188,18 @@ public final class GeneralCommands
         {
             return
             Commands.either(
-                Commands.waitUntil(() -> (elevator.isAtPosition(ElevatorPosition.kL3).getAsBoolean() && pivot.isAtPosition(PivotPosition.kL3).getAsBoolean()))
+                Commands.waitUntil(() -> (elevator.isAtPosition(ElevatorPosition.kL3).getAsBoolean() && pivot.isAtPosition(PivotPosition.kLowLevelCoralPosition).getAsBoolean()))
                 .deadlineFor(
                     elevator.moveToSetPositionCommand(ElevatorPosition.kL3),
-                    pivot.moveToSetPositionCommand(PivotPosition.kL3)),
+                    pivot.moveToSetPositionCommand(PivotPosition.kLowLevelCoralPosition)),
 
                     Commands.waitUntil(elevator.isAtPosition(ElevatorPosition.kSafeSwingPosition))
                     .deadlineFor(
                         elevator.moveToSetPositionCommand(ElevatorPosition.kSafeSwingPosition))
                     .andThen(
-                        Commands.waitUntil(pivot.isAtPosition(PivotPosition.kL3))
+                        Commands.waitUntil(pivot.isAtPosition(PivotPosition.kLowLevelCoralPosition))
                         .deadlineFor(
-                            pivot.moveToSetPositionCommand(PivotPosition.kL3)))
+                            pivot.moveToSetPositionCommand(PivotPosition.kLowLevelCoralPosition)))
                     .andThen(
                         Commands.waitUntil(elevator.isAtPosition(ElevatorPosition.kL3))
                         .deadlineFor(
@@ -247,9 +247,9 @@ public final class GeneralCommands
         {
             return
             Commands.either(
-                Commands.waitUntil(pivot.isAtPosition(PivotPosition.kGrabCoralPosition))
+                Commands.waitUntil(pivot.isAtPosition(PivotPosition.kDownPosition))
                 .deadlineFor(
-                    pivot.moveToSetPositionCommand(PivotPosition.kGrabCoralPosition))
+                    pivot.moveToSetPositionCommand(PivotPosition.kDownPosition))
                 .andThen(
                     Commands.waitUntil(elevator.isAtPosition(ElevatorPosition.kGrabCoralPosition))
                     .deadlineFor(
@@ -259,15 +259,15 @@ public final class GeneralCommands
                     .deadlineFor(
                         elevator.moveToSetPositionCommand(ElevatorPosition.kSafeSwingPosition))
                     .andThen(
-                        Commands.waitUntil(pivot.isAtPosition(PivotPosition.kL3))
+                        Commands.waitUntil(pivot.isAtPosition(PivotPosition.kDownPosition))
                         .deadlineFor(
-                            pivot.moveToSetPositionCommand(PivotPosition.kL3)))
+                            pivot.moveToSetPositionCommand(PivotPosition.kDownPosition)))
                     .andThen(
-                        Commands.waitUntil(elevator.isAtPosition(ElevatorPosition.kL3))
+                        Commands.waitUntil(elevator.isAtPosition(ElevatorPosition.kGrabCoralPosition))
                         .deadlineFor(
-                            elevator.moveToSetPositionCommand(ElevatorPosition.kL3))),
+                            elevator.moveToSetPositionCommand(ElevatorPosition.kGrabCoralPosition))),
 
-                () -> (elevator.getLeftPosition() > 60.0))
+                () -> (elevator.getLeftPosition() > 40.0)) // Checks if elevator is higher than the designated "Safe Swing" position
                 .withName("Move Scorer to Intaking Position Command");  
         }
         else
@@ -307,8 +307,8 @@ public final class GeneralCommands
             Commands.waitUntil(intakeWrist.isAtPosition(Position.kRestingPosition))
             .deadlineFor(
                 leds.setColorRainbowCommand(),
-                elevator.moveToSetPositionCommand(ElevatorPosition.kRestingPosition),
-                pivot.moveToSetPositionCommand(PivotPosition.kRestingPosition),
+                elevator.moveToSetPositionCommand(ElevatorPosition.kReadyToGrabCoralPosition),
+                pivot.moveToSetPositionCommand(PivotPosition.kFlippedPosition),
                 intakeWrist.moveToSetPositionCommand(Position.kRestingPosition))
             .andThen(
                 climb.climbToUpPositionCommand())
@@ -333,8 +333,8 @@ public final class GeneralCommands
             Commands.waitUntil(intakeWrist.isAtPosition(Position.kRestingPosition))
             .deadlineFor(
                 leds.setColorRainbowCommand(),
-                elevator.moveToSetPositionCommand(ElevatorPosition.kRestingPosition),
-                pivot.moveToSetPositionCommand(PivotPosition.kRestingPosition),
+                elevator.moveToSetPositionCommand(ElevatorPosition.kReadyToGrabCoralPosition),
+                pivot.moveToSetPositionCommand(PivotPosition.kFlippedPosition),
                 intakeWrist.moveToSetPositionCommand(Position.kRestingPosition))
             .andThen(
                 climb.climbToDownPositionCommand())
