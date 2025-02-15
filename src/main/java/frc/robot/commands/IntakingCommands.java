@@ -100,8 +100,8 @@ public final class IntakingCommands
                 Commands.waitUntil(coralIntakeProximity.isDetectedSupplier())
                 .deadlineFor(
                     intake.pickupCoralCommand(),
-                    elevator.moveToSetPositionCommand(TargetPosition.kGrabCoralPosition.elevator),
-                    pivot.moveToSetPositionCommand(TargetPosition.kGrabCoralPosition.pivot)))
+                    elevator.moveToSetPositionCommand(ElevatorPosition.kReadyToGrabCoralPosition),
+                    pivot.moveToSetPositionCommand(PivotPosition.kDownPosition)))
             .andThen(
                 Commands.waitUntil(intakeWrist.isAtPosition(Position.kPassToClawPosition))
                 .deadlineFor(
@@ -115,18 +115,7 @@ public final class IntakingCommands
             .andThen(
                 Commands.waitUntil(clawProximity.isDetectedSupplier())
                 .deadlineFor(
-                    elevator.moveToSetPositionCommand(TargetPosition.kRestingPosition.elevator)))
-            .andThen(
-                Commands.waitUntil(pivot.isAtPosition(PivotPosition.kFlippedPosition))
-                .deadlineFor(
-                    claw.stopCommand(),
-                    intakeWrist.moveToSetPositionCommand(Position.kRestingPosition),
-                    pivot.moveToSetPositionCommand(PivotPosition.kFlippedPosition),
                     elevator.moveToSetPositionCommand(ElevatorPosition.kGrabCoralPosition)))
-            .andThen(
-                Commands.waitUntil(elevator.isAtPosition(ElevatorPosition.kHoldingPosition))
-                .deadlineFor(
-                    elevator.moveToSetPositionCommand(ElevatorPosition.kHoldingPosition)))
             .andThen(leds.setColorSolidCommand(Color.kRed))
             .withName("Intake Coral Command");
         }
@@ -149,7 +138,7 @@ public final class IntakingCommands
             Commands.waitUntil(elevatorProximity.isDetectedSupplier())
             .deadlineFor(
                 leds.setColorBlinkCommand(Color.kYellow),
-                elevator.moveToSetPositionCommand(ElevatorPosition.kGrabCoralPosition),
+                elevator.moveToSetPositionCommand(ElevatorPosition.kReadyToGrabCoralPosition),
                 pivot.moveToSetPositionCommand(PivotPosition.kDownPosition),
                 claw.grabGamePieceCommand())
             .andThen(
@@ -187,7 +176,7 @@ public final class IntakingCommands
             return
             Commands.waitUntil(algaeIntakeProximity.isDetectedSupplier())
             .deadlineFor(
-                leds.setColorBlinkCommand(edu.wpi.first.wpilibj.util.Color.kYellow),
+                leds.setColorBlinkCommand(Color.kYellow),
                 intakeWrist.moveToSetPositionCommand(Position.kManipAlgaePosition),
                 intake.pickupCoralCommand())
             .andThen(
@@ -215,20 +204,46 @@ public final class IntakingCommands
         if(claw != null && elevator != null && pivot != null && leds != null && clawProximity != null)
         {
             return
-            Commands.waitUntil(clawProximity.isDetectedSupplier())
-            .deadlineFor(
-                leds.setColorBlinkCommand(Color.kYellow),
-                elevator.moveToSetPositionCommand(targetPosition.elevator),
-                pivot.moveToSetPositionCommand(targetPosition.pivot),
-                claw.grabGamePieceCommand())
+            leds.setColorBlinkCommand(Color.kYellow)
             .andThen(
-                Commands.waitUntil(() -> (pivot.isAtPosition(targetPosition.pivot).getAsBoolean() && elevator.isAtPosition(targetPosition.elevator).getAsBoolean()))
+                Commands.either(
+
+                    Commands.waitUntil(pivot.isAtPosition(PivotPosition.kReefAlgaePosition))
+                    .deadlineFor(
+                        pivot.moveToSetPositionCommand(PivotPosition.kReefAlgaePosition))
+                    .andThen(
+                        Commands.waitUntil(elevator.isAtPosition(targetPosition.elevator))
+                        .deadlineFor(
+                            elevator.moveToSetPositionCommand(targetPosition.elevator))), 
+                    
+                    Commands.waitUntil(elevator.isAtPosition(ElevatorPosition.kSafeSwingPosition))
+                    .deadlineFor(
+                        elevator.moveToSetPositionCommand(ElevatorPosition.kSafeSwingPosition))
+                    .andThen(
+                        Commands.waitUntil(pivot.isAtPosition(PivotPosition.kReefAlgaePosition))
+                        .deadlineFor(
+                            pivot.moveToSetPositionCommand(PivotPosition.kReefAlgaePosition)))
+                    .andThen(
+                        Commands.waitUntil(elevator.isAtPosition(targetPosition.elevator))
+                        .deadlineFor(
+                            elevator.moveToSetPositionCommand(targetPosition.elevator))),
+                            
+                    () -> (elevator.getLeftPosition() > 40.0)))
+            
+            .andThen(
+                Commands.waitUntil(clawProximity.isDetectedSupplier())
                 .deadlineFor(
-                    elevator.moveToSetPositionCommand(TargetPosition.kHoldAlgaePosition.elevator),
-                    pivot.moveToSetPositionCommand(TargetPosition.kHoldAlgaePosition.pivot),
-                    claw.stopCommand()))
-            .andThen(leds.setColorSolidCommand(Color.kRed))
-            .withName("Intake Algae From Reef Command");
+                    claw.grabGamePieceCommand()))
+            .andThen(
+                Commands.waitUntil(pivot.isAtPosition(PivotPosition.kHoldAlgaePosition))
+                .deadlineFor(
+                    pivot.moveToSetPositionCommand(PivotPosition.kHoldAlgaePosition)))
+            .andThen(
+                Commands.waitUntil(elevator.isAtPosition(ElevatorPosition.kReadyToGrabCoralPosition))
+                .deadlineFor(
+                    elevator.moveToSetPositionCommand(ElevatorPosition.kReadyToGrabCoralPosition),
+                    leds.setColorSolidCommand(Color.kRed)))
+            .withName("Intake Algae From Reef");
         }
         else
         {

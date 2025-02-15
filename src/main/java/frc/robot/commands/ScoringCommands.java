@@ -89,6 +89,7 @@ public final class ScoringCommands
 
     /**
      * Command to score coral, moves elevator and pivot up, ejects coral, and moves elevator and pivot back down
+     * Use the individual parts of this command instead, not this command
      * @param targetPosition the target position to score the coral at
      * @return the command to score
      * @author Logan Bellinger
@@ -132,11 +133,14 @@ public final class ScoringCommands
         if(intake != null && intakeWrist != null && leds != null && algaeIntakeProximity != null)
         {
             return
-            Commands.waitUntil(() -> (!algaeIntakeProximity.isDetectedSupplier().getAsBoolean()))
+            Commands.waitUntil(intakeWrist.isAtPosition(Position.kManipAlgaePosition))
             .deadlineFor(
                 leds.setColorBlinkCommand(Color.kBlue),
-                intakeWrist.moveToSetPositionCommand(Position.kManipAlgaePosition),
-                intake.ejectAlgaeCommand())
+                intakeWrist.moveToSetPositionCommand(Position.kManipAlgaePosition))
+            .andThen(
+                Commands.waitUntil(() -> (!algaeIntakeProximity.isDetectedSupplier().getAsBoolean()))
+                .deadlineFor(
+                    intake.ejectAlgaeCommand()))
             .andThen(
                 Commands.waitUntil(intakeWrist.isAtPosition(Position.kRestingPosition))
                 .deadlineFor(
@@ -212,6 +216,14 @@ public final class ScoringCommands
             return Commands.none();
         }
     }
+
+    // public static Command finishScoringAlgaeCommand()
+    // {
+    //     if(elevator != null && pivot != null && claw != null && leds != null && clawProximity != null)
+    //     {
+    //         return
+    //     }
+    // }
 
     public static Command flipScorerCommand()
     {

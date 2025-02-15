@@ -120,10 +120,12 @@ public final class GeneralCommands
 
     public static Command moveScorerToL1Command()
     {
-        if(elevator != null && pivot != null)
+        if(elevator != null && pivot != null && leds != null)
         {
             return
-            Commands.either(
+            leds.setColorBlinkCommand(Color.kBlue)
+            .andThen(
+                Commands.either(
                 Commands.waitUntil(() -> (elevator.isAtPosition(ElevatorPosition.kL1).getAsBoolean() && pivot.isAtPosition(PivotPosition.kLowLevelCoralPosition).getAsBoolean()))
                 .deadlineFor(
                     elevator.moveToSetPositionCommand(ElevatorPosition.kL1),
@@ -141,8 +143,8 @@ public final class GeneralCommands
                         .deadlineFor(
                             elevator.moveToSetPositionCommand(ElevatorPosition.kL1))),
 
-                () -> (elevator.isAtPosition(ElevatorPosition.kHoldingPosition).getAsBoolean() && pivot.isAtPosition(PivotPosition.kFlippedPosition).getAsBoolean()))
-                .withName("Move Scorer to L1 Command");  
+                () -> (elevator.isAtPosition(ElevatorPosition.kHoldingPosition).getAsBoolean() && pivot.isAtPosition(PivotPosition.kFlippedPosition).getAsBoolean())))
+            .withName("Move Scorer to L1 Command");  
         }
         else
         {
@@ -152,7 +154,7 @@ public final class GeneralCommands
 
     public static Command moveScorerToL2Commmand()
     {
-        if(elevator != null && pivot != null)
+        if(elevator != null && pivot != null && leds != null)
         {
             return
             Commands.either(
@@ -174,6 +176,7 @@ public final class GeneralCommands
                             elevator.moveToSetPositionCommand(ElevatorPosition.kL2))),
 
                 () -> (elevator.isAtPosition(ElevatorPosition.kHoldingPosition).getAsBoolean() && pivot.isAtPosition(PivotPosition.kFlippedPosition).getAsBoolean()))
+                
                 .withName("Move Scorer to L2 Command");  
         }
         else
@@ -184,10 +187,12 @@ public final class GeneralCommands
 
     public static Command moveScorerToL3Command()
     {
-        if(elevator != null && pivot != null)
+        if(elevator != null && pivot != null && leds != null)
         {
             return
-            Commands.either(
+            leds.setColorBlinkCommand(Color.kBlue)
+            .andThen(
+                Commands.either(
                 Commands.waitUntil(() -> (elevator.isAtPosition(ElevatorPosition.kL3).getAsBoolean() && pivot.isAtPosition(PivotPosition.kLowLevelCoralPosition).getAsBoolean()))
                 .deadlineFor(
                     elevator.moveToSetPositionCommand(ElevatorPosition.kL3),
@@ -205,7 +210,8 @@ public final class GeneralCommands
                         .deadlineFor(
                             elevator.moveToSetPositionCommand(ElevatorPosition.kL3))),
 
-                () -> (elevator.isAtPosition(ElevatorPosition.kHoldingPosition).getAsBoolean() && pivot.isAtPosition(PivotPosition.kFlippedPosition).getAsBoolean()))
+                () -> (elevator.isAtPosition(ElevatorPosition.kHoldingPosition).getAsBoolean() && pivot.isAtPosition(PivotPosition.kFlippedPosition).getAsBoolean())))
+            
                 .withName("Move Scorer to L3 Command");  
         }
         else
@@ -219,7 +225,9 @@ public final class GeneralCommands
         if(elevator != null && pivot != null)
         {
             return
-            Commands.either(
+            leds.setColorBlinkCommand(Color.kBlue)
+            .andThen(
+                Commands.either(
                 Commands.waitUntil(() -> (elevator.isAtPosition(ElevatorPosition.kL4).getAsBoolean() && pivot.isAtPosition(PivotPosition.kL4).getAsBoolean()))
                 .deadlineFor(
                     elevator.moveToSetPositionCommand(ElevatorPosition.kL4),
@@ -232,7 +240,8 @@ public final class GeneralCommands
                         .deadlineFor(
                             pivot.moveToSetPositionCommand(PivotPosition.kL4))),
 
-                () -> (elevator.isAtPosition(ElevatorPosition.kHoldingPosition).getAsBoolean() && pivot.isAtPosition(PivotPosition.kFlippedPosition).getAsBoolean()))
+                () -> (elevator.isAtPosition(ElevatorPosition.kHoldingPosition).getAsBoolean() && pivot.isAtPosition(PivotPosition.kFlippedPosition).getAsBoolean())))
+            
                 .withName("Move Scorer to L4 Command");  
         }
         else
@@ -251,9 +260,9 @@ public final class GeneralCommands
                 .deadlineFor(
                     pivot.moveToSetPositionCommand(PivotPosition.kDownPosition))
                 .andThen(
-                    Commands.waitUntil(elevator.isAtPosition(ElevatorPosition.kGrabCoralPosition))
+                    Commands.waitUntil(elevator.isAtPosition(ElevatorPosition.kReadyToGrabCoralPosition))
                     .deadlineFor(
-                        elevator.moveToSetPositionCommand(ElevatorPosition.kGrabCoralPosition))),
+                        elevator.moveToSetPositionCommand(ElevatorPosition.kReadyToGrabCoralPosition))),
 
                     Commands.waitUntil(elevator.isAtPosition(ElevatorPosition.kSafeSwingPosition))
                     .deadlineFor(
@@ -263,12 +272,64 @@ public final class GeneralCommands
                         .deadlineFor(
                             pivot.moveToSetPositionCommand(PivotPosition.kDownPosition)))
                     .andThen(
-                        Commands.waitUntil(elevator.isAtPosition(ElevatorPosition.kGrabCoralPosition))
+                        Commands.waitUntil(elevator.isAtPosition(ElevatorPosition.kReadyToGrabCoralPosition))
                         .deadlineFor(
-                            elevator.moveToSetPositionCommand(ElevatorPosition.kGrabCoralPosition))),
+                            elevator.moveToSetPositionCommand(ElevatorPosition.kReadyToGrabCoralPosition))),
 
                 () -> (elevator.getLeftPosition() > 40.0)) // Checks if elevator is higher than the designated "Safe Swing" position
                 .withName("Move Scorer to Intaking Position Command");  
+        }
+        else
+        {
+            return Commands.none();
+        }
+    }
+
+    public static Command moveScorerToBargeCommand()
+    {
+        if(elevator != null && pivot != null && leds != null)
+        {
+            return
+            leds.setColorBlinkCommand(Color.kBlue)
+            .andThen(
+                Commands.either(
+
+                Commands.waitUntil(() -> (elevator.isAtPosition(ElevatorPosition.kL4).getAsBoolean() && pivot.isAtPosition(PivotPosition.kScoreBargePosition).getAsBoolean()))
+                .deadlineFor(
+                    elevator.moveToSetPositionCommand(ElevatorPosition.kL4),
+                    pivot.moveToSetPositionCommand(PivotPosition.kScoreBargePosition)),
+
+                    Commands.waitUntil(() -> (elevator.isAtPosition(ElevatorPosition.kL4).getAsBoolean() && pivot.isAtPosition(PivotPosition.kScoreBargePosition).getAsBoolean()))
+                    .deadlineFor(
+                        elevator.moveToSetPositionCommand(ElevatorPosition.kL4),
+                        Commands.waitUntil(elevator.isAtPosition(ElevatorPosition.kSafeSwingPosition))
+                        .deadlineFor(
+                            pivot.moveToSetPositionCommand(PivotPosition.kScoreBargePosition))),
+
+                () -> (elevator.isAtPosition(ElevatorPosition.kHoldingPosition).getAsBoolean() && pivot.isAtPosition(PivotPosition.kFlippedPosition).getAsBoolean())))
+            
+                .withName("Move Scorer to Barge Command");
+        }
+        else
+        {
+            return Commands.none();
+        }  
+    }
+
+    public static Command moveScorerToProcessorCommand()
+    {
+        if(elevator != null && pivot != null && leds != null)
+        {
+            return
+            leds.setColorBlinkCommand(Color.kBlue)
+            .andThen(
+                Commands.waitUntil(elevator.isAtPosition(ElevatorPosition.kScoreProcessorPosition))
+                .deadlineFor(
+                    elevator.moveToSetPositionCommand(ElevatorPosition.kScoreProcessorPosition)))
+            .andThen(
+                Commands.waitUntil(pivot.isAtPosition(PivotPosition.kScoreProcessorPosition))
+                .deadlineFor(pivot.moveToSetPositionCommand(PivotPosition.kScoreProcessorPosition)))
+            .withName("Move Scorer To Processor");
         }
         else
         {
@@ -307,7 +368,7 @@ public final class GeneralCommands
             Commands.waitUntil(intakeWrist.isAtPosition(Position.kRestingPosition))
             .deadlineFor(
                 leds.setColorRainbowCommand(),
-                elevator.moveToSetPositionCommand(ElevatorPosition.kReadyToGrabCoralPosition),
+                elevator.moveToSetPositionCommand(ElevatorPosition.kHoldingPosition),
                 pivot.moveToSetPositionCommand(PivotPosition.kFlippedPosition),
                 intakeWrist.moveToSetPositionCommand(Position.kRestingPosition))
             .andThen(
@@ -333,7 +394,7 @@ public final class GeneralCommands
             Commands.waitUntil(intakeWrist.isAtPosition(Position.kRestingPosition))
             .deadlineFor(
                 leds.setColorRainbowCommand(),
-                elevator.moveToSetPositionCommand(ElevatorPosition.kReadyToGrabCoralPosition),
+                elevator.moveToSetPositionCommand(ElevatorPosition.kHoldingPosition),
                 pivot.moveToSetPositionCommand(PivotPosition.kFlippedPosition),
                 intakeWrist.moveToSetPositionCommand(Position.kRestingPosition))
             .andThen(
