@@ -8,8 +8,8 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 6.131072359953308,
-        "y": 4.0375422338965254
+        "x": 6.28875,
+        "y": 3.4399999999999995
       },
       "isLocked": false,
       "linkedName": "S1 Middle"
@@ -20,8 +20,8 @@
         "y": 0.6189144736842104
       },
       "prevControl": {
-        "x": 6.191506226828278,
-        "y": 0.8036479943097246
+        "x": 6.376500000000001,
+        "y": 1.353499999999999
       },
       "nextControl": null,
       "isLocked": false,
@@ -31,7 +31,30 @@
   "rotationTargets": [],
   "constraintZones": [],
   "pointTowardsZones": [],
-  "eventMarkers": [],
+  "eventMarkers": [
+    {
+      "name": "Move Scorer To Processor",
+      "waypointRelativePos": 0.2,
+      "endWaypointRelativePos": null,
+      "command": {
+        "type": "named",
+        "data": {
+          "name": "Move Scorer To Processor"
+        }
+      }
+    },
+    {
+      "name": "Score Algae Only",
+      "waypointRelativePos": 1.0,
+      "endWaypointRelativePos": null,
+      "command": {
+        "type": "named",
+        "data": {
+          "name": "Score Algae Only"
+        }
+      }
+    }
+  ],
   "globalConstraints": {
     "maxVelocity": 3.0,
     "maxAcceleration": 3.0,
@@ -42,7 +65,7 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 0.0
+    "rotation": 180.0
   },
   "reversed": false,
   "folder": "Reef Starts",

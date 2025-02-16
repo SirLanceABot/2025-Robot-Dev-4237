@@ -8,8 +8,8 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 3.2728819514870056,
-        "y": 4.117094677536138
+        "x": 2.64225,
+        "y": 3.3522499999999997
       },
       "isLocked": false,
       "linkedName": "S4 Left"
@@ -20,8 +20,8 @@
         "y": 0.759
       },
       "prevControl": {
-        "x": 1.569495380426395,
-        "y": 1.0811885944017148
+        "x": 2.13525,
+        "y": 1.3827499999999997
       },
       "nextControl": null,
       "isLocked": false,
@@ -31,7 +31,19 @@
   "rotationTargets": [],
   "constraintZones": [],
   "pointTowardsZones": [],
-  "eventMarkers": [],
+  "eventMarkers": [
+    {
+      "name": "Intake Coral From Station",
+      "waypointRelativePos": 0.15,
+      "endWaypointRelativePos": null,
+      "command": {
+        "type": "named",
+        "data": {
+          "name": "Intake Coral From Station"
+        }
+      }
+    }
+  ],
   "globalConstraints": {
     "maxVelocity": 3.0,
     "maxAcceleration": 3.0,

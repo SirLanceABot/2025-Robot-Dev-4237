@@ -3,6 +3,7 @@ package frc.robot.commands;
 import java.lang.invoke.MethodHandles;
 import java.util.List;
 
+import com.fasterxml.jackson.databind.ser.std.StdKeySerializers.EnumKeySerializer;
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.path.GoalEndState;
 import com.pathplanner.lib.path.PathConstraints;
@@ -245,6 +246,7 @@ public final class GeneralCommands
             leds.setColorBlinkCommand(Color.kBlue)
             .andThen(
                 Commands.either(
+                    
                 Commands.waitUntil(() -> (elevator.isAtPosition(ElevatorPosition.kL4).getAsBoolean() && pivot.isAtPosition(PivotPosition.kL4).getAsBoolean()))
                 .deadlineFor(
                     elevator.moveToSetPositionCommand(ElevatorPosition.kL4),
@@ -365,6 +367,19 @@ public final class GeneralCommands
         {
             return 
             claw.placeCoralCommand().withTimeout(0.5).withName("Score Coral Only Command");
+        }
+        else
+        {
+            return Commands.none();
+        }
+    }
+
+    public static Command scoreAlgaeOnlyCommand()
+    {
+        if(claw != null)
+        {
+            return
+            claw.ejectAlgaeCommand().withTimeout(0.5).withName("Score Algae Only Command");
         }
         else
         {

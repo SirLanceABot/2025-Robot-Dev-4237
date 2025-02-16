@@ -9,7 +9,7 @@
       "prevControl": null,
       "nextControl": {
         "x": 5.87925,
-        "y": 1.3534999999999988
+        "y": 1.3534999999999986
       },
       "isLocked": false,
       "linkedName": "Right Wall"
@@ -31,7 +31,30 @@
   "rotationTargets": [],
   "constraintZones": [],
   "pointTowardsZones": [],
-  "eventMarkers": [],
+  "eventMarkers": [
+    {
+      "name": "Move Scorer To L4",
+      "waypointRelativePos": 0.25,
+      "endWaypointRelativePos": null,
+      "command": {
+        "type": "named",
+        "data": {
+          "name": "Move Scorer To L4"
+        }
+      }
+    },
+    {
+      "name": "Eject Coral On L4",
+      "waypointRelativePos": 1.0,
+      "endWaypointRelativePos": null,
+      "command": {
+        "type": "named",
+        "data": {
+          "name": "Score Coral Only"
+        }
+      }
+    }
+  ],
   "globalConstraints": {
     "maxVelocity": 3.0,
     "maxAcceleration": 3.0,
