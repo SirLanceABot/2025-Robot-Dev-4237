@@ -13,6 +13,7 @@ import frc.robot.commands.GeneralCommands;
 import frc.robot.commands.ScoringCommands;
 import frc.robot.commands.CommandsManager.TargetPosition;
 import frc.robot.commands.IntakingCommands;
+import frc.robot.subsystems.Elevator.ElevatorPosition;
 import frc.robot.subsystems.Pivot.PivotPosition;
 
 import frc.robot.RobotContainer;
@@ -157,6 +158,8 @@ public final class OperatorBindings {
     private static void configBackButton()
     {
         Trigger backButton = controller.back();
+
+        backButton.onTrue(ScoringCommands.finishScoringAlgaeCommand());
     }
 
 
@@ -164,7 +167,7 @@ public final class OperatorBindings {
     {
         Trigger startButton = controller.start();
 
-        startButton.onTrue( (robotContainer.getPivot().isAtPosition(PivotPosition.kDownPosition)).getAsBoolean() ? ScoringCommands.flipScorerCommand() : GeneralCommands.moveScorerToIntakingPositionCommand());
+        startButton.onTrue( (robotContainer.getElevator().isAtPosition(ElevatorPosition.kGrabCoralPosition)).getAsBoolean() && (robotContainer.getPivot().isAtPosition(PivotPosition.kDownPosition).getAsBoolean()) ? ScoringCommands.flipScorerCommand() : GeneralCommands.moveScorerToIntakingPositionCommand());
     }
 
     private static void configLeftTrigger()

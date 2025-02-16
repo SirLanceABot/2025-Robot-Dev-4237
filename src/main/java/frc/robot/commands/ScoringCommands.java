@@ -253,8 +253,12 @@ public final class ScoringCommands
         if(elevator != null && pivot != null)
         {
             return
-            Commands.waitUntil(pivot.isAtPosition(PivotPosition.kFlippedPosition))
-            .deadlineFor(pivot.moveToSetPositionCommand(PivotPosition.kFlippedPosition))
+            Commands.waitUntil(elevator.isAtPosition(ElevatorPosition.kSafeSwingPosition))
+                .deadlineFor(elevator.moveToSetPositionCommand(ElevatorPosition.kSafeSwingPosition))
+            .andThen(
+                Commands.waitUntil(pivot.isAtPosition(PivotPosition.kFlippedPosition))
+                .deadlineFor(
+                    pivot.moveToSetPositionCommand(PivotPosition.kFlippedPosition)))
             .andThen(
                 Commands.waitUntil(elevator.isAtPosition(ElevatorPosition.kHoldingPosition))
                 .deadlineFor(elevator.moveToSetPositionCommand(ElevatorPosition.kHoldingPosition)))
@@ -314,7 +318,7 @@ public final class ScoringCommands
             .andThen(
                 GeneralCommands.driveToPositionCommand(targetPose, currentPose))
             .andThen(
-                finishScoringCoralCommand())
+                GeneralCommands.scoreCoralOnlyCommand())
             .withName("Autonomous Score Command");
         }
         else
