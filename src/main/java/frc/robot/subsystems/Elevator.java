@@ -1,5 +1,6 @@
 package frc.robot.subsystems;
-
+// I love you pookie Logan <3 UwU
+// -- Saathvik
 import java.lang.invoke.MethodHandles;
 import java.util.function.BooleanSupplier;
 
@@ -11,6 +12,7 @@ import edu.wpi.first.util.datalog.DoubleLogEntry;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import frc.robot.Constants;
+import frc.robot.motors.SparkMaxLance;
 // import frc.robot.Constants.TargetPosition;
 import frc.robot.motors.TalonFXLance;
 
@@ -60,8 +62,8 @@ public class Elevator extends SubsystemLance
     
     // *** CLASS VARIABLES & INSTANCE VARIABLES ***
     // Put all class variables and instance variables here
-    private final TalonFXLance leftMotor = new TalonFXLance(Constants.Elevator.LEFT_MOTOR_PORT, Constants.Elevator.LEFT_MOTOR_CAN_BUS, "Left Motor");
-    private final TalonFXLance rightMotor = new TalonFXLance(Constants.Elevator.RIGHT_MOTOR_PORT, Constants.Elevator.RIGHT_MOTOR_CAN_BUS, "Right Motor");
+    private final SparkMaxLance motor = new SparkMaxLance(Constants.Elevator.LEFT_MOTOR_PORT, Constants.Elevator.LEFT_MOTOR_CAN_BUS, "Left Motor");
+    // private final SparkMaxLance rightMotor = new SparkMaxLance(Constants.Elevator.RIGHT_MOTOR_PORT, Constants.Elevator.RIGHT_MOTOR_CAN_BUS, "Right Motor");
     // private SparkLimitSwitch forwardLimitSwitch;
     // private SparkLimitSwitch reverseLimitSwitch;
     // private RelativeEncoder encoder;
@@ -111,34 +113,34 @@ public class Elevator extends SubsystemLance
 
     private void configMotors()
     {
-        leftMotor.setupFactoryDefaults();
-        rightMotor.setupFactoryDefaults();
-        leftMotor.setupBrakeMode();
-        rightMotor.setupBrakeMode();
-        leftMotor.setPosition(1.0);
-        rightMotor.setPosition(1.0);
+        motor.setupFactoryDefaults();
+        // rightMotor.setupFactoryDefaults();
+        motor.setupBrakeMode();
+        // rightMotor.setupBrakeMode();
+        motor.setPosition(1.0);
+        // rightMotor.setPosition(1.0);
 
-        rightMotor.setupFollower(Constants.Elevator.LEFT_MOTOR_PORT, true);
+        // rightMotor.setupFollower(Constants.Elevator.LEFT_MOTOR_PORT, true);
 
-        leftMotor.setupForwardSoftLimit(150.0, true);
-        leftMotor.setupReverseSoftLimit(0.0, true);
-        leftMotor.setupForwardHardLimitSwitch(false, false);
-        leftMotor.setupReverseHardLimitSwitch(false, false);
+        motor.setupForwardSoftLimit(150.0, true);
+        motor.setupReverseSoftLimit(0.0, true);
+        motor.setupForwardHardLimitSwitch(false, false);
+        motor.setupReverseHardLimitSwitch(false, false);
 
-        leftMotor.setupPIDController(0, 1.0, 0.0, 0.0); // TODO tune this
+        motor.setupPIDController(0, 1.0, 0.0, 0.0); // TODO tune this
 
         // Configure PID Controller
     }
 
     public double getLeftPosition()
     {
-        return leftMotor.getPosition();
+        return motor.getPosition();
     }
 
-    public double getRightPosition()
-    {
-        return rightMotor.getPosition();
-    }
+    // public double getRightPosition()
+    // {
+    //     return rightMotor.getPosition();
+    // }
 
     // public void moveToPosition(Constants.TargetPosition targetPosition)
     // {
@@ -195,22 +197,22 @@ public class Elevator extends SubsystemLance
         //     stop();
         // }
 
-        leftMotor.setControlPosition(targetPosition.elevatorPosition);
+        motor.setControlPosition(targetPosition.elevatorPosition);
     }
 
     private void set(double speed)
     {
-        leftMotor.set(MathUtil.clamp(speed, MIN_OUTPUT, MAX_OUTPUT));
+        motor.set(MathUtil.clamp(speed, MIN_OUTPUT, MAX_OUTPUT));
     }
 
     public void stop()
     {
-        leftMotor.set(0.0);
+        motor.set(0.0);
     }
 
     public BooleanSupplier isAtPosition(ElevatorPosition position)
     {
-        return () -> Math.abs(leftMotor.getPosition() - position.elevatorPosition) < threshold;
+        return () -> Math.abs(motor.getPosition() - position.elevatorPosition) < threshold;
     }
 
     public Command setCommand(double speed)

@@ -46,7 +46,8 @@ public class Climb extends SubsystemLance
 
     // *** CLASS VARIABLES & INSTANCE VARIABLES ***
     // Put all class variables and instance variables here
-    private final TalonFXLance motor = new TalonFXLance(Constants.Climb.MOTOR_PORT, Constants.Climb.MOTOR_CAN_BUS, "Climb Motor");
+    private final TalonFXLance leadMotor = new TalonFXLance(Constants.Climb.LEAD_MOTOR_PORT, Constants.Climb.MOTOR_CAN_BUS, "Climb Lead Motor");
+    private final TalonFXLance followMotor = new TalonFXLance(Constants.Climb.FOLLOW_MOTOR_PORT, Constants.Climb.MOTOR_CAN_BUS, "Climb Follow Motor");
 
 
     private final double FORWARD_SOFT_LIMIT = 1000.0;
@@ -82,17 +83,23 @@ public class Climb extends SubsystemLance
      */
     private void configMotors()
     {
-        motor.setupFactoryDefaults();
-        motor.setSafetyEnabled(false);
-        motor.setupBrakeMode();
+        leadMotor.setupFactoryDefaults();
+        followMotor.setupFactoryDefaults();
+        leadMotor.setSafetyEnabled(false);
+        followMotor.setSafetyEnabled(false);
+        leadMotor.setupBrakeMode();
+        followMotor.setupBrakeMode();
+        leadMotor.setupInverted(false);
 
-        motor.setupInverted(false);
-        motor.setPosition(0.0);
+        followMotor.setupFollower(Constants.Climb.LEAD_MOTOR_PORT, false);
+
+        leadMotor.setPosition(0.0);
+        followMotor.setPosition(0.0);
         
         // motor.setupPIDController(0, 0.0, 0.0, 0.0);
 
-        motor.setupForwardSoftLimit(FORWARD_SOFT_LIMIT, true);
-        motor.setupReverseSoftLimit(REVERSE_SOFT_LIMIT, true);
+        leadMotor.setupForwardSoftLimit(FORWARD_SOFT_LIMIT, true);
+        leadMotor.setupReverseSoftLimit(REVERSE_SOFT_LIMIT, true);
         // motor.setupForwardHardLimitSwitch(true, true);
         // motor.setupReverseHardLimitSwitch(true, true);
     }
@@ -103,7 +110,7 @@ public class Climb extends SubsystemLance
      */
     public double getPosition()
     {
-        return motor.getPosition();
+        return leadMotor.getPosition();
     }
 
     /**
@@ -112,7 +119,7 @@ public class Climb extends SubsystemLance
      */
     private void set(double speed)
     {
-        motor.set(MathUtil.clamp(speed, -0.5, 0.5));
+        leadMotor.set(MathUtil.clamp(speed, -0.5, 0.5));
     }
 
     /**
@@ -150,7 +157,7 @@ public class Climb extends SubsystemLance
         // }
 
         // position = motor.getPosition();
-        motor.setControlPosition(Constants.Climb.CLIMB_UP_CAGE_POSITION);
+        leadMotor.setControlPosition(Constants.Climb.CLIMB_UP_CAGE_POSITION);
     }
 
     /**
@@ -172,12 +179,12 @@ public class Climb extends SubsystemLance
         // }
 
         // position = motor.getPosition();
-        motor.setControlPosition(Constants.Climb.CLIMB_DOWN_CAGE_POSITION);
+        leadMotor.setControlPosition(Constants.Climb.CLIMB_DOWN_CAGE_POSITION);
     }
 
     public BooleanSupplier isAtPosition(Position position)
     {
-        return () -> Math.abs(motor.getPosition() - position.value) < POSITION_TOLERANCE;
+        return () -> Math.abs(leadMotor.getPosition() - position.value) < POSITION_TOLERANCE;
     }
 
     /**
@@ -249,6 +256,6 @@ public class Climb extends SubsystemLance
     @Override
     public String toString()
     {
-        return "Climb position = " + motor.getPosition();
+        return "Climb position = " + leadMotor.getPosition();
     }
 }

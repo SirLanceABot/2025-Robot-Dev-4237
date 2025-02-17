@@ -13,6 +13,7 @@ import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import frc.robot.Constants;
+import frc.robot.motors.SparkMaxLance;
 // import frc.robot.Constants.TargetPosition;
 // import frc.robot.motors.SparkMaxLance;
 import frc.robot.motors.TalonFXLance;
@@ -72,7 +73,7 @@ public class Pivot extends SubsystemLance
     private double motorSpeed = 0.0;
     
     // private final SparkMaxLance motor = new SparkMaxLance(Constants.Pivot.MOTOR_PORT, Constants.Pivot.MOTOR_CAN_BUS, "Pivot Motor");
-    private final TalonFXLance motor = new TalonFXLance(Constants.Pivot.MOTOR_PORT, Constants.Pivot.MOTOR_CAN_BUS, "Pivot Motor");
+    private final SparkMaxLance motor = new SparkMaxLance(Constants.Pivot.MOTOR_PORT, Constants.Pivot.MOTOR_CAN_BUS, "Pivot Motor");
     // private final SparkMaxLance followMotor = new SparkMaxLance(Constants.Pivot.LEFT_MOTOR_PORT, Constants.Pivot.MOTOR_CAN_BUS, "Left Pivot Motor");
 
     // private SparkLimitSwitch forwardLimitSwitch;
@@ -121,7 +122,7 @@ public class Pivot extends SubsystemLance
         motor.setupForwardHardLimitSwitch(false, false);
         motor.setupReverseHardLimitSwitch(false, false);
         
-        motor.setupPIDController(0, 2.5, 0, 0, 0.05, 0);
+        motor.setupPIDController(0, 2.5, 0.0, 0.0);
 
         //Configure PID Controller
         // pidController.setP(kP);

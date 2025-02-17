@@ -46,7 +46,8 @@ public final class Constants
 
     public static class Climb
     {
-        public static final int MOTOR_PORT                              = 0;
+        public static final int LEAD_MOTOR_PORT                              = 0;
+        public static final int FOLLOW_MOTOR_PORT                            = 0;
         public static final String MOTOR_CAN_BUS                        = CANIVORE;
 
         public static final double CLIMB_UP_CAGE_POSITION                    = 50.0;   // Check value once we have robot
