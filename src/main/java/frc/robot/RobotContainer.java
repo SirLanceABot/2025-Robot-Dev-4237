@@ -22,7 +22,6 @@ import frc.robot.subsystems.Pivot;
 import frc.robot.subsystems.PoseEstimator;
 import frc.robot.subsystems.Shuttle;
 import frc.robot.util.AutonomousTab;
-import frc.robot.util.DriverTab;
 
 public class RobotContainer 
 {
@@ -61,7 +60,6 @@ public class RobotContainer
     private boolean useOperatorController   = false;
 
     private boolean useAutonomousTab        = true;
-    private boolean useDriverTab            = true;
 
     public final boolean fullRobot;
 
@@ -90,7 +88,6 @@ public class RobotContainer
     private final CommandXboxController operatorController;
 
     public final AutonomousTab autonomousTab;
-    public final DriverTab driverTab;
     
 
     /** 
@@ -189,9 +186,6 @@ public class RobotContainer
                 ? new AutonomousTab()
                 : null;
 
-        driverTab      = (useFullRobot || useDriverTab)
-        ? new DriverTab()
-        : null;
         // operatorButtonBindings = (useFullRobot || useBindings)
         // ? new OperatorButtonBindings(this)
         // : null;
