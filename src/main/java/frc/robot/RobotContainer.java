@@ -52,8 +52,8 @@ public class RobotContainer
     private boolean usePoseEstimator        = false;
     private boolean useProximity            = false;
 
-    private boolean useScoringSideCamera    = false;
-    private boolean useClimbSideCamera      = false;
+    private boolean useScoringSideCamera    = false; // 10.42.37.12
+    private boolean useClimbSideCamera      = false; // 10.42.37.11
 
     // private boolean useDriverBindings       = false;
     // private boolean useOperatorBindings     = false;
