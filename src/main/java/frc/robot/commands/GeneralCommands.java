@@ -30,7 +30,7 @@ import frc.robot.subsystems.Claw;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.IntakeWrist;
 import frc.robot.subsystems.LEDs;
-import frc.robot.subsystems.LEDs;
+import frc.robot.subsystems.LEDs.ColorPattern;
 import frc.robot.subsystems.Pivot;
 import frc.robot.subsystems.Pivot.PivotPosition;
 
@@ -95,6 +95,47 @@ public final class GeneralCommands
         System.out.println("  Constructor Finished: " + fullClassName);
     }
 
+
+     /**
+     * Command to set the led color and pattern,
+     * use this so that leds don't break the robot when disabled
+     * @param pattern pattern of the led color(s)
+     * @param colors the color(s) of the led
+     * @return the command to set the led color and pattern
+     * @author Matthew Fontecchio
+     */
+    public static Command setLedCommand(ColorPattern pattern, Color... colors)
+    {
+        if(leds != null)
+        {
+            switch(pattern)
+            {
+                case kSolid:
+                    return colors != null ? leds.setColorSolidCommand(colors[0]) : Commands.none();
+                case kBlink:
+                    return colors != null ? leds.setColorBlinkCommand(colors) : Commands.none();
+                case kBreathe:
+                    return colors != null ? leds.setColorBreatheCommand(colors) : Commands.none();
+                case kGradient:
+                    return colors != null ? leds.setColorGradientCommand(colors) : Commands.none();
+                case kRainbow:
+                    return leds.setColorRainbowCommand();
+                case kOff:
+                    return leds.offCommand();
+                default:
+                    return Commands.none();
+            }
+        }
+        else
+        {
+            return Commands.none();
+        }
+             
+    }
+
+   
+
+
     /**
      * Moves the scorer to the position passed to the command  **USE moveScorerTo(insert position here) instead, uses logic to make sure we don't assassinate our claw on our source intake**
      * @param targetPosition position to move scorer to
@@ -103,12 +144,12 @@ public final class GeneralCommands
      */
     public static Command moveScorerToSetPositionCommand(TargetPosition targetPosition)
     {
-        if(elevator != null && pivot != null && leds != null)
+        if(elevator != null && pivot != null)
         {
             return
             Commands.waitUntil(() -> (elevator.isAtPosition(targetPosition.elevator).getAsBoolean() && pivot.isAtPosition(targetPosition.pivot).getAsBoolean()))
             .deadlineFor(
-                leds.setColorBlinkCommand(Color.kBlue),
+                setLedCommand(ColorPattern.kBlink, Color.kBlue),
                 elevator.moveToSetPositionCommand(targetPosition.elevator),
                 pivot.moveToSetPositionCommand(targetPosition.pivot))
             .withName("Move Scorer to Set Position Command");
@@ -121,10 +162,10 @@ public final class GeneralCommands
 
     public static Command moveScorerToL1Command()
     {
-        if(elevator != null && pivot != null && leds != null)
+        if(elevator != null && pivot != null)
         {
             return
-            leds.setColorBlinkCommand(Color.kBlue)
+            setLedCommand(ColorPattern.kBlink, Color.kBlue)
             .andThen(
                 Commands.either(
                 Commands.waitUntil(() -> (elevator.isAtPosition(ElevatorPosition.kL1).getAsBoolean() && pivot.isAtPosition(PivotPosition.kLowLevelCoralPosition).getAsBoolean()))
@@ -172,7 +213,7 @@ public final class GeneralCommands
 
     public static Command moveScorerToL2Commmand()
     {
-        if(elevator != null && pivot != null && leds != null)
+        if(elevator != null && pivot != null)
         {
             return
             Commands.either(
@@ -205,10 +246,10 @@ public final class GeneralCommands
 
     public static Command moveScorerToL3Command()
     {
-        if(elevator != null && pivot != null && leds != null)
+        if(elevator != null && pivot != null)
         {
             return
-            leds.setColorBlinkCommand(Color.kBlue)
+            setLedCommand(ColorPattern.kBlink, Color.kBlue)
             .andThen(
                 Commands.either(
                 Commands.waitUntil(() -> (elevator.isAtPosition(ElevatorPosition.kL3).getAsBoolean() && pivot.isAtPosition(PivotPosition.kLowLevelCoralPosition).getAsBoolean()))
@@ -243,7 +284,7 @@ public final class GeneralCommands
         if(elevator != null && pivot != null)
         {
             return
-            leds.setColorBlinkCommand(Color.kBlue)
+            setLedCommand(ColorPattern.kBlink, Color.kBlue)
             .andThen(
                 Commands.either(
                     
@@ -306,10 +347,10 @@ public final class GeneralCommands
 
     public static Command moveScorerToBargeCommand()
     {
-        if(elevator != null && pivot != null && leds != null)
+        if(elevator != null && pivot != null)
         {
             return
-            leds.setColorBlinkCommand(Color.kBlue)
+            setLedCommand(ColorPattern.kBlink, Color.kBlue)
             .andThen(
                 Commands.either(
 
@@ -337,10 +378,10 @@ public final class GeneralCommands
 
     public static Command moveScorerToProcessorCommand()
     {
-        if(elevator != null && pivot != null && leds != null)
+        if(elevator != null && pivot != null)
         {
             return
-            leds.setColorBlinkCommand(Color.kBlue)
+            setLedCommand(ColorPattern.kBlink, Color.kBlue)
             .andThen(
                 Commands.waitUntil(elevator.isAtPosition(ElevatorPosition.kScoreProcessorPosition))
                 .deadlineFor(
@@ -394,12 +435,12 @@ public final class GeneralCommands
      */
     public static Command climbUpCageCommand()
     {
-        if(elevator != null && pivot != null && intakeWrist != null &&climb != null && leds != null)
+        if(elevator != null && pivot != null && intakeWrist != null && climb != null)
         {
             return
             Commands.waitUntil(intakeWrist.isAtPosition(Position.kRestingPosition))
             .deadlineFor(
-                leds.setColorRainbowCommand(),
+                setLedCommand(ColorPattern.kRainbow),
                 elevator.moveToSetPositionCommand(ElevatorPosition.kHoldingPosition),
                 pivot.moveToSetPositionCommand(PivotPosition.kFlippedPosition),
                 intakeWrist.moveToSetPositionCommand(Position.kRestingPosition))
@@ -420,12 +461,12 @@ public final class GeneralCommands
      */
     public static Command climbDownCageCommand()
     {
-        if(elevator != null && pivot != null && intakeWrist != null && climb != null && leds != null)
+        if(elevator != null && pivot != null && intakeWrist != null && climb != null)
         {
             return
             Commands.waitUntil(intakeWrist.isAtPosition(Position.kRestingPosition))
             .deadlineFor(
-                leds.setColorRainbowCommand(),
+                setLedCommand(ColorPattern.kRainbow),
                 elevator.moveToSetPositionCommand(ElevatorPosition.kHoldingPosition),
                 pivot.moveToSetPositionCommand(PivotPosition.kFlippedPosition),
                 intakeWrist.moveToSetPositionCommand(Position.kRestingPosition))

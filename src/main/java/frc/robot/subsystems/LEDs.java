@@ -36,6 +36,15 @@ public class LEDs extends SubsystemLance
     // *** INNER ENUMS and INNER CLASSES ***
     // Put all inner enums and inner classes here
 
+    public enum ColorPattern
+    {
+        kSolid,
+        kBlink,
+        kBreathe,
+        kGradient,
+        kRainbow,
+        kOff;
+    }
     // public enum Color
     // {
     //     kRed(255, 0, 0),
@@ -232,6 +241,8 @@ public class LEDs extends SubsystemLance
     {
         return run(() -> setColorBlink(colors)).withName("Set LED Blink");
     }
+
+    
 
     
 
