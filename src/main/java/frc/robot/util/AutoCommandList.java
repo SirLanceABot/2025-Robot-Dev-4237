@@ -8,6 +8,7 @@ import java.lang.invoke.MethodHandles;
 
 import com.pathplanner.lib.auto.AutoBuilder;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.RobotContainer;
@@ -101,6 +102,7 @@ public class AutoCommandList extends SequentialCommandGroup
             // pathPlannerString += autonomousTabData.scoreExtraNotes;
         System.out.println("Test string");
         System.out.println(pathPlannerString);
+        //SmartDashboard.putString(pathPlannerString);
 
         //if (pathPlannerString == "StartingSide Amp --")
         add(AutoBuilder.buildAuto(pathPlannerString));

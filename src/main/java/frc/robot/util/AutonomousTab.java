@@ -7,6 +7,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.pathplanner.lib.auto.AutoBuilder;
+
 import edu.wpi.first.math.estimator.PoseEstimator;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
@@ -31,7 +33,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.CommandSwerveDrivetrain;
 import frc.robot.util.AutoCommandList;
-// import frc.robot.RobotContainer;
+import frc.robot.RobotContainer;
 import frc.robot.util.AutonomousTabData.Right_Wall;
 import edu.wpi.first.util.sendable.SendableRegistry;
 
@@ -56,11 +58,10 @@ public class AutonomousTab
 
     // *** CLASS & INSTANCE VARIABLES ***
     // Create a Shuffleboard Tab
-    //private ShuffleboardTab autonomousTab = Shuffleboard.getTab("Autonomous");
     private final AutonomousTabData autonomousTabData = new AutonomousTabData();
     // Create the Autonomous Command List that will be scheduled to run during autonomousInit()
-    // private Command autonomousCommand = null;
-    // private RobotContainer robotContainer;
+    private Command autonomousCommand = null;
+    private RobotContainer robotContainer;
     private Field2d autofield = new Field2d();
     private Field2d field = new Field2d();
     private CommandSwerveDrivetrain drivetrain;
@@ -151,9 +152,6 @@ public class AutonomousTab
     */
     private void createLeftWallBox()
     {
-        //create and name the Box
-        // SendableRegistry.add(leftWallBox, "Left Wall");
-        // SendableRegistry.setName(leftWallBox, "Left Wall");
         
         //add options to  Box
         leftWallBox.setDefaultOption("Not This Side", AutonomousTabData.Left_Wall.kNo);
@@ -165,9 +163,6 @@ public class AutonomousTab
 
     private void createRightWallBox()
     {
-        //create and name the Box
-        // SendableRegistry.add(rightWallBox, "Right Wall");
-        // SendableRegistry.setName(rightWallBox, "Right Wall");
         
         //add options to  Box
         rightWallBox.setDefaultOption("Not This Side", AutonomousTabData.Right_Wall.kNo);
@@ -175,11 +170,6 @@ public class AutonomousTab
         rightWallBox.addOption(" -- Score_Coral_3 -- Score_Algae_0", AutonomousTabData.Right_Wall.kCoral3Algae0);
         rightWallBox.addOption(" -- Score_Coral_1 -- Score_Algae_2", AutonomousTabData.Right_Wall.kCoral4Algae0);
         SmartDashboard.putData("Right Wall", rightWallBox);
-        //put the widget on the shuffleboard
-        // autonomousTab.add(rightWallBox)
-        //     .withWidget(BuiltInWidgets.kSplitButtonChooser)
-        //     .withPosition(1, 1)
-        //     .withSize(5, 3);
     }
 
     private void createMiddleBox()
@@ -194,31 +184,7 @@ public class AutonomousTab
         SmartDashboard.putData("Middle", middleBox);
     }
 
-    {
     
-    
-
-    }
-    // private void createScoreCoralBox()
-    // {
-    //     //create and name the Box
-    //     SendableRegistry.add(scoreCoralBox, "Score Coral?");
-    //     SendableRegistry.setName(scoreCoralBox, "Score Coral?");
-        
-    //     //add options to  Box
-    //     scoreCoralBox.addOption("0", AutonomousTabData.Score_Coral_.k0);
-    //     scoreCoralBox.setDefaultOption("1", AutonomousTabData.Score_Coral_.k1);
-    //     scoreCoralBox.addOption("2", AutonomousTabData.Score_Coral_.k2);
-    //     scoreCoralBox.addOption("3", AutonomousTabData.Score_Coral_.k3);
-    //     scoreCoralBox.addOption("4", AutonomousTabData.Score_Coral_.k4);
-        
-
-    //     //put the widget on the shuffleboard
-    //     autonomousTab.add(scoreCoralBox)
-    //         .withWidget(BuiltInWidgets.kSplitButtonChooser)
-    //         .withPosition(6, 1)
-    //         .withSize(5, 3);
-    // }
 
     // private void createSitPrettyBox()
     // {
@@ -237,23 +203,6 @@ public class AutonomousTab
     //         .withSize(3, 3);
     // }
 
-    // private void createStageBox()
-    // {
-    //     //create and name the box
-    //     SendableRegistry.add(stageBox,"Stage Positioning");
-    //     SendableRegistry.setName(stageBox,"Stage  Positioning");
-
-    //     //add options to Box
-    //     stageBox.setDefaultOption("None", AutonomousTabData.StagePositioning.kNone);
-    //     // stageBox.addOption("Around Stage", AutonomousTabData.StagePositioning.kAroundStage);
-    //     stageBox.addOption("Through Stage", AutonomousTabData.StagePositioning.kThroughStage);
-
-    //     //put the widget on the shuffleboard
-    //     autonomousTab.add(stageBox)
-    //         .withWidget(BuiltInWidgets.kSplitButtonChooser)
-    //         .withPosition(1,4)
-    //         .withSize(8, 3);
-    // }
 
     /**
      * <b>Send Data</b> Button
@@ -261,8 +210,7 @@ public class AutonomousTab
      */
     private void createSendDataButton()
     {
-        SendableRegistry.add(sendDataButton, "Send Data");
-        SendableRegistry.setName(sendDataButton, "Send Data");
+
 
         sendDataButton.setDefaultOption("No", false);
         sendDataButton.addOption("Yes", true);
@@ -436,32 +384,32 @@ public class AutonomousTab
     //     return autoCommandList;
     // }
 
-    // public void updateIsAutoValid()
-    // {
-    //     String msgAuto = "";
-    //     boolean autoExists = true;
+    public void updateIsAutoValid()
+    {
+        String msgAuto = "";
+        boolean autoExists = true;
 
-    //     // autonomousCommand = new AutoCommandList(robotContainer, autonomousTabData);
-    //     autonomousTabData.createPathPlannerStringAndCommand();
-    //     autonomousCommand = autonomousTabData.getPathPlannerCommand();
+        autonomousCommand = new AutoCommandList(robotContainer, autonomousTabData);
+        autonomousTabData.createPathPlannerStringAndCommand();
+        autonomousCommand = autonomousTabData.getPathPlannerCommand();
 
-    //     // if(!AutoBuilder.getAllAutoNames().contains(AutoCommandList.pathPlannerString))
-    //     if(!AutoBuilder.getAllAutoNames().contains(autonomousTabData.getPathPlannerString()))
-    //     {
-    //         // add(AutoBuilder.buildAuto(AutoCommandList.pathPlannerString));
-    //         autoExists = false;
-    //         //doesAutonomousExist.setBoolean(false);
+        // if(!AutoBuilder.getAllAutoNames().contains(AutoCommandList.pathPlannerString))
+        if(!AutoBuilder.getAllAutoNames().contains(autonomousTabData.getPathPlannerString()))
+        {
+            // add(AutoBuilder.buildAuto(AutoCommandList.pathPlannerString));
+            autoExists = false;
+            //doesAutonomousExist.setBoolean(false);
 
-    //         msgAuto = " [Selected Autonomous Path does NOT exist ]\n";
+            msgAuto = " [Selected Autonomous Path does NOT exist ]\n";
             
-    //     }
+        }
 
     //     if(!autoExists)
     //         errorMessage += msgAuto;
 
     //     isAutoValid = autoExists;
 
-    // }
+    }
 
     public Command getAutonomousCommand()
     {
@@ -483,12 +431,12 @@ public class AutonomousTab
         return autonomousTabData.middle;
     }
 
-//     public void updateIsDataValidAndErrorMessage()
-//     {
-//         //errorMessage = "";
-//         String msgValid = "";
-//         boolean isValid = true;
-//         //autonomousNameBox.setString(AutoCommandList.pathPlannerString);
+    public void updateIsDataValidAndErrorMessage()
+    {
+        //errorMessage = "";
+        String msgValid = "";
+        boolean isValid = true;
+        //autonomousNameBox.setString(AutoCommandList.pathPlannerString);
         
 
 //         boolean isSitPretty =
@@ -528,5 +476,5 @@ public class AutonomousTab
 
     
     
-
+    }
 }
