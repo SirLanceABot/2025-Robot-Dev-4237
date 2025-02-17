@@ -53,6 +53,14 @@ public class GyroLance extends SensorLance
     public static final double RESET_DELAY = 0.1;
 
 
+    //Starting Yaw positions
+    public final double BLUE_LEFT_YAW = 180.0;
+    public final double BLUE_MIDDLE_YAW = 90.0;
+    public final double BLUE_RIGHT_YAW = 0.0;
+    public final double RED_LEFT_YAW = 0.0;
+    public final double RED_MIDDLE_YAW = -90.0;
+    public final double RED_RIGHT_YAW = 180.0;
+
     //TODO find out gyro port
     private final Pigeon2 gyro;// = new Pigeon2(0, "CANivore");
     private ResetState resetState = ResetState.kDone;

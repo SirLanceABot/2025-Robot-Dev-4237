@@ -201,6 +201,43 @@ public class RobotContainer
         // : null;
     }
 
+    // public void resetRobot(AutonomousTabData.StartingSide startingLocation)
+    // {   
+    //     if(gyro != null)
+    //     {
+    //         if(isRedAllianceSupplier().getAsBoolean())
+    //         {
+    //             switch(startingLocation)
+    //             {
+    //                 case :
+    //                     gyro.setYaw(gyro.RED_LEFT_YAW);
+    //                     break;
+    //                 case :
+    //                     gyro.setYaw(gyro.RED_MIDDLE_YAW);
+    //                     break;
+    //                 case :
+    //                     gyro.setYaw(gyro.RED_RIGHT_YAW);
+    //                     break;
+    //             }
+    //         }
+    //         else
+    //         {
+    //             switch(startingLocation)
+    //             {
+    //                 case :
+    //                     gyro.setYaw(gyro.BLUE_LEFT_YAW);
+    //                     break;
+    //                 case :
+    //                     gyro.setYaw(gyro.BLUE_MIDDLE_YAW);
+    //                     break;
+    //                 case :
+    //                     gyro.setYaw(gyro.BLUE_RIGHT_YAW);
+    //                     break;
+    //             }
+    //         }
+    //     }
+    // }
+
     public Claw getClaw()
     {
         return claw;
