@@ -14,6 +14,8 @@ import frc.robot.controls.DriverBindings;
 import frc.robot.controls.OperatorBindings;
 import frc.robot.loggers.DataLogFile;
 import frc.robot.motors.MotorControllerLance;
+import frc.robot.util.AutonomousTab;
+
 
 public class Robot extends TimedRobot 
 {
@@ -30,6 +32,7 @@ public class Robot extends TimedRobot
     private final RobotContainer robotContainer;
     private Command autonomousCommand = null;
     private TestMode testMode = null;
+    private boolean isRedAlliance;
     // private CommandSwerveDrivetrain drivetrain;
 
 
@@ -71,6 +74,8 @@ public class Robot extends TimedRobot
         if(robotContainer.getCommandSwerveDrivetrain() != null)
             SmartDashboard.putNumber("Speed", robotContainer.getCommandSwerveDrivetrain().getState().Speeds.vxMetersPerSecond);
 
+        isRedAlliance = robotContainer.isRedAllianceSupplier().getAsBoolean();
+
         // Runs the Scheduler.  This is responsible for polling buttons, adding newly-scheduled
         // commands, running already-scheduled commands, removing finished or interrupted commands,
         // and running subsystem periodic() methods.  This must be called from the robot's periodic
@@ -97,7 +102,9 @@ public class Robot extends TimedRobot
      */
     @Override
     public void disabledPeriodic() 
-    {}
+    {
+        robotContainer.resetRobot(robotContainer.autonomousTab.getLeftWall(), robotContainer.autonomousTab.getMiddle(), robotContainer.autonomousTab.getRightWall());
+    }
 
     /**
      * This method runs one time when the robot exits disabled mode.
@@ -118,6 +125,8 @@ public class Robot extends TimedRobot
         {
             autonomousCommand.schedule();
         }
+
+        robotContainer.resetRobot(robotContainer.autonomousTab.getLeftWall(), robotContainer.autonomousTab.getMiddle(), robotContainer.autonomousTab.getRightWall());
     }
 
     /**

@@ -3,6 +3,8 @@ package frc.robot;
 import java.lang.invoke.MethodHandles;
 import java.util.function.BooleanSupplier;
 
+import javax.lang.model.util.ElementScanner14;
+
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
@@ -22,6 +24,10 @@ import frc.robot.subsystems.Pivot;
 import frc.robot.subsystems.PoseEstimator;
 import frc.robot.subsystems.Shuttle;
 import frc.robot.util.AutonomousTab;
+import frc.robot.util.AutonomousTabData;
+import frc.robot.util.AutonomousTabData.Left_Wall;
+import frc.robot.util.AutonomousTabData.Middle;
+import frc.robot.util.AutonomousTabData.Right_Wall;
 
 public class RobotContainer 
 {
@@ -195,42 +201,54 @@ public class RobotContainer
         // : null;
     }
 
-    // public void resetRobot(AutonomousTabData.StartingSide startingLocation)
-    // {   
-    //     if(gyro != null)
-    //     {
-    //         if(isRedAllianceSupplier().getAsBoolean())
-    //         {
-    //             switch(startingLocation)
-    //             {
-    //                 case :
-    //                     gyro.setYaw(gyro.RED_LEFT_YAW);
-    //                     break;
-    //                 case :
-    //                     gyro.setYaw(gyro.RED_MIDDLE_YAW);
-    //                     break;
-    //                 case :
-    //                     gyro.setYaw(gyro.RED_RIGHT_YAW);
-    //                     break;
-    //             }
-    //         }
-    //         else
-    //         {
-    //             switch(startingLocation)
-    //             {
-    //                 case :
-    //                     gyro.setYaw(gyro.BLUE_LEFT_YAW);
-    //                     break;
-    //                 case :
-    //                     gyro.setYaw(gyro.BLUE_MIDDLE_YAW);
-    //                     break;
-    //                 case :
-    //                     gyro.setYaw(gyro.BLUE_RIGHT_YAW);
-    //                     break;
-    //             }
-    //         }
-    //     }
-    // }
+    public void resetRobot(AutonomousTabData.Left_Wall leftWall, AutonomousTabData.Middle middle, AutonomousTabData.Right_Wall rightWall)
+    {   
+        leftWall = autonomousTab.getLeftWall();
+        middle = autonomousTab.getMiddle();
+        rightWall = autonomousTab.getRightWall();
+
+        if(gyro != null)
+        {
+            if(isRedAllianceSupplier().getAsBoolean())
+            {
+                if(leftWall != Left_Wall.kNo)
+                {
+                    gyro.setYaw(gyro.RED_LEFT_YAW);
+                }
+                else if(middle != Middle.kNo)
+                {
+                    gyro.setYaw(gyro.RED_MIDDLE_YAW);
+                }
+                else if(rightWall != Right_Wall.kNo)
+                {
+                    gyro.setYaw(gyro.RED_RIGHT_YAW);
+                }
+                else
+                {
+                    gyro.setYaw(0);
+                }
+            }
+            else
+            {
+                if(leftWall != Left_Wall.kNo)
+                {
+                    gyro.setYaw(gyro.BLUE_LEFT_YAW);
+                }
+                else if(middle != Middle.kNo)
+                {
+                    gyro.setYaw(gyro.BLUE_MIDDLE_YAW);
+                }
+                else if(rightWall != Right_Wall.kNo)
+                {
+                    gyro.setYaw(gyro.BLUE_RIGHT_YAW);
+                }
+                else
+                {
+                    gyro.setYaw(180);
+                }
+            }
+        }
+    }
 
     public Claw getClaw()
     {
