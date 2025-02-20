@@ -81,6 +81,9 @@ public class Robot extends TimedRobot
         // and running subsystem periodic() methods.  This must be called from the robot's periodic
         // block in order for anything in the Command-based framework to work.
         CommandScheduler.getInstance().run();
+
+        //Display poseEstimator pose
+        // System.out.println("X = " + ((int)(robotContainer.getPoseEstimator().getEstimatedPose().getX() * 100)) / 100.0 + "   Y = " + ((int)(robotContainer.getPoseEstimator().getEstimatedPose().getY() * 100)) / 100.0);
     }
 
     /**

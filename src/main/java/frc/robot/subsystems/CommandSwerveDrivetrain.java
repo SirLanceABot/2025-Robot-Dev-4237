@@ -296,9 +296,9 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
     {
         return applyRequest(
             () -> drive
-                .withVelocityX(leftYAxis.getAsDouble() * (TunerConstants.MaxDriveSpeed * setScaleFactor.getAsDouble()))
-                .withVelocityY(leftXAxis.getAsDouble() * (TunerConstants.MaxDriveSpeed * setScaleFactor.getAsDouble()))
-                .withRotationalRate(rightXAxis.getAsDouble() * TunerConstants.MaxAngularRate * setScaleFactor.getAsDouble())
+                .withVelocityX((leftYAxis.getAsDouble() * (TunerConstants.MaxDriveSpeed * setScaleFactor.getAsDouble())) / 4.0)
+                .withVelocityY((leftXAxis.getAsDouble() * (TunerConstants.MaxDriveSpeed * setScaleFactor.getAsDouble())) / 4.0)
+                .withRotationalRate((rightXAxis.getAsDouble() * TunerConstants.MaxAngularRate * setScaleFactor.getAsDouble()) / 4.0)
         );
     }
 
