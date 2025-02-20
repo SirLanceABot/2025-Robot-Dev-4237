@@ -77,7 +77,7 @@ public class Intake extends SubsystemLance
         // Do Not Invert Motor Direction
         motor.setupInverted(true); // set to true
         // Set Coast Mode
-        motor.setupCoastMode();
+        motor.setupBrakeMode();
 
         // motor.setupVelocityConversionFactor(RPM_TO_FPS);
 
@@ -108,12 +108,12 @@ public class Intake extends SubsystemLance
 
     public void pickupCoral() 
     {
-        set(0.25);
+        set(0.9);
     }
 
     public void ejectCoral() 
     {
-        set(-0.25);
+        set(-0.9);
     }
 
     public void pickupAlgae()

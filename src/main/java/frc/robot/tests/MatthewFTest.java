@@ -5,6 +5,8 @@ import java.lang.invoke.MethodHandles;
 import edu.wpi.first.wpilibj.Joystick;
 import frc.robot.RobotContainer;
 import frc.robot.subsystems.Intake;
+import frc.robot.subsystems.IntakeWrist;
+import frc.robot.subsystems.IntakeWrist.Position;
 
 @SuppressWarnings("unused")
 public class MatthewFTest implements Test
@@ -32,6 +34,7 @@ public class MatthewFTest implements Test
     // private final ExampleSubsystem exampleSubsystem;
     private final Joystick joystick = new Joystick(0);
     private final Intake intake;
+    private final IntakeWrist intakeWrist;
     
 
 
@@ -48,6 +51,7 @@ public class MatthewFTest implements Test
 
         this.robotContainer = robotContainer;
         this.intake = robotContainer.getIntake();
+        this.intakeWrist = robotContainer.getIntakeWrist();
         // this.exampleSubsystem = robotContainer.exampleSubsystem;
 
         System.out.println("  Constructor Finished: " + fullClassName);
@@ -76,18 +80,37 @@ public class MatthewFTest implements Test
         
         if (joystick.getRawButton(1))
         {
+            intakeWrist.moveToSetPositionCommand(Position.kIntakeCoralPosition).schedule();
             // intake.pickupCoralCommand().schedule();
-            intake.pickupAlgaeCommand().schedule();
         }
         else if (joystick.getRawButton(2))
         {
-            intake.ejectAlgaeCommand().schedule();
+            intakeWrist.moveToSetPositionCommand(Position.kManipAlgaePosition).schedule();
             // intake.ejectCoralCommand().schedule();
         }
-        else if (joystick.getRawButton(3))
+        else if(joystick.getRawButton(4))
+        {
+            intakeWrist.moveToSetPositionCommand(Position.kRestingPosition).schedule();
+        }
+        else
+        {
+            intakeWrist.stopCommand().schedule();
+        } 
+
+        if(joystick.getRawButton(5))
+        {
+            intake.pickupCoralCommand().schedule();
+        }
+        else if(joystick.getRawButton(6))
+        {
+            intake.ejectCoralCommand().schedule();
+        }
+        else
         {
             intake.stopCommand().schedule();
-        } 
+        }
+
+        System.out.println(intakeWrist.toString());
     }
     
     /**
@@ -95,6 +118,7 @@ public class MatthewFTest implements Test
      */
     public void exit()
     {
+        intakeWrist.stopCommand().schedule();
         intake.stopCommand().schedule();
     } 
 }

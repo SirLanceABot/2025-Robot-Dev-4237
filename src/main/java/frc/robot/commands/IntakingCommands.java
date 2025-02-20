@@ -106,10 +106,10 @@ public final class IntakingCommands
                     elevator.moveToSetPositionCommand(ElevatorPosition.kReadyToGrabCoralPosition),
                     pivot.moveToSetPositionCommand(PivotPosition.kDownPosition)))
             .andThen(
-                Commands.waitUntil(intakeWrist.isAtPosition(Position.kPassToClawPosition))
+                Commands.waitUntil(intakeWrist.isAtPosition(Position.kRestingPosition))
                 .deadlineFor(
                     intake.stopCommand(),
-                    intakeWrist.moveToSetPositionCommand(Position.kPassToClawPosition)))
+                    intakeWrist.moveToSetPositionCommand(Position.kRestingPosition)))
             .andThen(
                     Commands.waitUntil(elevatorProximity.isDetectedSupplier())
                     .deadlineFor(
@@ -175,9 +175,9 @@ public final class IntakingCommands
                 intakeWrist.moveToSetPositionCommand(Position.kManipAlgaePosition),
                 intake.pickupCoralCommand())
             .andThen(
-                Commands.waitUntil(intakeWrist.isAtPosition(Position.kAlgaeIntakedPosition))
+                Commands.waitUntil(intakeWrist.isAtPosition(Position.kManipAlgaePosition))
                 .deadlineFor(
-                    intakeWrist.moveToSetPositionCommand(Position.kAlgaeIntakedPosition),
+                    intakeWrist.moveToSetPositionCommand(Position.kManipAlgaePosition),
                     intake.stopCommand()))
             .andThen(GeneralCommands.setLedCommand(ColorPattern.kSolid, Color.kRed))
             .withName("Intake Algae From Ground Command");

@@ -29,11 +29,9 @@ public class IntakeWrist extends SubsystemLance
     // Put all inner enums and inner classes here
     public enum Position
     {
-        kIntakeCoralPosition(0.0),
-        kManipAlgaePosition(1.0),
-        kAlgaeIntakedPosition(5.0),
-        kRestingPosition(10.0),
-        kPassToClawPosition(30.0);
+        kIntakeCoralPosition(9.25), //TODO these positions do not correlate with the position the motor tells us
+        kManipAlgaePosition(5.7622),
+        kRestingPosition(0.0);
 
         double value;
 
@@ -54,7 +52,7 @@ public class IntakeWrist extends SubsystemLance
     private static final double kI = 0.0;
     private static final double kD = 0.0;
 
-    private final double tolerance = 1.0;
+    private final double tolerance = 0.05;
 
     // *** CLASS CONSTRUCTORS ***
     // Put all class constructors here
@@ -88,6 +86,8 @@ public class IntakeWrist extends SubsystemLance
         motor.setupFactoryDefaults();
         motor.setupBrakeMode();
         motor.setPosition(0.0);
+        // motor.setupForwardSoftLimit(20.0, false); //values for testing
+        // motor.setupReverseSoftLimit(10.0, false); //values for testing
 
         motor.setupPIDController(0, kP, kI, kD);
     }
@@ -149,6 +149,16 @@ public class IntakeWrist extends SubsystemLance
     public Command moveToSetPositionCommand(Position targetPosition)
     {
         return run(() -> moveToPosition(targetPosition)).withName("Move To Set Position Intake Wrist");
+    }
+
+    public Command moveUpCommand() //For testing
+    {
+        return run(() -> set(0.05));
+    }
+
+    public Command moveDownCommand() //For testing
+    {
+        return run(() -> set(-0.05));
     }
 
     public Command stopCommand()
