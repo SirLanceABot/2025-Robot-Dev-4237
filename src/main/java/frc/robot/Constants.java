@@ -60,24 +60,25 @@ public final class Constants
         public static final int OPERATOR_CONTROLLER_PORT                = 1;
     }
 
-    public static class Drivetrain
-    {
-        public static int FRONT_LEFT_DRIVE_PORT                         = 0;
-        public static int FRONT_LEFT_TURN_PORT                          = 0;
-        public static int FRONT_LEFT_ENCODER_PORT                       = 0;
+    //Drivetrain uses the TunerConstants class for its constants
+    // public static class Drivetrain
+    // {
+    //     public static int FRONT_LEFT_DRIVE_PORT                         = 7;
+    //     public static int FRONT_LEFT_STEER_PORT                          = 9;
+    //     public static int FRONT_LEFT_ENCODER_PORT                       = 8;
 
-        public static int FRONT_RIGHT_DRIVE_PORT                        = 0;
-        public static int FRONT_RIGHT_TURN_PORT                         = 0;
-        public static int FRONT_RIGHT_ENCODER_PORT                      = 0;
+    //     public static int FRONT_RIGHT_DRIVE_PORT                        = 10;
+    //     public static int FRONT_RIGHT_STEER_PORT                         = 12;
+    //     public static int FRONT_RIGHT_ENCODER_PORT                      = 11;
 
-        public static int BACK_LEFT_DRIVE_PORT                          = 0;
-        public static int BACK_LEFT_TURN_PORT                           = 0;
-        public static int BACK_LEFT_ENCODER_PORT                        = 0;
+    //     public static int BACK_LEFT_DRIVE_PORT                          = 4;
+    //     public static int BACK_LEFT_STEER_PORT                           = 6;
+    //     public static int BACK_LEFT_ENCODER_PORT                        = 5;
 
-        public static int BACK_RIGHT_DRIVE_PORT                         = 0;
-        public static int BACK_RIGHT_TURN_PORT                          = 0;
-        public static int BACK_RIGHT_ENCODER_PORT                       = 0;
-    }
+    //     public static int BACK_RIGHT_DRIVE_PORT                         = 1;
+    //     public static int BACK_RIGHT_STEER_PORT                          = 3;
+    //     public static int BACK_RIGHT_ENCODER_PORT                       = 2;
+    // }
 
     public static class Elevator
     {
