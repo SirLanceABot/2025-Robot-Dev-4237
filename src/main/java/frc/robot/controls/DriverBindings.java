@@ -71,21 +71,21 @@ public final class DriverBindings {
 
             configSuppliers();
 
-            configAButton();
-            configBButton();
+            // configAButton();
+            // configBButton();
             configXButton();
-            configYButton();
+            // configYButton();
             configLeftBumper();
-            configRightBumper();
-            configBackButton();
-            configStartButton();
+            // configRightBumper();
+            // configBackButton();
+            // configStartButton();
             configLeftTrigger();
-            configRightTrigger();
-            configLeftStick();
-            configRightStick();
-            configDpadUp();
-            configDpadDown();
-            configRumble(3);
+            // configRightTrigger();
+            // configLeftStick();
+            // configRightStick();
+            // configDpadUp();
+            // configDpadDown(); 
+            // configRumble(3);
             configDefaultCommands();
 
             System.out.println("  Constructor Finished: " + fullClassName);
