@@ -41,13 +41,13 @@ public class Pivot extends SubsystemLance
 
     public enum PivotPosition
     {
-        kDownPosition(180.0),
-        kHoldAlgaePosition(150.0),
-        kScoreProcessorPosition(130.0),
-        kReefAlgaePosition(90.0),
-        kL4(20.0),
+        kDownPosition(115.9),
+        kHoldAlgaePosition(100.0),
+        kScoreProcessorPosition(91.5),
+        kReefAlgaePosition(60.0),
+        kL4(41.7),
         kScoreBargePosition(15.0),
-        kLowLevelCoralPosition(10.0),
+        kLowLevelCoralPosition(20.0),
         kFlippedPosition(0.0);
 
         public final double pivotPosition;
@@ -119,8 +119,8 @@ public class Pivot extends SubsystemLance
         // leadMotor.setupFollower(Constants.Pivot.RIGHT_MOTOR_PORT, true);
 
     //     // Hard Limits
-        motor.setupForwardHardLimitSwitch(false, false);
-        motor.setupReverseHardLimitSwitch(false, false);
+        // motor.setupForwardHardLimitSwitch(false, false);
+        // motor.setupReverseHardLimitSwitch(false, false);
         
         motor.setupPIDController(0, 2.5, 0.0, 0.0);
 
@@ -137,10 +137,10 @@ public class Pivot extends SubsystemLance
     // * This turns on the motor.
     // * @param motorSpeed
     // */
-    private void set(double motorSpeed)
+    public void set(double motorSpeed)
     {
         // targetPosition = Constants.TargetPosition.kOverride;
-        motor.set( MathUtil.clamp(motorSpeed, -0.2, 0.2));
+        motor.set( MathUtil.clamp(motorSpeed, -0.4, 0.4));
     }
 
     public void stop()

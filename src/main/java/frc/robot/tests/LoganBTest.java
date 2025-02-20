@@ -100,55 +100,75 @@ public class LoganBTest implements Test
      */
     public void periodic()
     {
-        if(joystick.getRawButton(1)) // A button
+        if(joystick.getRawButton(1))
         {
-            poseEstimator.setPlacingSideToLeftCommand().schedule();
-            System.out.println("Placing side set to Left");
+            pivot.set(0.2);
         }
         else if(joystick.getRawButton(2))
         {
-            poseEstimator.setPlacingSideToRightCommand().schedule();
-            System.out.println("Placing side set to Right");
+            pivot.set(-0.2);
         }
-        else if(joystick.getRawButton(3))
+        else
         {
-            // TODO: SET THE CLIMB SIDE LL IN ROBOOTCONTAINER TO TRUE (OR SCORING SIDE IF
-            // WE ARE USING THE OTHER ONE. MAKE SURE YOU USE THE RIGHT CAMERA OBJECT!!!!
-            // TODO: DOUBLE CHECK THE LL IS NAMED CORRECTLY
-            // TODO: DOUBLE CHECK LL IS ON MOST RECENT 2024 FIRMWARE
-
-            // Retrieve the current estimated pose and the nearest scoring pose
-            // Pose2d currentPose = poseEstimator.getEstimatedPose();
-            Pose2d currentPose = climbSideLimelight.getPose();
-            int tagId = (int) climbSideLimelight.getTagId();
-            boolean validTagInFrame = climbSideLimelight.isValidTagInFrame();
-            int tagCount = climbSideLimelight.getTagCount();
-
-            // print out the primary tagId as well as the number of tags from the mt2 pose
-            System.out.printf("Primary Tag ID: %d | Valid Tag: %b | Tag Count: %d%n",
-                    tagId, validTagInFrame, tagCount);
-
-            if(tagCount != 0 && tagId != -1)
-            {
-                boolean isRightBranch = poseEstimator.getIsRightBranch();
-                Pose2d scoringPose = poseEstimator.closestBranchLocation(tagId, isRightBranch);
-
-                // Calculate the total distance between the current pose and the scoring pose
-                Transform2d poseDifference = scoringPose.minus(currentPose);
-                double distance = climbSideLimelight.avgTagDistance();
-
-                // Print all relevant info on one line
-                System.out.printf("Pose: (X: %.2f, Y: %.2f) | Scoring Node: (X: %.2f, Y: %.2f, Rot: %s) | Distance: %.2f%n",
-                        currentPose.getX(), currentPose.getY(),
-                        scoringPose.getX(), scoringPose.getY(), scoringPose.getRotation(),
-                        distance);
-            }
-            else 
-            {
-                System.out.println("No tags found");
-            }
-            
+            pivot.stop();
         }
+        System.out.println(pivot.getPosition());
+
+
+
+
+
+
+
+        // if(joystick.getRawButton(1)) // A button
+        // {
+        //     poseEstimator.setPlacingSideToLeftCommand().schedule();
+        //     System.out.println("Placing side set to Left");
+        // }
+        // else if(joystick.getRawButton(2))
+        // {
+        //     poseEstimator.setPlacingSideToRightCommand().schedule();
+        //     System.out.println("Placing side set to Right");
+        // }
+        // else if(joystick.getRawButton(3))
+        // {
+        //     // TODO: SET THE CLIMB SIDE LL IN ROBOOTCONTAINER TO TRUE (OR SCORING SIDE IF
+        //     // WE ARE USING THE OTHER ONE. MAKE SURE YOU USE THE RIGHT CAMERA OBJECT!!!!
+        //     // TODO: DOUBLE CHECK THE LL IS NAMED CORRECTLY
+        //     // TODO: DOUBLE CHECK LL IS ON MOST RECENT 2024 FIRMWARE
+
+        //     // Retrieve the current estimated pose and the nearest scoring pose
+        //     // Pose2d currentPose = poseEstimator.getEstimatedPose();
+        //     Pose2d currentPose = climbSideLimelight.getPose();
+        //     int tagId = (int) climbSideLimelight.getTagId();
+        //     boolean validTagInFrame = climbSideLimelight.isValidTagInFrame();
+        //     int tagCount = climbSideLimelight.getTagCount();
+
+        //     // print out the primary tagId as well as the number of tags from the mt2 pose
+        //     System.out.printf("Primary Tag ID: %d | Valid Tag: %b | Tag Count: %d%n",
+        //             tagId, validTagInFrame, tagCount);
+
+        //     if(tagCount != 0 && tagId != -1)
+        //     {
+        //         boolean isRightBranch = poseEstimator.getIsRightBranch();
+        //         Pose2d scoringPose = poseEstimator.closestBranchLocation(tagId, isRightBranch);
+
+        //         // Calculate the total distance between the current pose and the scoring pose
+        //         Transform2d poseDifference = scoringPose.minus(currentPose);
+        //         double distance = climbSideLimelight.avgTagDistance();
+
+        //         // Print all relevant info on one line
+        //         System.out.printf("Pose: (X: %.2f, Y: %.2f) | Scoring Node: (X: %.2f, Y: %.2f, Rot: %s) | Distance: %.2f%n",
+        //                 currentPose.getX(), currentPose.getY(),
+        //                 scoringPose.getX(), scoringPose.getY(), scoringPose.getRotation(),
+        //                 distance);
+        //     }
+        //     else 
+        //     {
+        //         System.out.println("No tags found");
+        //     }
+            
+        // }
         // System.out.println(climbSideLimelight.getTagId());
         // System.out.println(climbSideLimelight.g);
         // System.out.println(climbSideLimelight.getCameraName());
