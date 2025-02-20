@@ -22,6 +22,7 @@ import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.FeedbackSensorSourceValue;
 import com.ctre.phoenix6.signals.ForwardLimitSourceValue;
 import com.ctre.phoenix6.signals.ForwardLimitTypeValue;
+import com.ctre.phoenix6.signals.GravityTypeValue;
 import com.ctre.phoenix6.signals.InvertedValue;
 import com.ctre.phoenix6.signals.NeutralModeValue;
 import com.ctre.phoenix6.signals.ReverseLimitSourceValue;
@@ -381,6 +382,35 @@ public class TalonFXLance extends MotorControllerLance
             slotConfigs.kV = kV;
             setup(() -> motor.getConfigurator().apply(slotConfigs), "Setup PID Controller"); 
         }
+    }
+
+    /**
+     * Set the PID controls for the motor.
+     * @param slotID The PID slot (0-2)
+     * @param kP The Proportional constant
+     * @param kI The Integral constant
+     * @param kD The Derivative constant
+     * @param kS Velocity feedforward gain
+     * @param kV Acceleration feedforward gain
+     * @param kA Gravity feedforward/feedback gain
+     * @param kG Gravity Feedforward/Feedback Type.
+     * @param gravType Elevator_Static for elevators, Arm_Cosine for other
+     */
+    public void setupPIDController(int slotId, double kP, double kI, double kD, double kS, double kV, double kA, double kG, GravityTypeValue gravType)
+    {
+        SlotConfigs slotConfigs = new SlotConfigs();
+        setup(() -> motor.getConfigurator().refresh(slotConfigs), "Refresh PID Controller");
+
+        slotConfigs.SlotNumber = slotId;
+        slotConfigs.kP = kP;
+        slotConfigs.kI = kI;
+        slotConfigs.kD = kD;
+        slotConfigs.kS = kS;
+        slotConfigs.kV = kV;
+        slotConfigs.kA = kA;
+        slotConfigs.kG = kG;
+        slotConfigs.GravityType = gravType;
+        setup(() -> motor.getConfigurator().apply(slotConfigs), "Setup PID Controller");
     }
 
     public double[] getPID(int slotId)
