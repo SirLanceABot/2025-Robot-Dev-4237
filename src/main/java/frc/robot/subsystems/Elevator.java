@@ -210,6 +210,11 @@ public class Elevator extends SubsystemLance
         motor.set(0.0);
     }
 
+    private void resetPosition()
+    {
+        motor.setPosition(0.0);
+    }
+
     public BooleanSupplier isAtPosition(ElevatorPosition position)
     {
         return () -> Math.abs(motor.getPosition() - position.elevatorPosition) < threshold;
@@ -228,6 +233,11 @@ public class Elevator extends SubsystemLance
     public Command moveToSetPositionCommand(ElevatorPosition position)
     {
         return run(() -> moveToSetPosition(position)).withName("Move To Set Position Elevator");
+    }
+
+    public Command resetPositionCommand()
+    {
+        return runOnce(() -> resetPosition()).withName("Reset Elevator Position");
     }
 
     // *** OVERRIDEN METHODS ***

@@ -165,6 +165,11 @@ public class Pivot extends SubsystemLance
         return motor.getPosition();
     }
 
+    private void resetPosition()
+    {
+        motor.setPosition(0.0);
+    }
+
     public BooleanSupplier isAtPosition(PivotPosition position)
     {
         return () -> Math.abs(motor.getPosition() - position.pivotPosition) < threshold;
@@ -233,6 +238,11 @@ public class Pivot extends SubsystemLance
     public Command moveToSetPositionCommand(PivotPosition targetPosition)
     {
         return runOnce(() -> motor.setControlPosition(targetPosition.pivotPosition));
+    }
+
+    public Command resetPositionCommand()
+    {
+        return runOnce(() -> resetPosition()).withName("Reset Pivot Position");
     }
 
     public Command stopCommand()

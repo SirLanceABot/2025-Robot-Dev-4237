@@ -3,6 +3,8 @@ package frc.robot.subsystems;
 import java.lang.invoke.MethodHandles;
 import java.util.function.BooleanSupplier;
 
+import com.ctre.phoenix6.signals.GravityTypeValue;
+
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
@@ -51,6 +53,11 @@ public class IntakeWrist extends SubsystemLance
     private static final double kP = 0.5;
     private static final double kI = 0.0;
     private static final double kD = 0.0;
+    private static final double kS = 0.0;
+    private static final double kV = 0.0;
+    private static final double kA = 0.0;
+    private static final double kG = 0.0;
+    private static final GravityTypeValue gravType = GravityTypeValue.Arm_Cosine;
 
     private final double tolerance = 0.05;
 
@@ -86,10 +93,10 @@ public class IntakeWrist extends SubsystemLance
         motor.setupFactoryDefaults();
         motor.setupBrakeMode();
         motor.setPosition(0.0);
-        // motor.setupForwardSoftLimit(20.0, false); //values for testing
-        // motor.setupReverseSoftLimit(10.0, false); //values for testing
+        motor.setupForwardSoftLimit(12.0, true); //values for testing
+        motor.setupReverseSoftLimit(0.0, true); //values for testing
 
-        motor.setupPIDController(0, kP, kI, kD);
+        motor.setupPIDController(0, kP, kI, kD, kS, kV, kA, kG, gravType);
     }
 
     /*
@@ -98,6 +105,11 @@ public class IntakeWrist extends SubsystemLance
     public double getPosition()
     {
         return motor.getPosition();
+    }
+
+    private void resetPosition()
+    {
+        motor.setPosition(0.0);
     }
 
     /*
@@ -164,6 +176,11 @@ public class IntakeWrist extends SubsystemLance
     public Command stopCommand()
     {
         return runOnce(() -> stop()).withName("Stop Intake Wrist");
+    }
+
+    public Command resetPositionCommand()
+    {
+        return runOnce(() -> resetPosition()).withName("Reset Intake Wrist Position");
     }
 
     // *** OVERRIDEN METHODS ***
