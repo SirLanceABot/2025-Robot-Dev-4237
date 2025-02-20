@@ -2,8 +2,8 @@ package frc.robot;
 
 import java.lang.invoke.MethodHandles;
 import java.util.function.BooleanSupplier;
-
 import javax.lang.model.util.ElementScanner14;
+import com.pathplanner.lib.auto.AutoBuilder;
 
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -23,6 +23,7 @@ import frc.robot.subsystems.LEDs;
 import frc.robot.subsystems.Pivot;
 import frc.robot.subsystems.PoseEstimator;
 import frc.robot.subsystems.Shuttle;
+import frc.robot.util.AutoCommandList;
 import frc.robot.util.AutonomousTab;
 import frc.robot.util.AutonomousTabData;
 import frc.robot.util.AutonomousTabData.Left_Wall;

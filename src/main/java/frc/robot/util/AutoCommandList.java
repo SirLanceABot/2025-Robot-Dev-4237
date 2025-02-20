@@ -117,10 +117,10 @@ public class AutoCommandList extends SequentialCommandGroup
      * Adds the command to the command group as well as the command string to display
      * @param command The command to add to the command group
      */
-    private void add(Command command)
+    public static void add(Command command)
     {
-        addCommands(command);
-        commandString += command + "\n";
+        // addCommands(command);
+        // commandString += command + "\n";
         // System.out.println("Command String");
         // System.out.println(commandString);
     }
