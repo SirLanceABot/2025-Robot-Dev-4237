@@ -394,7 +394,7 @@ public class TalonFXLance extends MotorControllerLance
      * @param kV Acceleration feedforward gain
      * @param kA Gravity feedforward/feedback gain
      * @param kG Gravity Feedforward/Feedback Type.
-     * @param gravType Elevator_Static for elevators, Arm_Cosine for other
+     * @param gravType Elevator_Static for constant equal gravity, Arm_Cosine for when gravity applies varying force
      */
     public void setupPIDController(int slotId, double kP, double kI, double kD, double kS, double kV, double kA, double kG, GravityTypeValue gravType)
     {
