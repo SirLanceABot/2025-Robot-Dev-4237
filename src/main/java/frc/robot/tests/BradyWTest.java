@@ -123,7 +123,7 @@ public class BradyWTest implements Test
         // }
 
 
-        System.out.println("Elevator Position: " + elevator.getLeftPosition());
+        System.out.println("Elevator Position: " + elevator.getPosition());
     }
 
     

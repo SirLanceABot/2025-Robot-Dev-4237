@@ -223,7 +223,7 @@ public final class IntakingCommands
                         .deadlineFor(
                             elevator.moveToSetPositionCommand(targetPosition.elevator))),
                             
-                    () -> (elevator.getLeftPosition() > 40.0)))
+                    () -> (elevator.getPosition() > 40.0)))
             
             .andThen(
                 Commands.waitUntil(clawProximity.isDetectedSupplier())

@@ -336,7 +336,7 @@ public final class GeneralCommands
                         .deadlineFor(
                             elevator.moveToSetPositionCommand(ElevatorPosition.kReadyToGrabCoralPosition))),
 
-                () -> (elevator.getLeftPosition() > 40.0)) // Checks if elevator is higher than the designated "Safe Swing" position
+                () -> (elevator.getPosition() > 40.0)) // Checks if elevator is higher than the designated "Safe Swing" position
                 .withName("Move Scorer to Intaking Position Command");  
         }
         else

@@ -69,8 +69,8 @@ public class Elevator extends SubsystemLance
     // private RelativeEncoder encoder;
     // private Constants.TargetPosition targetPosition = Constants.TargetPosition.kOverride;
     private final double threshold = 1.0;
-    private final double MAX_OUTPUT = 0.6;
-    private final double MIN_OUTPUT = 0.1;
+    private final double MAX_OUTPUT = 0.2;
+    private final double MIN_OUTPUT = -0.2;
 
     private double leftMotorEncoderPosition = 0.0;
     private double rightMotorEncoderPosition = 0.0;
@@ -122,17 +122,17 @@ public class Elevator extends SubsystemLance
 
         // rightMotor.setupFollower(Constants.Elevator.LEFT_MOTOR_PORT, true);
 
-        motor.setupForwardSoftLimit(150.0, true);
-        motor.setupReverseSoftLimit(0.0, true);
-        motor.setupForwardHardLimitSwitch(false, false);
-        motor.setupReverseHardLimitSwitch(false, false);
+        motor.setupForwardSoftLimit(150.0, false);
+        motor.setupReverseSoftLimit(0.0, false);
+        // motor.setupForwardHardLimitSwitch(false, false);
+        // motor.setupReverseHardLimitSwitch(false, false);
 
         motor.setupPIDController(0, 1.0, 0.0, 0.0); // TODO tune this
 
         // Configure PID Controller
     }
 
-    public double getLeftPosition()
+    public double getPosition()
     {
         return motor.getPosition();
     }
@@ -200,7 +200,7 @@ public class Elevator extends SubsystemLance
         motor.setControlPosition(targetPosition.elevatorPosition);
     }
 
-    private void set(double speed)
+    public void set(double speed)
     {
         motor.set(MathUtil.clamp(speed, MIN_OUTPUT, MAX_OUTPUT));
     }
@@ -251,6 +251,6 @@ public class Elevator extends SubsystemLance
     @Override
     public String toString()
     {
-        return "Elevator Position: " + getLeftPosition();
+        return "Elevator Position: " + getPosition();
     }
 }
