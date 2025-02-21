@@ -15,6 +15,8 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
+import frc.robot.subsystems.Intake;
+import frc.robot.subsystems.IntakeWrist;
 import frc.robot.RobotContainer;
 import frc.robot.commands.GeneralCommands;
 import frc.robot.commands.IntakingCommands;
@@ -108,7 +110,7 @@ public final class DriverBindings {
     {
         Trigger aButton = controller.a();
         aButton
-            .onTrue(ScoringCommands.scoreProcessorWithIntakeCommand());
+            .onTrue(IntakingCommands.testCommand1());
     }
 
 
@@ -117,7 +119,7 @@ public final class DriverBindings {
         Trigger bButton = controller.b();
         // bButton.whileTrue(drivetrain.pointCommand(leftYAxis, leftXAxis));
         bButton
-            .onTrue(IntakingCommands.intakeCoralFromStationCommand());
+            .onTrue(IntakingCommands.testCommand2());
         
         //applyRequest(() -> 
         //CommandSwerveDrivetrain.point.withModuleDirection(new Rotation2d(-leftYAxis.getAsDouble(), -leftXAxis.getAsDouble()))));
@@ -127,7 +129,7 @@ public final class DriverBindings {
     private static void configXButton()
     {
         Trigger xButton = controller.x();
-        xButton.whileTrue(drivetrain.lockWheelsCommand());
+        xButton.onTrue(IntakingCommands.testCommand3());
     }
 
 
@@ -135,8 +137,10 @@ public final class DriverBindings {
     {
         Trigger yButton = controller.y(); 
         yButton
-        .onTrue( Commands.runOnce(() -> controller.getHID().setRumble(RumbleType.kBothRumble, 1.0)))
-        .onFalse( Commands.runOnce(() -> controller.getHID().setRumble(RumbleType.kBothRumble, 0.0)));
+        .onTrue(IntakingCommands.testCommand4());
+        // .onTrue( Commands.runOnce(() -> controller.getHID().setRumble(RumbleType.kBothRumble, 1.0)))
+        // .onFalse( Commands.runOnce(() -> controller.getHID().setRumble(RumbleType.kBothRumble, 0.0)));
+        
     }
 
 

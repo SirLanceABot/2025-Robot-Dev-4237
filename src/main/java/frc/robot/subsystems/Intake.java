@@ -126,6 +126,11 @@ public class Intake extends SubsystemLance
         set(0.4);
     }
 
+    // public void pulse()
+    // {
+    //     for(int i = 0; )
+    // }
+
     public void stop() 
     {
         set(0.0);

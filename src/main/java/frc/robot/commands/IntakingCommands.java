@@ -159,6 +159,27 @@ public final class IntakingCommands
         }
     }
 
+    public static Command testCommand1()
+    {
+        return
+        intakeWrist.moveToSetPositionCommand(Position.kIntakeCoralPosition).alongWith(intake.pickupCoralCommand());
+    }
+    public static Command testCommand2()
+    {
+        return
+        intakeWrist.moveToSetPositionCommand(Position.kManipAlgaePosition).alongWith(intake.pickupAlgaeCommand());
+    }
+    public static Command testCommand3()
+    {
+        return
+        intakeWrist.moveToSetPositionCommand(Position.kRestingPosition).alongWith(intake.stopCommand());
+    }
+    public static Command testCommand4()
+    {
+        return
+        (intake.ejectAlgaeCommand());
+    }
+
     /**
      * The command to intake algae from the ground with our ground intake
      * @return Command to intake algae
