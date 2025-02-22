@@ -233,6 +233,11 @@ public class Pivot extends SubsystemLance
         return runOnce(() -> set(speed)).withName("Turn On Pivot");
     }
 
+    private void moveToSetPosition(PivotPosition targetPosition)
+    {
+        motor.setControlPosition(targetPosition.pivotPosition);
+    }
+
     // public Command holdCommand()
     // {
     //     return run(() -> stop()).withName("Hold Pivot");
@@ -240,7 +245,7 @@ public class Pivot extends SubsystemLance
 
     public Command moveToSetPositionCommand(PivotPosition targetPosition)
     {
-        return runOnce(() -> motor.setControlPosition(targetPosition.pivotPosition));
+        return runOnce(() -> moveToSetPosition(targetPosition)).withName("Move Pivot To Set Position");
     }
 
     public Command resetPositionCommand()
