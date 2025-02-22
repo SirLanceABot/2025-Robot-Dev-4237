@@ -1,5 +1,5 @@
 
-package frc.robot.util;
+package frc.robot.elastic;
 
 import java.lang.invoke.MethodHandles;
 
@@ -32,9 +32,9 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.CommandSwerveDrivetrain;
-import frc.robot.util.AutoCommandList;
 import frc.robot.RobotContainer;
-import frc.robot.util.AutonomousTabData.Right_Wall;
+import frc.robot.elastic.AutoCommandList;
+import frc.robot.elastic.AutonomousTabData.Right_Wall;
 import edu.wpi.first.util.sendable.SendableRegistry;
 
 

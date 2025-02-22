@@ -1,4 +1,4 @@
-package frc.robot.util;
+package frc.robot.elastic;
 
 import edu.wpi.first.wpilibj.Alert;
 import edu.wpi.first.wpilibj.Alert.AlertType;

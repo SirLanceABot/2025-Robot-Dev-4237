@@ -9,6 +9,12 @@ import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
+import frc.robot.elastic.AutoCommandList;
+import frc.robot.elastic.AutonomousTab;
+import frc.robot.elastic.AutonomousTabData;
+import frc.robot.elastic.AutonomousTabData.Left_Wall;
+import frc.robot.elastic.AutonomousTabData.Middle;
+import frc.robot.elastic.AutonomousTabData.Right_Wall;
 import frc.robot.generated.TunerConstants;
 import frc.robot.sensors.Camera;
 import frc.robot.sensors.GyroLance;
@@ -23,12 +29,6 @@ import frc.robot.subsystems.LEDs;
 import frc.robot.subsystems.Pivot;
 import frc.robot.subsystems.PoseEstimator;
 import frc.robot.subsystems.Shuttle;
-import frc.robot.util.AutoCommandList;
-import frc.robot.util.AutonomousTab;
-import frc.robot.util.AutonomousTabData;
-import frc.robot.util.AutonomousTabData.Left_Wall;
-import frc.robot.util.AutonomousTabData.Middle;
-import frc.robot.util.AutonomousTabData.Right_Wall;
 
 public class RobotContainer 
 {

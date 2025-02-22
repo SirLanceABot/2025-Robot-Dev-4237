@@ -2,7 +2,7 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-package frc.robot.util;
+package frc.robot.elastic;
 
 import java.lang.invoke.MethodHandles;
 
@@ -12,6 +12,8 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.RobotContainer;
+import frc.robot.elastic.AutonomousTab;
+import frc.robot.elastic.AutonomousTabData;
 // import frc.robot.Constants.Candle;
 // import frc.robot.sensors.Gyro4237;
 // import frc.robot.subsystems.AmpAssist;
@@ -23,8 +25,6 @@ import frc.robot.RobotContainer;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Pivot;
 import frc.robot.subsystems.Shuttle;
-import frc.robot.util.AutonomousTab;
-import frc.robot.util.AutonomousTabData;
 
 
 public class AutoCommandList extends SequentialCommandGroup

@@ -1,4 +1,4 @@
-package frc.robot.util;
+package frc.robot.elastic;
 
 import java.lang.invoke.MethodHandles;
 

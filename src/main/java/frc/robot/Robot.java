@@ -12,9 +12,9 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.commands.CommandsManager;
 import frc.robot.controls.DriverBindings;
 import frc.robot.controls.OperatorBindings;
+import frc.robot.elastic.AutonomousTab;
 import frc.robot.loggers.DataLogFile;
 import frc.robot.motors.MotorControllerLance;
-import frc.robot.util.AutonomousTab;
 
 
 public class Robot extends TimedRobot 
