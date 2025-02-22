@@ -102,11 +102,11 @@ public class LoganBTest implements Test
     {
         if(joystick.getRawButton(1))
         {
-            elevator.set(0.05);
+            elevator.set(0.5);
         }
         else if(joystick.getRawButton(2))
         {
-            elevator.set(-0.05);
+            elevator.set(-0.5);
         }
         else
         {

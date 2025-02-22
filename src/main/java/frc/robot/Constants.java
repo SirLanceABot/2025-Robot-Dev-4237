@@ -82,10 +82,10 @@ public final class Constants
 
     public static class Elevator
     {
-        public static final int LEFT_MOTOR_PORT                         = 0;
-        public static final int RIGHT_MOTOR_PORT                        = 0;
-        public static final String LEFT_MOTOR_CAN_BUS                   = CANIVORE;
-        public static final String RIGHT_MOTOR_CAN_BUS                  = CANIVORE;
+        public static final int LEFT_MOTOR_PORT                         = 30;
+        // public static final int RIGHT_MOTOR_PORT                        = 0;
+        public static final String LEFT_MOTOR_CAN_BUS                   = ROBORIO;
+        // public static final String RIGHT_MOTOR_CAN_BUS                  = CANIVORE;
 
         // public static final double L4                                   = 100.0;
         // public static final double UPPER_REEF_ALGAE                     = 90.0;

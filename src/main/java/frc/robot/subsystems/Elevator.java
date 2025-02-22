@@ -62,15 +62,15 @@ public class Elevator extends SubsystemLance
     
     // *** CLASS VARIABLES & INSTANCE VARIABLES ***
     // Put all class variables and instance variables here
-    private final SparkMaxLance motor = new SparkMaxLance(Constants.Elevator.LEFT_MOTOR_PORT, Constants.Elevator.LEFT_MOTOR_CAN_BUS, "Left Motor");
+    private final SparkMaxLance motor = new SparkMaxLance(Constants.Elevator.LEFT_MOTOR_PORT, Constants.Elevator.LEFT_MOTOR_CAN_BUS, "Motor");
     // private final SparkMaxLance rightMotor = new SparkMaxLance(Constants.Elevator.RIGHT_MOTOR_PORT, Constants.Elevator.RIGHT_MOTOR_CAN_BUS, "Right Motor");
     // private SparkLimitSwitch forwardLimitSwitch;
     // private SparkLimitSwitch reverseLimitSwitch;
     // private RelativeEncoder encoder;
     // private Constants.TargetPosition targetPosition = Constants.TargetPosition.kOverride;
     private final double threshold = 1.0;
-    private final double MAX_OUTPUT = 0.2;
-    private final double MIN_OUTPUT = -0.2;
+    private final double MAX_OUTPUT = 0.5;
+    private final double MIN_OUTPUT = -0.5;
 
     private double leftMotorEncoderPosition = 0.0;
     private double rightMotorEncoderPosition = 0.0;
@@ -117,13 +117,15 @@ public class Elevator extends SubsystemLance
         // rightMotor.setupFactoryDefaults();
         motor.setupBrakeMode();
         // rightMotor.setupBrakeMode();
-        motor.setPosition(1.0);
+        motor.setPosition(0.0);
         // rightMotor.setPosition(1.0);
+        motor.setInverted(true);
 
         // rightMotor.setupFollower(Constants.Elevator.LEFT_MOTOR_PORT, true);
 
-        motor.setupForwardSoftLimit(150.0, false);
-        motor.setupReverseSoftLimit(0.0, false);
+        // motor.setupForwardSoftLimit(150.0, false);
+        // motor.setupReverseSoftLimit(0.0, false);
+        motor.setSafetyEnabled(false);
         // motor.setupForwardHardLimitSwitch(false, false);
         // motor.setupReverseHardLimitSwitch(false, false);
 
