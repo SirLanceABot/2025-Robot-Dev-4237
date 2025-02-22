@@ -99,7 +99,7 @@ public final class Constants
 
     public static class Claw
     {
-        public static final int KICK_MOTOR_PORT                         = 0;
+        public static final int KICK_MOTOR_PORT                         = 32;
         public static final int GRAB_MOTOR_PORT                         = 0;
         public static final String KICK_MOTOR_CAN_BUS                   = ROBORIO;
         public static final String GRAB_MOTOR_CAN_BUS                   = ROBORIO;
@@ -128,7 +128,7 @@ public final class Constants
     public static class Pivot
     {
         // public static final int LEFT_MOTOR_PORT                         = 0;
-        public static final int MOTOR_PORT                              = 0;
+        public static final int MOTOR_PORT                              = 31;
         public static final String MOTOR_CAN_BUS                        = ROBORIO;
 
     //     public static final double L4                                   = 40.0;
