@@ -80,6 +80,9 @@ public class Pivot extends SubsystemLance
     // private SparkLimitSwitch reverseLimitSwitch;
 
     // private TargetPosition targetPosition = TargetPosition.kOverride;
+    private final double kP = 2.5;
+    private final double kI = 0.0;
+    private final double kD = 0.0;
     private final double threshold = 1.0;
 
     // *** CLASS CONSTRUCTORS ***
@@ -122,7 +125,7 @@ public class Pivot extends SubsystemLance
         // motor.setupForwardHardLimitSwitch(false, false);
         // motor.setupReverseHardLimitSwitch(false, false);
         
-        motor.setupPIDController(0, 2.5, 0.0, 0.0);
+        motor.setupPIDController(0, kP, kI, kD);
 
         //Configure PID Controller
         // pidController.setP(kP);

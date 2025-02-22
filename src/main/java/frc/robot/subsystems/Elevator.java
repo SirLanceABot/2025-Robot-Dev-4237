@@ -78,7 +78,7 @@ public class Elevator extends SubsystemLance
     private DoubleLogEntry elevatorPositionEntry;
 
     // PID Values
-    private final double kP = 0.0;
+    private final double kP = 1.0;
     private final double kI = 0.0;
     private final double kD = 0.0;
     private final double kS = 0.0;
@@ -129,7 +129,7 @@ public class Elevator extends SubsystemLance
         // motor.setupForwardHardLimitSwitch(false, false);
         // motor.setupReverseHardLimitSwitch(false, false);
 
-        motor.setupPIDController(0, 1.0, 0.0, 0.0); // TODO tune this
+        motor.setupPIDController(0, kP, kI, kD); // TODO tune this
 
         // Configure PID Controller
     }
