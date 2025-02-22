@@ -103,37 +103,6 @@ public class AutonomousTabData
     //     }
     // }
 
-    
-    // public static enum Score_Coral_
-    // {
-    //     // k0(" -- ScoreExtraNotes_0"), 
-    //     // k1(" -- ScoreExtraNotes_1"), 
-    //     // k2(" -- ScoreExtraNotes_2"), 
-    //     // k3(" -- ScoreExtraNotes_3"),
-    //     // k4(" -- ScoreExtraNotes_4");
-    //     k0("0"), 
-    //     k1("1"), 
-    //     k2("2"), 
-    //     k3("3"),
-    //     k4("4");
-
-    //     private final String name;
-
-    //     private Score_Coral_(String name)
-    //     {
-    //         this.name = " -- ScoreExtraNotes_" + name;
-    //     }
-
-    //     @Override
-    //     public String toString()
-    //     {
-    //         return name;
-    //     }
-    // }
-
-
-
-
     //-------------------------------------------------------------------//
 
     // IMPORTANT: Any variables added here must be initialized in the copy constructor below
@@ -169,14 +138,8 @@ public class AutonomousTabData
         pathPlannerString = "";
         pathPlannerString += leftWall;
        // pathPlannerString += sitPretty;
-        //pathPlannerString += scoreCoral;
 
 
-        // if (sitPretty != AutonomousTabData.SitPretty.kYes)
-        // {
-        //     pathPlannerString += stagePositioning;
-        //     
-        // }
 
         // System.out.println("Test string");
         System.out.println(pathPlannerString);
@@ -208,10 +171,7 @@ public class AutonomousTabData
         String msgValid = "";
         boolean isValid = true;
         //autonomousNameBox.setString(AutoCommandList.pathPlannerString);
-        
-       
-        // boolean isSitPretty =
-        // (sitPretty == AutonomousTabData.SitPretty.kYes);
+
         
 
         
@@ -222,13 +182,7 @@ public class AutonomousTabData
         if(!isValid)
             errorMessage += msgValid;
 
-        
-        
-        // Displays either "No Errors" or the error messages
-        
-        //autonomousNameBox.setString(" ");
 
-        //autonomousNameBox.setString(AutoCommandList.pathPlannerString);
 
         // 
         return isValid;

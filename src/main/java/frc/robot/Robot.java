@@ -64,15 +64,11 @@ public class Robot extends TimedRobot
     public void robotPeriodic() 
     {
         // Run periodic tasks
-        PeriodicTask.runAllPeriodicTasks();
+        
 
-        SmartDashboard.putNumber("Voltage", RobotController.getBatteryVoltage());
-
-        SmartDashboard.putNumber("Match Time", DriverStation.getMatchTime());
-
-        // SmartDashboard.putNumber("Speed", drivetrain.getState().Speeds.getVelocity());
-        if(robotContainer.getCommandSwerveDrivetrain() != null)
-            SmartDashboard.putNumber("Speed", robotContainer.getCommandSwerveDrivetrain().getState().Speeds.vxMetersPerSecond);
+        // // SmartDashboard.putNumber("Speed", drivetrain.getState().Speeds.getVelocity());
+        // if(robotContainer.getCommandSwerveDrivetrain() != null)
+        //     SmartDashboard.putNumber("Speed", robotContainer.getCommandSwerveDrivetrain().getState().Speeds.vxMetersPerSecond);
 
         isRedAlliance = robotContainer.isRedAllianceSupplier().getAsBoolean();
 
