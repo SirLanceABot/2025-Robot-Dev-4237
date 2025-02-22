@@ -162,7 +162,7 @@ public final class IntakingCommands
     public static Command testCommand1()
     {
         return
-        intakeWrist.moveToSetPositionCommand(Position.kIntakeCoralPosition).alongWith(intake.pickupCoralCommand());
+        intakeWrist.moveToSetPositionCommand(Position.kIntakeCoralPosition);//.alongWith(intake.pickupCoralCommand());
     }
     public static Command testCommand2()
     {

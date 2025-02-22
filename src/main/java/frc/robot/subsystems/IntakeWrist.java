@@ -6,6 +6,7 @@ import java.util.function.BooleanSupplier;
 import com.ctre.phoenix6.signals.GravityTypeValue;
 
 import edu.wpi.first.math.MathUtil;
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import frc.robot.Constants;
@@ -31,7 +32,7 @@ public class IntakeWrist extends SubsystemLance
     // Put all inner enums and inner classes here
     public enum Position
     {
-        kIntakeCoralPosition(9.75), //TODO these positions do not correlate with the position the motor tells us
+        kIntakeCoralPosition(10), //TODO these positions do not correlate with the position the motor tells us
         kManipAlgaePosition(5.7622),
         kRestingPosition(0.0);
 
@@ -48,6 +49,8 @@ public class IntakeWrist extends SubsystemLance
     // *** CLASS VARIABLES & INSTANCE VARIABLES ***
     // Put all class variables and instance variables here
     private final TalonFXLance motor = new TalonFXLance(Constants.IntakeWrist.MOTOR_PORT, Constants.IntakeWrist.MOTOR_CAN_BUS, "Intake Wrist Motor");
+    // private final DigitalInput forwardLimitSwitch = new DigitalInput(0);
+    // private final DigitalInput reverseLimitSwitch = new DigitalInput(0);
     private double speed;
 
     private static final double kP = 0.5;
@@ -118,7 +121,29 @@ public class IntakeWrist extends SubsystemLance
      */
     private void set(double speed)
     {
-        motor.set(MathUtil.clamp(speed, -0.5, 0.5));
+        motor.set(speed);
+        // if(speed > 0)
+        // {
+        //     if(forwardLimitSwitch.get())
+        //     {
+        //         motor.set(0.0);
+        //     }
+        //     else
+        //     {
+        //         motor.set(MathUtil.clamp(speed, -0.5, 0.5));
+        //     }
+        // }
+        // else
+        // {
+        //     if(reverseLimitSwitch.get())
+        //     {
+        //         motor.set(0.0);
+        //     }
+        //     else
+        //     {
+        //         motor.set(MathUtil.clamp(speed, -0.5, 0.5));
+        //     }
+        // }
     }
 
     /*
@@ -148,7 +173,24 @@ public class IntakeWrist extends SubsystemLance
         // {
         //     stop();
         // }
+
         motor.setControlPosition(targetPosition.value);
+
+        // if(targetPosition.value > motor.getPosition())
+        // {
+        //     if(!forwardLimitSwitch.get())
+        //     {
+        //         motor.setControlPosition(targetPosition.value);
+        //     }
+        // }
+        // else
+        // {
+        //     if(!reverseLimitSwitch.get())
+        //     {
+        //         motor.setControlPosition(targetPosition.value);
+        //     }
+        // }
+        
     }
 
     public BooleanSupplier isAtPosition(Position position)
@@ -191,6 +233,14 @@ public class IntakeWrist extends SubsystemLance
     public void periodic()
     {
         // This method will be called once per scheduler run
+        // if(forwardLimitSwitch.get() && motor.getVelocity() > 0.0)
+        // {
+        //     motor.stopMotor();
+        // }
+        // else if(reverseLimitSwitch.get() && motor.getVelocity() < 0.0)
+        // {
+        //     motor.stopMotor();
+        // }
     }
 
     @Override
