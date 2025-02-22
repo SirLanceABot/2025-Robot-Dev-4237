@@ -69,8 +69,14 @@ public class TunerConstants {
                 .withStatorCurrentLimitEnable(true)
         );
     private static final CANcoderConfiguration encoderInitialConfigs = new CANcoderConfiguration();
-    // Configs for the Pigeon 2; leave this null to skip applying Pigeon 2 configs
-    private static final Pigeon2Configuration pigeonConfigs = null;
+
+    //Creates pigeonConfigs
+    private static final MountPoseConfigs mountPoseConfigs = (new MountPoseConfigs()).withMountPoseRoll(0.0).withMountPosePitch(0.0).withMountPoseYaw(0.0);
+    private static final Pigeon2FeaturesConfigs featuresConfigs = (new Pigeon2FeaturesConfigs()).withDisableNoMotionCalibration(false).withDisableTemperatureCompensation(false).withEnableCompass(false);
+    private static final Pigeon2Configuration configs = (new Pigeon2Configuration()).withMountPose(mountPoseConfigs).withPigeon2Features(featuresConfigs);
+
+    // Configs for the Pigeon 2, leave this null to skip applying Pigeon 2 configs
+    private static final Pigeon2Configuration pigeonConfigs = configs;
 
     // CAN bus that the devices are located on;
     // All swerve devices must share the same CAN bus
@@ -103,6 +109,7 @@ public class TunerConstants {
     public static double MaxDriveSpeed = TunerConstants.kSpeedAt12Volts.in(MetersPerSecond); // kSpeedAt12Volts desired top speed //TODO Not originally in the generated TunerConstants
     public static double MaxAngularRate = RotationsPerSecond.of(0.75).in(RadiansPerSecond); // 3/4 of a rotation per second max angular velocity ///TODO Not originally in the generated TunerConstants
 
+    
 
     public static final SwerveDrivetrainConstants DrivetrainConstants = new SwerveDrivetrainConstants()
             .withCANBusName(kCANBus.getName())
@@ -203,11 +210,11 @@ public class TunerConstants {
      * Creates a CommandSwerveDrivetrain instance.
      * This should only be called once in your robot program,.
      */
-    // public static CommandSwerveDrivetrain createDrivetrain() {
-    //     return new CommandSwerveDrivetrain(
-    //         DrivetrainConstants, FrontLeft, FrontRight, BackLeft, BackRight
-    //     );
-    // }
+    public static CommandSwerveDrivetrain createDrivetrain() {
+        return new CommandSwerveDrivetrain(
+            DrivetrainConstants, FrontLeft, FrontRight, BackLeft, BackRight
+        );
+    }
 
 
     /**

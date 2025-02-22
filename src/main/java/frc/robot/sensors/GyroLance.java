@@ -68,6 +68,8 @@ public class GyroLance extends SensorLance
 
     private NetworkTable ASTable;// = NetworkTableInstance.getDefault().getTable("ASTable");
 
+    
+    //Passes the Pigeon2 from the CommandSwerveDrivetrain
     public GyroLance(Pigeon2 gyro)
     {
         super("Gyro4237");
@@ -79,13 +81,15 @@ public class GyroLance extends SensorLance
         xAxisEntry = ASTable.getDoubleTopic("accelXAxis").getEntry(0.0);
         yAxisEntry = ASTable.getDoubleTopic("accelYAxis").getEntry(0.0);
 
-        configGyro();
+        //Gyro is already configured by the CommandSwerveDrivetrain in TunerConstants
+        // configGyro();
         rotation2d = gyro.getRotation2d();
 
         System.out.println("  Constructor Finished: " + fullClassName);
     }
 
 
+    //Used when CommandSwerveDrivetrain is not used
     public GyroLance()
     {
         super("Gyro4237");
@@ -131,9 +135,11 @@ public class GyroLance extends SensorLance
         featuresConfigs.withEnableCompass(false);
         configs.withPigeon2Features(featuresConfigs);
 
+        //TODO not used?
         gyroTrimConfigs.withGyroScalarX(0.0);
         gyroTrimConfigs.withGyroScalarY(0.0);
         gyroTrimConfigs.withGyroScalarZ(0.0);
+
 
         count = 0;
         do
@@ -191,7 +197,8 @@ public class GyroLance extends SensorLance
 
     public Command resetYawCommand()
     {
-        return Commands.runOnce(() -> setYaw(0.0)).withName("Reset Yaw");
+        //Set to 180 b/c it works
+        return Commands.runOnce(() -> setYaw(180.0)).withName("Reset Yaw");
     }
 
     // public Command setYawRedCommand()

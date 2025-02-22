@@ -80,8 +80,8 @@ public final class DriverBindings {
             configLeftBumper();
             // configRightBumper();
             // configBackButton();
-            // configStartButton();
-            configLeftTrigger();
+            configStartButton();
+            // configLeftTrigger();
             // configRightTrigger();
             // configLeftStick();
             // configRightStick();

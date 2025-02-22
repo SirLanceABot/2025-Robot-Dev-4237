@@ -114,12 +114,7 @@ public class RobotContainer
                 : null;
 
         drivetrain = (useFullRobot || useDrivetrain)
-                ? new CommandSwerveDrivetrain(
-                        TunerConstants.DrivetrainConstants,
-                        TunerConstants.FrontLeft,
-                        TunerConstants.FrontRight,
-                        TunerConstants.BackLeft,
-                        TunerConstants.BackRight)
+                ? TunerConstants.createDrivetrain()
                 : null;
 
         gyro = (useFullRobot || useGyro) 
