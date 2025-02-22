@@ -82,7 +82,7 @@ public class Intake extends SubsystemLance
         // motor.setupVelocityConversionFactor(RPM_TO_FPS);
 
         // motor.setupCurrentLimit(30.0, 35.0, 0.5);
-        motor.setSafetyEnabled(true);
+        motor.setSafetyEnabled(false);
         //bottomMotor.setSafetyEnabled(false);
     }
 

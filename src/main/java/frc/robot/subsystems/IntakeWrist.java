@@ -31,7 +31,7 @@ public class IntakeWrist extends SubsystemLance
     // Put all inner enums and inner classes here
     public enum Position
     {
-        kIntakeCoralPosition(9.25), //TODO these positions do not correlate with the position the motor tells us
+        kIntakeCoralPosition(9.75), //TODO these positions do not correlate with the position the motor tells us
         kManipAlgaePosition(5.7622),
         kRestingPosition(0.0);
 
@@ -95,6 +95,7 @@ public class IntakeWrist extends SubsystemLance
         motor.setPosition(0.0);
         motor.setupForwardSoftLimit(12.0, true); //values for testing
         motor.setupReverseSoftLimit(0.0, true); //values for testing
+        motor.setSafetyEnabled(false);
 
         motor.setupPIDController(0, kP, kI, kD, kS, kV, kA, kG, gravType);
     }

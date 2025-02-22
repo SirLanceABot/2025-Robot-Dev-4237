@@ -73,10 +73,10 @@ public final class DriverBindings {
 
             configSuppliers();
 
-            // configAButton();
-            // configBButton();
+            configAButton();
+            configBButton();
             configXButton();
-            // configYButton();
+            configYButton();
             configLeftBumper();
             // configRightBumper();
             // configBackButton();

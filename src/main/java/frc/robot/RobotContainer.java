@@ -66,7 +66,7 @@ public class RobotContainer
     private boolean useDriverController     = false;
     private boolean useOperatorController   = false;
 
-    private boolean useAutonomousTab        = true;
+    private boolean useAutonomousTab        = false;
 
     public final boolean fullRobot;
 
