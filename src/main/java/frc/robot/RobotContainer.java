@@ -221,7 +221,7 @@ public class RobotContainer
                 }
                 else
                 {
-                    gyro.setYaw(0);
+                    gyro.setYaw(180.0);
                 }
             }
             else
@@ -240,7 +240,7 @@ public class RobotContainer
                 }
                 else
                 {
-                    gyro.setYaw(180);
+                    gyro.setYaw(0.0);
                 }
             }
         }

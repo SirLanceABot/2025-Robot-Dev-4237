@@ -116,12 +116,17 @@ public class LoganBTest implements Test
         {
             pivot.set(-0.2);
         }
+        else if(joystick.getRawButton(5))
+        {
+            claw.placeCoral();
+        }
         else
         {
             elevator.stop();
             pivot.stop();
+            claw.stop();
         }
-        System.out.printf("Elevator = %10.4f Pivot = %10.4f", elevator.getPosition(), pivot.getPosition());
+        System.out.printf("Elevator = %10.4f Pivot = %10.4f%n", elevator.getPosition(), pivot.getPosition());
 
 
 

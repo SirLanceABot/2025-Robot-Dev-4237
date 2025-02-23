@@ -118,6 +118,7 @@ public class Robot extends TimedRobot
     @Override
     public void autonomousInit() 
     {
+        DataLogManager.start();
         autonomousCommand = robotContainer.getAutonomousCommand();
 
         if(autonomousCommand != null) 
@@ -148,6 +149,7 @@ public class Robot extends TimedRobot
     @Override
     public void teleopInit() 
     {
+        DataLogManager.start();
         if(autonomousCommand != null) 
         {
             autonomousCommand.cancel();
