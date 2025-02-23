@@ -13,6 +13,7 @@ import com.pathplanner.lib.path.Waypoint;
 import edu.wpi.first.math.estimator.PoseEstimator;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.wpilibj.AddressableLED.ColorOrder;
 import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
@@ -142,24 +143,29 @@ public final class GeneralCommands
      * @return the command to do the thing
      * @author Logan Bellinger
      */
-    public static Command moveScorerToSetPositionCommand(TargetPosition targetPosition)
-    {
-        if(elevator != null && pivot != null)
-        {
-            return
-            Commands.waitUntil(() -> (elevator.isAtPosition(targetPosition.elevator).getAsBoolean() && pivot.isAtPosition(targetPosition.pivot).getAsBoolean()))
-            .deadlineFor(
-                setLedCommand(ColorPattern.kBlink, Color.kBlue),
-                elevator.moveToSetPositionCommand(targetPosition.elevator),
-                pivot.moveToSetPositionCommand(targetPosition.pivot))
-            .withName("Move Scorer to Set Position Command");
-        }
-        else
-        {
-            return Commands.none();
-        }
-    }
+    // public static Command moveScorerToSetPositionCommand(TargetPosition targetPosition)
+    // {
+    //     if(elevator != null && pivot != null)
+    //     {
+    //         return
+    //         Commands.waitUntil(() -> (elevator.isAtPosition(targetPosition.elevator).getAsBoolean() && pivot.isAtPosition(targetPosition.pivot).getAsBoolean()))
+    //         .deadlineFor(
+    //             setLedCommand(ColorPattern.kBlink, Color.kBlue),
+    //             elevator.moveToSetPositionCommand(targetPosition.elevator),
+    //             pivot.moveToSetPositionCommand(targetPosition.pivot))
+    //         .withName("Move Scorer to Set Position Command");
+    //     }
+    //     else
+    //     {
+    //         return Commands.none();
+    //     }
+    // }
 
+    /**
+     * Moves scorer to L1 - used for the autonomous lineup
+     * @return the thing
+     * @author Biggie
+     */
     public static Command moveScorerToL1Command()
     {
         if(elevator != null && pivot != null)
@@ -194,6 +200,11 @@ public final class GeneralCommands
         }
     }
 
+    /**
+     * Moves the scorer to the passed level - used in the autonomous lineup command
+     * @author Logan Bellinger
+     * @author Owen Doms
+     */
     public static Command chooseLevelCommand(TargetPosition targetPosition)
     {
         switch(targetPosition)
@@ -211,12 +222,19 @@ public final class GeneralCommands
         }
     }
 
+    /**
+     * Moves scorer to L2 - Used for auto score
+     */
     public static Command moveScorerToL2Commmand()
     {
         if(elevator != null && pivot != null)
         {
             return
-            Commands.either(
+            setLedCommand(ColorPattern.kBlink, Color.kBlue)
+            .andThen(
+
+                Commands.either(
+
                 Commands.waitUntil(() -> (elevator.isAtPosition(ElevatorPosition.kL2).getAsBoolean() && pivot.isAtPosition(PivotPosition.kLowLevelCoralPosition).getAsBoolean()))
                 .deadlineFor(
                     elevator.moveToSetPositionCommand(ElevatorPosition.kL2),
@@ -235,7 +253,8 @@ public final class GeneralCommands
                             elevator.moveToSetPositionCommand(ElevatorPosition.kL2))),
 
                 () -> (elevator.isAtPosition(ElevatorPosition.kHoldingPosition).getAsBoolean() && pivot.isAtPosition(PivotPosition.kFlippedPosition).getAsBoolean()))
-                
+            )
+                            
                 .withName("Move Scorer to L2 Command");  
         }
         else
@@ -244,6 +263,9 @@ public final class GeneralCommands
         }
     }
 
+    /** 
+     * Moves scorer to L3 - used for auto score
+     */
     public static Command moveScorerToL3Command()
     {
         if(elevator != null && pivot != null)
@@ -279,6 +301,10 @@ public final class GeneralCommands
         }
     }
 
+    /**
+     * Moves scorer to L4 - used for auto score  <- The absolute moneymaker right here
+     * @return
+     */
     public static Command moveScorerToL4Command()
     {
         if(elevator != null && pivot != null)
@@ -310,12 +336,21 @@ public final class GeneralCommands
         }
     }
 
+    /**
+     * Moves the scorer to the position where we are ready to intake coral - not to the position where the actually intake the coral
+     * @author Logan Bellinger
+     * @return
+     */
     public static Command moveScorerToIntakingPositionCommand()
     {
         if(elevator != null && pivot != null)
         {
             return
-            Commands.either(
+            setLedCommand(ColorPattern.kBlink, Color.kYellow)
+            .andThen(
+                Commands.either(
+                
+                // IF SCORER IS ABOVE THE SAFE SWING POSITION
                 Commands.waitUntil(pivot.isAtPosition(PivotPosition.kDownPosition))
                 .deadlineFor(
                     pivot.moveToSetPositionCommand(PivotPosition.kDownPosition))
@@ -324,6 +359,7 @@ public final class GeneralCommands
                     .deadlineFor(
                         elevator.moveToSetPositionCommand(ElevatorPosition.kReadyToGrabCoralPosition))),
 
+                // IF SCORER IS NOT ABOVE THE SAFE SWING POSITION
                     Commands.waitUntil(elevator.isAtPosition(ElevatorPosition.kSafeSwingPosition))
                     .deadlineFor(
                         elevator.moveToSetPositionCommand(ElevatorPosition.kSafeSwingPosition))
@@ -336,7 +372,8 @@ public final class GeneralCommands
                         .deadlineFor(
                             elevator.moveToSetPositionCommand(ElevatorPosition.kReadyToGrabCoralPosition))),
 
-                () -> (elevator.getPosition() > 40.0)) // Checks if elevator is higher than the designated "Safe Swing" position
+                () -> (elevator.getPosition() > 40.0))) // Checks if elevator is higher than the designated "Safe Swing" position)
+            
                 .withName("Move Scorer to Intaking Position Command");  
         }
         else
@@ -345,6 +382,11 @@ public final class GeneralCommands
         }
     }
 
+    /**
+     * Moves the scorer to the Barge heights
+     * @author Logan Belliner
+     * @return
+     */
     public static Command moveScorerToBargeCommand()
     {
         if(elevator != null && pivot != null)
@@ -354,11 +396,13 @@ public final class GeneralCommands
             .andThen(
                 Commands.either(
 
+                // IF SCORER IS IN FLIPPED POSITION INITIALLY
                 Commands.waitUntil(() -> (elevator.isAtPosition(ElevatorPosition.kL4).getAsBoolean() && pivot.isAtPosition(PivotPosition.kScoreBargePosition).getAsBoolean()))
                 .deadlineFor(
                     elevator.moveToSetPositionCommand(ElevatorPosition.kL4),
                     pivot.moveToSetPositionCommand(PivotPosition.kScoreBargePosition)),
 
+                    // IF SCORER IS NOT IN FLIPPED POSITION INITIALLY
                     Commands.waitUntil(() -> (elevator.isAtPosition(ElevatorPosition.kL4).getAsBoolean() && pivot.isAtPosition(PivotPosition.kScoreBargePosition).getAsBoolean()))
                     .deadlineFor(
                         elevator.moveToSetPositionCommand(ElevatorPosition.kL4),
@@ -376,6 +420,11 @@ public final class GeneralCommands
         }  
     }
 
+    /**
+     * Moves the scorer to the position where we score in the processor - first moving the elevator and then the pivot
+     * @author Logan Bellinger
+     * @return
+     */
     public static Command moveScorerToProcessorCommand()
     {
         if(elevator != null && pivot != null)
@@ -390,6 +439,32 @@ public final class GeneralCommands
                 Commands.waitUntil(pivot.isAtPosition(PivotPosition.kScoreProcessorPosition))
                 .deadlineFor(pivot.moveToSetPositionCommand(PivotPosition.kScoreProcessorPosition)))
             .withName("Move Scorer To Processor");
+        }
+        else
+        {
+            return Commands.none();
+        }
+    }
+
+    /**
+     * moves the scorer to the position where we hold the algae once it is intaked in the claw - different from where we hold coral due to the algae being obese
+     * @author Logan BEllinger
+     * @return
+     */
+    public static Command moveScorerToHoldAlgaeCommand()
+    {
+        if(elevator != null && pivot != null)
+        {
+            return
+            setLedCommand(ColorPattern.kBlink, Color.kBlue)
+            .andThen(
+                Commands.waitUntil(elevator.isAtPosition(ElevatorPosition.kHoldingPosition))
+                .deadlineFor(
+                    pivot.moveToSetPositionCommand(PivotPosition.kHoldAlgaePosition),
+                    elevator.moveToSetPositionCommand(ElevatorPosition.kHoldingPosition)))
+            .andThen(
+                setLedCommand(ColorPattern.kSolid, Color.kRed))
+            .withName("Move Scorer to hold algae position command");
         }
         else
         {
@@ -415,6 +490,10 @@ public final class GeneralCommands
         }
     }
 
+    /**
+     * ejects the algae, used to do things n stuff
+     * @return
+     */
     public static Command scoreAlgaeOnlyCommand()
     {
         if(claw != null)

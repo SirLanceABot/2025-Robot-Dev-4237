@@ -109,9 +109,9 @@ public final class OperatorBindings {
     {
         Trigger bButton = controller.b();
 
-        //Create a path on the fly and score on L3 level, (stops the path if it takes over 10 seconds - probably not needed)
+        //Create a path on the fly and score on L2 level, (stops the path if it takes over 10 seconds - probably not needed)
         bButton.onTrue(Commands.runOnce(() -> 
-            ScoringCommands.scoreCoralAutonomouslyReallyCoolAndAwesomeCommand(robotContainer.getPoseEstimator().getIsRightBranch(), TargetPosition.kL3)).withTimeout(10.0));
+            ScoringCommands.scoreCoralAutonomouslyReallyCoolAndAwesomeCommand(robotContainer.getPoseEstimator().getIsRightBranch(), TargetPosition.kL2)).withTimeout(10.0));
 
     }
 
@@ -120,9 +120,9 @@ public final class OperatorBindings {
     {
         Trigger xButton = controller.x();
 
-        //Create a path on the fly and score on L2 level, (stops the path if it takes over 10 seconds - probably not needed)
+        //Create a path on the fly and score on L3 level, (stops the path if it takes over 10 seconds - probably not needed)
         xButton.onTrue(Commands.runOnce(() -> 
-            ScoringCommands.scoreCoralAutonomouslyReallyCoolAndAwesomeCommand(robotContainer.getPoseEstimator().getIsRightBranch(), TargetPosition.kL2)).withTimeout(10.0));
+            ScoringCommands.scoreCoralAutonomouslyReallyCoolAndAwesomeCommand(robotContainer.getPoseEstimator().getIsRightBranch(), TargetPosition.kL3)).withTimeout(10.0));
 
     }
 
@@ -159,7 +159,7 @@ public final class OperatorBindings {
     {
         Trigger backButton = controller.back();
 
-        backButton.onTrue(ScoringCommands.finishScoringAlgaeCommand());
+        backButton.onTrue(GeneralCommands.scoreAlgaeOnlyCommand());
     }
 
 
@@ -221,14 +221,14 @@ public final class OperatorBindings {
     {
         Trigger dpadLeft = controller.povLeft();
 
-        dpadLeft.onTrue(ScoringCommands.scoreProcessorWithClawCommand());
+        dpadLeft.onTrue(GeneralCommands.moveScorerToProcessorCommand());
     }
 
     private static void configDpadRight()
     {
         Trigger dpadRight = controller.povRight();
 
-        dpadRight.onTrue(ScoringCommands.scoreAlgaeInBargeCommand());
+        dpadRight.onTrue(GeneralCommands.moveScorerToBargeCommand());
     }
 
 

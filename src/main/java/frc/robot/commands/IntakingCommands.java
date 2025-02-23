@@ -119,6 +119,8 @@ public final class IntakingCommands
                 Commands.waitUntil(clawProximity.isDetectedSupplier())
                 .deadlineFor(
                     elevator.moveToSetPositionCommand(ElevatorPosition.kGrabCoralPosition)))
+            .andThen(
+                claw.stopCommand())
             .andThen(GeneralCommands.setLedCommand(ColorPattern.kSolid, Color.kRed))
             .withName("Intake Coral Command");
         }
@@ -249,7 +251,8 @@ public final class IntakingCommands
             .andThen(
                 Commands.waitUntil(clawProximity.isDetectedSupplier())
                 .deadlineFor(
-                    claw.grabGamePieceCommand()))
+                    claw.grabGamePieceCommand(),
+                    GeneralCommands.setLedCommand(ColorPattern.kSolid, Color.kRed)))
             .withName("Intake Algae From Reef");
         }
         else
