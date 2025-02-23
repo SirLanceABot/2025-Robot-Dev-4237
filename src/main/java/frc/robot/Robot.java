@@ -70,8 +70,7 @@ public class Robot extends TimedRobot
         // if(robotContainer.getCommandSwerveDrivetrain() != null)
         //     SmartDashboard.putNumber("Speed", robotContainer.getCommandSwerveDrivetrain().getState().Speeds.vxMetersPerSecond);
 
-        isRedAlliance = robotContainer.isRedAllianceSupplier().getAsBoolean();
-
+        // isRedAlliance = robotContainer.getCommandSwerveDrivetrain().isRedAllianceSupplier().getAsBoolean();
         // Runs the Scheduler.  This is responsible for polling buttons, adding newly-scheduled
         // commands, running already-scheduled commands, removing finished or interrupted commands,
         // and running subsystem periodic() methods.  This must be called from the robot's periodic

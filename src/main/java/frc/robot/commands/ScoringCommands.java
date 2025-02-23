@@ -4,6 +4,8 @@ import java.lang.invoke.MethodHandles;
 
 import javax.lang.model.util.ElementScanner14;
 
+import com.ctre.phoenix6.hardware.Pigeon2;
+
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.util.Color;
@@ -12,7 +14,6 @@ import edu.wpi.first.wpilibj2.command.Commands;
 import frc.robot.Constants;
 import frc.robot.RobotContainer;
 import frc.robot.commands.CommandsManager.TargetPosition;
-import frc.robot.sensors.GyroLance;
 import frc.robot.sensors.Proximity;
 import frc.robot.subsystems.CommandSwerveDrivetrain;
 import frc.robot.subsystems.Elevator;
@@ -54,7 +55,7 @@ public final class ScoringCommands
     private static Elevator elevator;
     private static Claw claw;
     private static LEDs leds;
-    private static GyroLance gyro;
+    private static Pigeon2 gyro;
     private static PoseEstimator poseEstimator;
     private static Proximity algaeIntakeProximity;
     private static Proximity elevatorProximity;
@@ -78,7 +79,7 @@ public final class ScoringCommands
         elevator = robotContainer.getElevator();
         claw = robotContainer.getClaw();
         leds = robotContainer.getLEDs();
-        gyro = robotContainer.getGyro();
+        gyro = drivetrain.getPigeon2();
         algaeIntakeProximity = robotContainer.getAlgaeIntakeProximity();
         elevatorProximity = robotContainer.getElevatorProximity();
         clawProximity = robotContainer.getClawProximity();
@@ -311,7 +312,7 @@ public final class ScoringCommands
     public static Command scoreCoralAutonomouslyReallyCoolAndAwesomeCommand(boolean isRight, TargetPosition targetPosition)
     {
         // TODO: YIPPEE
-        if(drivetrain != null && gyro != null && elevator != null && pivot != null && claw != null)
+        if(drivetrain != null && elevator != null && pivot != null && claw != null)
         {
             Pose2d currentPose = poseEstimator.getEstimatedPose();
             Pose2d targetPose = poseEstimator.closestBranchLocation(poseEstimator.getPrimaryTagID(), isRight);

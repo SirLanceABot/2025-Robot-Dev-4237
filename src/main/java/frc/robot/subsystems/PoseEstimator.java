@@ -6,6 +6,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.function.BooleanSupplier;
 
+import com.ctre.phoenix6.hardware.Pigeon2;
+
 import edu.wpi.first.math.Matrix;
 import edu.wpi.first.math.Nat;
 import edu.wpi.first.math.estimator.SwerveDrivePoseEstimator;
@@ -22,7 +24,6 @@ import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants;
 import frc.robot.LimelightHelpers;
 import frc.robot.sensors.Camera;
-import frc.robot.sensors.GyroLance;
 
 /**
  * This is an example of what a subsystem should look like.
@@ -45,7 +46,7 @@ public class PoseEstimator extends SubsystemLance
         kRight;
     }
 
-    private final GyroLance gyro;
+    private final Pigeon2 gyro;
     private final CommandSwerveDrivetrain drivetrain;
     private final Camera[] cameraArray;
 
@@ -143,13 +144,13 @@ public class PoseEstimator extends SubsystemLance
     /** 
      * Creates a new PoseEstimator. 
      */
-    public PoseEstimator(CommandSwerveDrivetrain drivetrain, GyroLance gyro, Camera[] cameraArray)
+    public PoseEstimator(CommandSwerveDrivetrain drivetrain, Camera[] cameraArray)
     {
         super("PoseEstimator");
         System.out.println("  Constructor Started:  " + fullClassName);
 
         this.drivetrain = drivetrain;
-        this.gyro = gyro;
+        this.gyro = drivetrain.getPigeon2();
         this.cameraArray = cameraArray;
 
         ASTable = NetworkTableInstance.getDefault().getTable(Constants.ADVANTAGE_SCOPE_TABLE_NAME);
@@ -434,7 +435,7 @@ public class PoseEstimator extends SubsystemLance
             {
                 if(gyro != null)
                 {
-                    LimelightHelpers.SetRobotOrientation(camera.getCameraName(), gyro.getYaw(), 0.0, 0.0, 0.0, 0.0, 0.0);
+                    LimelightHelpers.SetRobotOrientation(camera.getCameraName(), gyro.getYaw().getValueAsDouble(), 0.0, 0.0, 0.0, 0.0, 0.0);
                 }
 
                 if(camera.getTagCount() > 0)

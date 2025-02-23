@@ -5,6 +5,7 @@ import static edu.wpi.first.units.Units.*;
 
 import java.util.List;
 import java.util.concurrent.locks.Lock;
+import java.util.function.BooleanSupplier;
 import java.util.function.DoubleSupplier;
 import java.util.function.Supplier;
 
@@ -37,7 +38,6 @@ import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 import frc.robot.generated.TunerConstants;
 import frc.robot.generated.TunerConstants.TunerSwerveDrivetrain;
 import frc.robot.sensors.Camera;
-import frc.robot.sensors.GyroLance;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -317,6 +317,20 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
                 .withModuleDirection(new Rotation2d(leftYAxis.getAsDouble(), leftXAxis.getAsDouble()))
 
         );
+    }
+
+    public BooleanSupplier isRedAllianceSupplier()
+    {
+        return () ->
+        {
+            var alliance = DriverStation.getAlliance();
+            if (alliance.isPresent())
+            {
+            return alliance.get() == DriverStation.Alliance.Red;
+            }
+            DriverStation.reportError("No alliance is avaliable, assuming Blue", false);
+            return false;
+        };
     }
 
 

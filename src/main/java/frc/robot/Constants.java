@@ -154,6 +154,16 @@ public final class Constants
         public static final String MOTOR_CAN_BUS                        = ROBORIO;
     }
 
+    public static class Gyro
+    {
+        public static final double BLUE_LEFT_YAW = 180.0;
+        public static final double BLUE_MIDDLE_YAW = 90.0;
+        public static final double BLUE_RIGHT_YAW = 0.0;
+        public static final double RED_LEFT_YAW = 0.0;
+        public static final double RED_MIDDLE_YAW = -90.0;
+        public static final double RED_RIGHT_YAW = 180.0;
+    }
+
     // public enum TargetPosition
     // {
     //     kStartingPosition(Constants.Elevator.RESTING_POSITION, Constants.Pivot.RESTING_POSITION),

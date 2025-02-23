@@ -3,6 +3,7 @@ package frc.robot.commands;
 import java.lang.invoke.MethodHandles;
 import java.util.List;
 
+import com.ctre.phoenix6.hardware.Pigeon2;
 import com.fasterxml.jackson.databind.ser.std.StdKeySerializers.EnumKeySerializer;
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.path.GoalEndState;
@@ -20,7 +21,6 @@ import edu.wpi.first.wpilibj2.command.Commands;
 import frc.robot.Constants;
 import frc.robot.RobotContainer;
 import frc.robot.commands.CommandsManager.TargetPosition;
-import frc.robot.sensors.GyroLance;
 import frc.robot.sensors.Proximity;
 import frc.robot.subsystems.Climb;
 import frc.robot.subsystems.CommandSwerveDrivetrain;
@@ -62,12 +62,12 @@ public final class GeneralCommands
     private static Claw claw;
     private static Climb climb;
     private static LEDs leds;
-    private static GyroLance gyro;
+    private static Pigeon2 gyro;
     private static Proximity intakeProximity;
     private static Proximity elevatorProximity;
     private static Proximity clawProximity;
     private static PoseEstimator poseEstimate;
-    private static CommandSwerveDrivetrain commandSwerveDrivetrain;
+    private static CommandSwerveDrivetrain drivetrain;
    
 
 
@@ -87,11 +87,11 @@ public final class GeneralCommands
         claw = robotContainer.getClaw();
         climb = robotContainer.getClimb();
         leds = robotContainer.getLEDs();
-        gyro = robotContainer.getGyro();
+        gyro = robotContainer.getCommandSwerveDrivetrain().getPigeon2();
         intakeProximity = robotContainer.getCoralIntakeProximity();
         elevatorProximity = robotContainer.getElevatorProximity();
         clawProximity = robotContainer.getClawProximity();
-        commandSwerveDrivetrain = robotContainer.getCommandSwerveDrivetrain();
+        drivetrain = robotContainer.getCommandSwerveDrivetrain();
 
         System.out.println("  Constructor Finished: " + fullClassName);
     }
@@ -568,8 +568,7 @@ public final class GeneralCommands
     {
         if(gyro != null)
         {
-            return
-            gyro.resetYawCommand().withName("Reset Yaw Command");
+            return Commands.runOnce(() -> gyro.setYaw((drivetrain.isRedAllianceSupplier().getAsBoolean() ? 180.0 : 0.0)));
         }
         else
         {

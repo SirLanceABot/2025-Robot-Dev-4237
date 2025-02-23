@@ -3,6 +3,8 @@ package frc.robot;
 import java.lang.invoke.MethodHandles;
 import java.util.function.BooleanSupplier;
 import javax.lang.model.util.ElementScanner14;
+
+import com.ctre.phoenix6.hardware.Pigeon2;
 import com.pathplanner.lib.auto.AutoBuilder;
 
 import edu.wpi.first.wpilibj.DriverStation;
@@ -17,7 +19,6 @@ import frc.robot.elastic.AutonomousTabData.Middle;
 import frc.robot.elastic.AutonomousTabData.Right_Wall;
 import frc.robot.generated.TunerConstants;
 import frc.robot.sensors.Camera;
-import frc.robot.sensors.GyroLance;
 import frc.robot.sensors.Proximity;
 import frc.robot.subsystems.Claw;
 import frc.robot.subsystems.Climb;
@@ -80,7 +81,6 @@ public class RobotContainer
     private final Shuttle shuttle;
     private final LEDs leds;
 
-    private final GyroLance gyro;
     private final Camera[] cameraArray = new Camera[2];
     private final PoseEstimator poseEstimator;
     private final Proximity coralIntakeProximity;
@@ -115,12 +115,6 @@ public class RobotContainer
 
         drivetrain = (useFullRobot || useDrivetrain)
                 ? TunerConstants.createDrivetrain()
-                : null;
-
-        gyro = (useFullRobot || useGyro) 
-                ? (drivetrain != null) 
-                        ? new GyroLance(drivetrain.getPigeon2()) 
-                        : new GyroLance() 
                 : null;
 
         elevator = (useFullRobot || useElevator)
@@ -172,7 +166,7 @@ public class RobotContainer
                 : null;
 
         poseEstimator = (useFullRobot || usePoseEstimator)
-                ? new PoseEstimator(drivetrain, gyro, cameraArray)
+                ? new PoseEstimator(drivetrain, cameraArray)
                 : null;
 
         driverController = (useFullRobot || useDriverController)
@@ -188,6 +182,8 @@ public class RobotContainer
                 ? new AutonomousTab()
                 : null;
 
+            
+
         // operatorButtonBindings = (useFullRobot || useBindings)
         // ? new OperatorButtonBindings(this)
         // : null;
@@ -199,25 +195,26 @@ public class RobotContainer
 
     public void resetRobot(AutonomousTabData.Left_Wall leftWall, AutonomousTabData.Middle middle, AutonomousTabData.Right_Wall rightWall)
     {   
+        Pigeon2 gyro = drivetrain.getPigeon2();
         leftWall = autonomousTab.getLeftWall();
         middle = autonomousTab.getMiddle();
         rightWall = autonomousTab.getRightWall();
 
-        if(gyro != null)
+        if(drivetrain != null)
         {
-            if(isRedAllianceSupplier().getAsBoolean())
+            if(drivetrain.isRedAllianceSupplier().getAsBoolean())
             {
                 if(leftWall != Left_Wall.kNo)
                 {
-                    gyro.setYaw(gyro.RED_LEFT_YAW);
+                    gyro.setYaw(Constants.Gyro.RED_LEFT_YAW);
                 }
                 else if(middle != Middle.kNo)
                 {
-                    gyro.setYaw(gyro.RED_MIDDLE_YAW);
+                    gyro.setYaw(Constants.Gyro.RED_MIDDLE_YAW);
                 }
                 else if(rightWall != Right_Wall.kNo)
                 {
-                    gyro.setYaw(gyro.RED_RIGHT_YAW);
+                    gyro.setYaw(Constants.Gyro.RED_RIGHT_YAW);
                 }
                 else
                 {
@@ -228,15 +225,15 @@ public class RobotContainer
             {
                 if(leftWall != Left_Wall.kNo)
                 {
-                    gyro.setYaw(gyro.BLUE_LEFT_YAW);
+                    gyro.setYaw(Constants.Gyro.BLUE_LEFT_YAW);
                 }
                 else if(middle != Middle.kNo)
                 {
-                    gyro.setYaw(gyro.BLUE_MIDDLE_YAW);
+                    gyro.setYaw(Constants.Gyro.BLUE_MIDDLE_YAW);
                 }
                 else if(rightWall != Right_Wall.kNo)
                 {
-                    gyro.setYaw(gyro.BLUE_RIGHT_YAW);
+                    gyro.setYaw(Constants.Gyro.BLUE_RIGHT_YAW);
                 }
                 else
                 {
@@ -254,11 +251,6 @@ public class RobotContainer
     public Climb getClimb()
     {
         return climb;
-    }
-
-    public GyroLance getGyro()
-    {
-        return gyro;
     }
 
     public CommandSwerveDrivetrain getCommandSwerveDrivetrain()
@@ -339,20 +331,6 @@ public class RobotContainer
     public Camera getClimbSideCamera()
     {
         return cameraArray[1];
-    }
-
-    public BooleanSupplier isRedAllianceSupplier()
-    {
-        return () ->
-        {
-            var alliance = DriverStation.getAlliance();
-            if (alliance.isPresent())
-            {
-            return alliance.get() == DriverStation.Alliance.Red;
-            }
-            DriverStation.reportError("No alliance is avaliable, assuming Blue", false);
-            return false;
-        };
     }
 
     public Command getAutonomousCommand() 
