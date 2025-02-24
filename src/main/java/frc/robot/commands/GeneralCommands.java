@@ -23,7 +23,7 @@ import frc.robot.RobotContainer;
 import frc.robot.commands.CommandsManager.TargetPosition;
 import frc.robot.sensors.Proximity;
 import frc.robot.subsystems.Climb;
-import frc.robot.subsystems.CommandSwerveDrivetrain;
+import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Elevator;
 import frc.robot.subsystems.Elevator.ElevatorPosition;
 import frc.robot.subsystems.IntakeWrist.Position;
@@ -67,7 +67,7 @@ public final class GeneralCommands
     private static Proximity elevatorProximity;
     private static Proximity clawProximity;
     private static PoseEstimator poseEstimate;
-    private static CommandSwerveDrivetrain drivetrain;
+    private static Drivetrain drivetrain;
    
 
 
@@ -87,11 +87,11 @@ public final class GeneralCommands
         claw = robotContainer.getClaw();
         climb = robotContainer.getClimb();
         leds = robotContainer.getLEDs();
-        gyro = robotContainer.getCommandSwerveDrivetrain().getPigeon2();
+        gyro = robotContainer.getDrivetrain().getPigeon2();
         intakeProximity = robotContainer.getCoralIntakeProximity();
         elevatorProximity = robotContainer.getElevatorProximity();
         clawProximity = robotContainer.getClawProximity();
-        drivetrain = robotContainer.getCommandSwerveDrivetrain();
+        drivetrain = robotContainer.getDrivetrain();
 
         System.out.println("  Constructor Finished: " + fullClassName);
     }

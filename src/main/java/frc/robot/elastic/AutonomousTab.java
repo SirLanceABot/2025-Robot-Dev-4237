@@ -22,7 +22,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.RobotContainer;
 import frc.robot.elastic.AutoCommandList;
 import frc.robot.elastic.AutonomousTabData.Right_Wall;
-import frc.robot.subsystems.CommandSwerveDrivetrain;
+import frc.robot.subsystems.Drivetrain;
 import java.lang.invoke.MethodHandles;
 import java.util.HashMap;
 import java.util.List;
@@ -55,7 +55,7 @@ public class AutonomousTab
   private RobotContainer robotContainer;
   private Field2d autofield = new Field2d();
   private Field2d field = new Field2d();
-  private CommandSwerveDrivetrain drivetrain;
+  private Drivetrain drivetrain;
   private PoseEstimator poseEstimator;
   private Trajectory trajectory;
   private Alert autonomousAlert;

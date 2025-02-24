@@ -15,7 +15,7 @@ import frc.robot.Constants;
 import frc.robot.RobotContainer;
 import frc.robot.commands.CommandsManager.TargetPosition;
 import frc.robot.sensors.Proximity;
-import frc.robot.subsystems.CommandSwerveDrivetrain;
+import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Elevator;
 import frc.robot.subsystems.Claw;
 import frc.robot.subsystems.Intake;
@@ -48,7 +48,7 @@ public final class ScoringCommands
 
     // *** CLASS VARIABLES & INSTANCE VARIABLES ***
     // Put all class variables and instance variables here
-    private static CommandSwerveDrivetrain drivetrain;
+    private static Drivetrain drivetrain;
     private static Intake intake;
     private static IntakeWrist intakeWrist;
     private static Pivot pivot;
@@ -72,7 +72,7 @@ public final class ScoringCommands
     {
         System.out.println("  Constructor Started:  " + fullClassName);
 
-        drivetrain = robotContainer.getCommandSwerveDrivetrain();
+        drivetrain = robotContainer.getDrivetrain();
         intake = robotContainer.getIntake();
         intakeWrist = robotContainer.getIntakeWrist();
         pivot = robotContainer.getPivot();

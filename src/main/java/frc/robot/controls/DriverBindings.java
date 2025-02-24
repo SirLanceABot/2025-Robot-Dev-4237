@@ -23,7 +23,7 @@ import frc.robot.commands.IntakingCommands;
 import frc.robot.commands.ScoringCommands;
 import frc.robot.controls.Xbox.RumbleEvent;
 import frc.robot.generated.TunerConstants;
-import frc.robot.subsystems.CommandSwerveDrivetrain;
+import frc.robot.subsystems.Drivetrain;
 
 public final class DriverBindings {
 
@@ -40,7 +40,7 @@ public final class DriverBindings {
     // *** CLASS & INSTANCE VARIABLES ***
     // Put all class and instance variables here.
     //Variables should be private and static
-    private static CommandSwerveDrivetrain drivetrain;
+    private static Drivetrain drivetrain;
     private static CommandXboxController controller;
 
     private static DoubleSupplier leftYAxis;
@@ -69,7 +69,7 @@ public final class DriverBindings {
         {
             System.out.println("  Constructor Started:  " + fullClassName);
 
-            drivetrain = robotContainer.getCommandSwerveDrivetrain();
+            drivetrain = robotContainer.getDrivetrain();
 
             configSuppliers();
 
@@ -122,7 +122,7 @@ public final class DriverBindings {
             .onTrue(IntakingCommands.testCommand2());
         
         //applyRequest(() -> 
-        //CommandSwerveDrivetrain.point.withModuleDirection(new Rotation2d(-leftYAxis.getAsDouble(), -leftXAxis.getAsDouble()))));
+        // drivetrain.point.withModuleDirection(new Rotation2d(-leftYAxis.getAsDouble(), -leftXAxis.getAsDouble()))));
     }
 
 
@@ -201,7 +201,7 @@ public final class DriverBindings {
     {
         Trigger leftStick = controller.leftStick();
         // leftStick
-            // .onTrue(robotContainer.getCommandSwerveDrivetrain())
+            // .onTrue(robotContainer.getDrivetrain())
     }
 
 
@@ -240,7 +240,7 @@ public final class DriverBindings {
             drivetrain.setDefaultCommand(drivetrain.driveCommand(leftYAxis, leftXAxis, rightXAxis, scaleFactorSupplier));
                
             //.applyRequest(() ->
-            //         CommandSwerveDrivetrain.drive.withVelocityX(leftYAxis.getAsDouble() * (TunerConstants.MaxDriveSpeed / 4.0))// Drive forward with negative Y (forward)
+            //         drivetrain.drive.withVelocityX(leftYAxis.getAsDouble() * (TunerConstants.MaxDriveSpeed / 4.0))// Drive forward with negative Y (forward)
             //             .withVelocityY(leftXAxis.getAsDouble() * (TunerConstants.MaxDriveSpeed / 4.0)) // Drive left with negative X (left)
             //             .withRotationalRate(rightXAxis.getAsDouble() * TunerConstants.MaxAngularRate)) // Drive counterclockwise with negative X (left)
             // );

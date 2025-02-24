@@ -33,7 +33,7 @@ public class Robot extends TimedRobot
     private Command autonomousCommand = null;
     private TestMode testMode = null;
     private boolean isRedAlliance;
-    // private CommandSwerveDrivetrain drivetrain;
+    // private Drivetrain drivetrain;
 
 
 
@@ -47,7 +47,7 @@ public class Robot extends TimedRobot
 
         //Configure RobotContainer
         robotContainer = new RobotContainer();
-        // drivetrain = robotContainer.getCommandSwerveDrivetrain();
+        // drivetrain = robotContainer.getDrivetrain();
         //Configure commands
         CommandsManager.createCommands(robotContainer);
 
@@ -67,11 +67,11 @@ public class Robot extends TimedRobot
         
 
         // // SmartDashboard.putNumber("Speed", drivetrain.getState().Speeds.getVelocity());
-        // if(robotContainer.getCommandSwerveDrivetrain() != null)
-        //     SmartDashboard.putNumber("Speed", robotContainer.getCommandSwerveDrivetrain().getState().Speeds.vxMetersPerSecond);
+        // if(robotContainer.getDrivetrain() != null)
+        //     SmartDashboard.putNumber("Speed", robotContainer.getDrivetrain().getState().Speeds.vxMetersPerSecond);
 
-        // System.out.println(robotContainer.getCommandSwerveDrivetrain().getPigeon2().getYaw().getValueAsDouble());
-        // isRedAlliance = robotContainer.getCommandSwerveDrivetrain().isRedAllianceSupplier().getAsBoolean();
+        // System.out.println(robotContainer.getDrivetrain().getPigeon2().getYaw().getValueAsDouble());
+        // isRedAlliance = robotContainer.getDrivetrain().isRedAllianceSupplier().getAsBoolean();
         // Runs the Scheduler.  This is responsible for polling buttons, adding newly-scheduled
         // commands, running already-scheduled commands, removing finished or interrupted commands,
         // and running subsystem periodic() methods.  This must be called from the robot's periodic

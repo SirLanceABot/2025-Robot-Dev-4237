@@ -23,7 +23,7 @@ import frc.robot.sensors.Camera;
 import frc.robot.sensors.Proximity;
 import frc.robot.subsystems.Claw;
 import frc.robot.subsystems.Climb;
-import frc.robot.subsystems.CommandSwerveDrivetrain;
+import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Elevator;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.IntakeWrist;
@@ -74,7 +74,7 @@ public class RobotContainer
 
     private final Claw claw;
     private final Climb climb;
-    private final CommandSwerveDrivetrain drivetrain;
+    private final Drivetrain drivetrain;
     private final Elevator elevator;
     private final Intake intake;
     private final IntakeWrist intakeWrist;
@@ -265,7 +265,7 @@ public class RobotContainer
         return climb;
     }
 
-    public CommandSwerveDrivetrain getCommandSwerveDrivetrain()
+    public Drivetrain getDrivetrain()
     {
         return drivetrain;
     }
