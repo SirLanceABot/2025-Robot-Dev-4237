@@ -70,6 +70,7 @@ public class Robot extends TimedRobot
         // if(robotContainer.getCommandSwerveDrivetrain() != null)
         //     SmartDashboard.putNumber("Speed", robotContainer.getCommandSwerveDrivetrain().getState().Speeds.vxMetersPerSecond);
 
+        // System.out.println(robotContainer.getCommandSwerveDrivetrain().getPigeon2().getYaw().getValueAsDouble());
         // isRedAlliance = robotContainer.getCommandSwerveDrivetrain().isRedAllianceSupplier().getAsBoolean();
         // Runs the Scheduler.  This is responsible for polling buttons, adding newly-scheduled
         // commands, running already-scheduled commands, removing finished or interrupted commands,
@@ -101,7 +102,7 @@ public class Robot extends TimedRobot
     @Override
     public void disabledPeriodic() 
     {
-        robotContainer.resetRobot(robotContainer.autonomousTab.getLeftWall(), robotContainer.autonomousTab.getMiddle(), robotContainer.autonomousTab.getRightWall());
+        robotContainer.resetRobot();
     }
 
     /**
@@ -125,7 +126,7 @@ public class Robot extends TimedRobot
             autonomousCommand.schedule();
         }
 
-        robotContainer.resetRobot(robotContainer.autonomousTab.getLeftWall(), robotContainer.autonomousTab.getMiddle(), robotContainer.autonomousTab.getRightWall());
+        robotContainer.resetRobot();
     }
 
     /**
@@ -161,7 +162,9 @@ public class Robot extends TimedRobot
      */
     @Override
     public void teleopPeriodic() 
-    {}
+    {
+        System.out.print("Axis : " + robotContainer.getDriverController().getRawAxis(1) + "      ");
+    }
 
     /**
      * This method runs one time when the robot exits teleop mode.

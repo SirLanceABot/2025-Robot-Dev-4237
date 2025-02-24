@@ -78,7 +78,7 @@ public class Elevator extends SubsystemLance
     private DoubleLogEntry elevatorPositionEntry;
 
     // PID Values
-    private final double kP = 1.0;
+    private final double kP = 0.1;
     private final double kI = 0.0;
     private final double kD = 0.0;
     private final double kS = 0.0;

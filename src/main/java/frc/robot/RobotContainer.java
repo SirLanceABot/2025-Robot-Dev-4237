@@ -8,6 +8,7 @@ import com.ctre.phoenix6.hardware.Pigeon2;
 import com.pathplanner.lib.auto.AutoBuilder;
 
 import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
@@ -193,47 +194,58 @@ public class RobotContainer
         // : null;
     }
 
-    public void resetRobot(AutonomousTabData.Left_Wall leftWall, AutonomousTabData.Middle middle, AutonomousTabData.Right_Wall rightWall)
+    public void resetRobot()
     {   
-        Pigeon2 gyro = drivetrain.getPigeon2();
-        leftWall = autonomousTab.getLeftWall();
-        middle = autonomousTab.getMiddle();
-        rightWall = autonomousTab.getRightWall();
 
         if(drivetrain != null)
         {
-            if(drivetrain.isRedAllianceSupplier().getAsBoolean())
+            Pigeon2 gyro = drivetrain.getPigeon2();
+    
+            boolean isRed = DriverStation.getAlliance().isPresent() && DriverStation.getAlliance().get() == DriverStation.Alliance.Red;
+
+            if(autonomousTab != null)
             {
-                if(leftWall != Left_Wall.kNo)
+                Left_Wall leftWall = autonomousTab.getLeftWall();
+                Middle middle = autonomousTab.getMiddle();
+                Right_Wall rightWall = autonomousTab.getRightWall();
+
+                if(isRed)
                 {
-                    gyro.setYaw(Constants.Gyro.RED_LEFT_YAW);
-                }
-                else if(middle != Middle.kNo)
-                {
-                    gyro.setYaw(Constants.Gyro.RED_MIDDLE_YAW);
-                }
-                else if(rightWall != Right_Wall.kNo)
-                {
-                    gyro.setYaw(Constants.Gyro.RED_RIGHT_YAW);
+                    if(leftWall != Left_Wall.kNo)
+                    {
+                        gyro.setYaw(Constants.Gyro.RED_LEFT_YAW);
+                    }
+                    else if(middle != Middle.kNo)
+                    {
+                        gyro.setYaw(Constants.Gyro.RED_MIDDLE_YAW);
+                    }
+                    else if(rightWall != Right_Wall.kNo)
+                    {
+                        gyro.setYaw(Constants.Gyro.RED_RIGHT_YAW);
+                    }
                 }
                 else
                 {
-                    gyro.setYaw(180.0);
+                    if(leftWall != Left_Wall.kNo)
+                    {
+                        gyro.setYaw(Constants.Gyro.BLUE_LEFT_YAW);
+                    }
+                    else if(middle != Middle.kNo)
+                    {
+                        gyro.setYaw(Constants.Gyro.BLUE_MIDDLE_YAW);
+                    }
+                    else if(rightWall != Right_Wall.kNo)
+                    {
+                        gyro.setYaw(Constants.Gyro.BLUE_RIGHT_YAW);
+                    }
                 }
+                
             }
             else
             {
-                if(leftWall != Left_Wall.kNo)
+                if(isRed)
                 {
-                    gyro.setYaw(Constants.Gyro.BLUE_LEFT_YAW);
-                }
-                else if(middle != Middle.kNo)
-                {
-                    gyro.setYaw(Constants.Gyro.BLUE_MIDDLE_YAW);
-                }
-                else if(rightWall != Right_Wall.kNo)
-                {
-                    gyro.setYaw(Constants.Gyro.BLUE_RIGHT_YAW);
+                    gyro.setYaw(180.0);
                 }
                 else
                 {

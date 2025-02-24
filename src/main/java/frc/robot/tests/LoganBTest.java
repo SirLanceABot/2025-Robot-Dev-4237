@@ -2,6 +2,8 @@ package frc.robot.tests;
 
 import java.lang.invoke.MethodHandles;
 
+import javax.lang.model.util.ElementScanner14;
+
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Transform2d;
 import edu.wpi.first.wpilibj.Joystick;
@@ -15,6 +17,7 @@ import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.IntakeWrist;
 import frc.robot.subsystems.Pivot;
 import frc.robot.subsystems.PoseEstimator;
+import frc.robot.subsystems.Elevator.ElevatorPosition;
 
 @SuppressWarnings("unused")
 public class LoganBTest implements Test
@@ -102,31 +105,21 @@ public class LoganBTest implements Test
     {
         if(joystick.getRawButton(1))
         {
-            elevator.set(0.2);
+            pivot.set(0.2);
         }
         else if(joystick.getRawButton(2))
         {
-            elevator.set(-0.2);
+            pivot.set(-0.2);
         }
         else if(joystick.getRawButton(3))
         {
-            pivot.set(0.2);
-        }
-        else if(joystick.getRawButton(4))
-        {
-            pivot.set(-0.2);
-        }
-        else if(joystick.getRawButton(5))
-        {
-            claw.placeCoral();
+            claw.grabGamePiece();
         }
         else
         {
-            elevator.stop();
             pivot.stop();
             claw.stop();
         }
-        System.out.printf("Elevator = %10.4f Pivot = %10.4f%n", elevator.getPosition(), pivot.getPosition());
 
 
 
