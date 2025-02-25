@@ -36,17 +36,17 @@ public class Elevator extends SubsystemLance
     // Put all inner enums and inner classes here
     public enum ElevatorPosition
     {
-        kL4(50.0),
-        kUpperReefAlgae(40.0),
-        kSafeSwingPosition(30.0),
-        kLowerReefAlgae(20.0),
-        kReadyToGrabCoralPosition(12.0),
-        kGrabCoralPosition(10.0),
-        kScoreProcessorPosition(8.0),
-        kL3(3.0),
-        kL2(2.0),
-        kL1(1.0),
-        kHoldingPosition(0.0);
+        kHoldingPosition(0.0),
+        kL1(0.0),
+        kL2(12.5),
+        kL3(29.0),
+        kLowerReefAlgae(33.0),
+        kGrabCoralPosition(36.0),
+        kScoreProcessorPosition(36.0),
+        kReadyToGrabCoralPosition(40.0),
+        kSafeSwingPosition(50.0),
+        kUpperReefAlgae(55.0),
+        kL4(70.0);
 
         public final double elevatorPosition;
 
@@ -78,7 +78,7 @@ public class Elevator extends SubsystemLance
     private DoubleLogEntry elevatorPositionEntry;
 
     // PID Values
-    private final double kP = 0.1;
+    private final double kP = 0.07;
     private final double kI = 0.0;
     private final double kD = 0.0;
     private final double kS = 0.0;

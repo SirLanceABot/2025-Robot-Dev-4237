@@ -41,14 +41,14 @@ public class Pivot extends SubsystemLance
 
     public enum PivotPosition
     {
-        kDownPosition(115.9),
-        kHoldAlgaePosition(100.0),
-        kScoreProcessorPosition(91.5),
-        kReefAlgaePosition(60.0),
-        kL4(41.7),
-        kScoreBargePosition(15.0),
-        kLowLevelCoralPosition(20.0),
-        kFlippedPosition(0.0);
+        kFlippedPosition(0.0),
+        kScoreBargePosition(12.25),
+        kHoldAlgaePosition(16.5),
+        kLowLevelCoralPosition(25.0),
+        kL4(34.0),
+        kReefAlgaePosition(53.5),
+        kScoreProcessorPosition(74.5),
+        kDownPosition(115.9);
 
         public final double pivotPosition;
 
@@ -80,7 +80,7 @@ public class Pivot extends SubsystemLance
     // private SparkLimitSwitch reverseLimitSwitch;
 
     // private TargetPosition targetPosition = TargetPosition.kOverride;
-    private final double kP = 2.5;
+    private final double kP = 0.05;
     private final double kI = 0.0;
     private final double kD = 0.0;
     private final double threshold = 1.0;

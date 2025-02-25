@@ -79,7 +79,7 @@ public final class ScoringCommands
         elevator = robotContainer.getElevator();
         claw = robotContainer.getClaw();
         leds = robotContainer.getLEDs();
-        gyro = drivetrain.getPigeon2();
+        gyro = (robotContainer.getDrivetrain() != null ? robotContainer.getDrivetrain().getPigeon2() : null);
         algaeIntakeProximity = robotContainer.getAlgaeIntakeProximity();
         elevatorProximity = robotContainer.getElevatorProximity();
         clawProximity = robotContainer.getClawProximity();

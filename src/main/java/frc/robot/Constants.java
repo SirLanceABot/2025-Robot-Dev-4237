@@ -100,7 +100,7 @@ public final class Constants
     public static class Claw
     {
         public static final int KICK_MOTOR_PORT                         = 32;
-        public static final int GRAB_MOTOR_PORT                         = 0;
+        public static final int GRAB_MOTOR_PORT                         = 14;
         public static final String KICK_MOTOR_CAN_BUS                   = ROBORIO;
         public static final String GRAB_MOTOR_CAN_BUS                   = ROBORIO;
     }

@@ -8,6 +8,7 @@ import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Transform2d;
 import edu.wpi.first.wpilibj.Joystick;
 import frc.robot.RobotContainer;
+import frc.robot.commands.GeneralCommands;
 import frc.robot.sensors.Camera;
 import frc.robot.subsystems.Claw;
 // import frc.robot.Constants.TargetPosition;
@@ -18,6 +19,7 @@ import frc.robot.subsystems.IntakeWrist;
 import frc.robot.subsystems.Pivot;
 import frc.robot.subsystems.PoseEstimator;
 import frc.robot.subsystems.Elevator.ElevatorPosition;
+import frc.robot.subsystems.Pivot.PivotPosition;
 
 @SuppressWarnings("unused")
 public class LoganBTest implements Test

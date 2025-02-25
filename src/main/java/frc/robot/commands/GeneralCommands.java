@@ -87,7 +87,7 @@ public final class GeneralCommands
         claw = robotContainer.getClaw();
         climb = robotContainer.getClimb();
         leds = robotContainer.getLEDs();
-        gyro = robotContainer.getDrivetrain().getPigeon2();
+        gyro = (robotContainer.getDrivetrain() != null ? robotContainer.getDrivetrain().getPigeon2() : null);
         intakeProximity = robotContainer.getCoralIntakeProximity();
         elevatorProximity = robotContainer.getElevatorProximity();
         clawProximity = robotContainer.getClawProximity();
@@ -132,6 +132,26 @@ public final class GeneralCommands
             return Commands.none();
         }
              
+    }
+
+    public static Command testScoringCommand()
+    {
+        if(elevator != null && pivot != null && claw != null)
+        {
+            return
+            Commands.waitUntil(elevator.isAtPosition(ElevatorPosition.kL2))
+            .deadlineFor(elevator.moveToSetPositionCommand(ElevatorPosition.kL2))
+
+            .andThen(
+                Commands.waitUntil(pivot.isAtPosition(PivotPosition.kLowLevelCoralPosition))
+                .deadlineFor(pivot.moveToSetPositionCommand(PivotPosition.kLowLevelCoralPosition)))
+        
+            .andThen(claw.placeCoralCommand());
+        }
+        else
+        {
+            return Commands.none();
+        }
     }
 
    
