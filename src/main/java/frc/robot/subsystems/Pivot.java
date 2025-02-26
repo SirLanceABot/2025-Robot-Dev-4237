@@ -125,7 +125,8 @@ public class Pivot extends SubsystemLance
         // motor.setupForwardHardLimitSwitch(false, false);
         // motor.setupReverseHardLimitSwitch(false, false);
         
-        motor.setupPIDController(0, kP, kI, kD);
+        motor.setupPIDController(0, 0.05, kI, kD); // Use when bringing pivot up
+        motor.setupPIDController(1, 0.02, kI, kD); // Use when bringing pivot down
 
         //Configure PID Controller
         // pidController.setP(kP);
@@ -235,7 +236,14 @@ public class Pivot extends SubsystemLance
 
     private void moveToSetPosition(PivotPosition targetPosition)
     {
-        motor.setControlPosition(targetPosition.pivotPosition);
+        if(targetPosition.pivotPosition > getPosition()) // For when the target position is HIGHER than the current (moving down)
+        {
+            motor.setControlPosition(targetPosition.pivotPosition, 1); // SLOT 1 is the lower P value
+        }
+        else if(targetPosition.pivotPosition < getPosition()) // For when the target position is LOWER than the current (moving up)
+        {
+            motor.setControlPosition(targetPosition.pivotPosition, 0); // SLOT 0 is the higher P value
+        }
     }
 
     // public Command holdCommand()
