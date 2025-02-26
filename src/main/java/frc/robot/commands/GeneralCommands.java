@@ -15,6 +15,7 @@ import edu.wpi.first.math.estimator.PoseEstimator;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.AddressableLED.ColorOrder;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
@@ -588,7 +589,7 @@ public final class GeneralCommands
     {
         if(gyro != null)
         {
-            return Commands.runOnce(() -> gyro.setYaw((drivetrain.isRedAllianceSupplier().getAsBoolean() ? 180.0 : 0.0)));
+            return drivetrain.setYawCommand(() -> (DriverStation.getAlliance().isPresent() && DriverStation.getAlliance().get() == DriverStation.Alliance.Red ? 180.0 : 0.0));//.andThen(Commands.print("Value of supplier: " + (DriverStation.getAlliance().get() == DriverStation.Alliance.Red)));
         }
         else
         {

@@ -33,6 +33,7 @@ import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.Notifier;
 import edu.wpi.first.wpilibj.RobotController;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.Subsystem;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 import frc.robot.generated.TunerConstants;
@@ -326,11 +327,17 @@ public class Drivetrain extends TunerSwerveDrivetrain implements Subsystem
             var alliance = DriverStation.getAlliance();
             if (alliance.isPresent())
             {
-            return alliance.get() == DriverStation.Alliance.Red;
+                System.out.println("Alliance = " + alliance.get());
+                return alliance.get() == DriverStation.Alliance.Red;
             }
             DriverStation.reportError("No alliance is avaliable, assuming Blue", false);
             return false;
         };
+    }
+
+    public Command setYawCommand(DoubleSupplier yaw)
+    {
+        return Commands.runOnce(() -> getPigeon2().setYaw(yaw.getAsDouble()));
     }
 
 

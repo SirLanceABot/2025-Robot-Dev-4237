@@ -20,6 +20,7 @@ import edu.wpi.first.math.numbers.N3;
 import edu.wpi.first.networktables.DoubleArrayEntry;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableInstance;
+import edu.wpi.first.networktables.StructPublisher;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants;
 import frc.robot.LimelightHelpers;
@@ -69,7 +70,7 @@ public class PoseEstimator extends SubsystemLance
 
     // Outputs
     private Pose2d estimatedPose = new Pose2d();
-    private DoubleArrayEntry poseEstimatorEntry;
+    private StructPublisher<Pose2d> poseEstimatorEntry;
 
     private boolean isRightBranch;
     private int primaryReefTag = 0;
@@ -155,7 +156,7 @@ public class PoseEstimator extends SubsystemLance
 
         ASTable = NetworkTableInstance.getDefault().getTable(Constants.ADVANTAGE_SCOPE_TABLE_NAME);
         // This is where the robot starts in AdvantageScope
-        poseEstimatorEntry = ASTable.getDoubleArrayTopic("PoseEstimator").getEntry(defaultPosition);
+        poseEstimatorEntry = ASTable.getStructTopic("PoseEstimator", Pose2d.struct).publish();
 
         double[] doubleArray = {0.0, 0.0, 0.0};
 
@@ -426,7 +427,7 @@ public class PoseEstimator extends SubsystemLance
             swerveModulePositions = drivetrain.getState().ModulePositions;
 
             // Updates odometry
-            estimatedPose = poseEstimator.update(gyroRotation, swerveModulePositions);
+            poseEstimator.update(gyroRotation, swerveModulePositions);
         }
 
         for (Camera camera : cameraArray) 
@@ -498,9 +499,7 @@ public class PoseEstimator extends SubsystemLance
             // grabs the newest estimated pose
             estimatedPose = poseEstimator.getEstimatedPosition();
 
-            //puts pose onto AdvantageScope
-            double[] pose = {estimatedPose.getX(), estimatedPose.getY(), estimatedPose.getRotation().getDegrees()};
-            poseEstimatorEntry.set(pose);
+            poseEstimatorEntry.set(estimatedPose);
         }
     }
 
