@@ -28,6 +28,9 @@ import edu.wpi.first.math.kinematics.SwerveDriveOdometry;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.math.numbers.N1;
 import edu.wpi.first.math.numbers.N3;
+import edu.wpi.first.networktables.NetworkTable;
+import edu.wpi.first.networktables.NetworkTableInstance;
+import edu.wpi.first.networktables.StructPublisher;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.Notifier;
@@ -36,6 +39,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.Subsystem;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
+import frc.robot.Constants;
 import frc.robot.generated.TunerConstants;
 import frc.robot.generated.TunerConstants.TunerSwerveDrivetrain;
 import frc.robot.sensors.Camera;
@@ -53,6 +57,12 @@ public class Drivetrain extends TunerSwerveDrivetrain implements Subsystem
     private static final double kSimLoopPeriod = 0.005; // 5 ms
     private Notifier m_simNotifier = null;
     private double m_lastSimTime;
+
+    //Used for logging odometry
+    private final NetworkTable ASTable;
+    private StructPublisher<Pose2d> drivetrainEntry;
+    private Pose2d estimatedPose = new Pose2d();
+
 
     /* Blue alliance sees forward as 0 degrees (toward red alliance wall) */
     private static final Rotation2d kBlueAlliancePerspectiveRotation = Rotation2d.kZero;
@@ -161,6 +171,10 @@ public class Drivetrain extends TunerSwerveDrivetrain implements Subsystem
             startSimThread();
         }
 
+        ASTable = NetworkTableInstance.getDefault().getTable(Constants.ADVANTAGE_SCOPE_TABLE_NAME);
+        drivetrainEntry = ASTable.getStructTopic("DrivetrainOdometry", Pose2d.struct).publish();
+
+
     }
 
     /**
@@ -183,6 +197,9 @@ public class Drivetrain extends TunerSwerveDrivetrain implements Subsystem
         {
             startSimThread();
         }
+
+        ASTable = NetworkTableInstance.getDefault().getTable(Constants.ADVANTAGE_SCOPE_TABLE_NAME);
+        drivetrainEntry = ASTable.getStructTopic("DrivetrainOdometry", Pose2d.struct).publish();
 
 
     }
@@ -215,6 +232,10 @@ public class Drivetrain extends TunerSwerveDrivetrain implements Subsystem
         }
         SmartDashboard.putData("Swerve/Field", field);
 
+        ASTable = NetworkTableInstance.getDefault().getTable(Constants.ADVANTAGE_SCOPE_TABLE_NAME);
+        drivetrainEntry = ASTable.getStructTopic("DrivetrainOdometry", Pose2d.struct).publish();
+
+
     }
 
     // private Rotation2d angleToNearestBranch()
@@ -243,21 +264,21 @@ public class Drivetrain extends TunerSwerveDrivetrain implements Subsystem
     //     return () -> (yDistance.getAsDouble() > xDistance.getAsDouble() ? (1.0) * (xDistance.getAsDouble() / originalXDistance): (yDistance.getAsDouble()/xDistance.getAsDouble()) * (xDistance.getAsDouble() / originalXDistance)); //TODO Might need to increase the multiplier when close to the desired position
     // }
 
-    public PathConstraints constraints = new PathConstraints(3.0, 3.0, 2 * Math.PI, 4 * Math.PI);
+    // public PathConstraints constraints = new PathConstraints(3.0, 3.0, 2 * Math.PI, 4 * Math.PI);
 
     //TODO send this to a new autobuilder to run the path
     //Creates a path to run to get from one spot on the field to another
-    private PathPlannerPath createOnTheFlyPath(Pose2d... pose)
-    {
-        List<Waypoint> waypoints = PathPlannerPath.waypointsFromPoses(pose);
-        PathPlannerPath path = new PathPlannerPath(waypoints, constraints, null, new GoalEndState(0.0,pose[pose.length - 1].getRotation()));
-        return path;
-    }
+    // private PathPlannerPath createOnTheFlyPath(Pose2d... pose)
+    // {
+    //     List<Waypoint> waypoints = PathPlannerPath.waypointsFromPoses(pose);
+    //     PathPlannerPath path = new PathPlannerPath(waypoints, constraints, null, new GoalEndState(0.0,pose[pose.length - 1].getRotation()));
+    //     return path;
+    // }
 
     //public Pose2d getPose()
-    {
+    // {
         //return periodicData.odometry.getPoseMeters();
-    }
+    // }
 
    
 
@@ -387,7 +408,10 @@ public class Drivetrain extends TunerSwerveDrivetrain implements Subsystem
             });
         }
 
-        //private final SwerveDriveOdometry odometry;
+        //logs position data
+        estimatedPose = getState().Pose;
+        drivetrainEntry.set(estimatedPose);
+        
     }
 
     private void startSimThread() 
