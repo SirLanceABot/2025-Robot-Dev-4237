@@ -10,6 +10,7 @@ import edu.wpi.first.math.geometry.Transform2d;
 import edu.wpi.first.wpilibj.Joystick;
 import frc.robot.RobotContainer;
 import frc.robot.commands.GeneralCommands;
+import frc.robot.commands.CommandsManager.TargetPosition;
 import frc.robot.sensors.Camera;
 import frc.robot.subsystems.Claw;
 // import frc.robot.Constants.TargetPosition;
@@ -20,6 +21,7 @@ import frc.robot.subsystems.IntakeWrist;
 import frc.robot.subsystems.Pivot;
 import frc.robot.subsystems.PoseEstimator;
 import frc.robot.subsystems.Elevator.ElevatorPosition;
+import frc.robot.subsystems.IntakeWrist.Position;
 import frc.robot.subsystems.Pivot.PivotPosition;
 
 @SuppressWarnings("unused")
@@ -109,37 +111,45 @@ public class LoganBTest implements Test
         if(joystick.getRawButton(1))
         {
             // elevator.moveToSetPositionCommand(ElevatorPosition.kL4).schedule();
-            elevator.set(0.1);
+            // elevator.set(0.1);
+            intakeWrist.moveToSetPositionCommand(Position.kRestingPosition).schedule();
+            // intakeWrist.set(0.2);
         }
         else if(joystick.getRawButton(2))
         {
             // elevator.moveToSetPositionCommand(ElevatorPosition.kL2).schedule();
-            elevator.set(-0.1);
+            // elevator.set(-0.1);
+            intakeWrist.moveToSetPositionCommand(Position.kIntakeCoralPosition).schedule();
+            // intakeWrist.set(-0.2);
         }
         else if(joystick.getRawButton(3))
         {
             // pivot.moveToSetPositionCommand(PivotPosition.kFlippedPosition).schedule();
-            pivot.set(0.1);
+            // pivot.set(0.1);
+            // intake.pickupCoral();
         }
         else if(joystick.getRawButton(4))
         {
             // pivot.moveToSetPositionCommand(PivotPosition.kHoldAlgaePosition).schedule();
-            pivot.set(-0.1);
+            // pivot.set(-0.1);
+            // intake.pickupAlgae();
         }
         else if(joystick.getRawButton(5))
         {
-            claw.placeCoral();
+            // claw.placeCoral();
         }
         else if(joystick.getRawButton(6))
         {
-            claw.grabGamePiece();
+            // claw.grabGamePiece();
         }
         else
         {
-            elevator.stop();
-            pivot.stop();
-            claw.stop();
+            // elevator.stop();
+            // pivot.stop();
+            // claw.stop();
         }
+        System.out.println("Position: " + intakeWrist.getPosition());
+
 
 
 

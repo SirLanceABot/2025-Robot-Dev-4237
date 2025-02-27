@@ -53,7 +53,7 @@ public class IntakeWrist extends SubsystemLance
     // private final DigitalInput reverseLimitSwitch = new DigitalInput(0);
     private double speed;
 
-    private static final double kP = 0.5;
+    private static final double kP = 0.45;
     private static final double kI = 0.0;
     private static final double kD = 0.0;
     private static final double kS = 0.0;
@@ -100,7 +100,8 @@ public class IntakeWrist extends SubsystemLance
         motor.setupReverseSoftLimit(0.0, true); //values for testing
         motor.setSafetyEnabled(false);
 
-        motor.setupPIDController(0, kP, kI, kD, kS, kV, kA, kG, gravType);
+        motor.setupPIDController(0, 0.5, kI, kD); // USE FOR GOING DOWN
+        //motor.setupPIDController(1, 0.55, kI, kD); // USE FOR GOING UP
     }
 
     /*
@@ -119,7 +120,7 @@ public class IntakeWrist extends SubsystemLance
     /*
      * sets the speed of motor
      */
-    private void set(double speed)
+    public void set(double speed)
     {
         motor.set(speed);
         // if(speed > 0)
@@ -149,7 +150,7 @@ public class IntakeWrist extends SubsystemLance
     /*
      * stops the motor.
      */
-    private void stop()
+    public void stop()
     {
         set(0.0);
     }
@@ -174,6 +175,14 @@ public class IntakeWrist extends SubsystemLance
         //     stop();
         // }
 
+        // if(targetPosition.value > getPosition()) // For when the target position is HIGHER than the current (moving down)
+        // {
+        //     motor.setControlPosition(targetPosition.value, 0); // SLOT 0 is the lower P value
+        // }
+        // else if(targetPosition.value < getPosition()) // For when the target position is LOWER than the current (moving up)
+        // {
+        //     motor.setControlPosition(targetPosition, 1); // SLOT 1 is the higher P value
+        // }
         motor.setControlPosition(targetPosition.value);
 
         // if(targetPosition.value > motor.getPosition())
