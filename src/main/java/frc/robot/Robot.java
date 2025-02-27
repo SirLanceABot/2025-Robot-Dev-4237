@@ -163,7 +163,7 @@ public class Robot extends TimedRobot
     @Override
     public void teleopPeriodic() 
     {
-        System.out.print("Axis : " + robotContainer.getDriverController().getRawAxis(1) + "      ");
+        // System.out.print("Axis : " + robotContainer.getDriverController().getRawAxis(1) + "      ");
     }
 
     /**

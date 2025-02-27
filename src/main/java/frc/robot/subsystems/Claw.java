@@ -68,6 +68,8 @@ public class Claw extends SubsystemLance
         kickMotor.setupBrakeMode();
         grabMotor.setupBrakeMode();
         kickMotor.setInverted(false);
+        kickMotor.setSafetyEnabled(false);
+        grabMotor.setSafetyEnabled(false);
     }
 
     /**

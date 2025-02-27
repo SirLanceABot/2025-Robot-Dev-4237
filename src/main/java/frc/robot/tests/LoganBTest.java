@@ -1,5 +1,6 @@
 package frc.robot.tests;
 
+import java.lang.annotation.ElementType;
 import java.lang.invoke.MethodHandles;
 
 import javax.lang.model.util.ElementScanner14;
@@ -107,18 +108,35 @@ public class LoganBTest implements Test
     {
         if(joystick.getRawButton(1))
         {
-            pivot.set(0.2);
+            // elevator.moveToSetPositionCommand(ElevatorPosition.kL4).schedule();
+            elevator.set(0.1);
         }
         else if(joystick.getRawButton(2))
         {
-            pivot.set(-0.2);
+            // elevator.moveToSetPositionCommand(ElevatorPosition.kL2).schedule();
+            elevator.set(-0.1);
         }
         else if(joystick.getRawButton(3))
+        {
+            // pivot.moveToSetPositionCommand(PivotPosition.kFlippedPosition).schedule();
+            pivot.set(0.1);
+        }
+        else if(joystick.getRawButton(4))
+        {
+            // pivot.moveToSetPositionCommand(PivotPosition.kHoldAlgaePosition).schedule();
+            pivot.set(-0.1);
+        }
+        else if(joystick.getRawButton(5))
+        {
+            claw.placeCoral();
+        }
+        else if(joystick.getRawButton(6))
         {
             claw.grabGamePiece();
         }
         else
         {
+            elevator.stop();
             pivot.stop();
             claw.stop();
         }

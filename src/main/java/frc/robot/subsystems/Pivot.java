@@ -125,8 +125,8 @@ public class Pivot extends SubsystemLance
         // motor.setupForwardHardLimitSwitch(false, false);
         // motor.setupReverseHardLimitSwitch(false, false);
         
-        motor.setupPIDController(0, 0.05, kI, kD); // Use when bringing pivot up
-        motor.setupPIDController(1, 0.02, kI, kD); // Use when bringing pivot down
+        motor.setupPIDController(0, 0.01, kI, kD); // Use when bringing pivot up
+        motor.setupPIDController(1, 0.01, kI, kD); // Use when bringing pivot down
 
         //Configure PID Controller
         // pidController.setP(kP);
