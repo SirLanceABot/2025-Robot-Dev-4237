@@ -28,6 +28,8 @@ import com.ctre.phoenix6.signals.NeutralModeValue;
 import com.ctre.phoenix6.signals.ReverseLimitSourceValue;
 import com.ctre.phoenix6.signals.ReverseLimitTypeValue;
 import com.ctre.phoenix6.spns.SpnValue;
+import com.revrobotics.spark.ClosedLoopSlot;
+import com.revrobotics.spark.SparkBase.ControlType;
 
 import edu.wpi.first.wpilibj.DriverStation;
 
@@ -581,6 +583,24 @@ public class TalonFXLance extends MotorControllerLance
     {
         motor.setControl(positionVoltage.withPosition(position));
     }
+
+    /**
+     * Move the motor to a position using PID control.
+     * Units are rotations by default, but can be changed using the conversion factor.
+     * @param position The position to move the motor to
+     * @param slotID The PID slot (0-2)
+     */
+    public void setControlPosition(double position, int slotId)
+    {
+        if(slotId >= 0 && slotId <= 2)
+        {
+            motor.setControl( positionVoltage
+                .withPosition(position)
+                .withSlot(slotId)
+            );
+        }
+    }
+
 
     /**
      * Spin the motor to a velocity using PID control.
