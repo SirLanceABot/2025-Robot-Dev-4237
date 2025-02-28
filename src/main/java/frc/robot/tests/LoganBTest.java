@@ -112,15 +112,19 @@ public class LoganBTest implements Test
         {
             // elevator.moveToSetPositionCommand(ElevatorPosition.kL4).schedule();
             // elevator.set(0.1);
-            intakeWrist.moveToSetPositionCommand(Position.kRestingPosition).schedule();
+            // intakeWrist.moveToSetPositionCommand(Position.kRestingPosition).schedule();
             // intakeWrist.set(0.2);
+            GeneralCommands.intakeTestCommand().schedule();
+            // pivot.set(0.1);
         }
         else if(joystick.getRawButton(2))
         {
             // elevator.moveToSetPositionCommand(ElevatorPosition.kL2).schedule();
             // elevator.set(-0.1);
-            intakeWrist.moveToSetPositionCommand(Position.kIntakeCoralPosition).schedule();
+            // intakeWrist.moveToSetPositionCommand(Position.kIntakeCoralPosition).schedule();
             // intakeWrist.set(-0.2);
+            // pivot.moveToSetPositionCommand(PivotPosition.kDownPosition).schedule();
+            // pivot.set(-0.1);
         }
         else if(joystick.getRawButton(3))
         {
@@ -148,7 +152,7 @@ public class LoganBTest implements Test
             // pivot.stop();
             // claw.stop();
         }
-        System.out.println("Position: " + intakeWrist.getPosition());
+        // System.out.println("Position: " + pivot.getPosition());
 
 
 

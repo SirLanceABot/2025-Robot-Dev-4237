@@ -57,7 +57,7 @@ public final class ScoringCommands
     private static LEDs leds;
     private static Pigeon2 gyro;
     private static PoseEstimator poseEstimator;
-    private static Proximity algaeIntakeProximity;
+    private static Proximity intakeProximity;
     private static Proximity elevatorProximity;
     private static Proximity clawProximity;
    
@@ -80,7 +80,7 @@ public final class ScoringCommands
         claw = robotContainer.getClaw();
         leds = robotContainer.getLEDs();
         gyro = (robotContainer.getDrivetrain() != null ? robotContainer.getDrivetrain().getPigeon2() : null);
-        algaeIntakeProximity = robotContainer.getAlgaeIntakeProximity();
+        intakeProximity = robotContainer.getIntakeProximity();
         elevatorProximity = robotContainer.getElevatorProximity();
         clawProximity = robotContainer.getClawProximity();
 
@@ -136,7 +136,7 @@ public final class ScoringCommands
      */
     public static Command scoreProcessorWithIntakeCommand()
     {
-        if(intake != null && intakeWrist != null && algaeIntakeProximity != null)
+        if(intake != null && intakeWrist != null && intakeProximity != null)
         {
             return
             Commands.waitUntil(intakeWrist.isAtPosition(Position.kManipAlgaePosition))
@@ -144,7 +144,7 @@ public final class ScoringCommands
                 GeneralCommands.setLedCommand(ColorPattern.kBlink, Color.kBlue),
                 intakeWrist.moveToSetPositionCommand(Position.kManipAlgaePosition))
             .andThen(
-                Commands.waitUntil(() -> (!algaeIntakeProximity.isDetectedSupplier().getAsBoolean()))
+                Commands.waitUntil(() -> (!intakeProximity.isDetectedSupplier().getAsBoolean()))
                 .deadlineFor(
                     intake.ejectAlgaeCommand()))
             .andThen(

@@ -50,8 +50,7 @@ public final class IntakingCommands
     private static Elevator elevator;
     private static Claw claw;
     private static LEDs leds;
-    private static Proximity coralIntakeProximity;
-    private static Proximity algaeIntakeProximity;
+    private static Proximity intakeProximity;
     private static Proximity elevatorProximity;
     private static Proximity clawProximity;
 
@@ -71,8 +70,7 @@ public final class IntakingCommands
         elevator = robotContainer.getElevator();
         claw = robotContainer.getClaw();
         leds = robotContainer.getLEDs();
-        coralIntakeProximity = robotContainer.getCoralIntakeProximity();
-        algaeIntakeProximity = robotContainer.getAlgaeIntakeProximity();
+        intakeProximity = robotContainer.getIntakeProximity();
         elevatorProximity = robotContainer.getElevatorProximity();
         clawProximity = robotContainer.getClawProximity();
 
@@ -91,7 +89,7 @@ public final class IntakingCommands
     */
     public static Command intakeCoralCommand()
     {
-        if(intake != null && intakeWrist != null && elevator != null && claw != null && coralIntakeProximity != null && elevatorProximity != null && clawProximity != null)
+        if(intake != null && intakeWrist != null && elevator != null && claw != null && intakeProximity != null && elevatorProximity != null && clawProximity != null)
         {
             // Does it work?  I don't know.  I'm sure its fine
             return 
@@ -100,7 +98,7 @@ public final class IntakingCommands
                 GeneralCommands.setLedCommand(ColorPattern.kBlink, Color.kYellow),
                 intakeWrist.moveToSetPositionCommand(Position.kIntakeCoralPosition))
             .andThen(
-                Commands.waitUntil(coralIntakeProximity.isDetectedSupplier())
+                Commands.waitUntil(intakeProximity.isDetectedSupplier())
                 .deadlineFor(
                     intake.pickupCoralCommand(),
                     elevator.moveToSetPositionCommand(ElevatorPosition.kReadyToGrabCoralPosition),
@@ -189,10 +187,10 @@ public final class IntakingCommands
      */
     public static Command intakeAlgaeCommand()
     {
-        if(intake != null && intakeWrist != null && coralIntakeProximity != null)
+        if(intake != null && intakeWrist != null && intakeProximity != null)
         {
             return
-            Commands.waitUntil(algaeIntakeProximity.isDetectedSupplier())
+            Commands.waitUntil(intakeProximity.isDetectedSupplier())
             .deadlineFor(
                 GeneralCommands.setLedCommand(ColorPattern.kBlink, Color.kYellow),
                 intakeWrist.moveToSetPositionCommand(Position.kManipAlgaePosition),

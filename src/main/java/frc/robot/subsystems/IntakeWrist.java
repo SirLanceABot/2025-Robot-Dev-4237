@@ -49,8 +49,8 @@ public class IntakeWrist extends SubsystemLance
     // *** CLASS VARIABLES & INSTANCE VARIABLES ***
     // Put all class variables and instance variables here
     private final TalonFXLance motor = new TalonFXLance(Constants.IntakeWrist.MOTOR_PORT, Constants.IntakeWrist.MOTOR_CAN_BUS, "Intake Wrist Motor");
-    // private final DigitalInput forwardLimitSwitch = new DigitalInput(0);
-    // private final DigitalInput reverseLimitSwitch = new DigitalInput(0);
+    private final DigitalInput forwardLimitSwitch = new DigitalInput(0);
+    private final DigitalInput reverseLimitSwitch = new DigitalInput(1);
     private double speed;
 
     private static final double kP = 0.45;
@@ -62,7 +62,7 @@ public class IntakeWrist extends SubsystemLance
     private static final double kG = 0.0;
     private static final GravityTypeValue gravType = GravityTypeValue.Arm_Cosine;
 
-    private final double tolerance = 0.05;
+    private final double tolerance = 1.0;
 
     // *** CLASS CONSTRUCTORS ***
     // Put all class constructors here
@@ -100,8 +100,8 @@ public class IntakeWrist extends SubsystemLance
         motor.setupReverseSoftLimit(0.0, true); //values for testing
         motor.setSafetyEnabled(false);
 
-        motor.setupPIDController(0, 0.5, kI, kD); // USE FOR GOING DOWN
-        //motor.setupPIDController(1, 0.55, kI, kD); // USE FOR GOING UP
+        motor.setupPIDController(0, 0.45, kI, kD); // USE FOR GOING DOWN
+        motor.setupPIDController(1, 0.55, kI, kD); // USE FOR GOING UP
     }
 
     /*
@@ -122,29 +122,29 @@ public class IntakeWrist extends SubsystemLance
      */
     public void set(double speed)
     {
-        motor.set(speed);
-        // if(speed > 0)
-        // {
-        //     if(forwardLimitSwitch.get())
-        //     {
-        //         motor.set(0.0);
-        //     }
-        //     else
-        //     {
-        //         motor.set(MathUtil.clamp(speed, -0.5, 0.5));
-        //     }
-        // }
-        // else
-        // {
-        //     if(reverseLimitSwitch.get())
-        //     {
-        //         motor.set(0.0);
-        //     }
-        //     else
-        //     {
-        //         motor.set(MathUtil.clamp(speed, -0.5, 0.5));
-        //     }
-        // }
+        // motor.set(speed);
+        if(speed > 0)
+        {
+            if(forwardLimitSwitch.get())
+            {
+                motor.set(0.0);
+            }
+            else
+            {
+                motor.set(MathUtil.clamp(speed, -0.5, 0.5));
+            }
+        }
+        else
+        {
+            if(reverseLimitSwitch.get())
+            {
+                motor.set(0.0);
+            }
+            else
+            {
+                motor.set(MathUtil.clamp(speed, -0.5, 0.5));
+            }
+        }
     }
 
     /*
@@ -181,24 +181,24 @@ public class IntakeWrist extends SubsystemLance
         // }
         // else if(targetPosition.value < getPosition()) // For when the target position is LOWER than the current (moving up)
         // {
-        //     motor.setControlPosition(targetPosition, 1); // SLOT 1 is the higher P value
+        //     motor.setControlPosition(targetPosition.value, 1); // SLOT 1 is the higher P value
         // }
-        motor.setControlPosition(targetPosition.value);
+        // motor.setControlPosition(targetPosition.value);
 
-        // if(targetPosition.value > motor.getPosition())
-        // {
-        //     if(!forwardLimitSwitch.get())
-        //     {
-        //         motor.setControlPosition(targetPosition.value);
-        //     }
-        // }
-        // else
-        // {
-        //     if(!reverseLimitSwitch.get())
-        //     {
-        //         motor.setControlPosition(targetPosition.value);
-        //     }
-        // }
+        if(targetPosition.value > motor.getPosition())  // For when the target position is HIGHER than the current (moving down)
+        {
+            if(!forwardLimitSwitch.get())
+            {
+                motor.setControlPosition(targetPosition.value, 0);  // SLOT 0 is the lower P value
+            }
+        }
+        else    // For when the target position is LOWER than the current (moving up)
+        {
+            if(!reverseLimitSwitch.get())
+            {
+                motor.setControlPosition(targetPosition.value, 1); // SLOT 1 is the higher P value
+            }
+        }
         
     }
 

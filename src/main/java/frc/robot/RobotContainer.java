@@ -84,8 +84,7 @@ public class RobotContainer
 
     private final Camera[] cameraArray = new Camera[2];
     private final PoseEstimator poseEstimator;
-    private final Proximity coralIntakeProximity;
-    private final Proximity algaeIntakeProximity;
+    private final Proximity intakeProximity;
     private final Proximity elevatorProximity;
     private final Proximity clawProximity;
 
@@ -142,12 +141,8 @@ public class RobotContainer
                 ? new LEDs()
                 : null;
 
-        coralIntakeProximity = (useFullRobot || useProximity)
+        intakeProximity = (useFullRobot || useProximity)
                 ? new Proximity(Constants.Proximity.CORAL_INTAKE_PORT)
-                : null;
-
-        algaeIntakeProximity = (useFullRobot || useProximity)
-                ? new Proximity(Constants.Proximity.ALGAE_INTAKE_PORT)
                 : null;
 
         elevatorProximity = (useFullRobot || useProximity)
@@ -300,14 +295,9 @@ public class RobotContainer
         return poseEstimator;
     }
 
-    public Proximity getCoralIntakeProximity()
+    public Proximity getIntakeProximity()
     {
-        return coralIntakeProximity;
-    }
-
-    public Proximity getAlgaeIntakeProximity()
-    {
-        return algaeIntakeProximity;
+        return intakeProximity;
     }
 
     public Proximity getElevatorProximity()
