@@ -161,6 +161,140 @@ public final class GeneralCommands
         }
     }
 
+    public static Command testgrabbingFromIntakeCommand()
+    {
+        if( elevator != null & pivot != null && claw != null && clawProximity != null)
+        {
+            return
+            elevator.moveToSetPositionCommand(ElevatorPosition.kSafeSwingPosition)
+                .until(elevator.isAtPosition(ElevatorPosition.kSafeSwingPosition))
+                .withTimeout(2.0)
+            .andThen(
+                pivot.moveToSetPositionCommand(PivotPosition.kDownPosition)
+                    .until(pivot.isAtPosition(PivotPosition.kDownPosition))
+                    .withTimeout(2.0)
+            )
+            .andThen(
+                elevator.moveToSetPositionCommand(ElevatorPosition.kReadyToGrabCoralPosition)
+                    .until(elevator.isAtPosition(ElevatorPosition.kReadyToGrabCoralPosition))
+                    .withTimeout(2.0)
+            )
+            .andThen(
+                Commands.parallel(
+                    claw.grabGamePieceCommand()
+                        .until(clawProximity.isDetectedSupplier())
+                            .andThen(
+                                claw.stopCommand()
+                            ),
+
+                    elevator.moveToSetPositionCommand(ElevatorPosition.kGrabCoralPosition)
+                        .until(elevator.isAtPosition(ElevatorPosition.kGrabCoralPosition))
+                        .withTimeout(2.0)
+                )
+            )
+            .andThen(
+                elevator.moveToSetPositionCommand(ElevatorPosition.kReadyToGrabCoralPosition)
+                    .until(elevator.isAtPosition(ElevatorPosition.kReadyToGrabCoralPosition))
+                    .withTimeout(2.0)
+               
+            );
+        }
+        else
+        {
+            return Commands.none();
+        }
+    }
+
+    public static Command testGrabAndFlipCommand()
+    {
+        if( elevator != null & pivot != null && claw != null)
+        {
+            return
+            elevator.moveToSetPositionCommand(ElevatorPosition.kSafeSwingPosition)
+                .until(elevator.isAtPosition(ElevatorPosition.kSafeSwingPosition))
+                .withTimeout(2.0)
+            .andThen(
+                pivot.moveToSetPositionCommand(PivotPosition.kDownPosition)
+                    .until(pivot.isAtPosition(PivotPosition.kDownPosition))
+                    .withTimeout(2.0)
+            )
+            .andThen(
+                elevator.moveToSetPositionCommand(ElevatorPosition.kReadyToGrabCoralPosition)
+                    .until(elevator.isAtPosition(ElevatorPosition.kReadyToGrabCoralPosition))
+                    .withTimeout(2.0)
+            )
+            .andThen(
+                Commands.parallel(
+                    claw.grabGamePieceCommand()
+                        .until(clawProximity.isDetectedSupplier())
+                            .andThen(
+                            claw.stopCommand()
+                            ),
+
+                    elevator.moveToSetPositionCommand(ElevatorPosition.kGrabCoralPosition)
+                        .until(elevator.isAtPosition(ElevatorPosition.kGrabCoralPosition))
+                        .withTimeout(2.0)
+                )
+            )
+            .andThen(
+                elevator.moveToSetPositionCommand(ElevatorPosition.kSafeSwingPosition)
+                    .until(elevator.isAtPosition(ElevatorPosition.kSafeSwingPosition))
+                    .withTimeout(2.0)  
+            )
+            .andThen(
+                pivot.moveToSetPositionCommand(PivotPosition.kSafeDropPosition)
+                    .until(pivot.isAtPosition(PivotPosition.kSafeDropPosition))
+                    .withTimeout(2.0)
+            )
+            .andThen(
+                Commands.parallel(
+                    pivot.moveToSetPositionCommand(PivotPosition.kFlippedPosition)
+                        .until(pivot.isAtPosition(PivotPosition.kFlippedPosition))
+                        .withTimeout(2.0),
+
+                    elevator.moveToSetPositionCommand(ElevatorPosition.kHoldingPosition)
+                        .until(elevator.isAtPosition(ElevatorPosition.kHoldingPosition))
+                        .withTimeout(2.0)
+                )
+            );
+        }
+        else
+        {
+            return Commands.none();
+        }
+    }
+
+    public static Command testScoringAndReadyToIntakeCommand()
+    {
+        if(elevator != null && pivot != null && claw != null && clawProximity != null)
+        {
+            if(elevator.getPosition() > 30)
+            {
+                return
+                elevator.moveToSetPositionCommand(ElevatorPosition.kSafeSwingPosition)
+                    .until(elevator.isAtPosition(ElevatorPosition.kSafeSwingPosition))
+                    .withTimeout(2.0);
+                // .andThen(
+                //     Commands.parallel(
+                //         elevator.moveToSetPositionCommand(ElevatorPosition.kL4)
+                //             .until(elevator.isAtPosition(ElevatorPosition.kL4))
+                //             .withTimeout(2.0)
+                //     )
+                // )
+            }
+            else
+            {
+                return Commands.none();
+            }
+        }
+        else
+        {
+            return Commands.none();
+        }
+    }
+
+
+
     public static Command testScoringCommand()
     {
         if(elevator != null && pivot != null && claw != null)
