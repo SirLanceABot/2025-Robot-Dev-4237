@@ -175,30 +175,30 @@ public class IntakeWrist extends SubsystemLance
         //     stop();
         // }
 
-        // if(targetPosition.value > getPosition()) // For when the target position is HIGHER than the current (moving down)
-        // {
-        //     motor.setControlPosition(targetPosition.value, 0); // SLOT 0 is the lower P value
-        // }
-        // else if(targetPosition.value < getPosition()) // For when the target position is LOWER than the current (moving up)
-        // {
-        //     motor.setControlPosition(targetPosition.value, 1); // SLOT 1 is the higher P value
-        // }
+        if(targetPosition.value > getPosition()) // For when the target position is HIGHER than the current (moving down)
+        {
+            motor.setControlPosition(targetPosition.value, 0); // SLOT 0 is the lower P value
+        }
+        else if(targetPosition.value < getPosition()) // For when the target position is LOWER than the current (moving up)
+        {
+            motor.setControlPosition(targetPosition.value, 1); // SLOT 1 is the higher P value
+        }
         // motor.setControlPosition(targetPosition.value);
 
-        if(targetPosition.value > motor.getPosition())  // For when the target position is HIGHER than the current (moving down)
-        {
-            if(!forwardLimitSwitch.get())
-            {
-                motor.setControlPosition(targetPosition.value, 0);  // SLOT 0 is the lower P value
-            }
-        }
-        else    // For when the target position is LOWER than the current (moving up)
-        {
-            if(!reverseLimitSwitch.get())
-            {
-                motor.setControlPosition(targetPosition.value, 1); // SLOT 1 is the higher P value
-            }
-        }
+        // if(targetPosition.value > motor.getPosition())  // For when the target position is HIGHER than the current (moving down)
+        // {
+        //     if(!forwardLimitSwitch.get())
+        //     {
+        //         motor.setControlPosition(targetPosition.value, 0);  // SLOT 0 is the lower P value
+        //     }
+        // }
+        // else    // For when the target position is LOWER than the current (moving up)
+        // {
+        //     if(!reverseLimitSwitch.get())
+        //     {
+        //         motor.setControlPosition(targetPosition.value, 1); // SLOT 1 is the higher P value
+        //     }
+        // }
         
     }
 

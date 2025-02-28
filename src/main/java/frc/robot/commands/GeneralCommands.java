@@ -140,18 +140,20 @@ public final class GeneralCommands
         if(intake != null && intakeWrist != null && intakeProximity != null)
         {
             return 
-            Commands.waitUntil(intakeWrist.isAtPosition(Position.kIntakeCoralPosition))
-            .deadlineFor(
-                intakeWrist.moveToSetPositionCommand(Position.kIntakeCoralPosition))
+            intakeWrist.moveToSetPositionCommand(Position.kIntakeCoralPosition)
+                .until(intakeWrist.isAtPosition(Position.kIntakeCoralPosition))
+                .withTimeout(1.5)
             .andThen(
-                Commands.waitUntil(intakeProximity.isDetectedSupplier())
-                .deadlineFor(
-                    intake.pickupCoralCommand()))
+                intake.pickupCoralCommand()
+                    .until(intakeProximity.isDetectedSupplier()))
+            .andThen(intake.stopCommand())
             .andThen(
-                Commands.waitUntil(intakeWrist.isAtPosition(Position.kRestingPosition))
-                .deadlineFor(
-                    intake.stopCommand(),
-                    intakeWrist.moveToSetPositionCommand(Position.kRestingPosition)));
+                intakeWrist.moveToSetPositionCommand(Position.kRestingPosition)
+                    .until(intakeWrist.isAtPosition(Position.kRestingPosition)))
+            .andThen(
+                intake.ejectCoralCommand()
+                .withTimeout(1.0)
+            );
         }
         else
         {
