@@ -273,18 +273,64 @@ public final class GeneralCommands
                 return
                 elevator.moveToSetPositionCommand(ElevatorPosition.kSafeSwingPosition)
                     .until(elevator.isAtPosition(ElevatorPosition.kSafeSwingPosition))
-                    .withTimeout(2.0);
-                // .andThen(
-                //     Commands.parallel(
-                //         elevator.moveToSetPositionCommand(ElevatorPosition.kL4)
-                //             .until(elevator.isAtPosition(ElevatorPosition.kL4))
-                //             .withTimeout(2.0)
-                //     )
-                // )
+                    .withTimeout(2.0)
+                .andThen(
+                    pivot.moveToSetPositionCommand(PivotPosition.kFlippedPosition)
+                        .until(pivot.isAtPosition(PivotPosition.kFlippedPosition))
+                        .withTimeout(2.0)
+                )
+                .andThen(
+                    elevator.moveToSetPositionCommand(ElevatorPosition.kL4)
+                        .until(elevator.isAtPosition(ElevatorPosition.kL4))
+                        .withTimeout(2.0)
+                )
+                .andThen(
+                    pivot.moveToSetPositionCommand(PivotPosition.kL4)
+                        .until(pivot.isAtPosition(PivotPosition.kL4))
+                        .withTimeout(2.0)
+                )
+                .andThen(
+                    claw.placeCoralCommand()
+                        .until(() -> !(clawProximity.isDetectedSupplier().getAsBoolean()))
+                )
+                .andThen(
+                    pivot.moveToSetPositionCommand(PivotPosition.kFlippedPosition)
+                        .until(pivot.isAtPosition(PivotPosition.kFlippedPosition))
+                        .withTimeout(2.0)
+                )
+                .andThen(
+                    elevator.moveToSetPositionCommand(ElevatorPosition.kHoldingPosition)
+                        .until(elevator.isAtPosition(ElevatorPosition.kHoldingPosition))
+                        .withTimeout(2.0)
+                );
+
+            
             }
             else
             {
-                return Commands.none();
+                return 
+                elevator.moveToSetPositionCommand(ElevatorPosition.kL4)
+                    .until(elevator.isAtPosition(ElevatorPosition.kL4))
+                    .withTimeout(2.0)
+                .andThen(
+                    pivot.moveToSetPositionCommand(PivotPosition.kL4)
+                        .until(pivot.isAtPosition(PivotPosition.kL4))
+                        .withTimeout(2.0)
+                )
+                .andThen(
+                    claw.placeCoralCommand()
+                        .until(() -> !(clawProximity.isDetectedSupplier().getAsBoolean()))
+                )
+                .andThen(
+                    pivot.moveToSetPositionCommand(PivotPosition.kFlippedPosition)
+                        .until(pivot.isAtPosition(PivotPosition.kFlippedPosition))
+                        .withTimeout(2.0)
+                )
+                .andThen(
+                    elevator.moveToSetPositionCommand(ElevatorPosition.kHoldingPosition)
+                        .until(elevator.isAtPosition(ElevatorPosition.kHoldingPosition))
+                        .withTimeout(2.0)
+                );
             }
         }
         else
