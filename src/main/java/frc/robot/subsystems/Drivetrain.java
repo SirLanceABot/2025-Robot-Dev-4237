@@ -19,11 +19,16 @@ import com.pathplanner.lib.path.GoalEndState;
 import com.pathplanner.lib.path.PathConstraints;
 import com.pathplanner.lib.path.PathPlannerPath;
 import com.pathplanner.lib.path.Waypoint;
+import com.pathplanner.lib.util.DriveFeedforwards;
 
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.Matrix;
+import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.kinematics.ChassisSpeeds;
+import edu.wpi.first.math.kinematics.DifferentialDriveOdometry;
+import edu.wpi.first.math.kinematics.DifferentialDriveWheelSpeeds;
 import edu.wpi.first.math.kinematics.SwerveDriveOdometry;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.math.numbers.N1;
@@ -275,10 +280,61 @@ public class Drivetrain extends TunerSwerveDrivetrain implements Subsystem
     //     return path;
     // }
 
-    //public Pose2d getPose()
+    public Pose2d getPose()
+    {
+        return getState().Pose;
+    }
+
+  
+
+    /**
+     * resets odometry by reseting the gyro, pose, and the left / right motors
+     */
+    // public void resetOdometry()
     // {
-        //return periodicData.odometry.getPoseMeters();
+    //     odometry.resetPosition(
+    //         gyro.getRotation2d(),
+    //         leftLeaderPosition,
+    //         rightLeaderPosition,
+    //         pose
+    //     );
     // }
+
+    /**
+     * @return
+     * the robot's estimated chassis speed based on the left and right velocities
+     */
+    public ChassisSpeeds getRobotRelativeSpeeds()
+    {
+        return getState().Speeds;
+    }
+
+    /**
+     * @param chassisSpeeds
+     * the robot's chassis speed
+     */
+    public void driveRobotRelative(ChassisSpeeds chassisSpeeds, DriveFeedforwards feedforwards)
+    {
+        ChassisSpeeds wheelSpeeds = getState().Speeds;
+        SimpleMotorFeedforward motorFeedforward = new SimpleMotorFeedforward(.12,12.0/3.7);
+        
+        double xDirectionWheelSpeedInVolts = motorFeedforward.calculate(wheelSpeeds.vxMetersPerSecond);
+        double yDirectionWheelSpeedInVolts = motorFeedforward.calculate(wheelSpeeds.vyMetersPerSecond);
+
+        // System.out.println("-------------------LV = " + leftWheelSpeedInVolts + ", RV = " + rightWheelSpeedInVolts + ", RV = " + rightLeaderVelocity + ", LV = " + leftLeaderVelocity + ", CS = " + chassisSpeeds);
+        SmartDashboard.putString("Chassis Speeds", chassisSpeeds.toString());
+        SmartDashboard.putNumber("X Volts", xDirectionWheelSpeedInVolts);
+        SmartDashboard.putNumber("Y Volts", yDirectionWheelSpeedInVolts);
+        SmartDashboard.putNumber("X velocity", xDirectionWheelSpeedInVolts);
+        SmartDashboard.putNumber("Y velocity", yDirectionWheelSpeedInVolts);
+
+    }
+    
+
+    public void resetOdometryPose(Pose2d pose)
+    {
+        resetPose(getState().Pose);
+    }
 
    
 
