@@ -129,20 +129,20 @@ public final class DriverBindings {
     private static void configXButton()
     {
         Trigger xButton = controller.x();
-        xButton.onTrue(IntakingCommands.testCommand3());
-        // xButton.onTrue(GeneralCommands.moveScorerToHoldAlgaeCommand());
+        // xButton.onTrue(IntakingCommands.testCommand3());
+        xButton.onTrue(GeneralCommands.moveScorerToHoldAlgaeCommand());
     }
 
 
     private static void configYButton()
     {
         Trigger yButton = controller.y(); 
-        yButton
-        .onTrue(IntakingCommands.testCommand4());
+        // yButton
+        // .onTrue(IntakingCommands.testCommand4());
         // .onTrue( Commands.runOnce(() -> controller.getHID().setRumble(RumbleType.kBothRumble, 1.0)))
         // .onFalse( Commands.runOnce(() -> controller.getHID().setRumble(RumbleType.kBothRumble, 0.0)));
 
-        // yButton.onTrue(IntakingCommands.intakeCoralFromStationCommand());
+        yButton.onTrue(IntakingCommands.intakeCoralFromStationCommand());
         
     }
 

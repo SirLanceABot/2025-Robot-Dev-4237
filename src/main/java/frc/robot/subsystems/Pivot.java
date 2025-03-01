@@ -47,9 +47,9 @@ public class Pivot extends SubsystemLance
         kLowLevelCoralPosition(25.0),
         kL4(34.0),
         kSafeDropPosition(50.0), //TODO needs tuned
-        kReefAlgaePosition(53.5),
-        kScoreProcessorPosition(74.5),
-        kDownPosition(115.9);
+        kReefAlgaePosition(54.5),
+        kScoreProcessorPosition(75.5),
+        kDownPosition(117.9);
 
         public final double pivotPosition;
 
@@ -84,7 +84,7 @@ public class Pivot extends SubsystemLance
     private final double kP = 0.05;
     private final double kI = 0.0;
     private final double kD = 0.0;
-    private final double threshold = 1.0;
+    private final double threshold = 2.0;
 
     // *** CLASS CONSTRUCTORS ***
     // Put all class constructors here

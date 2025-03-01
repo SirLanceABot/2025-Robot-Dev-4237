@@ -49,8 +49,8 @@ public class IntakeWrist extends SubsystemLance
     // *** CLASS VARIABLES & INSTANCE VARIABLES ***
     // Put all class variables and instance variables here
     private final TalonFXLance motor = new TalonFXLance(Constants.IntakeWrist.MOTOR_PORT, Constants.IntakeWrist.MOTOR_CAN_BUS, "Intake Wrist Motor");
-    private final DigitalInput forwardLimitSwitch = new DigitalInput(0);
-    private final DigitalInput reverseLimitSwitch = new DigitalInput(1);
+    private final DigitalInput forwardLimitSwitch = new DigitalInput(1);
+    private final DigitalInput reverseLimitSwitch = new DigitalInput(0);
     private double speed;
 
     private static final double kP = 0.45;
@@ -101,7 +101,7 @@ public class IntakeWrist extends SubsystemLance
         motor.setSafetyEnabled(false);
 
         motor.setupPIDController(0, 0.45, kI, kD); // USE FOR GOING DOWN
-        motor.setupPIDController(1, 0.55, kI, kD); // USE FOR GOING UP
+        motor.setupPIDController(1, 0.6, kI, kD); // USE FOR GOING UP
     }
 
     /*

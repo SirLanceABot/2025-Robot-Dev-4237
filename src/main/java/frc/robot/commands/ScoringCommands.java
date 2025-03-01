@@ -259,16 +259,19 @@ public final class ScoringCommands
         if(elevator != null && pivot != null)
         {
             return
-            Commands.waitUntil(elevator.isAtPosition(ElevatorPosition.kSafeSwingPosition))
-                .deadlineFor(elevator.moveToSetPositionCommand(ElevatorPosition.kSafeSwingPosition))
+            elevator.moveToSetPositionCommand(ElevatorPosition.kSafeSwingPosition)
+                .until(elevator.isAtPosition(ElevatorPosition.kSafeSwingPosition))
+                .withTimeout(2.0)
+            
             .andThen(
-                Commands.waitUntil(pivot.isAtPosition(PivotPosition.kFlippedPosition))
-                .deadlineFor(
-                    pivot.moveToSetPositionCommand(PivotPosition.kFlippedPosition)))
+                pivot.moveToSetPositionCommand(PivotPosition.kFlippedPosition)
+                    .until(pivot.isAtPosition(PivotPosition.kFlippedPosition))
+                    .withTimeout(2.0))
+
             .andThen(
-                Commands.waitUntil(elevator.isAtPosition(ElevatorPosition.kHoldingPosition))
-                .deadlineFor(elevator.moveToSetPositionCommand(ElevatorPosition.kHoldingPosition)))
-            .withName("Flip Scorer");
+                elevator.moveToSetPositionCommand(ElevatorPosition.kHoldingPosition)
+                    .until(elevator.isAtPosition(ElevatorPosition.kHoldingPosition))
+                    .withTimeout(2.0));
         }
         else
         {

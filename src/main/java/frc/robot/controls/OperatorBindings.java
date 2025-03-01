@@ -175,6 +175,7 @@ public final class OperatorBindings {
         Trigger leftTrigger = controller.leftTrigger();
         leftTrigger
             .onTrue(robotContainer.getPoseEstimator().setPlacingSideToLeftCommand()
+            .andThen(Commands.runOnce(() -> controller.getHID().setRumble(RumbleType.kLeftRumble, 1.0))).withTimeout(0.25)
             .andThen(Commands.runOnce(() -> controller.getHID().setRumble(RumbleType.kLeftRumble, 1.0)))
             .withTimeout(0.25));
     }
@@ -184,7 +185,8 @@ public final class OperatorBindings {
     {
         Trigger rightTrigger = controller.rightTrigger();
         rightTrigger
-            .onTrue(robotContainer.getPoseEstimator().setPlacingSideToRightCommand()
+            .onTrue(robotContainer.getPoseEstimator().setPlacingSideToLeftCommand()
+            .andThen(Commands.runOnce(() -> controller.getHID().setRumble(RumbleType.kRightRumble, 1.0))).withTimeout(0.25)
             .andThen(Commands.runOnce(() -> controller.getHID().setRumble(RumbleType.kRightRumble, 1.0)))
             .withTimeout(0.25));
     }
