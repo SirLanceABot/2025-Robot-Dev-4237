@@ -9,12 +9,15 @@ import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import edu.wpi.first.wpilibj2.command.Commands;
 import frc.robot.commands.CommandsManager;
 import frc.robot.controls.DriverBindings;
 import frc.robot.controls.OperatorBindings;
-import frc.robot.elastic.AutonomousTab;
+//import frc.robot.elastic.AutonomousTab;
+import frc.robot.elastic.ElasticLance;
 import frc.robot.loggers.DataLogFile;
 import frc.robot.motors.MotorControllerLance;
+import frc.robot.pathplanner.PathPlannerLance;
 
 
 public class Robot extends TimedRobot 
@@ -33,6 +36,9 @@ public class Robot extends TimedRobot
     private Command autonomousCommand = null;
     private TestMode testMode = null;
     private boolean isRedAlliance;
+    private Command currentCommand = null;
+    private Command previousCommand = null;
+    private boolean autonomousRun = false;
     // private Drivetrain drivetrain;
 
 
@@ -55,6 +61,8 @@ public class Robot extends TimedRobot
         DriverBindings.createBindings(robotContainer);
         OperatorBindings.createBindings(robotContainer);
 
+        PathPlannerLance.configPathPlanner(robotContainer);
+        ElasticLance.configElastic();
         // TODO - Add these PathPlanner warmup commands
         // FollowPathCommand.warmupCommand().schedule();
         // PathfindingCommand.warmupCommand().schedule();
@@ -64,7 +72,8 @@ public class Robot extends TimedRobot
     public void robotPeriodic() 
     {
         // Run periodic tasks
-        
+        PeriodicTask.runAllPeriodicTasks();
+        ElasticLance.sendDataToSmartDashboard();
 
         // // SmartDashboard.putNumber("Speed", drivetrain.getState().Speeds.getVelocity());
         // if(robotContainer.getDrivetrain() != null)
@@ -94,7 +103,13 @@ public class Robot extends TimedRobot
      */
     @Override
     public void disabledInit() 
-    {}
+    {
+        if (!autonomousRun)
+        {
+            previousCommand = ElasticLance.getAutonomousCommand();
+            
+        }
+    }
 
     /**
      * This method runs periodically (20ms) during disabled mode.
@@ -102,7 +117,19 @@ public class Robot extends TimedRobot
     @Override
     public void disabledPeriodic() 
     {
-        robotContainer.resetRobot();
+        if (!autonomousRun)
+        {
+            currentCommand = ElasticLance.getAutonomousCommand();
+            if(currentCommand != previousCommand)
+            {
+                ElasticLance.resetRobot(robotContainer.getDrivetrain().getPigeon2());
+                autonomousCommand = currentCommand;
+                
+            }
+            previousCommand = currentCommand;
+            System.out.println(currentCommand.getName());
+        }    
+        
     }
 
     /**
@@ -119,14 +146,13 @@ public class Robot extends TimedRobot
     public void autonomousInit() 
     {
         DataLogManager.start();
-        autonomousCommand = robotContainer.getAutonomousCommand();
+        //autonomousCommand = ElasticLance.getAutonomousCommand();
 
         if(autonomousCommand != null) 
         {
             autonomousCommand.schedule();
         }
 
-        robotContainer.resetRobot();
     }
 
     /**
@@ -141,7 +167,9 @@ public class Robot extends TimedRobot
      */
     @Override
     public void autonomousExit() 
-    {}
+    {
+        autonomousRun = true;
+    }
 
     /**
      * This method runs one time when the robot enters teleop mode.
@@ -155,6 +183,8 @@ public class Robot extends TimedRobot
             autonomousCommand.cancel();
             autonomousCommand = null;
         }
+
+        autonomousRun = false;
     }
 
     /**

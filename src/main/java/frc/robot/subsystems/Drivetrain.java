@@ -282,7 +282,9 @@ public class Drivetrain extends TunerSwerveDrivetrain implements Subsystem
 
     public Pose2d getPose()
     {
+        System.out.println("poseTest2");
         return getState().Pose;
+        
     }
 
   
@@ -306,6 +308,7 @@ public class Drivetrain extends TunerSwerveDrivetrain implements Subsystem
      */
     public ChassisSpeeds getRobotRelativeSpeeds()
     {
+        System.out.println("speedsTest3");
         return getState().Speeds;
     }
 
@@ -316,11 +319,13 @@ public class Drivetrain extends TunerSwerveDrivetrain implements Subsystem
     public void driveRobotRelative(ChassisSpeeds chassisSpeeds, DriveFeedforwards feedforwards)
     {
         ChassisSpeeds wheelSpeeds = getState().Speeds;
+        System.out.println("driveTest1");
         SimpleMotorFeedforward motorFeedforward = new SimpleMotorFeedforward(.12,12.0/3.7);
-        
+        System.out.println("driveTest2");
+
         double xDirectionWheelSpeedInVolts = motorFeedforward.calculate(wheelSpeeds.vxMetersPerSecond);
         double yDirectionWheelSpeedInVolts = motorFeedforward.calculate(wheelSpeeds.vyMetersPerSecond);
-
+        System.out.println("driveTest3");
         // System.out.println("-------------------LV = " + leftWheelSpeedInVolts + ", RV = " + rightWheelSpeedInVolts + ", RV = " + rightLeaderVelocity + ", LV = " + leftLeaderVelocity + ", CS = " + chassisSpeeds);
         SmartDashboard.putString("Chassis Speeds", chassisSpeeds.toString());
         SmartDashboard.putNumber("X Volts", xDirectionWheelSpeedInVolts);
@@ -334,6 +339,7 @@ public class Drivetrain extends TunerSwerveDrivetrain implements Subsystem
     public void resetOdometryPose(Pose2d pose)
     {
         resetPose(getState().Pose);
+        System.out.println("resetTest2");
     }
 
    

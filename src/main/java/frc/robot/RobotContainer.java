@@ -12,13 +12,11 @@ import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
-import frc.robot.elastic.AutoCommandList;
-import frc.robot.elastic.AutonomousTab;
+//import frc.robot.elastic.AutonomousTab;
 import frc.robot.elastic.AutonomousTabData;
-import frc.robot.elastic.AutonomousTabData.Left_Wall;
-import frc.robot.elastic.AutonomousTabData.Middle;
-import frc.robot.elastic.AutonomousTabData.Right_Wall;
+import frc.robot.elastic.ElasticLance;
 import frc.robot.generated.TunerConstants;
+import frc.robot.pathplanner.PathPlannerLance;
 import frc.robot.sensors.Camera;
 import frc.robot.sensors.Proximity;
 import frc.robot.subsystems.Claw;
@@ -68,7 +66,7 @@ public class RobotContainer
     private boolean useDriverController     = false;
     private boolean useOperatorController   = false;
 
-    private boolean useAutonomousTab        = false;
+    //private boolean useAutonomousTab        = false;
 
     public final boolean fullRobot;
 
@@ -94,7 +92,7 @@ public class RobotContainer
     private final CommandXboxController driverController;
     private final CommandXboxController operatorController;
 
-    public final AutonomousTab autonomousTab;
+    //public final AutonomousTab autonomousTab;
     
 
     /** 
@@ -174,12 +172,7 @@ public class RobotContainer
                 : null; 
 
 
-        autonomousTab      = (useFullRobot || useAutonomousTab)
-                ? new AutonomousTab()
-                : null;
-
-            
-
+        
         // operatorButtonBindings = (useFullRobot || useBindings)
         // ? new OperatorButtonBindings(this)
         // : null;
@@ -189,66 +182,7 @@ public class RobotContainer
         // : null;
     }
 
-    public void resetRobot()
-    {   
-
-        if(drivetrain != null)
-        {
-            Pigeon2 gyro = drivetrain.getPigeon2();
     
-            boolean isRed = DriverStation.getAlliance().isPresent() && DriverStation.getAlliance().get() == DriverStation.Alliance.Red;
-
-            if(autonomousTab != null)
-            {
-                Left_Wall leftWall = autonomousTab.getLeftWall();
-                Middle middle = autonomousTab.getMiddle();
-                Right_Wall rightWall = autonomousTab.getRightWall();
-
-                if(isRed)
-                {
-                    if(leftWall != Left_Wall.kNo)
-                    {
-                        gyro.setYaw(Constants.Gyro.RED_LEFT_YAW);
-                    }
-                    else if(middle != Middle.kNo)
-                    {
-                        gyro.setYaw(Constants.Gyro.RED_MIDDLE_YAW);
-                    }
-                    else if(rightWall != Right_Wall.kNo)
-                    {
-                        gyro.setYaw(Constants.Gyro.RED_RIGHT_YAW);
-                    }
-                }
-                else
-                {
-                    if(leftWall != Left_Wall.kNo)
-                    {
-                        gyro.setYaw(Constants.Gyro.BLUE_LEFT_YAW);
-                    }
-                    else if(middle != Middle.kNo)
-                    {
-                        gyro.setYaw(Constants.Gyro.BLUE_MIDDLE_YAW);
-                    }
-                    else if(rightWall != Right_Wall.kNo)
-                    {
-                        gyro.setYaw(Constants.Gyro.BLUE_RIGHT_YAW);
-                    }
-                }
-                
-            }
-            else
-            {
-                if(isRed)
-                {
-                    gyro.setYaw(180.0);
-                }
-                else
-                {
-                    gyro.setYaw(0.0);
-                }
-            }
-        }
-    }
 
     public Claw getClaw()
     {
