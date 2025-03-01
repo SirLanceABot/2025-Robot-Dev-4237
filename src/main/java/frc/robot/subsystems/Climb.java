@@ -89,7 +89,7 @@ public class Climb extends SubsystemLance
         followMotor.setSafetyEnabled(false);
         leadMotor.setupBrakeMode();
         followMotor.setupBrakeMode();
-        leadMotor.setupInverted(false);
+        leadMotor.setupInverted(true);
 
         followMotor.setupFollower(Constants.Climb.LEAD_MOTOR_PORT, false);
 
@@ -98,8 +98,8 @@ public class Climb extends SubsystemLance
         
         // motor.setupPIDController(0, 0.0, 0.0, 0.0);
 
-        leadMotor.setupForwardSoftLimit(FORWARD_SOFT_LIMIT, true);
-        leadMotor.setupReverseSoftLimit(REVERSE_SOFT_LIMIT, true);
+        // leadMotor.setupForwardSoftLimit(FORWARD_SOFT_LIMIT, true);
+        // leadMotor.setupReverseSoftLimit(REVERSE_SOFT_LIMIT, true);
         // motor.setupForwardHardLimitSwitch(true, true);
         // motor.setupReverseHardLimitSwitch(true, true);
     }
@@ -117,7 +117,7 @@ public class Climb extends SubsystemLance
      * sets the motor to the speed passed to the function
      * @param speed sets speed from -1.0 to 1.0
      */
-    private void set(double speed)
+    public void set(double speed)
     {
         leadMotor.set(MathUtil.clamp(speed, -0.5, 0.5));
     }

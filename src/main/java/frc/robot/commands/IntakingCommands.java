@@ -98,13 +98,11 @@ public final class IntakingCommands
                 intakeWrist.moveToSetPositionCommand(Position.kIntakeCoralPosition)
                     .until(intakeWrist.isAtPosition(Position.kIntakeCoralPosition)),
 
-                GeneralCommands.moveScorerToIntakingPositionCommand())
-                .withTimeout(3.0)
-                    
-            .andThen(
+                GeneralCommands.moveScorerToIntakingPositionCommand(),
+                
                 intake.pickupCoralCommand()
                     .until(intakeProximity.isDetectedSupplier()))
-
+                    
             .andThen(intake.stopCommand())
 
             .andThen(
@@ -114,6 +112,8 @@ public final class IntakingCommands
             .andThen(
                 intake.ejectCoralCommand()
                     .until(elevatorProximity.isDetectedSupplier()))
+            
+            .andThen(intake.stopCommand())
 
             .andThen(
                 Commands.parallel(

@@ -597,15 +597,16 @@ public final class GeneralCommands
 
                     .andThen(
                         elevator.moveToSetPositionCommand(ElevatorPosition.kReadyToGrabCoralPosition)
-                            .until(elevator.isAtPosition(ElevatorPosition.kReadyToGrabCoralPosition))),
+                            .until(elevator.isAtPosition(ElevatorPosition.kReadyToGrabCoralPosition))
+                            .withTimeout(3.0)),
 
                     // IF SCORER IS NOT ABOVE THE SAFE SWING POSITION
                     elevator.moveToSetPositionCommand(ElevatorPosition.kSafeSwingPosition)
-                        .until(elevator.isAtPosition(ElevatorPosition.kReadyToGrabCoralPosition))
+                        .until(elevator.isAtPosition(ElevatorPosition.kSafeSwingPosition))
 
                     .andThen(
                         pivot.moveToSetPositionCommand(PivotPosition.kDownPosition)
-                        .until(pivot.isAtPosition(PivotPosition.kDownPosition)))
+                            .until(pivot.isAtPosition(PivotPosition.kDownPosition)))
 
                     .andThen(
                         elevator.moveToSetPositionCommand(ElevatorPosition.kReadyToGrabCoralPosition)

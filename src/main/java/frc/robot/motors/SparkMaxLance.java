@@ -272,6 +272,7 @@ public class SparkMaxLance extends MotorControllerLance
             motorConfig.limitSwitch.forwardLimitSwitchType(Type.kNormallyOpen);
         else
             motorConfig.limitSwitch.forwardLimitSwitchType(Type.kNormallyClosed);
+        motorConfig.limitSwitch.forwardLimitSwitchEnabled(isEnabled);
         setup(() -> motor.configure(motorConfig, resetMode, persistMode), "Setup Forward Hard Limit");
     }
 
@@ -292,6 +293,7 @@ public class SparkMaxLance extends MotorControllerLance
             motorConfig.limitSwitch.reverseLimitSwitchType(Type.kNormallyOpen);
         else
             motorConfig.limitSwitch.reverseLimitSwitchType(Type.kNormallyClosed);
+        motorConfig.limitSwitch.reverseLimitSwitchEnabled(isEnabled);
         setup(() -> motor.configure(motorConfig, resetMode, persistMode), "Setup Reverse Hard Limit");
     }
 

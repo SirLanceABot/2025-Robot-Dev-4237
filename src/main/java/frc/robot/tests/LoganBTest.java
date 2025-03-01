@@ -10,6 +10,8 @@ import edu.wpi.first.math.geometry.Transform2d;
 import edu.wpi.first.wpilibj.Joystick;
 import frc.robot.RobotContainer;
 import frc.robot.commands.GeneralCommands;
+import frc.robot.commands.IntakingCommands;
+import frc.robot.commands.ScoringCommands;
 import frc.robot.commands.CommandsManager.TargetPosition;
 import frc.robot.sensors.Camera;
 import frc.robot.subsystems.Claw;
@@ -114,25 +116,37 @@ public class LoganBTest implements Test
             // elevator.set(0.1);
             // intakeWrist.moveToSetPositionCommand(Position.kRestingPosition).schedule();
             // intakeWrist.set(0.2);
-            // GeneralCommands.intakeTestCommand().schedule();
-            GeneralCommands.testgrabbingFromIntakeCommand().schedule();
+            // IntakingCommands.intakeCoralCommand().schedule();
+            // GeneralCommands.testgrabbingFromIntakeCommand().schedule();
             // pivot.set(0.1);
+            // claw.grabGamePiece();
+            // elevator.moveToSetPositionCommand(ElevatorPosition.kSafeSwingPosition).schedule();
+            // GeneralCommands.moveScorerToIntakingPositionCommand().schedule();
+            climb.set(0.05);
         }
         else if(joystick.getRawButton(2))
         {
+            // ScoringCommands.flipScorerCommand().schedule();
             // elevator.moveToSetPositionCommand(ElevatorPosition.kL2).schedule();
             // elevator.set(-0.1);
             // intakeWrist.moveToSetPositionCommand(Position.kIntakeCoralPosition).schedule();
             // intakeWrist.set(-0.2);
             // pivot.moveToSetPositionCommand(PivotPosition.kDownPosition).schedule();
             // pivot.set(-0.1);
-            GeneralCommands.testGrabAndFlipCommand().schedule();
+            // GeneralCommands.testGrabAndFlipCommand().schedule();
+            // pivot.set(0.2);
+            // elevator.moveToSetPositionCommand(ElevatorPosition.kL4).schedule();
+            climb.set(-0.05);
         }
         else if(joystick.getRawButton(3))
         {
             // pivot.moveToSetPositionCommand(PivotPosition.kFlippedPosition).schedule();
+
+
             // pivot.set(0.1);
             // intake.pickupCoral();
+            // pivot.set(-0.2);
+            // elevator.moveToSetPositionCommand(ElevatorPosition.kReadyToGrabCoralPosition).schedule();
         }
         else if(joystick.getRawButton(4))
         {
@@ -150,9 +164,11 @@ public class LoganBTest implements Test
         }
         else
         {
-            elevator.stopCommand().schedule();
-            pivot.stopCommand().schedule();
-            claw.stopCommand().schedule();
+            // elevator.stopCommand().schedule();
+            // pivot.stopCommand().schedule();
+            // claw.stopCommand().schedule();
+            // pivot.stop();
+            climb.stop();
         }
         // System.out.println("Position: " + pivot.getPosition());
 

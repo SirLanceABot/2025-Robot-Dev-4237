@@ -81,10 +81,10 @@ public class Pivot extends SubsystemLance
     // private SparkLimitSwitch reverseLimitSwitch;
 
     // private TargetPosition targetPosition = TargetPosition.kOverride;
-    private final double kP = 0.05;
+    private final double kP = 0.04;
     private final double kI = 0.0;
     private final double kD = 0.0;
-    private final double threshold = 2.0;
+    private final double threshold = 4.0;
 
     // *** CLASS CONSTRUCTORS ***
     // Put all class constructors here
@@ -254,7 +254,7 @@ public class Pivot extends SubsystemLance
 
     public Command moveToSetPositionCommand(PivotPosition targetPosition)
     {
-        return runOnce(() -> moveToSetPosition(targetPosition)).withName("Move Pivot To Set Position");
+        return run(() -> moveToSetPosition(targetPosition)).withName("Move Pivot To Set Position");
     }
 
     public Command resetPositionCommand()
@@ -275,7 +275,10 @@ public class Pivot extends SubsystemLance
     public void periodic()
     {
         // This method will be called once per scheduler run
-
+        if(motor.isReverseLimitSwitchPressed() && getPosition() != 0.0)
+        {
+            resetPosition();
+        }
     }
 
     // @Override

@@ -41,10 +41,10 @@ public class Elevator extends SubsystemLance
         kL2(12.5),
         kL3(29.0),
         kLowerReefAlgae(33.0),
-        kGrabCoralPosition(36.0),
+        kGrabCoralPosition(38.0),
         kScoreProcessorPosition(36.0),
-        kReadyToGrabCoralPosition(40.0),
-        kSafeSwingPosition(50.0),
+        kReadyToGrabCoralPosition(45.0),
+        kSafeSwingPosition(60.0),
         kUpperReefAlgae(55.0),
         kL4(70.0);
 
@@ -126,8 +126,8 @@ public class Elevator extends SubsystemLance
         // motor.setupForwardSoftLimit(150.0, false);
         // motor.setupReverseSoftLimit(0.0, false);
         motor.setSafetyEnabled(false);
-        // motor.setupForwardHardLimitSwitch(false, false);
-        // motor.setupReverseHardLimitSwitch(false, false);
+        // motor.setupForwardHardLimitSwitch(true, false);
+        // motor.setupReverseHardLimitSwitch(true, true);
 
         motor.setupPIDController(0, kP, kI, kD); // TODO tune this
 
@@ -216,6 +216,7 @@ public class Elevator extends SubsystemLance
     {
         motor.setPosition(0.0);
     }
+    
 
     public BooleanSupplier isAtPosition(ElevatorPosition position)
     {
@@ -247,6 +248,11 @@ public class Elevator extends SubsystemLance
     @Override
     public void periodic()
     {
+        if(motor.isReverseLimitSwitchPressed() && getPosition() != 0.0)
+        {
+            resetPosition();
+        }
+        System.out.println("Position: " + getPosition());
         // This method will be called once per scheduler run
     }
 

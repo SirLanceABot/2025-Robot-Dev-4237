@@ -261,17 +261,18 @@ public final class ScoringCommands
             return
             elevator.moveToSetPositionCommand(ElevatorPosition.kSafeSwingPosition)
                 .until(elevator.isAtPosition(ElevatorPosition.kSafeSwingPosition))
-                .withTimeout(2.0)
             
             .andThen(
-                pivot.moveToSetPositionCommand(PivotPosition.kFlippedPosition)
-                    .until(pivot.isAtPosition(PivotPosition.kFlippedPosition))
-                    .withTimeout(2.0))
-
+                Commands.parallel(
+                    claw.grabGamePieceCommand()
+                        .until(pivot.isAtPosition(PivotPosition.kFlippedPosition)),
+                    pivot.moveToSetPositionCommand(PivotPosition.kFlippedPosition)
+                        .until(pivot.isAtPosition(PivotPosition.kFlippedPosition)))
+                )
+            .andThen(claw.stopCommand())
             .andThen(
                 elevator.moveToSetPositionCommand(ElevatorPosition.kHoldingPosition)
-                    .until(elevator.isAtPosition(ElevatorPosition.kHoldingPosition))
-                    .withTimeout(2.0));
+                    .until(elevator.isAtPosition(ElevatorPosition.kHoldingPosition)));
         }
         else
         {
