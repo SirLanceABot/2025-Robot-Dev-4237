@@ -744,7 +744,7 @@ public final class GeneralCommands
         {
             return
             ScoringCommands.flipScorerCommand()
-            .andThen(leds.setColorRainbowCommand())
+            .andThen(setLedCommand(ColorPattern.kRainbow))
             .andThen(
                 climb.climbToUpPositionCommand())
             .withName("Climb Up Cage");
@@ -766,7 +766,7 @@ public final class GeneralCommands
         {
             return
             ScoringCommands.flipScorerCommand()
-            .andThen(leds.setColorRainbowCommand())
+            .andThen(setLedCommand(ColorPattern.kRainbow))
             .andThen(
                 climb.climbToUpPositionCommand())
             .withName("Climb Up Cage");

@@ -50,7 +50,7 @@ public final class IntakingCommands
     private static Pivot pivot;
     private static Elevator elevator;
     private static Claw claw;
-    private static LEDs leds;
+    // private static LEDs leds;
     private static Proximity intakeProximity;
     private static Proximity elevatorProximity;
     private static Proximity clawProximity;
@@ -70,7 +70,7 @@ public final class IntakingCommands
         pivot = robotContainer.getPivot();
         elevator = robotContainer.getElevator();
         claw = robotContainer.getClaw();
-        leds = robotContainer.getLEDs();
+        // leds = robotContainer.getLEDs();
         intakeProximity = robotContainer.getIntakeProximity();
         elevatorProximity = robotContainer.getElevatorProximity();
         clawProximity = robotContainer.getClawProximity();
@@ -124,7 +124,7 @@ public final class IntakingCommands
                         .until(elevator.isAtPosition(ElevatorPosition.kGrabCoralPosition))))
 
             .andThen(claw.stopCommand())
-            .andThen(leds.setColorSolidCommand(Color.kRed));
+            .andThen(GeneralCommands.setLedCommand(ColorPattern.kSolid, Color.kRed));
         }
         else
         {
@@ -154,7 +154,7 @@ public final class IntakingCommands
                         .until(elevator.isAtPosition(ElevatorPosition.kGrabCoralPosition))))
 
             .andThen(claw.stopCommand())
-            .andThen(leds.setColorSolidCommand(Color.kRed));
+            .andThen(GeneralCommands.setLedCommand(ColorPattern.kSolid, Color.kRed));
         }
         else
         {
@@ -193,7 +193,7 @@ public final class IntakingCommands
         if(intake != null && intakeWrist != null && intakeProximity != null)
         {
             return
-            leds.setColorBlinkCommand(Color.kYellow)
+            GeneralCommands.setLedCommand(ColorPattern.kBlink, Color.kYellow)
             
             .andThen(
                 intakeWrist.moveToSetPositionCommand(Position.kIntakeCoralPosition)
@@ -253,7 +253,7 @@ public final class IntakingCommands
                     .until(clawProximity.isDetectedSupplier()))
             
             .andThen(claw.stopCommand())
-            .andThen(leds.setColorSolidCommand(Color.kRed))
+            .andThen(GeneralCommands.setLedCommand(ColorPattern.kSolid, Color.kRed))
             .withName("Intake Algae From Reef");
         }
         else

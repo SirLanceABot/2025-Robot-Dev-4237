@@ -54,7 +54,7 @@ public final class ScoringCommands
     private static Pivot pivot;
     private static Elevator elevator;
     private static Claw claw;
-    private static LEDs leds;
+    // private static LEDs leds;
     private static Pigeon2 gyro;
     private static PoseEstimator poseEstimator;
     private static Proximity intakeProximity;
@@ -78,7 +78,7 @@ public final class ScoringCommands
         pivot = robotContainer.getPivot();
         elevator = robotContainer.getElevator();
         claw = robotContainer.getClaw();
-        leds = robotContainer.getLEDs();
+        // leds = robotContainer.getLEDs();
         gyro = (robotContainer.getDrivetrain() != null ? robotContainer.getDrivetrain().getPigeon2() : null);
         intakeProximity = robotContainer.getIntakeProximity();
         elevatorProximity = robotContainer.getElevatorProximity();
@@ -90,7 +90,7 @@ public final class ScoringCommands
 
     // *** CLASS METHODS & INSTANCE METHODS ***
     // Put all class methods and instance methods here
-
+    
     
 
     /**
