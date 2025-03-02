@@ -112,6 +112,7 @@ public class LoganBTest implements Test
     {
         if(joystick.getRawButton(1))
         {
+            // IntakingCommands.intakeCoralCommand().schedule();
             // elevator.moveToSetPositionCommand(ElevatorPosition.kL4).schedule();
             // elevator.set(0.1);
             // intakeWrist.moveToSetPositionCommand(Position.kRestingPosition).schedule();
@@ -123,10 +124,14 @@ public class LoganBTest implements Test
             // elevator.moveToSetPositionCommand(ElevatorPosition.kSafeSwingPosition).schedule();
             // GeneralCommands.moveScorerToIntakingPositionCommand().schedule();
             // pivot.set(0.1);
-            GeneralCommands.moveScorerToL1Command().schedule();
+            // GeneralCommands.moveScorerToL1Command().schedule();
+            climb.set(0.2);
+            // IntakingCommands.intakeAlgaeFromReefCommand(TargetPosition.kLowerReefAlgae).schedule();
         }
         else if(joystick.getRawButton(2))
         {
+            // ScoringCommands.flipScorerCommand().schedule();
+            // IntakingCommands.intakeAlgaeFromReefCommand(TargetPosition.kUpperReefAlgae).schedule();
             // ScoringCommands.flipScorerCommand().schedule();
             // elevator.moveToSetPositionCommand(ElevatorPosition.kL2).schedule();
             // elevator.set(-0.1);
@@ -139,10 +144,12 @@ public class LoganBTest implements Test
             // elevator.moveToSetPositionCommand(ElevatorPosition.kL4).schedule();
             // elevator.set(-0.2);
             // pivot.set(-0.1);
-            GeneralCommands.moveScorerToL2Commmand().schedule();
+            // GeneralCommands.moveScorerToL2Commmand().schedule();
+            climb.set(-0.2);
         }
         else if(joystick.getRawButton(3))
         {
+            // GeneralCommands.moveScorerToBargeCommand().schedule();
             // pivot.moveToSetPositionCommand(PivotPosition.kFlippedPosition).schedule();
 
             // elevator.set(0.2);
@@ -150,25 +157,27 @@ public class LoganBTest implements Test
             // intake.pickupCoral();
             // pivot.set(-0.2);
             // elevator.moveToSetPositionCommand(ElevatorPosition.kReadyToGrabCoralPosition).schedule();
-            GeneralCommands.moveScorerToL3Command().schedule();
+            // GeneralCommands.moveScorerToL3Command().schedule();
         }
         else if(joystick.getRawButton(4))
         {
+            // GeneralCommands.moveScorerToProcessorCommand().schedule();
             // pivot.moveToSetPositionCommand(PivotPosition.kHoldAlgaePosition).schedule();
             // pivot.set(-0.1);
             // intake.pickupAlgae();
             // elevator.set(-0.2);
-            GeneralCommands.moveScorerToL4Command().schedule();
+            // GeneralCommands.moveScorerToL4Command().schedule();
         }
         else if(joystick.getRawButton(5))
         {
+            // elevator.moveToSetPositionCommand(ElevatorPosition.kScoreProcessorPosition).schedule();
             // claw.placeCoral();
-            GeneralCommands.moveScorerToIntakingPositionCommand().schedule();
+            // GeneralCommands.moveScorerToIntakingPositionCommand().schedule();
         }
         else if(joystick.getRawButton(6))
         {
             // claw.grabGamePiece();
-            ScoringCommands.flipScorerCommand().schedule();
+            // ScoringCommands.flipScorerCommand().schedule();
         }
         else
         {
@@ -176,7 +185,7 @@ public class LoganBTest implements Test
             // pivot.stopCommand().schedule();
             // claw.stopCommand().schedule();
             // pivot.stop();
-            // climb.stop();
+            climb.stop();
             // pivot.stop();
             // elevator.stop();
         }

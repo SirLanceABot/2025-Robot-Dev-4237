@@ -143,7 +143,11 @@ public final class IntakingCommands
         {
             return
             GeneralCommands.moveScorerToIntakingPositionCommand()
-                .until(elevatorProximity.isDetectedSupplier())
+                .until(() -> (elevator.isAtPosition(ElevatorPosition.kReadyToGrabCoralPosition).getAsBoolean() && pivot.isAtPosition(PivotPosition.kDownPosition).getAsBoolean()))
+
+            .andThen(Commands.waitUntil(elevatorProximity.isDetectedSupplier()))
+
+            .andThen(Commands.waitSeconds(0.25))
 
             .andThen(
                 Commands.parallel(
@@ -223,7 +227,7 @@ public final class IntakingCommands
      */
     public static Command intakeAlgaeFromReefCommand(TargetPosition targetPosition)
     {
-        if(claw != null && elevator != null && pivot != null && clawProximity != null)
+        if(elevator != null && pivot != null)
         {
             return
             GeneralCommands.setLedCommand(ColorPattern.kBlink, Color.kYellow)
@@ -248,11 +252,11 @@ public final class IntakingCommands
                             
                     () -> (elevator.getPosition() >  ElevatorPosition.kSafeSwingPosition.elevatorPosition)))
             
-            .andThen(
-                claw.grabGamePieceCommand()
-                    .until(clawProximity.isDetectedSupplier()))
+            // .andThen(
+            //     claw.grabGamePieceCommand()
+            //         .until(clawProximity.isDetectedSupplier()))
             
-            .andThen(claw.stopCommand())
+            // .andThen(claw.stopCommand())
             .andThen(GeneralCommands.setLedCommand(ColorPattern.kSolid, Color.kRed))
             .withName("Intake Algae From Reef");
         }

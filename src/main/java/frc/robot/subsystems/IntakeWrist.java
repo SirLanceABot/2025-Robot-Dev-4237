@@ -100,6 +100,9 @@ public class IntakeWrist extends SubsystemLance
         motor.setupReverseSoftLimit(0.0, true); //values for testing
         motor.setSafetyEnabled(false);
 
+        motor.setupForwardHardLimitSwitch(true, true, 1);
+        motor.setupReverseHardLimitSwitch(true, true, 0);
+
         motor.setupPIDController(0, 0.45, kI, kD); // USE FOR GOING DOWN
         motor.setupPIDController(1, 0.75, kI, kD); // USE FOR GOING UP
     }

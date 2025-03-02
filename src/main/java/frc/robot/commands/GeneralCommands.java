@@ -665,11 +665,14 @@ public final class GeneralCommands
             setLedCommand(ColorPattern.kBlink, Color.kBlue)
 
             .andThen(
-                elevator.moveToSetPositionCommand(ElevatorPosition.kScoreProcessorPosition)
-                    .until(elevator.isAtPosition(ElevatorPosition.kScoreProcessorPosition)))
+                elevator.moveToSetPositionCommand(ElevatorPosition.kSafeSwingPosition)
+                    .until(elevator.isAtPosition(ElevatorPosition.kSafeSwingPosition)))
             .andThen(
                 pivot.moveToSetPositionCommand(PivotPosition.kScoreProcessorPosition)
                     .until(pivot.isAtPosition(PivotPosition.kScoreProcessorPosition)))
+            .andThen(
+                elevator.moveToSetPositionCommand(ElevatorPosition.kScoreProcessorPosition)
+                    .until(elevator.isAtPosition(ElevatorPosition.kScoreProcessorPosition)))
 
             .withName("Move Scorer To Processor");
         }

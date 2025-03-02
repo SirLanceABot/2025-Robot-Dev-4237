@@ -125,6 +125,8 @@ public class Pivot extends SubsystemLance
     //     // Hard Limits
         motor.setupForwardHardLimitSwitch(false, true);
         motor.setupReverseHardLimitSwitch(false, true);
+
+        motor.setupClosedLoopRampRate(0.4);
         
         motor.setupPIDController(0, 0.02, kI, kD); // Use when bringing pivot up
         motor.setupPIDController(1, 0.0075, kI, kD); // Use when bringing pivot down

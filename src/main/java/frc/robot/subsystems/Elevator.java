@@ -42,7 +42,7 @@ public class Elevator extends SubsystemLance
         kL2(12.5),
         kL3(31.0),
         kLowerReefAlgae(33.0),
-        kGrabCoralPosition(38.0),
+        kGrabCoralPosition(36.0),
         kScoreProcessorPosition(36.0),
         kReadyToGrabCoralPosition(45.0),
         kSafeSwingPosition(60.0),
@@ -130,7 +130,8 @@ public class Elevator extends SubsystemLance
         motor.setupForwardHardLimitSwitch(true, true);
         motor.setupReverseHardLimitSwitch(true, true);
 
-        motor.setupPIDController(0, kP, kI, kD); // TODO tune this
+        motor.setupPIDController(0, 0.05, kI, kD); // TODO tune this
+        motor.setupPIDController(1, 0.07, kI, kD);
         motor.setupClosedLoopRampRate(0.25);
 
         // Configure PID Controller
@@ -201,7 +202,14 @@ public class Elevator extends SubsystemLance
         //     stop();
         // }
 
-        motor.setControlPosition(targetPosition.elevatorPosition);
+        if(targetPosition.elevatorPosition > getPosition()) // For when the target position is HIGHER than the current (moving down)
+        {
+            motor.setControlPosition(targetPosition.elevatorPosition, 1); // SLOT 1 is the lower P value
+        }
+        else if(targetPosition.elevatorPosition < getPosition()) // For when the target position is LOWER than the current (moving up)
+        {
+            motor.setControlPosition(targetPosition.elevatorPosition, 0); // SLOT 0 is the higher P value
+        }
     }
 
     public void set(double speed)
@@ -254,7 +262,7 @@ public class Elevator extends SubsystemLance
         {
             resetPosition();
         }
-        System.out.println("Position: " + getPosition());
+        // System.out.println("Position: " + getPosition());
         // This method will be called once per scheduler run
     }
 
