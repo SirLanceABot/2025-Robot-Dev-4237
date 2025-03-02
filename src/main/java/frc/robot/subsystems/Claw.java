@@ -93,7 +93,7 @@ public class Claw extends SubsystemLance
      */
     public void grabGamePiece()
     {
-        setGrabSpeed(0.5);
+        setGrabSpeed(0.7);
     }
 
     public void ejectAlgae()

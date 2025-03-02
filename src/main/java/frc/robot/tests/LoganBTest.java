@@ -122,7 +122,8 @@ public class LoganBTest implements Test
             // claw.grabGamePiece();
             // elevator.moveToSetPositionCommand(ElevatorPosition.kSafeSwingPosition).schedule();
             // GeneralCommands.moveScorerToIntakingPositionCommand().schedule();
-            elevator.set(0.2);
+            // pivot.set(0.1);
+            GeneralCommands.moveScorerToL1Command().schedule();
         }
         else if(joystick.getRawButton(2))
         {
@@ -136,31 +137,38 @@ public class LoganBTest implements Test
             // GeneralCommands.testGrabAndFlipCommand().schedule();
             // pivot.set(0.2);
             // elevator.moveToSetPositionCommand(ElevatorPosition.kL4).schedule();
-            elevator.set(-0.2);
+            // elevator.set(-0.2);
+            // pivot.set(-0.1);
+            GeneralCommands.moveScorerToL2Commmand().schedule();
         }
         else if(joystick.getRawButton(3))
         {
             // pivot.moveToSetPositionCommand(PivotPosition.kFlippedPosition).schedule();
 
-
+            // elevator.set(0.2);
             // pivot.set(0.1);
             // intake.pickupCoral();
             // pivot.set(-0.2);
             // elevator.moveToSetPositionCommand(ElevatorPosition.kReadyToGrabCoralPosition).schedule();
+            GeneralCommands.moveScorerToL3Command().schedule();
         }
         else if(joystick.getRawButton(4))
         {
             // pivot.moveToSetPositionCommand(PivotPosition.kHoldAlgaePosition).schedule();
             // pivot.set(-0.1);
             // intake.pickupAlgae();
+            // elevator.set(-0.2);
+            GeneralCommands.moveScorerToL4Command().schedule();
         }
         else if(joystick.getRawButton(5))
         {
             // claw.placeCoral();
+            GeneralCommands.moveScorerToIntakingPositionCommand().schedule();
         }
         else if(joystick.getRawButton(6))
         {
             // claw.grabGamePiece();
+            ScoringCommands.flipScorerCommand().schedule();
         }
         else
         {
@@ -169,7 +177,8 @@ public class LoganBTest implements Test
             // claw.stopCommand().schedule();
             // pivot.stop();
             // climb.stop();
-            elevator.stop();
+            // pivot.stop();
+            // elevator.stop();
         }
         // System.out.println("Position: " + pivot.getPosition());
 

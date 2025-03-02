@@ -45,7 +45,7 @@ public class Pivot extends SubsystemLance
         kScoreBargePosition(12.25),
         kHoldAlgaePosition(16.5),
         kLowLevelCoralPosition(25.0),
-        kL4(34.0),
+        kL4(31.0),
         kSafeDropPosition(50.0), //TODO needs tuned
         kReefAlgaePosition(54.5),
         kScoreProcessorPosition(75.5),
@@ -123,8 +123,8 @@ public class Pivot extends SubsystemLance
         // leadMotor.setupFollower(Constants.Pivot.RIGHT_MOTOR_PORT, true);
 
     //     // Hard Limits
-        // motor.setupForwardHardLimitSwitch(false, false);
-        // motor.setupReverseHardLimitSwitch(false, false);
+        motor.setupForwardHardLimitSwitch(false, true);
+        motor.setupReverseHardLimitSwitch(false, true);
         
         motor.setupPIDController(0, 0.02, kI, kD); // Use when bringing pivot up
         motor.setupPIDController(1, 0.0075, kI, kD); // Use when bringing pivot down

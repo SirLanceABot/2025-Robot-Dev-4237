@@ -605,8 +605,13 @@ public final class GeneralCommands
                         .until(elevator.isAtPosition(ElevatorPosition.kSafeSwingPosition))
 
                     .andThen(
-                        pivot.moveToSetPositionCommand(PivotPosition.kDownPosition)
-                            .until(pivot.isAtPosition(PivotPosition.kDownPosition)))
+                        Commands.parallel(
+                            pivot.moveToSetPositionCommand(PivotPosition.kDownPosition)
+                                .until(pivot.isAtPosition(PivotPosition.kDownPosition)),
+                            
+                            claw.grabGamePieceCommand().until(pivot.isAtPosition(PivotPosition.kDownPosition))))
+
+                    .andThen(claw.stopCommand())
 
                     .andThen(
                         elevator.moveToSetPositionCommand(ElevatorPosition.kReadyToGrabCoralPosition)
