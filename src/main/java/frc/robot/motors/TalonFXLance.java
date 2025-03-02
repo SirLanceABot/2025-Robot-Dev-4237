@@ -3,6 +3,7 @@ package frc.robot.motors;
 import java.lang.invoke.MethodHandles;
 
 import com.ctre.phoenix6.StatusCode;
+import com.ctre.phoenix6.configs.ClosedLoopRampsConfigs;
 import com.ctre.phoenix6.configs.CurrentLimitsConfigs;
 import com.ctre.phoenix6.configs.FeedbackConfigs;
 import com.ctre.phoenix6.configs.HardwareLimitSwitchConfigs;
@@ -299,6 +300,19 @@ public class TalonFXLance extends MotorControllerLance
 
         openLoopRampsConfigs.DutyCycleOpenLoopRampPeriod = rampRateSeconds;
         setup(() -> motor.getConfigurator().apply(openLoopRampsConfigs), "Setup Open Loop Ramp Rate");
+    }
+
+    /**
+     * Set the maximum rate at which the motor output can change.
+     * @param rampRateSeconds Time in seconds to go from 0 to full throttle
+     */
+    public void setupClosedLoopRampRate(double rampRateSeconds)
+    {
+        ClosedLoopRampsConfigs closedLoopRampsConfigs = new ClosedLoopRampsConfigs();
+        setup(() -> motor.getConfigurator().refresh(closedLoopRampsConfigs), "Refresh Closed Loop Ramp Rate");
+
+        closedLoopRampsConfigs.DutyCycleClosedLoopRampPeriod = rampRateSeconds;
+        setup(() -> motor.getConfigurator().apply(closedLoopRampsConfigs), "Setup Closed Loop Ramp Rate");
     }
 
     /**

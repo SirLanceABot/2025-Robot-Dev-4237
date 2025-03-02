@@ -6,6 +6,7 @@ import java.util.function.BooleanSupplier;
 
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.spark.SparkLimitSwitch;
+import com.revrobotics.spark.config.LimitSwitchConfig.Type;
 
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.util.datalog.DoubleLogEntry;
@@ -64,8 +65,8 @@ public class Elevator extends SubsystemLance
     // Put all class variables and instance variables here
     private final SparkMaxLance motor = new SparkMaxLance(Constants.Elevator.LEFT_MOTOR_PORT, Constants.Elevator.LEFT_MOTOR_CAN_BUS, "Motor");
     // private final SparkMaxLance rightMotor = new SparkMaxLance(Constants.Elevator.RIGHT_MOTOR_PORT, Constants.Elevator.RIGHT_MOTOR_CAN_BUS, "Right Motor");
-    // private SparkLimitSwitch forwardLimitSwitch;
-    // private SparkLimitSwitch reverseLimitSwitch;
+    private SparkLimitSwitch forwardLimitSwitch;
+    private SparkLimitSwitch reverseLimitSwitch;
     // private RelativeEncoder encoder;
     // private Constants.TargetPosition targetPosition = Constants.TargetPosition.kOverride;
     private final double threshold = 2.0;
@@ -126,10 +127,11 @@ public class Elevator extends SubsystemLance
         // motor.setupForwardSoftLimit(150.0, false);
         // motor.setupReverseSoftLimit(0.0, false);
         motor.setSafetyEnabled(false);
-        // motor.setupForwardHardLimitSwitch(true, false);
-        // motor.setupReverseHardLimitSwitch(true, true);
+        motor.setupForwardHardLimitSwitch(true, true);
+        motor.setupReverseHardLimitSwitch(true, true);
 
         motor.setupPIDController(0, kP, kI, kD); // TODO tune this
+        motor.setupClosedLoopRampRate(0.25);
 
         // Configure PID Controller
     }

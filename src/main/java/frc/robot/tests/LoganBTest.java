@@ -122,7 +122,7 @@ public class LoganBTest implements Test
             // claw.grabGamePiece();
             // elevator.moveToSetPositionCommand(ElevatorPosition.kSafeSwingPosition).schedule();
             // GeneralCommands.moveScorerToIntakingPositionCommand().schedule();
-            climb.set(0.05);
+            elevator.set(0.2);
         }
         else if(joystick.getRawButton(2))
         {
@@ -136,7 +136,7 @@ public class LoganBTest implements Test
             // GeneralCommands.testGrabAndFlipCommand().schedule();
             // pivot.set(0.2);
             // elevator.moveToSetPositionCommand(ElevatorPosition.kL4).schedule();
-            climb.set(-0.05);
+            elevator.set(-0.2);
         }
         else if(joystick.getRawButton(3))
         {
@@ -168,7 +168,8 @@ public class LoganBTest implements Test
             // pivot.stopCommand().schedule();
             // claw.stopCommand().schedule();
             // pivot.stop();
-            climb.stop();
+            // climb.stop();
+            elevator.stop();
         }
         // System.out.println("Position: " + pivot.getPosition());
 
