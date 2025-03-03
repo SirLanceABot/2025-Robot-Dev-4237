@@ -13,7 +13,6 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 //import frc.robot.elastic.AutonomousTab;
-import frc.robot.elastic.AutonomousTabData;
 import frc.robot.elastic.ElasticLance;
 import frc.robot.generated.TunerConstants;
 import frc.robot.pathplanner.PathPlannerLance;
