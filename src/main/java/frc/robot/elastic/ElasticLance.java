@@ -1,10 +1,15 @@
 package frc.robot.elastic;
 
+import java.io.IOException;
 import java.lang.invoke.MethodHandles;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import com.ctre.phoenix6.hardware.Pigeon2;
 import com.pathplanner.lib.auto.AutoBuilder;
+import com.pathplanner.lib.commands.PathPlannerAuto;
+import com.pathplanner.lib.path.PathPlannerPath;
 
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
@@ -13,6 +18,7 @@ import edu.wpi.first.math.trajectory.Trajectory;
 import edu.wpi.first.math.trajectory.TrajectoryConfig;
 import edu.wpi.first.math.trajectory.TrajectoryGenerator;
 import edu.wpi.first.math.util.Units;
+import edu.wpi.first.util.struct.parser.ParseException;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.RobotController;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
@@ -25,6 +31,7 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj.util.Color;
 import frc.robot.Constants;
 import frc.robot.RobotContainer;
+import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Elevator;
 import frc.robot.subsystems.LEDs;
 import frc.robot.subsystems.LEDs.ColorPattern;
@@ -57,6 +64,11 @@ public class ElasticLance
     private static LEDs leds;
     private static Elevator elevator;
     private static Pivot pivot;
+    private static Drivetrain drivetrain;
+    private final Field2d m_field = new Field2d();
+    public static String autoName;
+
+    public String newAutoName;
 
     
     private ElasticLance()
@@ -68,6 +80,8 @@ public class ElasticLance
         configAutoChooser();
         configTeleopField();
         elevator = robotContainer.getElevator();
+        drivetrain = robotContainer.getDrivetrain();
+        
     }
 
     // public static void createWidgets()
@@ -81,8 +95,8 @@ public class ElasticLance
         SmartDashboard.putNumber("Match Time", DriverStation.getMatchTime());
         SmartDashboard.putNumber("CAN Utilization %", RobotController.getCANStatus().percentBusUtilization * 100.00);
         SmartDashboard.putNumber("CPU Temperature", RobotController.getCPUTemp());
-        SmartDashboard.putNumber("Elevator Position", elevator.getPosition());
-        SmartDashboard.putNumber("Pivot Position", pivot.getPosition());
+        //SmartDashboard.putNumber("Elevator Position", elevator.getPosition());
+        //SmartDashboard.putNumber("Pivot Position", pivot.getPosition());
 
         updateAllianceColorBox();
     }
@@ -259,22 +273,40 @@ public class ElasticLance
 
     private static void configAutoField()
     {
-        // Create the trajectory to follow in autonomous. It is best to initialize
-        // trajectories here to avoid wasting time in autonomous.
-        trajectory = TrajectoryGenerator.generateTrajectory(
-            new Pose2d(0, 0, Rotation2d.fromDegrees(0)),
-            List.of(new Translation2d(1, 1), new Translation2d(2, -1)),
-            new Pose2d(3, 0, Rotation2d.fromDegrees(0)),
-            new TrajectoryConfig(Units.feetToMeters(3.0), Units.feetToMeters(3.0))
-        );
-  
-        // Create and push Field2d to SmartDashboard.
-        SmartDashboard.putData(autofield);
-
-        // Push the trajectory to Field2d.
-        autofield.getObject("traj").setTrajectory(trajectory);
-        SmartDashboard.putData(field);
-    }
+        // var robotPose = drivetrain.getPose();
+        // //Create and push Field2d to SmartDashboard.
+        // SmartDashboard.putData(autofield);
+        // autofield.setRobotPose(robotPose);
+        
+        // autoName = getAutonomousCommand().getName();
+        // //List<PathPlannerPath> pathPlannerPaths = PathPlannerAuto.getPathGroupFromAutoFile(autoName);
+        //     List<Pose2d> poses = new ArrayList<>();
+        //     for (PathPlannerPath path : pathPlannerPaths) {
+        //         poses.addAll(path.getAllPathPoints().stream().map(point -> new Pose2d(point.position.getX(), point.position.getY(), new Rotation2d())).collect(Collectors.toList()));
+        //     }
+        //     autofield.getObject("path").setPoses(poses);
+        }
+      
+          
+           
+                //     // Create the trajectory to follow in autonomous. It is best to initialize
+            //     // trajectories here to avoid wasting time in autonomous.
+            //     trajectory = TrajectoryGenerator.generateTrajectory(
+            //         new Pose2d(0, 0, Rotation2d.fromDegrees(0)),
+            //         List.of(new Translation2d(1, 1), new Translation2d(2, -1)),
+            //         new Pose2d(3, 0, Rotation2d.fromDegrees(0)),
+            //         new TrajectoryConfig(Units.feetToMeters(3.0), Units.feetToMeters(3.0))
+            //     );
+          
+        
+        
+            //     // Push the trajectory to Field2d.
+            //     autofield.getObject("traj").setTrajectory(trajectory);
+            
+        
+        
+        
+           
 
     private static void configTeleopField()
     {
