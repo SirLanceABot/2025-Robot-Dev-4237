@@ -62,7 +62,7 @@ public class Robot extends TimedRobot
         OperatorBindings.createBindings(robotContainer);
 
         PathPlannerLance.configPathPlanner(robotContainer);
-        ElasticLance.configElastic();
+        ElasticLance.configElastic(robotContainer);
         // TODO - Add these PathPlanner warmup commands
         // FollowPathCommand.warmupCommand().schedule();
         // PathfindingCommand.warmupCommand().schedule();

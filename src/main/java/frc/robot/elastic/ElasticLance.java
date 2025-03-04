@@ -22,7 +22,13 @@ import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj.util.Color;
 import frc.robot.Constants;
+import frc.robot.RobotContainer;
+import frc.robot.subsystems.Elevator;
+import frc.robot.subsystems.LEDs;
+import frc.robot.subsystems.LEDs.ColorPattern;
+import frc.robot.subsystems.Pivot;
 
 public class ElasticLance 
 {
@@ -43,37 +49,25 @@ public class ElasticLance
     private static SendableChooser < Command > middle;
     private static SendableChooser < Command > rightWall;
 
-    private Field2d autofield = new Field2d();
-    private Field2d field = new Field2d();
+    private static Field2d autofield = new Field2d();
+    private static Field2d field = new Field2d();
 
-    private Trajectory trajectory;
+    private static Trajectory trajectory;
 
+    private static LEDs leds;
+    private static Elevator elevator;
+    private static Pivot pivot;
 
+    
+    private ElasticLance()
+    {}
 
-    public ElasticLance()
+    public static void configElastic(RobotContainer robotContainer)
     {
-        SmartDashboard.putData("AutoField", autofield);
-        SmartDashboard.putData("Field", field);
-
-        // Create the trajectory to follow in autonomous. It is best to initialize
-    // trajectories here to avoid wasting time in autonomous.
-    trajectory = TrajectoryGenerator.generateTrajectory(
-      new Pose2d(0, 0, Rotation2d.fromDegrees(0)),
-      List.of(new Translation2d(1, 1), new Translation2d(2, -1)),
-      new Pose2d(3, 0, Rotation2d.fromDegrees(0)),
-      new TrajectoryConfig(Units.feetToMeters(3.0), Units.feetToMeters(3.0)));
-
-    // Create and push Field2d to SmartDashboard.
-    SmartDashboard.putData(autofield);
-
-    // Push the trajectory to Field2d.
-    autofield.getObject("traj").setTrajectory(trajectory);
-    SmartDashboard.putData(field);
-    }
-
-    public static void configElastic()
-    {
+        leds = robotContainer.getLEDs();
         configAutoChooser();
+        configTeleopField();
+        elevator = robotContainer.getElevator();
     }
 
     // public static void createWidgets()
@@ -87,17 +81,10 @@ public class ElasticLance
         SmartDashboard.putNumber("Match Time", DriverStation.getMatchTime());
         SmartDashboard.putNumber("CAN Utilization %", RobotController.getCANStatus().percentBusUtilization * 100.00);
         SmartDashboard.putNumber("CPU Temperature", RobotController.getCPUTemp());
-
-
+        SmartDashboard.putNumber("Elevator Position", elevator.getPosition());
+        SmartDashboard.putNumber("Pivot Position", pivot.getPosition());
 
         updateAllianceColorBox();
-        // SmartDashboard.putString("Alliance Color", color.toHexString());
-        // SmartDashboard.putNumber("Pivot", Pivot.getPosition());
-
-        // SmartDashboard.putNumber(":)", LEDs.getLEDs());
-        //SmartDashboard.putBoolean("Alerts Working", Alerts)
-
-        // SmartDashboard.put("Alliance Color", DriverStation.getAlliance());
     }
 
     public static void updateAllianceColorBox()
@@ -207,11 +194,14 @@ public class ElasticLance
             if ( counter == 1)
             {
                 SmartDashboard.putString("ERROR", "Valid Selection, good job");
+                configAutoField();
+                leds.setColorSolidCommand(color.kGreen).schedule();
                 return command;
             }
             else
             {
                 SmartDashboard.putString("ERROR", "Invalid Selection: Pick ONE Autonomous");
+                leds.setColorBlinkCommand(Color.kRed).schedule();
                 return Commands.none();
             }
         }
@@ -228,7 +218,7 @@ public class ElasticLance
         {
             boolean isRed = DriverStation.getAlliance().isPresent() && DriverStation.getAlliance().get() == DriverStation.Alliance.Red;
 
-            //if(autonomousTab != null)
+            
         
             Command leftWall = getLeftWall();
             Command middle = getMiddle();
@@ -265,6 +255,30 @@ public class ElasticLance
                 }
             }
         }
+    }
+
+    private static void configAutoField()
+    {
+        // Create the trajectory to follow in autonomous. It is best to initialize
+        // trajectories here to avoid wasting time in autonomous.
+        trajectory = TrajectoryGenerator.generateTrajectory(
+            new Pose2d(0, 0, Rotation2d.fromDegrees(0)),
+            List.of(new Translation2d(1, 1), new Translation2d(2, -1)),
+            new Pose2d(3, 0, Rotation2d.fromDegrees(0)),
+            new TrajectoryConfig(Units.feetToMeters(3.0), Units.feetToMeters(3.0))
+        );
+  
+        // Create and push Field2d to SmartDashboard.
+        SmartDashboard.putData(autofield);
+
+        // Push the trajectory to Field2d.
+        autofield.getObject("traj").setTrajectory(trajectory);
+        SmartDashboard.putData(field);
+    }
+
+    private static void configTeleopField()
+    {
+        SmartDashboard.putData("Field", field);
     }
 
 }
