@@ -176,7 +176,8 @@ public final class OperatorBindings {
     {
         Trigger startButton = controller.start();
 
-        startButton.onTrue(Commands.either(ScoringCommands.flipScorerCommand(), GeneralCommands.moveScorerToIntakingPositionCommand(), elevator.isAtPosition(ElevatorPosition.kGrabCoralPosition)));
+        if(elevator != null && pivot != null)
+            startButton.onTrue(Commands.either(ScoringCommands.flipScorerCommand(), GeneralCommands.moveScorerToIntakingPositionCommand(), elevator.isAtPosition(ElevatorPosition.kGrabCoralPosition)));
     }
 
     private static void configLeftTrigger()

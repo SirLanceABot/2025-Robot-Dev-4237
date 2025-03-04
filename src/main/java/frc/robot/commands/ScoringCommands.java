@@ -259,21 +259,22 @@ public final class ScoringCommands
         if(elevator != null && pivot != null)
         {
             return
-            elevator.moveToSetPositionCommand(ElevatorPosition.kSafeSwingPosition)
-                .until(elevator.isAtPosition(ElevatorPosition.kSafeSwingPosition))
-            
-            .andThen(
-                Commands.parallel(
-                    claw.grabGamePieceCommand()
-                        .until(pivot.isAtPosition(PivotPosition.kFlippedPosition)),
+            Commands.parallel(
+
+                elevator.moveToSetPositionCommand(ElevatorPosition.kSafeSwingPosition)
+                    .until(elevator.isAtPosition(ElevatorPosition.kSafeSwingPosition))
+                .andThen(
+                    elevator.moveToSetPositionCommand(ElevatorPosition.kHoldingPosition)
+                        .until(elevator.isAtPosition(ElevatorPosition.kHoldingPosition))),
+
+                claw.grabGamePieceCommand()
+                            .until(pivot.isAtPosition(PivotPosition.kFlippedPosition)),
+
                     Commands.waitSeconds(0.5).andThen(pivot.moveToSetPositionCommand(PivotPosition.kFlippedPosition)
                         .until(pivot.isAtPosition(PivotPosition.kFlippedPosition))
-                        .withTimeout(3.0)))
-                )
-            .andThen(claw.stopCommand())
-            .andThen(
-                elevator.moveToSetPositionCommand(ElevatorPosition.kHoldingPosition)
-                    .until(elevator.isAtPosition(ElevatorPosition.kHoldingPosition)));
+                        .withTimeout(3.0))
+            )
+            .andThen(claw.stopCommand());
         }
         else
         {
