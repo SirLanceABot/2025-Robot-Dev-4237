@@ -464,7 +464,7 @@ public class PoseEstimator extends SubsystemLance
 
                     if (distToTag > 1.5) 
                     {
-                        System.out.println("Distance greater than 1.5");
+                        // System.out.println("Distance greater than 1.5");
                         rejectUpdate = true;
                     }
 

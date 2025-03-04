@@ -112,7 +112,7 @@ public class LoganBTest implements Test
     {
         if(joystick.getRawButton(1))
         {
-            // intake.set(0.5);
+            intake.set(0.5);
             // IntakingCommands.intakeCoralCommand().schedule();
             // elevator.moveToSetPositionCommand(ElevatorPosition.kL4).schedule();
             // elevator.set(0.1);
@@ -163,7 +163,7 @@ public class LoganBTest implements Test
         }
         else if(joystick.getRawButton(4))
         {
-            ScoringCommands.testHoldAlgaeCommand().schedule();
+            // ScoringCommands.testHoldAlgaeCommand().schedule();
             // GeneralCommands.moveScorerToProcessorCommand().schedule();
             // pivot.moveToSetPositionCommand(PivotPosition.kHoldAlgaePosition).schedule();
             // pivot.set(-0.1);
@@ -191,7 +191,7 @@ public class LoganBTest implements Test
             // climb.stop();
             // pivot.stop();
             // elevator.stop();
-            // intake.stop();
+            intake.stop();
             // claw.stopCommand().schedule();
         }
         // System.out.println("Position: " + pivot.getPosition());

@@ -33,7 +33,7 @@ public class IntakeWrist extends SubsystemLance
     public enum Position
     {
         kIntakeCoralPosition(10), //TODO these positions do not correlate with the position the motor tells us
-        kManipAlgaePosition(5.7622),
+        kManipAlgaePosition(4),
         kRestingPosition(0.0);
 
         double value;

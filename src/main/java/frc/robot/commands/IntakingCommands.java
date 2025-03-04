@@ -224,13 +224,14 @@ public final class IntakingCommands
 
             .andThen(
                 intake.pickupAlgaeCommand()
-                    .until(intakeProximity.isDetectedSupplier()))
+                    .until(intake.isAlgaeIn()))
 
-            .andThen(intake.pulseCommand())
-        
-            .andThen(
+            .andThen(Commands.parallel(
+                intake.pulseCommand(),
+
                 intakeWrist.moveToSetPositionCommand(Position.kManipAlgaePosition)
-                    .until(intakeWrist.isAtPosition(Position.kManipAlgaePosition)));
+                    .until(intakeWrist.isAtPosition(Position.kManipAlgaePosition))
+            ));
         }
         else
         {

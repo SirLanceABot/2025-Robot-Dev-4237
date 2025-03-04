@@ -70,7 +70,7 @@ public class Claw extends SubsystemLance
         kickMotor.setInverted(false);
         kickMotor.setSafetyEnabled(false);
         grabMotor.setSafetyEnabled(false);
-        grabMotor.setupCurrentLimit(50.0, 30.0, 0.5);
+        grabMotor.setupCurrentLimit(30.0, 50.0, 0.5);
     }
 
     /**

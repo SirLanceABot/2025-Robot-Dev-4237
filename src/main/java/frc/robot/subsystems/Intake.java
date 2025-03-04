@@ -82,7 +82,7 @@ public class Intake extends SubsystemLance
 
         // motor.setupVelocityConversionFactor(RPM_TO_FPS);
 
-        // motor.setupCurrentLimit(30.0, 35.0, 0.5);
+        // motor.setupCurrentLimit(30.0, 50.0, 0.5); //TODO: Check neo550 current
         motor.setSafetyEnabled(false);
         //bottomMotor.setSafetyEnabled(false);
     }
@@ -120,9 +120,14 @@ public class Intake extends SubsystemLance
         set(-0.2);
     }
 
-    public BooleanSupplier isCoralIn()
+    public BooleanSupplier isCoralOrAlgaeIn()
     {
         return () -> motor.getCurrentAmps() >= 10;
+    }
+
+    public BooleanSupplier isAlgaeIn()
+    {
+        return () -> motor.getCurrentAmps() >= 60;
     }
 
     public void pulse()
@@ -134,7 +139,7 @@ public class Intake extends SubsystemLance
         }
         else
         {
-            motor.set(-0.25);
+            motor.set(-0.35);
         }
         System.out.println("Intake amps: " + motor.getCurrentAmps());
     }
@@ -148,7 +153,7 @@ public class Intake extends SubsystemLance
     public void ejectAlgae()
     {
         motor.setupCoastMode();
-        set(0.5);
+        set(1.0);
     }
 
     // public void pulse()
@@ -203,6 +208,7 @@ public class Intake extends SubsystemLance
         //periodicData.bottomRollerPosition = bottomMotor.getPosition();
         //rollerVelocity = motor.getVelocity();
         //periodicDatopRollerVelocityta.bottomRollerVelocity = bottomMotor.getVelocity();
+        System.out.println("Intake amps: " + motor.getCurrentAmps());
     }
 
     @Override

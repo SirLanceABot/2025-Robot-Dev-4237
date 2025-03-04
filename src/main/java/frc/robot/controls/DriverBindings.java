@@ -17,6 +17,7 @@ import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.IntakeWrist;
+import frc.robot.subsystems.IntakeWrist.Position;
 import frc.robot.RobotContainer;
 import frc.robot.commands.GeneralCommands;
 import frc.robot.commands.IntakingCommands;
@@ -56,6 +57,7 @@ public final class DriverBindings {
     private static final double WALK_SPEED = 0.65;
     private static final double RUN_SPEED = 1.0;
     private static Intake intake;
+    private static IntakeWrist intakeWrist;
 
 
     // *** CLASS CONSTRUCTOR ***
@@ -66,6 +68,7 @@ public final class DriverBindings {
     {
         controller = robotContainer.getDriverController();
         intake = robotContainer.getIntake();
+        
 
         if(controller != null)
         {
@@ -122,7 +125,7 @@ public final class DriverBindings {
         Trigger bButton = controller.b();
         // bButton.whileTrue(drivetrain.pointCommand(leftYAxis, leftXAxis));
         // bButton
-        //     .onTrue(IntakingCommands.testCommand2());
+            // .onTrue(Commands.runOnce(() -> intakeWrist.moveToSetPositionCommand(Position.kRestingPosition).andThen(intake.stopCommand())));
         
         //applyRequest(() -> 
         // drivetrain.point.withModuleDirection(new Rotation2d(-leftYAxis.getAsDouble(), -leftXAxis.getAsDouble()))));
@@ -133,7 +136,7 @@ public final class DriverBindings {
     {
         Trigger xButton = controller.x();
         // xButton.onTrue(IntakingCommands.testCommand3());
-        xButton.onTrue(GeneralCommands.moveScorerToHoldAlgaeCommand());
+        xButton.onTrue(intake.ejectAlgaeCommand().withTimeout(3.0));
     }
 
 
@@ -165,12 +168,14 @@ public final class DriverBindings {
         Trigger rightBumper = controller.rightBumper();
         rightBumper
             .onTrue(IntakingCommands.moveIntakeCommand());
+            // .onTrue(IntakingCommands.intakeCoralCommand());
     }
 
 
     private static void configBackButton()
     {
         Trigger backButton = controller.back();
+        backButton.onTrue(Commands.runOnce(() -> intakeWrist.moveToSetPositionCommand(Position.kRestingPosition).andThen(intake.stopCommand())));
     }
 
 
@@ -178,7 +183,7 @@ public final class DriverBindings {
     {
         Trigger startButton = controller.start();
         startButton
-            .onTrue(GeneralCommands.resetGyroCommand());
+            .onTrue(Commands.runOnce(() -> drivetrain.getPigeon2().setYaw(0.0), drivetrain));
     }
 
 
