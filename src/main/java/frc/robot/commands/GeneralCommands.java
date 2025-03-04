@@ -594,6 +594,7 @@ public final class GeneralCommands
                     // IF SCORER IS ABOVE THE SAFE SWING POSITION
                     pivot.moveToSetPositionCommand(PivotPosition.kDownPosition)
                         .until(pivot.isAtPosition(PivotPosition.kDownPosition))
+                        .withTimeout(3.0)
 
                     .andThen(
                         elevator.moveToSetPositionCommand(ElevatorPosition.kReadyToGrabCoralPosition)
@@ -607,7 +608,8 @@ public final class GeneralCommands
                     .andThen(
                         Commands.parallel(
                             pivot.moveToSetPositionCommand(PivotPosition.kDownPosition)
-                                .until(pivot.isAtPosition(PivotPosition.kDownPosition)),
+                                .until(pivot.isAtPosition(PivotPosition.kDownPosition))
+                                .withTimeout(3.0),
                             
                             claw.grabGamePieceCommand().until(pivot.isAtPosition(PivotPosition.kDownPosition))))
 
@@ -793,9 +795,21 @@ public final class GeneralCommands
      */
     public static Command resetGyroCommand()
     {
-        if(gyro != null)
+
+        if(gyro != null && DriverStation.getAlliance().isPresent())
         {
-            return drivetrain.setYawCommand(() -> (DriverStation.getAlliance().isPresent() && DriverStation.getAlliance().get() == DriverStation.Alliance.Red ? 180.0 : 0.0));//.andThen(Commands.print("Value of supplier: " + (DriverStation.getAlliance().get() == DriverStation.Alliance.Red)));
+            // if(DriverStation.getAlliance().get() == DriverStation.Alliance.Blue)
+            // {
+            //     return drivetrain.setYawCommand(0.0).andThen(Commands.print(DriverStation.getAlliance().get().toString() + " Blue if"));
+            // }
+            // else
+            // {
+            //     return drivetrain.setYawCommand(180.0).andThen(Commands.print(DriverStation.getAlliance().get().toString() + " Red if"));
+            // }
+            return Commands.runOnce(() -> drivetrain.setYawCommand(() -> (DriverStation.getAlliance())));
+
+            // return drivetrain.setYawCommand(() -> (DriverStation.getAlliance().get() == DriverStation.Alliance.Red) ? 180.0 : 0.0)
+            // .andThen(Commands.print(DriverStation.getAlliance().get().toString()));//.andThen(Commands.print("Value of supplier: " + (DriverStation.getAlliance().get() == DriverStation.Alliance.Red)));
         }
         else
         {

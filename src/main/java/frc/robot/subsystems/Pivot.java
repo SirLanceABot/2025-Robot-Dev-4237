@@ -49,7 +49,7 @@ public class Pivot extends SubsystemLance
         kSafeDropPosition(50.0), //TODO needs tuned
         kReefAlgaePosition(54.5),
         kScoreProcessorPosition(75.5),
-        kDownPosition(117.9);
+        kDownPosition(119.9);
 
         public final double pivotPosition;
 
@@ -119,6 +119,7 @@ public class Pivot extends SubsystemLance
         motor.setupInverted(true);
     //     followMotor.setupInverted(true);
         motor.setPosition(0.0);
+        motor.setSafetyEnabled(false);
     //     followMotor.setPosition(0.0);
         // leadMotor.setupFollower(Constants.Pivot.RIGHT_MOTOR_PORT, true);
 

@@ -266,8 +266,9 @@ public final class ScoringCommands
                 Commands.parallel(
                     claw.grabGamePieceCommand()
                         .until(pivot.isAtPosition(PivotPosition.kFlippedPosition)),
-                    pivot.moveToSetPositionCommand(PivotPosition.kFlippedPosition)
-                        .until(pivot.isAtPosition(PivotPosition.kFlippedPosition)))
+                    Commands.waitSeconds(0.5).andThen(pivot.moveToSetPositionCommand(PivotPosition.kFlippedPosition)
+                        .until(pivot.isAtPosition(PivotPosition.kFlippedPosition))
+                        .withTimeout(3.0)))
                 )
             .andThen(claw.stopCommand())
             .andThen(
@@ -278,6 +279,14 @@ public final class ScoringCommands
         {
             return Commands.none();
         }
+    }
+
+    public static Command testHoldAlgaeCommand()
+    {
+        return
+        intake.pickupAlgaeCommand()
+            .until(intakeProximity.isDetectedSupplier())
+        .andThen(intake.pulseCommand());
     }
 
     /**

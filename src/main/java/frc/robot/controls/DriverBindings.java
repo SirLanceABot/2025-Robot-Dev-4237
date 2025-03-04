@@ -52,9 +52,10 @@ public final class DriverBindings {
     private static BooleanSupplier isTeleop;
     private static DoubleSupplier matchTime;
 
-    private static final double CRAWL_SPEED = 0.4;
+    private static final double CRAWL_SPEED = 0.175;
     private static final double WALK_SPEED = 0.65;
     private static final double RUN_SPEED = 1.0;
+    private static Intake intake;
 
 
     // *** CLASS CONSTRUCTOR ***
@@ -64,6 +65,7 @@ public final class DriverBindings {
     public static void createBindings(RobotContainer robotContainer)
     {
         controller = robotContainer.getDriverController();
+        intake = robotContainer.getIntake();
 
         if(controller != null)
         {
@@ -73,21 +75,22 @@ public final class DriverBindings {
 
             configSuppliers();
 
-            // configAButton();
-            // configBButton();
-            // configXButton();
-            // configYButton();
+            configAButton();
+            configBButton();
+            configXButton();
+            configYButton();
             configLeftBumper();
-            // configRightBumper();
-            // configBackButton();
+            configRightBumper();
+            configBackButton();
             configStartButton();
-            // configLeftTrigger();
-            // configRightTrigger();
-            // configLeftStick();
-            // configRightStick();
-            // configDpadUp();
-            // configDpadDown(); 
-            // configRumble(3);
+            configLeftTrigger();
+            configRightTrigger();
+            configLeftStick();
+            configRightStick();
+            configDpadUp();
+            configDpadDown(); 
+            
+            configRumble(3);
             configDefaultCommands();
 
             System.out.println("  Constructor Finished: " + fullClassName);
@@ -110,7 +113,7 @@ public final class DriverBindings {
     {
         Trigger aButton = controller.a();
         aButton
-            .onTrue(IntakingCommands.testCommand1());
+            .onTrue(IntakingCommands.intakeCoralCommand());
     }
 
 
@@ -118,8 +121,8 @@ public final class DriverBindings {
     {
         Trigger bButton = controller.b();
         // bButton.whileTrue(drivetrain.pointCommand(leftYAxis, leftXAxis));
-        bButton
-            .onTrue(IntakingCommands.testCommand2());
+        // bButton
+        //     .onTrue(IntakingCommands.testCommand2());
         
         //applyRequest(() -> 
         // drivetrain.point.withModuleDirection(new Rotation2d(-leftYAxis.getAsDouble(), -leftXAxis.getAsDouble()))));
@@ -161,7 +164,7 @@ public final class DriverBindings {
     {
         Trigger rightBumper = controller.rightBumper();
         rightBumper
-            .onTrue(IntakingCommands.intakeCoralCommand());
+            .onTrue(IntakingCommands.moveIntakeCommand());
     }
 
 

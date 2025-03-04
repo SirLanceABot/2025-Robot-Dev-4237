@@ -13,9 +13,11 @@ import frc.robot.commands.GeneralCommands;
 import frc.robot.commands.ScoringCommands;
 import frc.robot.commands.CommandsManager.TargetPosition;
 import frc.robot.commands.IntakingCommands;
+import frc.robot.subsystems.Elevator;
 import frc.robot.subsystems.Elevator.ElevatorPosition;
+import frc.robot.subsystems.Pivot;
 import frc.robot.subsystems.Pivot.PivotPosition;
-
+import frc.robot.subsystems.PoseEstimator;
 import frc.robot.RobotContainer;
 
 public final class OperatorBindings {
@@ -38,6 +40,9 @@ public final class OperatorBindings {
     private static DoubleSupplier leftXAxis;
     private static DoubleSupplier rightXAxis;
     private static DoubleSupplier rightYAxis;
+    private static Elevator elevator;
+    private static Pivot pivot;
+    private static PoseEstimator poseEstimator;
 
     private static BooleanSupplier isTeleop;
     private static DoubleSupplier matchTime;
@@ -50,6 +55,9 @@ public final class OperatorBindings {
 
     public static void createBindings(RobotContainer robotContainer)
     {
+        elevator = robotContainer.getElevator();
+        pivot = robotContainer.getPivot();
+        poseEstimator = robotContainer.getPoseEstimator();
         controller = robotContainer.getOperatorController();
 
         if(controller != null)
@@ -57,26 +65,26 @@ public final class OperatorBindings {
             System.out.println("  Constructor Started:  " + fullClassName);
 
 
-            // configSuppliers();
+            configSuppliers();
 
-            // configAButton();
-            // configBButton();
-            // configXButton();
-            // configYButton();
-            // configLeftBumper();
-            // configRightBumper();
-            // configBackButton();
-            // configStartButton();
-            // configLeftTrigger();
-            // configRightTrigger();
-            // configLeftStick();
-            // configRightStick();
+            configAButton();
+            configBButton();
+            configXButton();
+            configYButton();
+            configLeftBumper();
+            configRightBumper();
+            configBackButton();
+            configStartButton();
+            configLeftTrigger();
+            configRightTrigger();
+            configLeftStick();
+            configRightStick();
             // configDpadUp();
             // configDpadDown();
-            // configDpadLeft();
-            // configDpadRight();
-            // configRumble(30);
-            // configDefaultCommands();
+            configDpadLeft();
+            configDpadRight();
+            configRumble(30);
+            configDefaultCommands();
 
             System.out.println("  Constructor Finished: " + fullClassName);
         }
@@ -100,8 +108,9 @@ public final class OperatorBindings {
         Trigger aButton = controller.a();
 
         //Create a path on the fly and score on L1 level, (stops the path if it takes over 10 seconds - probably not needed)
-        aButton.onTrue(Commands.runOnce(() -> 
-            ScoringCommands.scoreCoralAutonomouslyReallyCoolAndAwesomeCommand(robotContainer.getPoseEstimator().getIsRightBranch(), TargetPosition.kL1)).withTimeout(10.0));
+        // aButton.onTrue(Commands.runOnce(() -> 
+        //     ScoringCommands.scoreCoralAutonomouslyReallyCoolAndAwesomeCommand(robotContainer.getPoseEstimator().getIsRightBranch(), TargetPosition.kL1)).withTimeout(10.0));
+        aButton.onTrue(GeneralCommands.moveScorerToL1Command());
     }
 
 
@@ -110,9 +119,9 @@ public final class OperatorBindings {
         Trigger bButton = controller.b();
 
         //Create a path on the fly and score on L2 level, (stops the path if it takes over 10 seconds - probably not needed)
-        bButton.onTrue(Commands.runOnce(() -> 
-            ScoringCommands.scoreCoralAutonomouslyReallyCoolAndAwesomeCommand(robotContainer.getPoseEstimator().getIsRightBranch(), TargetPosition.kL2)).withTimeout(10.0));
-
+        // bButton.onTrue(Commands.runOnce(() -> 
+        //     ScoringCommands.scoreCoralAutonomouslyReallyCoolAndAwesomeCommand(robotContainer.getPoseEstimator().getIsRightBranch(), TargetPosition.kL2)).withTimeout(10.0));
+        bButton.onTrue(GeneralCommands.moveScorerToL2Commmand());
     }
 
 
@@ -121,9 +130,9 @@ public final class OperatorBindings {
         Trigger xButton = controller.x();
 
         //Create a path on the fly and score on L3 level, (stops the path if it takes over 10 seconds - probably not needed)
-        xButton.onTrue(Commands.runOnce(() -> 
-            ScoringCommands.scoreCoralAutonomouslyReallyCoolAndAwesomeCommand(robotContainer.getPoseEstimator().getIsRightBranch(), TargetPosition.kL3)).withTimeout(10.0));
-
+        // xButton.onTrue(Commands.runOnce(() -> 
+        //     ScoringCommands.scoreCoralAutonomouslyReallyCoolAndAwesomeCommand(robotContainer.getPoseEstimator().getIsRightBranch(), TargetPosition.kL3)).withTimeout(10.0));
+        xButton.onTrue(GeneralCommands.moveScorerToL3Command());
     }
 
 
@@ -132,9 +141,9 @@ public final class OperatorBindings {
         Trigger yButton = controller.y();
 
         //Create a path on the fly and score on L4 level, (stops the path if it takes over 10 seconds - probably not needed)
-        yButton.onTrue(Commands.runOnce(() -> 
-            ScoringCommands.scoreCoralAutonomouslyReallyCoolAndAwesomeCommand(robotContainer.getPoseEstimator().getIsRightBranch(), TargetPosition.kL4)).withTimeout(10.0));
-
+        // yButton.onTrue(Commands.runOnce(() -> 
+        //     ScoringCommands.scoreCoralAutonomouslyReallyCoolAndAwesomeCommand(robotContainer.getPoseEstimator().getIsRightBranch(), TargetPosition.kL4)).withTimeout(10.0));
+        yButton.onTrue(GeneralCommands.moveScorerToL4Command());
     }
 
 
@@ -142,7 +151,7 @@ public final class OperatorBindings {
     {
         Trigger leftBumper = controller.leftBumper();
 
-        leftBumper.onTrue(IntakingCommands.intakeAlgaeFromReefCommand(TargetPosition.kLowerReefAlgae));
+        leftBumper.onTrue(GeneralCommands.scoreCoralOnlyCommand());
 
     }
 
@@ -167,14 +176,14 @@ public final class OperatorBindings {
     {
         Trigger startButton = controller.start();
 
-        startButton.onTrue( (robotContainer.getElevator().isAtPosition(ElevatorPosition.kGrabCoralPosition)).getAsBoolean() && (robotContainer.getPivot().isAtPosition(PivotPosition.kDownPosition).getAsBoolean()) ? ScoringCommands.flipScorerCommand() : GeneralCommands.moveScorerToIntakingPositionCommand());
+        startButton.onTrue(Commands.either(ScoringCommands.flipScorerCommand(), GeneralCommands.moveScorerToIntakingPositionCommand(), elevator.isAtPosition(ElevatorPosition.kGrabCoralPosition)));
     }
 
     private static void configLeftTrigger()
     {
         Trigger leftTrigger = controller.leftTrigger();
         leftTrigger
-            .onTrue(robotContainer.getPoseEstimator().setPlacingSideToLeftCommand()
+            .onTrue(poseEstimator.setPlacingSideToLeftCommand()
             .andThen(Commands.runOnce(() -> controller.getHID().setRumble(RumbleType.kLeftRumble, 1.0))).withTimeout(0.25)
             .andThen(Commands.runOnce(() -> controller.getHID().setRumble(RumbleType.kLeftRumble, 1.0)))
             .withTimeout(0.25));
@@ -185,7 +194,7 @@ public final class OperatorBindings {
     {
         Trigger rightTrigger = controller.rightTrigger();
         rightTrigger
-            .onTrue(robotContainer.getPoseEstimator().setPlacingSideToLeftCommand()
+            .onTrue(poseEstimator.setPlacingSideToLeftCommand()
             .andThen(Commands.runOnce(() -> controller.getHID().setRumble(RumbleType.kRightRumble, 1.0))).withTimeout(0.25)
             .andThen(Commands.runOnce(() -> controller.getHID().setRumble(RumbleType.kRightRumble, 1.0)))
             .withTimeout(0.25));

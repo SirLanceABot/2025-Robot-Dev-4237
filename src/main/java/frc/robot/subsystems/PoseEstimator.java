@@ -450,28 +450,33 @@ public class PoseEstimator extends SubsystemLance
                     double robotVelo = Math.hypot(drivetrain.getState().Speeds.vxMetersPerSecond, drivetrain.getState().Speeds.vyMetersPerSecond);
                     double robotRotation = Math.toDegrees(drivetrain.getState().Speeds.omegaRadiansPerSecond);
 
-                    if(visionPose != null)
+                    if(visionPose == null)
                     {
+                        System.out.println("Vision Pose equal null");
                         rejectUpdate = true;
                     }
 
                     if (!reefTag) 
                     {
+                        System.out.println("Not Reef tag");
                         rejectUpdate = true;
                     }
 
                     if (distToTag > 1.5) 
                     {
+                        System.out.println("Distance greater than 1.5");
                         rejectUpdate = true;
                     }
 
                     if(robotVelo > 2.5)
                     {
+                        System.out.println("robot velo greater than 2.5");
                         rejectUpdate = true;
                     }
 
                     if(robotRotation > 720.0)
                     {
+                        System.out.println("robot rotation greater than 720");
                         rejectUpdate = true;
                     }
 
@@ -479,6 +484,7 @@ public class PoseEstimator extends SubsystemLance
                     // measurement
                     if (!rejectUpdate && poseEstimator != null)
                     {
+                        System.out.println("Adding vision measurement for tag: " + tagID);
                         primaryReefTag = tagID;
                         poseEstimator.addVisionMeasurement(
                                 visionPose,

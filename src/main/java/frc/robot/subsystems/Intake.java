@@ -6,6 +6,7 @@ import frc.robot.Constants;
 import frc.robot.motors.SparkMaxLance;
 import frc.robot.motors.TalonFXLance;
 import java.lang.invoke.MethodHandles;
+import java.util.function.BooleanSupplier;
 
 /**
  * This is the Intake subsystem
@@ -77,7 +78,7 @@ public class Intake extends SubsystemLance
         // Do Not Invert Motor Direction
         motor.setupInverted(true); // set to true
         // Set Coast Mode
-        motor.setupCoastMode();
+        motor.setupBrakeMode();
 
         // motor.setupVelocityConversionFactor(RPM_TO_FPS);
 
@@ -96,9 +97,10 @@ public class Intake extends SubsystemLance
     //     return rollerVelocity;
     // }
 
-    private void set(double speed) 
+    public void set(double speed) 
     {
         motor.set(speed);
+        System.out.println("Intake amps: " + motor.getCurrentAmps());
     }
 
     private void setVoltage(double voltage) 
@@ -108,22 +110,45 @@ public class Intake extends SubsystemLance
 
     public void pickupCoral() 
     {
+        motor.setupCoastMode();
         set(0.9);
     }
 
     public void ejectCoral() 
     {
-        set(-0.1);
+        motor.setupCoastMode();
+        set(-0.2);
+    }
+
+    public BooleanSupplier isCoralIn()
+    {
+        return () -> motor.getCurrentAmps() >= 10;
+    }
+
+    public void pulse()
+    {
+        // motor.setupBrakeMode();
+        if(motor.getCurrentAmps() > 1.0)
+        {
+            motor.set(0.0);
+        }
+        else
+        {
+            motor.set(-0.25);
+        }
+        System.out.println("Intake amps: " + motor.getCurrentAmps());
     }
 
     public void pickupAlgae()
     {
-        set(-0.4);
+        motor.setupBrakeMode();
+        set(-0.5);
     }
 
     public void ejectAlgae()
     {
-        set(0.4);
+        motor.setupCoastMode();
+        set(0.5);
     }
 
     // public void pulse()
@@ -133,7 +158,7 @@ public class Intake extends SubsystemLance
 
     public void stop() 
     {
-        set(0.0);
+        motor.set(0.0);
     }
 
     public Command pickupCoralCommand() 
@@ -146,9 +171,14 @@ public class Intake extends SubsystemLance
         return run(() -> ejectCoral()).withName("Eject Coral");
     }
 
+    public Command pulseCommand()
+    {
+        return run(() -> pulse());
+    }
+
     public Command pickupAlgaeCommand()
     {
-        return runOnce(() -> pickupAlgae()).withName("Pickup Algae");
+        return run(() -> pickupAlgae()).withName("Pickup Algae");
     }
 
     public Command ejectAlgaeCommand()

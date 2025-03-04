@@ -4,6 +4,7 @@ package frc.robot.subsystems;
 import static edu.wpi.first.units.Units.*;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.concurrent.locks.Lock;
 import java.util.function.BooleanSupplier;
 import java.util.function.DoubleSupplier;
@@ -79,7 +80,7 @@ public class Drivetrain extends TunerSwerveDrivetrain implements Subsystem
 
     //Drive the robot
     private static final SwerveRequest.FieldCentric drive = new SwerveRequest.FieldCentric()
-            .withDeadband(TunerConstants.MaxDriveSpeed * 0.1).withRotationalDeadband(TunerConstants.MaxAngularRate * 0.1) // Add a 10% deadband
+            .withDeadband(TunerConstants.MaxDriveSpeed * 0.05).withRotationalDeadband(TunerConstants.MaxAngularRate * 0.05) // Add a 5% deadband
             .withDriveRequestType(DriveRequestType.OpenLoopVoltage);
 
     //Lock the wheels
@@ -418,9 +419,19 @@ public class Drivetrain extends TunerSwerveDrivetrain implements Subsystem
         };
     }
 
-    public Command setYawCommand(DoubleSupplier yaw)
+    public void setYawCommand(Supplier<Optional<DriverStation.Alliance>> alliance)
     {
-        return Commands.runOnce(() -> getPigeon2().setYaw(yaw.getAsDouble()));
+        if(DriverStation.Alliance.Blue == alliance.get().get())
+        {
+            getPigeon2().setYaw(0.0);
+            System.out.println("Setting to 0.0");
+        }
+        else
+        {
+            getPigeon2().setYaw(0.0);
+            System.out.println("Setting to 180");
+        }//TODO: is cracked out lol, fix before thrusday
+        
     }
 
 

@@ -70,14 +70,16 @@ public class Claw extends SubsystemLance
         kickMotor.setInverted(false);
         kickMotor.setSafetyEnabled(false);
         grabMotor.setSafetyEnabled(false);
+        grabMotor.setupCurrentLimit(50.0, 30.0, 0.5);
     }
 
     /**
      *Sets the speed of the grab motor
     */
-    private void setGrabSpeed(double speed)
+    public void setGrabSpeed(double speed)
     {
         grabMotor.set(speed);
+        System.out.println("Grab motor amps: " + grabMotor.getCurrentAmps());
     }
 
     /**
@@ -86,6 +88,19 @@ public class Claw extends SubsystemLance
     private void setKickSpeed(double speed)
     {
         kickMotor.set(speed);
+    }
+
+    private void pulseGrab()
+    {
+        if(grabMotor.getCurrentAmps() > 20.0)
+        {
+            grabMotor.set(0.0);
+        }
+        else
+        {
+            grabMotor.set(0.1);
+        }
+        System.out.println("Claw amps: " + grabMotor.getCurrentAmps());
     }
 
     /**
@@ -110,13 +125,13 @@ public class Claw extends SubsystemLance
     */
     public void placeCoral()
     {
-        setKickSpeed(1.0); //0.1 was too slow
+        setKickSpeed(0.5); //0.1 was too slow
     }
 
     public void stop()
     {
-        setGrabSpeed(0.0);
-        setKickSpeed(0.0);
+        grabMotor.set(0.0);
+        kickMotor.set(0.0);
     }
 
     /**
@@ -126,7 +141,12 @@ public class Claw extends SubsystemLance
     public Command grabGamePieceCommand()
     {
         // design pending
-        return run( () -> grabGamePiece()).withName("Grab GamePiece");
+        return run(() -> grabGamePiece()).withName("Grab GamePiece");
+    }
+
+    public Command pulseCommand()
+    {
+        return run(() -> pulseGrab());
     }
 
     /**
@@ -144,7 +164,7 @@ public class Claw extends SubsystemLance
     */
     public Command placeCoralCommand()
     {
-        return runOnce(() -> placeCoral()).withName("Place Coral");
+        return run(() -> placeCoral()).withName("Place Coral");
     }
 
     public Command holdAlgaeCommand()

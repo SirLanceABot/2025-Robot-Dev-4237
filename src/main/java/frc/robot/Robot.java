@@ -117,7 +117,7 @@ public class Robot extends TimedRobot
     @Override
     public void disabledPeriodic() 
     {
-        if (!autonomousRun)
+        if (!autonomousRun && robotContainer.getDrivetrain() != null)
         {
             currentCommand = ElasticLance.getAutonomousCommand();
             if(currentCommand != previousCommand)
@@ -127,7 +127,7 @@ public class Robot extends TimedRobot
                 
             }
             previousCommand = currentCommand;
-            System.out.println(currentCommand.getName());
+            // System.out.println(currentCommand.getName());
         }    
         
     }
