@@ -419,19 +419,21 @@ public class Drivetrain extends TunerSwerveDrivetrain implements Subsystem
         };
     }
 
-    public void setYawCommand(Supplier<Optional<DriverStation.Alliance>> alliance)
+    public void setYaw()
     {
-        if(DriverStation.Alliance.Blue == alliance.get().get())
+        if(DriverStation.getAlliance().isPresent())
         {
-            getPigeon2().setYaw(0.0);
-            System.out.println("Setting to 0.0");
+            if(DriverStation.Alliance.Blue == DriverStation.getAlliance().get())
+            {
+                getPigeon2().setYaw(0.0);
+                System.out.println("Setting to 0.0");
+            }
+            else
+            {
+                getPigeon2().setYaw(0.0);
+                System.out.println("Setting to 180");
+            } // TODO: TEST THIS (REMOVE IF WORKS)
         }
-        else
-        {
-            getPigeon2().setYaw(0.0);
-            System.out.println("Setting to 180");
-        }//TODO: is cracked out lol, fix before thrusday
-        
     }
 
 

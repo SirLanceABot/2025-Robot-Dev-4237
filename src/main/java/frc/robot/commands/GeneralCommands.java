@@ -795,25 +795,13 @@ public final class GeneralCommands
      */
     public static Command resetGyroCommand()
     {
-
-        if(gyro != null && DriverStation.getAlliance().isPresent())
+        if (gyro != null)
         {
-            // if(DriverStation.getAlliance().get() == DriverStation.Alliance.Blue)
-            // {
-            //     return drivetrain.setYawCommand(0.0).andThen(Commands.print(DriverStation.getAlliance().get().toString() + " Blue if"));
-            // }
-            // else
-            // {
-            //     return drivetrain.setYawCommand(180.0).andThen(Commands.print(DriverStation.getAlliance().get().toString() + " Red if"));
-            // }
-            return Commands.runOnce(() -> drivetrain.setYawCommand(() -> (DriverStation.getAlliance())));
-
-            // return drivetrain.setYawCommand(() -> (DriverStation.getAlliance().get() == DriverStation.Alliance.Red) ? 180.0 : 0.0)
-            // .andThen(Commands.print(DriverStation.getAlliance().get().toString()));//.andThen(Commands.print("Value of supplier: " + (DriverStation.getAlliance().get() == DriverStation.Alliance.Red)));
+            return Commands.runOnce(drivetrain::setYaw, drivetrain);
         }
         else
         {
-            return Commands.none();
+            return Commands.print("No gyro to reset");
         }
     }
 
