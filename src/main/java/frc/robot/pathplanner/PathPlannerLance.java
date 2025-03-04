@@ -70,7 +70,6 @@ public class PathPlannerLance
             try
             {
                 RobotConfig config = RobotConfig.fromGUISettings();
-                System.out.println("Test1");
 
                 AutoBuilder.configure
                 (
@@ -83,7 +82,6 @@ public class PathPlannerLance
                     shouldFlipPath(),
                     drivetrain
                 );
-                System.out.println("Test2");
             } 
             catch (Exception e) 
             {

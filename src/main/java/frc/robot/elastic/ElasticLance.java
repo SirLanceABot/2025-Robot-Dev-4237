@@ -65,7 +65,6 @@ public class ElasticLance
     private static Elevator elevator;
     private static Pivot pivot;
     private static Drivetrain drivetrain;
-    private final Field2d m_field = new Field2d();
     public static String autoName;
 
     public String newAutoName;
@@ -79,6 +78,7 @@ public class ElasticLance
         leds = robotContainer.getLEDs();
         configAutoChooser();
         configTeleopField();
+        configAutoField();
         elevator = robotContainer.getElevator();
         drivetrain = robotContainer.getDrivetrain();
         
@@ -95,7 +95,7 @@ public class ElasticLance
         SmartDashboard.putNumber("Match Time", DriverStation.getMatchTime());
         SmartDashboard.putNumber("CAN Utilization %", RobotController.getCANStatus().percentBusUtilization * 100.00);
         SmartDashboard.putNumber("CPU Temperature", RobotController.getCPUTemp());
-        //SmartDashboard.putNumber("Elevator Position", elevator.getPosition());
+        SmartDashboard.putNumber("Elevator Position", elevator.getPosition());
         //SmartDashboard.putNumber("Pivot Position", pivot.getPosition());
 
         updateAllianceColorBox();
@@ -209,13 +209,13 @@ public class ElasticLance
             {
                 SmartDashboard.putString("ERROR", "Valid Selection, good job");
                 configAutoField();
-                leds.setColorSolidCommand(color.kGreen).schedule();
+                //leds.setColorSolidCommand(color.kGreen).schedule();
                 return command;
             }
             else
             {
                 SmartDashboard.putString("ERROR", "Invalid Selection: Pick ONE Autonomous");
-                leds.setColorBlinkCommand(Color.kRed).schedule();
+                //leds.setColorBlinkCommand(Color.kRed).schedule();
                 return Commands.none();
             }
         }
@@ -273,19 +273,27 @@ public class ElasticLance
 
     private static void configAutoField()
     {
-        // var robotPose = drivetrain.getPose();
-        // //Create and push Field2d to SmartDashboard.
-        // SmartDashboard.putData(autofield);
-        // autofield.setRobotPose(robotPose);
+        //var robotPose = drivetrain.getPose();
+        //Create and push Field2d to SmartDashboard.
+        SmartDashboard.putData(autofield);
+        //autofield.setRobotPose(robotPose);
         
         // autoName = getAutonomousCommand().getName();
-        // //List<PathPlannerPath> pathPlannerPaths = PathPlannerAuto.getPathGroupFromAutoFile(autoName);
+        // try {
+        //     List<PathPlannerPath> pathPlannerPaths = PathPlannerAuto.getPathGroupFromAutoFile(autoName);
         //     List<Pose2d> poses = new ArrayList<>();
         //     for (PathPlannerPath path : pathPlannerPaths) {
         //         poses.addAll(path.getAllPathPoints().stream().map(point -> new Pose2d(point.position.getX(), point.position.getY(), new Rotation2d())).collect(Collectors.toList()));
         //     }
         //     autofield.getObject("path").setPoses(poses);
-        }
+        // }            
+        // catch (Exception e) 
+        // {
+        //     SmartDashboard.putString("ERROR", "traj error");
+        //     System.out.println("Elastic error");
+
+        // }
+    }
       
           
            
@@ -310,7 +318,7 @@ public class ElasticLance
 
     private static void configTeleopField()
     {
-        SmartDashboard.putData("Field", field);
+        SmartDashboard.putData("FieldT", field);
     }
 
 }
