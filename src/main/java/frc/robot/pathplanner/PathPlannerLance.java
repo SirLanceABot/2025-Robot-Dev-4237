@@ -4,10 +4,12 @@ import java.lang.invoke.MethodHandles;
 import java.util.Optional;
 import java.util.function.BooleanSupplier;
 
+import com.ctre.phoenix6.swerve.SwerveRequest;
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.config.RobotConfig;
 import com.pathplanner.lib.controllers.PPLTVController;
 import com.pathplanner.lib.util.PathPlannerLogging;
+import com.ctre.phoenix6.swerve.SwerveDrivetrain;
 
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
@@ -32,6 +34,7 @@ public class PathPlannerLance
 
     private static Drivetrain drivetrain;
     private static Field2d field; // object to put on dashboards
+    
     // private static SendableChooser < Command > leftWall;
     // private static SendableChooser < Command > middle;
     // private static SendableChooser < Command > rightWall;
@@ -43,7 +46,7 @@ public class PathPlannerLance
     public static void configPathPlanner(RobotContainer robotContainer)
     {
         drivetrain = robotContainer.getDrivetrain();
-        configAutoBuilder();
+        // configAutoBuilder();
         // configAutoChooser();
 
         // configPathPlannerLogging();
@@ -63,36 +66,38 @@ public class PathPlannerLance
         // PathfindingCommand.warmupCommand().schedule();
     }
 
-    private static void configAutoBuilder()
-    {
-        if(drivetrain != null)
-        {
-            try
-            {
-                RobotConfig config = RobotConfig.fromGUISettings();
+    // private static void configAutoBuilder()
+    // {
+    //     if(drivetrain != null)
+    //     {
+    //         try
+    //         {
+    //             RobotConfig config = RobotConfig.fromGUISettings();
 
-                AutoBuilder.configure
-                (
-                    drivetrain::getPose,
-                    drivetrain::resetOdometryPose,
-                    drivetrain::getRobotRelativeSpeeds,
-                    (speeds, feedforwards) -> drivetrain.driveRobotRelative(speeds, feedforwards),
-                    new PPLTVController(0.02 /*, 3.7*/),
-                    config,
-                    shouldFlipPath(),
-                    drivetrain
-                );
-            } 
-            catch (Exception e) 
-            {
-                e.printStackTrace();
-            }
-        }
-        else
-        {
-            System.out.println("No Drivetrain");
-        }
-    }
+    //             AutoBuilder.configure
+    //             (
+    //                 drivetrain::getPose,
+    //                 drivetrain::resetOdometryPose,
+    //                 drivetrain::getRobotRelativeSpeeds,
+    //                 (speeds, feedforwards) -> setControl(pathApplyRobotSpeeds.withSpeeds(speeds)
+    //                                             .withWheelForceFeedforwardsX(feedforwards.robotRelativeForcesXNewtons())
+    //                                             .withWheelForceFeedforwardsY(feedforwards.robotRelativeForcesYNewtons())),
+    //                 new PPLTVController(0.02 /*, 3.7*/),
+    //                 config,
+    //                 shouldFlipPath(),
+    //                 drivetrain
+    //             );
+    //         } 
+    //         catch (Exception e) 
+    //         {
+    //             e.printStackTrace();
+    //         }
+    //     }
+    //     else
+    //     {
+    //         System.out.println("No Drivetrain");
+    //     }
+    // }
 
     /**
      * @return if we should flip out auto pahts based on our alliance

@@ -123,6 +123,7 @@ public final class DriverBindings {
     private static void configBButton()
     {
         Trigger bButton = controller.b();
+        // bButton.whileTrue()
         // bButton.whileTrue(drivetrain.pointCommand(leftYAxis, leftXAxis));
         // bButton
             // .onTrue(Commands.runOnce(() -> intakeWrist.moveToSetPositionCommand(Position.kRestingPosition).andThen(intake.stopCommand())));
@@ -228,6 +229,12 @@ public final class DriverBindings {
     private static void configDpadDown()
     {
         Trigger dpadDown = controller.povDown();
+    }
+
+    private static void configDpadLeft()
+    {
+        Trigger dpadLeft = controller.povLeft();
+        // dpadLeft.whileTrue(claw)
     }
 
     public static void configRumble(int time)

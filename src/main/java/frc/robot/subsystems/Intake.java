@@ -141,7 +141,7 @@ public class Intake extends SubsystemLance
         {
             motor.set(-0.35);
         }
-        System.out.println("Intake amps: " + motor.getCurrentAmps());
+        // System.out.println("Intake amps: " + motor.getCurrentAmps());
     }
 
     public void pickupAlgae()
@@ -208,7 +208,7 @@ public class Intake extends SubsystemLance
         //periodicData.bottomRollerPosition = bottomMotor.getPosition();
         //rollerVelocity = motor.getVelocity();
         //periodicDatopRollerVelocityta.bottomRollerVelocity = bottomMotor.getVelocity();
-        System.out.println("Intake amps: " + motor.getCurrentAmps());
+        // System.out.println("Intake amps: " + motor.getCurrentAmps());
     }
 
     @Override

@@ -16,6 +16,11 @@ import com.ctre.phoenix6.swerve.SwerveDrivetrainConstants;
 import com.ctre.phoenix6.swerve.SwerveModule.DriveRequestType;
 import com.ctre.phoenix6.swerve.SwerveModuleConstants;
 import com.ctre.phoenix6.swerve.SwerveRequest;
+import com.pathplanner.lib.auto.AutoBuilder;
+import com.pathplanner.lib.config.PIDConstants;
+import com.pathplanner.lib.config.RobotConfig;
+import com.pathplanner.lib.controllers.PPHolonomicDriveController;
+import com.pathplanner.lib.controllers.PPLTVController;
 import com.pathplanner.lib.path.GoalEndState;
 import com.pathplanner.lib.path.PathConstraints;
 import com.pathplanner.lib.path.PathPlannerPath;
@@ -63,6 +68,7 @@ public class Drivetrain extends TunerSwerveDrivetrain implements Subsystem
     private static final double kSimLoopPeriod = 0.005; // 5 ms
     private Notifier m_simNotifier = null;
     private double m_lastSimTime;
+    private static SwerveRequest.ApplyRobotSpeeds pathApplyRobotSpeeds = new SwerveRequest.ApplyRobotSpeeds();
 
     //Used for logging odometry
     private final NetworkTable ASTable;
@@ -82,6 +88,9 @@ public class Drivetrain extends TunerSwerveDrivetrain implements Subsystem
     private static final SwerveRequest.FieldCentric drive = new SwerveRequest.FieldCentric()
             .withDeadband(TunerConstants.MaxDriveSpeed * 0.05).withRotationalDeadband(TunerConstants.MaxAngularRate * 0.05) // Add a 5% deadband
             .withDriveRequestType(DriveRequestType.OpenLoopVoltage);
+
+    private static final SwerveRequest.RobotCentric autoDrive = new SwerveRequest.RobotCentric()
+            .withDriveRequestType(DriveRequestType.Velocity);
 
     //Lock the wheels
     public static final SwerveRequest.SwerveDriveBrake lock = new SwerveRequest.SwerveDriveBrake();
@@ -180,7 +189,7 @@ public class Drivetrain extends TunerSwerveDrivetrain implements Subsystem
         ASTable = NetworkTableInstance.getDefault().getTable(Constants.ADVANTAGE_SCOPE_TABLE_NAME);
         drivetrainEntry = ASTable.getStructTopic("DrivetrainOdometry", Pose2d.struct).publish();
 
-
+        configAutoBuilder();
     }
 
     /**
@@ -207,7 +216,7 @@ public class Drivetrain extends TunerSwerveDrivetrain implements Subsystem
         ASTable = NetworkTableInstance.getDefault().getTable(Constants.ADVANTAGE_SCOPE_TABLE_NAME);
         drivetrainEntry = ASTable.getStructTopic("DrivetrainOdometry", Pose2d.struct).publish();
 
-
+        configAutoBuilder();
     }
 
     /**
@@ -241,7 +250,36 @@ public class Drivetrain extends TunerSwerveDrivetrain implements Subsystem
         ASTable = NetworkTableInstance.getDefault().getTable(Constants.ADVANTAGE_SCOPE_TABLE_NAME);
         drivetrainEntry = ASTable.getStructTopic("DrivetrainOdometry", Pose2d.struct).publish();
 
+        configAutoBuilder();
+    }
 
+    private void configAutoBuilder()
+    {
+        try
+        {
+            RobotConfig config = RobotConfig.fromGUISettings();
+
+            AutoBuilder.configure
+            (
+                () -> getState().Pose,
+                this::resetPose,
+                () -> getState().Speeds,
+                (speeds, feedforwards) -> setControl(pathApplyRobotSpeeds.withSpeeds(speeds)
+                                            .withWheelForceFeedforwardsX(feedforwards.robotRelativeForcesXNewtons())
+                                            .withWheelForceFeedforwardsY(feedforwards.robotRelativeForcesYNewtons())),
+                new PPHolonomicDriveController(
+                    new PIDConstants(10, 0, 0),
+                    new PIDConstants(7, 0, 0)
+                ),
+                config,
+                () -> DriverStation.getAlliance().orElse(Alliance.Blue) == Alliance.Red,
+                this
+            );
+        } 
+        catch (Exception e) 
+        {
+            e.printStackTrace();
+        }
     }
 
     // private Rotation2d angleToNearestBranch()
@@ -315,13 +353,14 @@ public class Drivetrain extends TunerSwerveDrivetrain implements Subsystem
      * @param chassisSpeeds
      * the robot's chassis speed
      */
-    public void driveRobotRelative(ChassisSpeeds chassisSpeeds, DriveFeedforwards feedforwards)
+    public Command driveRobotRelative(ChassisSpeeds chassisSpeeds)
     {
         ChassisSpeeds wheelSpeeds = getState().Speeds;
         SimpleMotorFeedforward motorFeedforward = new SimpleMotorFeedforward(.12,12.0/3.7);
 
-        double xDirectionWheelSpeedInVolts = motorFeedforward.calculate(wheelSpeeds.vxMetersPerSecond);
-        double yDirectionWheelSpeedInVolts = motorFeedforward.calculate(wheelSpeeds.vyMetersPerSecond);
+
+        double xDirectionWheelSpeedInVolts = 0.0;// motorFeedforward.calculate(wheelSpeeds.vxMetersPerSecond);
+        double yDirectionWheelSpeedInVolts = 0.0;//motorFeedforward.calculate(wheelSpeeds.vyMetersPerSecond);
         // System.out.println("-------------------LV = " + leftWheelSpeedInVolts + ", RV = " + rightWheelSpeedInVolts + ", RV = " + rightLeaderVelocity + ", LV = " + leftLeaderVelocity + ", CS = " + chassisSpeeds);
         SmartDashboard.putString("Chassis Speeds", chassisSpeeds.toString());
         SmartDashboard.putNumber("X Volts", xDirectionWheelSpeedInVolts);
@@ -329,12 +368,16 @@ public class Drivetrain extends TunerSwerveDrivetrain implements Subsystem
         SmartDashboard.putNumber("X velocity", xDirectionWheelSpeedInVolts);
         SmartDashboard.putNumber("Y velocity", yDirectionWheelSpeedInVolts);
 
+        return applyRequest(() -> autoDrive.withVelocityX(chassisSpeeds.vxMetersPerSecond)
+                                    .withVelocityY(chassisSpeeds.vyMetersPerSecond)
+                                    .withRotationalRate(chassisSpeeds.omegaRadiansPerSecond));
+
     }
     
 
     public void resetOdometryPose(Pose2d pose)
     {
-        resetPose(getState().Pose);
+        resetPose(pose);
     }
 
    

@@ -171,6 +171,11 @@ public class Claw extends SubsystemLance
     {
         return runOnce(() -> holdAlgae()).withName("Hold Algae");
     }
+
+    public Command setKickSpeedCommand(double speed)
+    {
+        return run(() ->  setKickSpeed(speed)).withName("Set Kick Speed");
+    }
     
     /**
      * runs stop command

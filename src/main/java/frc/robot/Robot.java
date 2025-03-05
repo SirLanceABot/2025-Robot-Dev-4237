@@ -2,6 +2,9 @@ package frc.robot;
 
 import java.lang.invoke.MethodHandles;
 
+import com.pathplanner.lib.auto.AutoBuilder;
+import com.pathplanner.lib.commands.PathPlannerAuto;
+
 import edu.wpi.first.wpilibj.DataLogManager;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.RobotController;
@@ -145,13 +148,18 @@ public class Robot extends TimedRobot
     @Override
     public void autonomousInit() 
     {
-        DataLogManager.start();
+        // DataLogManager.start();
         //autonomousCommand = ElasticLance.getAutonomousCommand();
 
-        if(autonomousCommand != null) 
-        {
-            autonomousCommand.schedule();
-        }
+        // PathPlannerAuto path = new PathPlannerAuto("Testing");
+        Command path = AutoBuilder.buildAuto("Testing");
+        path.schedule();
+        System.out.println("Scheduled Auto Command");
+
+        // if(autonomousCommand != null) 
+        // {
+        //     autonomousCommand.schedule();
+        // }
 
     }
 
