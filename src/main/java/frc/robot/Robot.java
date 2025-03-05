@@ -3,7 +3,9 @@ package frc.robot;
 import java.lang.invoke.MethodHandles;
 
 import com.pathplanner.lib.auto.AutoBuilder;
+import com.pathplanner.lib.commands.FollowPathCommand;
 import com.pathplanner.lib.commands.PathPlannerAuto;
+import com.pathplanner.lib.commands.PathfindingCommand;
 import com.pathplanner.lib.path.PathPlannerPath;
 
 import edu.wpi.first.math.geometry.Pose2d;
@@ -70,8 +72,8 @@ public class Robot extends TimedRobot
         PathPlannerLance.configPathPlanner(robotContainer);
         ElasticLance.configElastic(robotContainer);
         // TODO - Add these PathPlanner warmup commands
-        // FollowPathCommand.warmupCommand().schedule();
-        // PathfindingCommand.warmupCommand().schedule();
+        FollowPathCommand.warmupCommand().schedule();
+        PathfindingCommand.warmupCommand().schedule();
     }
 
     @Override
@@ -130,12 +132,10 @@ public class Robot extends TimedRobot
             {
                 ElasticLance.resetRobot(robotContainer.getDrivetrain().getPigeon2());
                 autonomousCommand = currentCommand;
-                
             }
             previousCommand = currentCommand;
             // System.out.println(currentCommand.getName());
         }    
-        
     }
 
     /**
