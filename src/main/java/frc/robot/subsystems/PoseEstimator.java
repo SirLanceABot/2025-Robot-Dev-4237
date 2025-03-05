@@ -174,6 +174,11 @@ public class PoseEstimator extends SubsystemLance
                 drivetrain.getState().Pose,
                 stateStdDevs,
                 visionStdDevs);
+
+            drivetrain.setVisionMeasurementStdDevs(visionStdDevs);
+            drivetrain.setStateStdDevs(stateStdDevs);
+
+
         }
         else
         {
@@ -465,7 +470,7 @@ public class PoseEstimator extends SubsystemLance
                         rejectUpdate = true;
                     }
 
-                    if (distToTag > 2.5) 
+                    if (distToTag > 1)
                     {
                         System.out.println("Distance greater than 2.5");
                         rejectUpdate = true;
@@ -498,6 +503,16 @@ public class PoseEstimator extends SubsystemLance
                     {
                         primaryReefTag = 0;
                     }
+
+                    if (!rejectUpdate) // COMMENT OUT TO STOP DRIVETRAIN POSE FROM UPDATING
+                    {
+                        System.out.println("Adding vision measurement for tag: " + tagID);
+                        primaryReefTag = tagID;
+                        drivetrain.addVisionMeasurement(
+                                visionPose,
+                                camera.getTimestamp(),
+                                visionStdDevs);
+                    }
                 }
             }
         }
@@ -507,6 +522,7 @@ public class PoseEstimator extends SubsystemLance
         {
             // grabs the newest estimated pose
             estimatedPose = poseEstimator.getEstimatedPosition();
+            estimatedPose = drivetrain.getPose();
 
             poseEstimatorEntry.set(estimatedPose);
         }
