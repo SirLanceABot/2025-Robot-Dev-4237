@@ -184,7 +184,7 @@ public final class DriverBindings {
     {
         Trigger startButton = controller.start();
         startButton
-            .onTrue(Commands.runOnce(() -> drivetrain.setYaw(), drivetrain));
+            .onTrue(Commands.runOnce(() -> drivetrain.seedFieldCentric(), drivetrain));
     }
 
 
