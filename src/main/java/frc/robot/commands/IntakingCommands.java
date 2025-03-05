@@ -157,23 +157,37 @@ public final class IntakingCommands
         if(elevator != null && pivot != null && claw != null & elevatorProximity != null && clawProximity != null)
         {
             return
-            GeneralCommands.moveScorerToIntakingPositionCommand()
-                .until(() -> (elevator.isAtPosition(ElevatorPosition.kReadyToGrabCoralPosition).getAsBoolean() && pivot.isAtPosition(PivotPosition.kDownPosition).getAsBoolean()))
+            // GeneralCommands.moveScorerToIntakingPositionCommand()
+            //     .until(() -> (elevator.isAtPosition(ElevatorPosition.kReadyToGrabCoralPosition).getAsBoolean() && pivot.isAtPosition(PivotPosition.kDownPosition).getAsBoolean()))
 
-            .andThen(elevator.moveToSetPositionCommand(ElevatorPosition.kSafeSwingPosition).until(elevator.isAtPosition(ElevatorPosition.kSafeSwingPosition)))
+            Commands.parallel(
+                elevator.moveToSetPositionCommand(ElevatorPosition.kSafeSwingPosition)
+                    .until(elevator.isAtPosition(ElevatorPosition.kSafeSwingPosition)),
+
+                pivot.moveToSetPositionCommand(PivotPosition.kDownPosition)
+                    .until(pivot.isAtPosition(PivotPosition.kDownPosition))
+            )
+
+            // .andThen(elevator.moveToSetPositionCommand(ElevatorPosition.kSafeSwingPosition).until(elevator.isAtPosition(ElevatorPosition.kSafeSwingPosition)))
 
             .andThen(Commands.waitUntil(elevatorProximity.isDetectedSupplier()))
 
-            .andThen(Commands.waitSeconds(0.25))
-
             .andThen(
                 Commands.parallel(
-                    claw.grabGamePieceCommand()
-                        .until(clawProximity.isDetectedSupplier())
-                        .withTimeout(3.0),
-
                     elevator.moveToSetPositionCommand(ElevatorPosition.kGrabCoralPosition)
-                        .until(elevator.isAtPosition(ElevatorPosition.kGrabCoralPosition))))
+                        .until(elevator.isAtPosition(ElevatorPosition.kGrabCoralPosition)),
+                        
+                    claw.grabGamePieceCommand().until(clawProximity.isDetectedSupplier()).withTimeout(2.0)))
+            // .andThen(Commands.waitSeconds(0.25))
+
+            // .andThen(
+            //     Commands.parallel(
+            //         claw.grabGamePieceCommand()
+            //             .until(clawProximity.isDetectedSupplier())
+            //             .withTimeout(1.0),
+
+            //         elevator.moveToSetPositionCommand(ElevatorPosition.kGrabCoralPosition)
+            //             .until(elevator.isAtPosition(ElevatorPosition.kGrabCoralPosition))))
 
             .andThen(Commands.waitSeconds(0.5))
             .andThen(claw.stopCommand())

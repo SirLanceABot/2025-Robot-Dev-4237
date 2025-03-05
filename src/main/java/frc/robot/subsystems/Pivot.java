@@ -130,7 +130,7 @@ public class Pivot extends SubsystemLance
         motor.setupClosedLoopRampRate(0.4);
         
         motor.setupPIDController(0, 0.02, kI, kD); // Use when bringing pivot up
-        motor.setupPIDController(1, 0.0075, kI, kD); // Use when bringing pivot down
+        motor.setupPIDController(1, 0.0085, kI, kD); // Use when bringing pivot down
 
         //Configure PID Controller
         // pidController.setP(kP);

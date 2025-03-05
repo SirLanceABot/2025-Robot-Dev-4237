@@ -462,8 +462,14 @@ public class Drivetrain extends TunerSwerveDrivetrain implements Subsystem
         {
             if(DriverStation.Alliance.Blue == DriverStation.getAlliance().get())
             {
-                getPigeon2().setYaw(0.0);
+                getPigeon2().setYaw(180.0);
                 System.out.println("Setting to 0.0");
+                DriverStation.getAlliance().ifPresent(allianceColor -> {
+                    setOperatorPerspectiveForward(
+                        allianceColor == Alliance.Red
+                            ? kRedAlliancePerspectiveRotation
+                            : kBlueAlliancePerspectiveRotation);}
+                    );
             }
             else
             {

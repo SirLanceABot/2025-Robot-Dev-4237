@@ -131,7 +131,7 @@ public class Elevator extends SubsystemLance
         motor.setupReverseHardLimitSwitch(true, true);
 
         motor.setupPIDController(0, 0.05, kI, kD); // TODO tune this
-        motor.setupPIDController(1, 0.07, kI, kD);
+        motor.setupPIDController(1, 0.06, kI, kD); // was 0.07
         motor.setupClosedLoopRampRate(0.25);
 
         // Configure PID Controller

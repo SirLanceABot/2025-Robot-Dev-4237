@@ -4,7 +4,10 @@ import java.lang.invoke.MethodHandles;
 
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.commands.PathPlannerAuto;
+import com.pathplanner.lib.path.PathPlannerPath;
 
+import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.DataLogManager;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.RobotController;
@@ -153,6 +156,17 @@ public class Robot extends TimedRobot
 
         // PathPlannerAuto path = new PathPlannerAuto("Testing");
         Command path = AutoBuilder.buildAuto("Testing");
+        try {
+            PathPlannerPath ppPath = PathPlannerPath.fromPathFile("Testing");
+            Pose2d initialPose = ppPath.getStartingHolonomicPose().orElse(new Pose2d()).rotateBy(new Rotation2d(180.0));
+            robotContainer.getPoseEstimator().resetPose(initialPose);
+        }
+        catch (Exception e)
+        {
+            System.out.println("Path planner loading file error");
+        }
+
+
         path.schedule();
         System.out.println("Scheduled Auto Command");
 

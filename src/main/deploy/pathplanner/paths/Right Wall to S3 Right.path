@@ -16,12 +16,12 @@
     },
     {
       "anchor": {
-        "x": 4.15,
-        "y": 2.562
+        "x": 4.031496710526316,
+        "y": 2.668338815789474
       },
       "prevControl": {
-        "x": 4.62775,
-        "y": 1.9574999999999996
+        "x": 4.509246710526317,
+        "y": 2.063838815789474
       },
       "nextControl": null,
       "isLocked": false,
@@ -31,9 +31,21 @@
   "rotationTargets": [],
   "constraintZones": [],
   "pointTowardsZones": [],
-  "eventMarkers": [],
+  "eventMarkers": [
+    {
+      "name": "Move Scorer",
+      "waypointRelativePos": 0.05,
+      "endWaypointRelativePos": null,
+      "command": {
+        "type": "named",
+        "data": {
+          "name": "Move Scorer to L4"
+        }
+      }
+    }
+  ],
   "globalConstraints": {
-    "maxVelocity": 0.5,
+    "maxVelocity": 1.5,
     "maxAcceleration": 1.0,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0,

@@ -140,8 +140,6 @@ public class PoseEstimator extends SubsystemLance
     // *** CLASS CONSTRUCTORS ***
     // Put all class constructors here
 
-
-
     /** 
      * Creates a new PoseEstimator. 
      */
@@ -171,7 +169,7 @@ public class PoseEstimator extends SubsystemLance
         {
             poseEstimator = new SwerveDrivePoseEstimator(
                 drivetrain.getKinematics(), 
-                gyro.getRotation2d(), 
+                gyro.getRotation2d().rotateBy(new Rotation2d(180.0)), 
                 drivetrain.getState().ModulePositions,
                 drivetrain.getState().Pose,
                 stateStdDevs,
@@ -183,6 +181,11 @@ public class PoseEstimator extends SubsystemLance
         }
 
         System.out.println("  Constructor Finished: " + fullClassName);
+    }
+
+    public void resetPose(Pose2d pose)
+    {
+        poseEstimator.resetPose(pose);
     }
 
     /**
@@ -423,7 +426,7 @@ public class PoseEstimator extends SubsystemLance
     {
         if (drivetrain != null && gyro != null && poseEstimator != null) 
         {
-            gyroRotation = gyro.getRotation2d();
+            gyroRotation = gyro.getRotation2d().rotateBy(new Rotation2d(180.0));
             swerveModulePositions = drivetrain.getState().ModulePositions;
 
             // Updates odometry
@@ -446,7 +449,7 @@ public class PoseEstimator extends SubsystemLance
                     // variables for pose estimator logic
                     boolean rejectUpdate = false;
                     boolean reefTag = isReefTag(camera.getTagId());
-                    double distToTag = getDistanceToReefTag(camera.getTagId());
+                    double distToTag = camera.avgTagDistance();
                     double robotVelo = Math.hypot(drivetrain.getState().Speeds.vxMetersPerSecond, drivetrain.getState().Speeds.vyMetersPerSecond);
                     double robotRotation = Math.toDegrees(drivetrain.getState().Speeds.omegaRadiansPerSecond);
 
@@ -462,9 +465,9 @@ public class PoseEstimator extends SubsystemLance
                         rejectUpdate = true;
                     }
 
-                    if (distToTag > 1.5) 
+                    if (distToTag > 2.5) 
                     {
-                        // System.out.println("Distance greater than 1.5");
+                        System.out.println("Distance greater than 2.5");
                         rejectUpdate = true;
                     }
 

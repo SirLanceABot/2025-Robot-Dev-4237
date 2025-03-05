@@ -184,7 +184,7 @@ public final class DriverBindings {
     {
         Trigger startButton = controller.start();
         startButton
-            .onTrue(Commands.runOnce(() -> drivetrain.getPigeon2().setYaw(0.0), drivetrain));
+            .onTrue(Commands.runOnce(() -> drivetrain.setYaw(), drivetrain));
     }
 
 

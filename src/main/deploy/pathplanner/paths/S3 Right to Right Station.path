@@ -3,25 +3,25 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 4.15,
-        "y": 2.562
+        "x": 4.031496710526316,
+        "y": 2.668338815789474
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.93475,
-        "y": 1.5484999999999989
+        "x": 2.8162467105263156,
+        "y": 1.6548388157894731
       },
       "isLocked": false,
       "linkedName": "S3 Right"
     },
     {
       "anchor": {
-        "x": 1.716,
-        "y": 0.759
+        "x": 1.7607730263157892,
+        "y": 0.8594572368421052
       },
       "prevControl": {
-        "x": 2.40825,
-        "y": 1.2852499999999998
+        "x": 2.453023026315789,
+        "y": 1.385707236842105
       },
       "nextControl": null,
       "isLocked": false,
@@ -45,8 +45,8 @@
     }
   ],
   "globalConstraints": {
-    "maxVelocity": 3.0,
-    "maxAcceleration": 3.0,
+    "maxVelocity": 0.5,
+    "maxAcceleration": 1.0,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0,
     "nominalVoltage": 12.0,
@@ -62,5 +62,5 @@
     "velocity": 0,
     "rotation": -29.999999999999996
   },
-  "useDefaultConstraints": true
+  "useDefaultConstraints": false
 }
