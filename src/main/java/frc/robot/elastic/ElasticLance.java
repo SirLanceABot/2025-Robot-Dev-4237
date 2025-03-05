@@ -77,10 +77,13 @@ public class ElasticLance
     {
         leds = robotContainer.getLEDs();
         configAutoChooser();
-        configTeleopField();
-        configAutoField();
+        
         elevator = robotContainer.getElevator();
         drivetrain = robotContainer.getDrivetrain();
+        pivot = robotContainer.getPivot();
+
+        configTeleopField();
+        configAutoField();
         
     }
 
@@ -96,7 +99,7 @@ public class ElasticLance
         SmartDashboard.putNumber("CAN Utilization %", RobotController.getCANStatus().percentBusUtilization * 100.00);
         SmartDashboard.putNumber("CPU Temperature", RobotController.getCPUTemp());
         SmartDashboard.putNumber("Elevator Position", elevator.getPosition());
-        //SmartDashboard.putNumber("Pivot Position", pivot.getPosition());
+        SmartDashboard.putNumber("Pivot Position", pivot.getPosition());
 
         updateAllianceColorBox();
     }
@@ -208,7 +211,7 @@ public class ElasticLance
             if ( counter == 1)
             {
                 SmartDashboard.putString("ERROR", "Valid Selection, good job");
-                configAutoField();
+                //configAutoField();
                 //leds.setColorSolidCommand(color.kGreen).schedule();
                 return command;
             }
@@ -273,45 +276,42 @@ public class ElasticLance
 
     private static void configAutoField()
     {
-        //var robotPose = drivetrain.getPose();
         //Create and push Field2d to SmartDashboard.
         SmartDashboard.putData(autofield);
-        //autofield.setRobotPose(robotPose);
+        Pose2d pose = drivetrain.getPose();
+        autofield.setRobotPose(pose);
         
-        // autoName = getAutonomousCommand().getName();
-        // try {
-        //     List<PathPlannerPath> pathPlannerPaths = PathPlannerAuto.getPathGroupFromAutoFile(autoName);
-        //     List<Pose2d> poses = new ArrayList<>();
-        //     for (PathPlannerPath path : pathPlannerPaths) {
-        //         poses.addAll(path.getAllPathPoints().stream().map(point -> new Pose2d(point.position.getX(), point.position.getY(), new Rotation2d())).collect(Collectors.toList()));
-        //     }
-        //     autofield.getObject("path").setPoses(poses);
-        // }            
-        // catch (Exception e) 
-        // {
-        //     SmartDashboard.putString("ERROR", "traj error");
-        //     System.out.println("Elastic error");
+        autoName = getAutonomousCommand().getName();
+        try {
+            List<PathPlannerPath> pathPlannerPaths = PathPlannerAuto.getPathGroupFromAutoFile(autoName);
+            List<Pose2d> poses = new ArrayList<>();
+            for (PathPlannerPath path : pathPlannerPaths) {
+                poses.addAll(path.getAllPathPoints().stream().map(point -> new Pose2d(point.position.getX(), point.position.getY(), new Rotation2d())).collect(Collectors.toList()));
+            }
+            autofield.getObject("path").setPoses(poses);
+        }            
+        catch (Exception e) 
+        {
+            SmartDashboard.putString("ERROR", "traj error");
+            System.out.println("Elastic error");
 
-        // }
-    }
-      
-          
-           
-                //     // Create the trajectory to follow in autonomous. It is best to initialize
-            //     // trajectories here to avoid wasting time in autonomous.
-            //     trajectory = TrajectoryGenerator.generateTrajectory(
-            //         new Pose2d(0, 0, Rotation2d.fromDegrees(0)),
-            //         List.of(new Translation2d(1, 1), new Translation2d(2, -1)),
-            //         new Pose2d(3, 0, Rotation2d.fromDegrees(0)),
-            //         new TrajectoryConfig(Units.feetToMeters(3.0), Units.feetToMeters(3.0))
-            //     );
+        }
+    
+        // // Create the trajectory to follow in autonomous. It is best to initialize
+        // // trajectories here to avoid wasting time in autonomous.
+        // trajectory = TrajectoryGenerator.generateTrajectory(
+        //     new Pose2d(0, 0, Rotation2d.fromDegrees(0)),
+        //     List.of(new Translation2d(1, 1), new Translation2d(2, -1)),
+        //     new Pose2d(3, 0, Rotation2d.fromDegrees(0)),
+        //     new TrajectoryConfig(Units.feetToMeters(3.0), Units.feetToMeters(3.0))
+        //     );
           
         
         
-            //     // Push the trajectory to Field2d.
-            //     autofield.getObject("traj").setTrajectory(trajectory);
+            // Push the trajectory to Field2d.
+            //autofield.getObject("traj").setTrajectory(trajectory);
             
-        
+    }    
         
         
            
