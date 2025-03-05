@@ -65,7 +65,7 @@ public class ElasticLance
     private static Elevator elevator;
     private static Pivot pivot;
     private static Drivetrain drivetrain;
-    public static String autoName;
+    public static String autoName = getAutonomousCommand().getName();;
 
     public String newAutoName;
 
@@ -83,7 +83,7 @@ public class ElasticLance
         pivot = robotContainer.getPivot();
 
         configTeleopField();
-        //createAutoField();
+        createAutoField();
         
     }
 
@@ -100,6 +100,7 @@ public class ElasticLance
         SmartDashboard.putNumber("CPU Temperature", RobotController.getCPUTemp());
         SmartDashboard.putNumber("Elevator Position", elevator.getPosition());
         SmartDashboard.putNumber("Pivot Position", pivot.getPosition());
+        updateTeleopField();
 
         updateAllianceColorBox();
     }
@@ -280,44 +281,76 @@ public class ElasticLance
         autofield.setRobotPose(pose);
     }
 
-    private static void updateAutoField()
-    {
-        autoName = getAutonomousCommand().getName();
-        try {
-            List<PathPlannerPath> pathPlannerPaths = PathPlannerAuto.getPathGroupFromAutoFile(autoName);
-            List<Pose2d> poses = new ArrayList<>();
-            for (PathPlannerPath path : pathPlannerPaths) {
-                poses.addAll(path.getAllPathPoints().stream().map(point -> new Pose2d(point.position.getX(), point.position.getY(), new Rotation2d())).collect(Collectors.toList()));
-            }
-            autofield.getObject("path").setPoses(poses);
-        }            
-        catch (Exception e) 
-        {
-            SmartDashboard.putString("ERROR", "traj error");
-            System.out.println("Elastic error");
-
-        }
-    
-        // // Create the trajectory to follow in autonomous. It is best to initialize
-        // // trajectories here to avoid wasting time in autonomous.
-        // trajectory = TrajectoryGenerator.generateTrajectory(
-        //     new Pose2d(0, 0, Rotation2d.fromDegrees(0)),
-        //     List.of(new Translation2d(1, 1), new Translation2d(2, -1)),
-        //     new Pose2d(3, 0, Rotation2d.fromDegrees(0)),
-        //     new TrajectoryConfig(Units.feetToMeters(3.0), Units.feetToMeters(3.0))
-        //     );
-          
+//     public static void updateAutoField() 
+//     {
+  
         
+//         List<PathPlannerPath> pathPlannerPaths = null;
+//         try 
+//         {
+//         pathPlannerPaths = getPathPlannerPaths(autoName);
+//                 } catch (IOException | ParseException e) {
+//                 e.printStackTrace();
+//                 }
         
-            // Push the trajectory to Field2d.
-            //autofield.getObject("traj").setTrajectory(trajectory);
+//                 if (pathPlannerPaths != null) 
+//                 {
+//                 List<Pose2d> poses = extractPosesFromPaths(pathPlannerPaths);
+//                 autofield.getObject("path").setPoses(poses);
+//                 }    
+        
             
-    }    
-        
+//                 // Create the trajectory to follow in autonomous. It is best to initialize
+//                 // trajectories here to avoid wasting time in autonomous.
+//                 // trajectory = TrajectoryGenerator.generateTrajectory(
+//                 //     new Pose2d(0, 0, Rotation2d.fromDegrees(0)),
+//                 //     List.of(new Translation2d(1, 1), new Translation2d(2, -1)),
+//                 //     new Pose2d(3, 0, Rotation2d.fromDegrees(0)),
+//                 //     new TrajectoryConfig(Units.feetToMeters(3.0), Units.feetToMeters(3.0))
+//                 //     );
+                  
+                     
+                
+//                 //     //Push the trajectory to Field2d.
+//                 //     autofield.getObject("traj").setTrajectory(trajectory);
+                    
+//             }    
+             
+// //             private static List<PathPlannerPath> getPathPlannerPaths(String autoName)
+// //     throws IOException, ParseException {
+// //   try {
+// //     return PathPlannerAuto.getPathGroupFromAutoFile(autoName);
+// // } catch (IOException e) {
+// //     // TODO Auto-generated catch block
+// //     e.printStackTrace();
+// // } catch (org.json.simple.parser.ParseException e) {
+// //     System.out.println("test");
+// //     e.printStackTrace();
+// // }
+// // }
+
+//   private static List<Pose2d> extractPosesFromPaths(List<PathPlannerPath> pathPlannerPaths) {
+//     List<Pose2d> poses = new ArrayList<>();
+//     for (PathPlannerPath path : pathPlannerPaths) {
+//       poses.addAll(
+//           path.getAllPathPoints().stream()
+//               .map(
+//                   point ->
+//                       new Pose2d(point.position.getX(), point.position.getY(), new Rotation2d()))
+//               .collect(Collectors.toList()));
+//     }
+//     return poses;
+//   }
         
     private static void configTeleopField()
     {
         SmartDashboard.putData("FieldT", field);
+    }
+
+    private static void updateTeleopField()
+    {
+        var robotPose = drivetrain.getPose();
+        field.setRobotPose(robotPose);
     }
 
 }
