@@ -83,7 +83,7 @@ public class ElasticLance
         pivot = robotContainer.getPivot();
 
         configTeleopField();
-        configAutoField();
+        //createAutoField();
         
     }
 
@@ -211,7 +211,7 @@ public class ElasticLance
             if ( counter == 1)
             {
                 SmartDashboard.putString("ERROR", "Valid Selection, good job");
-                //configAutoField();
+                //updateAutoField();
                 //leds.setColorSolidCommand(color.kGreen).schedule();
                 return command;
             }
@@ -234,8 +234,6 @@ public class ElasticLance
         if(gyro != null)
         {
             boolean isRed = DriverStation.getAlliance().isPresent() && DriverStation.getAlliance().get() == DriverStation.Alliance.Red;
-
-            
         
             Command leftWall = getLeftWall();
             Command middle = getMiddle();
@@ -274,13 +272,16 @@ public class ElasticLance
         }
     }
 
-    private static void configAutoField()
+    private static void createAutoField()
     {
         //Create and push Field2d to SmartDashboard.
-        SmartDashboard.putData(autofield);
+        SmartDashboard.putData("AutoField", autofield);
         Pose2d pose = drivetrain.getPose();
         autofield.setRobotPose(pose);
-        
+    }
+
+    private static void updateAutoField()
+    {
         autoName = getAutonomousCommand().getName();
         try {
             List<PathPlannerPath> pathPlannerPaths = PathPlannerAuto.getPathGroupFromAutoFile(autoName);
@@ -314,8 +315,6 @@ public class ElasticLance
     }    
         
         
-           
-
     private static void configTeleopField()
     {
         SmartDashboard.putData("FieldT", field);
