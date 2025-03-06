@@ -79,7 +79,7 @@ public class Claw extends SubsystemLance
     public void setGrabSpeed(double speed)
     {
         grabMotor.set(speed);
-        System.out.println("Grab motor amps: " + grabMotor.getCurrentAmps());
+        // System.out.println("Grab motor amps: " + grabMotor.getCurrentAmps());
     }
 
     /**
@@ -125,7 +125,7 @@ public class Claw extends SubsystemLance
     */
     public void placeCoral()
     {
-        setKickSpeed(0.25); //0.1 was too slow
+        setKickSpeed(0.30); //0.1 was too slow
     }
 
     public void stop()

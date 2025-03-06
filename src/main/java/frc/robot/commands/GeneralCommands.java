@@ -15,6 +15,7 @@ import com.pathplanner.lib.path.Waypoint;
 import edu.wpi.first.math.estimator.PoseEstimator;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.AddressableLED.ColorOrder;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.util.Color;
@@ -400,28 +401,34 @@ public final class GeneralCommands
             setLedCommand(ColorPattern.kBlink, Color.kBlue)
 
             .andThen(
-                Commands.either(
+                Commands.parallel(
 
-                    elevator.moveToSetPositionCommand(ElevatorPosition.kL1)
-                        .until(elevator.isAtPosition(ElevatorPosition.kL1))
-                    .andThen(
-                        pivot.moveToSetPositionCommand(PivotPosition.kLowLevelCoralPosition)
-                            .until(pivot.isAtPosition(PivotPosition.kLowLevelCoralPosition))),
+                        elevator.moveToSetPositionCommand(ElevatorPosition.kSafeSwingPosition)
+                            .until(elevator.isAtPosition(ElevatorPosition.kSafeSwingPosition))
+                        .andThen(elevator.moveToSetPositionCommand(ElevatorPosition.kL1)
+                            .until(elevator.isAtPosition(ElevatorPosition.kL1))),
 
+                        Commands.waitSeconds(0.5)
+                        .andThen(
+                            pivot.moveToSetPositionCommand(PivotPosition.kLowLevelCoralPosition)
+                                .until(pivot.isAtPosition(PivotPosition.kLowLevelCoralPosition))
+                                .withTimeout(3.0)),
 
-                    elevator.moveToSetPositionCommand(ElevatorPosition.kSafeSwingPosition)
-                        .until(elevator.isAtPosition(ElevatorPosition.kSafeSwingPosition))
-                    .andThen(
-                        pivot.moveToSetPositionCommand(PivotPosition.kFlippedPosition)
-                            .until(pivot.isAtPosition(PivotPosition.kFlippedPosition)))
-                    .andThen(
-                        elevator.moveToSetPositionCommand(ElevatorPosition.kL1)
-                            .until(elevator.isAtPosition(ElevatorPosition.kL1)))
-                    .andThen(
-                        pivot.moveToSetPositionCommand(PivotPosition.kLowLevelCoralPosition)
-                            .until(pivot.isAtPosition(PivotPosition.kLowLevelCoralPosition))),
+                        claw.grabGamePieceCommand())).withTimeout(3.0)
+                .andThen(claw.stopCommand())
+                    // elevator.moveToSetPositionCommand(ElevatorPosition.kSafeSwingPosition)
+                    //     .until(elevator.isAtPosition(ElevatorPosition.kSafeSwingPosition))
+                    // .andThen(
+                    //     pivot.moveToSetPositionCommand(PivotPosition.kFlippedPosition)
+                    //         .until(pivot.isAtPosition(PivotPosition.kFlippedPosition)))
+                    // .andThen(
+                    //     elevator.moveToSetPositionCommand(ElevatorPosition.kL1)
+                    //         .until(elevator.isAtPosition(ElevatorPosition.kL1)))
+                    // .andThen(
+                    //     pivot.moveToSetPositionCommand(PivotPosition.kLowLevelCoralPosition)
+                    //         .until(pivot.isAtPosition(PivotPosition.kLowLevelCoralPosition))),
 
-                () -> (elevator.isAtPosition(ElevatorPosition.kHoldingPosition).getAsBoolean() && pivot.isAtPosition(PivotPosition.kFlippedPosition).getAsBoolean())))
+                
             .withName("Move Scorer to L1 Command");  
         }
         else
@@ -463,28 +470,22 @@ public final class GeneralCommands
             setLedCommand(ColorPattern.kBlink, Color.kBlue)
 
             .andThen(
-                Commands.either(
+                Commands.parallel(
 
-                    elevator.moveToSetPositionCommand(ElevatorPosition.kL2)
-                        .until(elevator.isAtPosition(ElevatorPosition.kL2))
-                    .andThen(
-                        pivot.moveToSetPositionCommand(PivotPosition.kLowLevelCoralPosition)
-                            .until(pivot.isAtPosition(PivotPosition.kLowLevelCoralPosition))),
+                        elevator.moveToSetPositionCommand(ElevatorPosition.kSafeSwingPosition)
+                            .until(elevator.isAtPosition(ElevatorPosition.kSafeSwingPosition))
+                        .andThen(elevator.moveToSetPositionCommand(ElevatorPosition.kL2)
+                            .until(elevator.isAtPosition(ElevatorPosition.kL2))),
 
+                        Commands.waitSeconds(0.5)
+                        .andThen(
+                            pivot.moveToSetPositionCommand(PivotPosition.kLowLevelCoralPosition)
+                                .until(pivot.isAtPosition(PivotPosition.kLowLevelCoralPosition))
+                                .withTimeout(3.0)),
 
-                    elevator.moveToSetPositionCommand(ElevatorPosition.kSafeSwingPosition)
-                        .until(elevator.isAtPosition(ElevatorPosition.kSafeSwingPosition))
-                    .andThen(
-                        pivot.moveToSetPositionCommand(PivotPosition.kFlippedPosition)
-                            .until(pivot.isAtPosition(PivotPosition.kFlippedPosition)))
-                    .andThen(
-                        elevator.moveToSetPositionCommand(ElevatorPosition.kL2)
-                            .until(elevator.isAtPosition(ElevatorPosition.kL2)))
-                    .andThen(
-                        pivot.moveToSetPositionCommand(PivotPosition.kLowLevelCoralPosition)
-                            .until(pivot.isAtPosition(PivotPosition.kLowLevelCoralPosition))),
-
-                () -> (elevator.isAtPosition(ElevatorPosition.kHoldingPosition).getAsBoolean() && pivot.isAtPosition(PivotPosition.kFlippedPosition).getAsBoolean())))
+                        claw.grabGamePieceCommand()
+                    )).withTimeout(3.0)
+            .andThen(claw.stopCommand())
             .withName("Move Scorer to L2 Command");        
         }
         else
@@ -504,28 +505,22 @@ public final class GeneralCommands
             setLedCommand(ColorPattern.kBlink, Color.kBlue)
 
             .andThen(
-                Commands.either(
+                Commands.parallel(
 
-                    elevator.moveToSetPositionCommand(ElevatorPosition.kL3)
-                        .until(elevator.isAtPosition(ElevatorPosition.kL3))
-                    .andThen(
-                        pivot.moveToSetPositionCommand(PivotPosition.kLowLevelCoralPosition)
-                            .until(pivot.isAtPosition(PivotPosition.kLowLevelCoralPosition))),
+                        elevator.moveToSetPositionCommand(ElevatorPosition.kSafeSwingPosition)
+                            .until(elevator.isAtPosition(ElevatorPosition.kSafeSwingPosition))
+                        .andThen(elevator.moveToSetPositionCommand(ElevatorPosition.kL3)
+                            .until(elevator.isAtPosition(ElevatorPosition.kL3))),
 
+                        Commands.waitSeconds(0.5)
+                        .andThen(
+                            pivot.moveToSetPositionCommand(PivotPosition.kLowLevelCoralPosition)
+                                .until(pivot.isAtPosition(PivotPosition.kLowLevelCoralPosition))
+                                .withTimeout(3.0)),
 
-                    elevator.moveToSetPositionCommand(ElevatorPosition.kSafeSwingPosition)
-                        .until(elevator.isAtPosition(ElevatorPosition.kSafeSwingPosition))
-                    .andThen(
-                        pivot.moveToSetPositionCommand(PivotPosition.kFlippedPosition)
-                            .until(pivot.isAtPosition(PivotPosition.kFlippedPosition)))
-                    .andThen(
-                        elevator.moveToSetPositionCommand(ElevatorPosition.kL3)
-                            .until(elevator.isAtPosition(ElevatorPosition.kL3)))
-                    .andThen(
-                        pivot.moveToSetPositionCommand(PivotPosition.kLowLevelCoralPosition)
-                            .until(pivot.isAtPosition(PivotPosition.kLowLevelCoralPosition))),
-
-                () -> (elevator.isAtPosition(ElevatorPosition.kHoldingPosition).getAsBoolean() && pivot.isAtPosition(PivotPosition.kFlippedPosition).getAsBoolean())))
+                        claw.grabGamePieceCommand()
+                    )).withTimeout(3.0)
+            .andThen(claw.stopCommand())
             .withName("Move Scorer to L3 Command");  
         }
         else
@@ -546,29 +541,21 @@ public final class GeneralCommands
             setLedCommand(ColorPattern.kBlink, Color.kBlue)
 
             .andThen(
-                Commands.either(
+                Commands.parallel(
 
-                    elevator.moveToSetPositionCommand(ElevatorPosition.kL4)
-                        .until(elevator.isAtPosition(ElevatorPosition.kL4))
-                    .andThen(
-                        pivot.moveToSetPositionCommand(PivotPosition.kL4)
-                            .until(pivot.isAtPosition(PivotPosition.kL4))),
-
-
-                    elevator.moveToSetPositionCommand(ElevatorPosition.kSafeSwingPosition)
-                        .until(elevator.isAtPosition(ElevatorPosition.kSafeSwingPosition))
-                    .andThen(
-                        pivot.moveToSetPositionCommand(PivotPosition.kFlippedPosition)
-                            .until(pivot.isAtPosition(PivotPosition.kFlippedPosition)))
-                    .andThen(
                         elevator.moveToSetPositionCommand(ElevatorPosition.kL4)
-                            .until(elevator.isAtPosition(ElevatorPosition.kL4)))
-                    .andThen(
-                        pivot.moveToSetPositionCommand(PivotPosition.kL4)
-                            .until(pivot.isAtPosition(PivotPosition.kL4))),
+                            .until(elevator.isAtPosition(ElevatorPosition.kL4)),
 
-                () -> (elevator.isAtPosition(ElevatorPosition.kHoldingPosition).getAsBoolean() && pivot.isAtPosition(PivotPosition.kFlippedPosition).getAsBoolean())))
-            .withName("Move Scorer to L1 Command");  
+                        Commands.waitSeconds(0.5)
+                        .andThen(
+                            pivot.moveToSetPositionCommand(PivotPosition.kL4)
+                                .until(pivot.isAtPosition(PivotPosition.kL4))
+                                .withTimeout(3.0)),
+
+                        claw.grabGamePieceCommand()
+                    )).withTimeout(3.0)
+            .andThen(claw.stopCommand())
+            .withName("Move Scorer to L4 Command");  
         }
         else
         {
@@ -717,8 +704,9 @@ public final class GeneralCommands
         if(claw != null)
         {
             return 
-            claw.placeCoralCommand().withTimeout(0.5)
-            .andThen(claw.stopCommand()).withName("Score Coral Only Command");
+            Commands.parallel(
+                claw.placeCoralCommand().withTimeout(0.5).andThen(claw.stopCommand()),
+                pivot.moveToSetPositionCommand(PivotPosition.kL4Place).until(pivot.isAtPosition(PivotPosition.kL4Place)).withTimeout(1.0));
         }
         else
         {
@@ -814,7 +802,7 @@ public final class GeneralCommands
      */
     public static Command driveToPositionCommand(Pose2d targetPose, Pose2d currentPose)
     {
-
+        PathConstraints constraints = new PathConstraints(1.0, 1.0, Units.degreesToRadians(360), Units.degreesToRadians(360));
         List<Waypoint> waypoints = PathPlannerPath.waypointsFromPoses(
                                     new Pose2d(currentPose.getTranslation(), currentPose.getRotation()),
                                     new Pose2d(targetPose.getTranslation(), targetPose.getRotation()));          
@@ -822,7 +810,7 @@ public final class GeneralCommands
 
         PathPlannerPath path = new PathPlannerPath(
                                     waypoints,
-                                    PathConstraints.unlimitedConstraints(12.0),
+                                    constraints,
                                     null,
                                     new GoalEndState(0.0, targetPose.getRotation()));
         path.preventFlipping = true;

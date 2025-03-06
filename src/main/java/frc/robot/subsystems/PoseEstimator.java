@@ -72,7 +72,7 @@ public class PoseEstimator extends SubsystemLance
     private Pose2d estimatedPose = new Pose2d();
     private StructPublisher<Pose2d> poseEstimatorEntry;
 
-    private boolean isRightBranch;
+    private boolean isRightBranch = false;
     private int primaryReefTag = 0;
 
     // private final double[][] blueLeftBranchLocationArray = 
@@ -169,7 +169,7 @@ public class PoseEstimator extends SubsystemLance
         {
             poseEstimator = new SwerveDrivePoseEstimator(
                 drivetrain.getKinematics(), 
-                gyro.getRotation2d().rotateBy(new Rotation2d(180.0)), 
+                gyro.getRotation2d(), 
                 drivetrain.getState().ModulePositions,
                 drivetrain.getState().Pose,
                 stateStdDevs,
@@ -202,9 +202,9 @@ public class PoseEstimator extends SubsystemLance
         stateStdDevs.set(1, 0, 0.1); // y in meters
         stateStdDevs.set(2, 0, 0.05); // heading in radians
 
-        visionStdDevs.set(0, 0, 0.2); // x in meters
-        visionStdDevs.set(1, 0, 0.2); // y in meters
-        visionStdDevs.set(2, 0, 0.25); // heading in radians
+        visionStdDevs.set(0, 0, 0.2); // x in meters // 0.2
+        visionStdDevs.set(1, 0, 0.2); // y in meters // 0.2
+        visionStdDevs.set(2, 0, 0.25); // heading in radians // 0.25
     }
 
     private void fillMaps()
@@ -431,7 +431,7 @@ public class PoseEstimator extends SubsystemLance
     {
         if (drivetrain != null && gyro != null && poseEstimator != null) 
         {
-            gyroRotation = gyro.getRotation2d().rotateBy(new Rotation2d(180.0));
+            gyroRotation = gyro.getRotation2d();
             swerveModulePositions = drivetrain.getState().ModulePositions;
 
             // Updates odometry
@@ -444,7 +444,8 @@ public class PoseEstimator extends SubsystemLance
             {
                 if(gyro != null)
                 {
-                    LimelightHelpers.SetRobotOrientation(camera.getCameraName(), gyro.getYaw().getValueAsDouble(), 0.0, 0.0, 0.0, 0.0, 0.0);
+                    // System.out.println("Yaw Log: " + drivetrain.getState().Pose.getRotation().getDegrees());
+                    LimelightHelpers.SetRobotOrientation(camera.getCameraName(), drivetrain.getState().Pose.getRotation().getDegrees(), 0.0, 0.0, 0.0, 0.0, 0.0);
                 }
 
                 if(camera.getTagCount() > 0)
@@ -460,31 +461,31 @@ public class PoseEstimator extends SubsystemLance
 
                     if(visionPose == null)
                     {
-                        System.out.println("Vision Pose equal null");
+                        // System.out.println("Vision Pose equal null");
                         rejectUpdate = true;
                     }
 
                     if (!reefTag) 
                     {
-                        System.out.println("Not Reef tag");
+                        // System.out.println("Not Reef tag");
                         rejectUpdate = true;
                     }
 
                     if (distToTag > 1)
                     {
-                        System.out.println("Distance greater than 2.5");
+                        // System.out.println("Distance greater than 2.5");
                         rejectUpdate = true;
                     }
 
                     if(robotVelo > 2.5)
                     {
-                        System.out.println("robot velo greater than 2.5");
+                        // System.out.println("robot velo greater than 2.5");
                         rejectUpdate = true;
                     }
 
                     if(robotRotation > 720.0)
                     {
-                        System.out.println("robot rotation greater than 720");
+                        // System.out.println("robot rotation greater than 720");
                         rejectUpdate = true;
                     }
 
@@ -492,7 +493,7 @@ public class PoseEstimator extends SubsystemLance
                     // measurement
                     if (!rejectUpdate && poseEstimator != null)
                     {
-                        System.out.println("Adding vision measurement for tag: " + tagID);
+                        // System.out.println("Adding vision measurement for tag: " + tagID);
                         primaryReefTag = tagID;
                         poseEstimator.addVisionMeasurement(
                                 visionPose,

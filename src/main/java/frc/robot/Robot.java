@@ -160,7 +160,7 @@ public class Robot extends TimedRobot
         Command path = AutoBuilder.buildAuto("Testing");
         try {
             PathPlannerPath ppPath = PathPlannerPath.fromPathFile("Testing");
-            Pose2d initialPose = ppPath.getStartingHolonomicPose().orElse(new Pose2d()).rotateBy(new Rotation2d(180.0));
+            Pose2d initialPose = ppPath.getStartingHolonomicPose().orElse(new Pose2d());
             robotContainer.getPoseEstimator().resetPose(initialPose);
         }
         catch (Exception e)

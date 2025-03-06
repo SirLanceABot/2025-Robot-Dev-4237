@@ -529,7 +529,6 @@ public class Drivetrain extends TunerSwerveDrivetrain implements Subsystem
         //logs position data
         estimatedPose = getState().Pose;
         drivetrainEntry.set(estimatedPose);
-        
     }
 
     private void startSimThread() 

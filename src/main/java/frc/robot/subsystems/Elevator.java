@@ -132,7 +132,7 @@ public class Elevator extends SubsystemLance
 
         motor.setupPIDController(0, 0.05, kI, kD); // TODO tune this
         motor.setupPIDController(1, 0.06, kI, kD); // was 0.07
-        motor.setupClosedLoopRampRate(0.25);
+        motor.setupClosedLoopRampRate(0.35);
 
         // Configure PID Controller
     }
@@ -258,9 +258,11 @@ public class Elevator extends SubsystemLance
     @Override
     public void periodic()
     {
+        // System.out.println(motor.isReverseLimitSwitchPressed());
         if(motor.isReverseLimitSwitchPressed() && getPosition() != 0.0)
         {
             resetPosition();
+            // System.out.println("Reset to 0: " + getPosition());
         }
         // System.out.println("Position: " + getPosition());
         // This method will be called once per scheduler run

@@ -1,12 +1,15 @@
 package frc.robot.commands;
 
 import java.lang.invoke.MethodHandles;
+import java.util.function.Supplier;
 
 import javax.lang.model.util.ElementScanner14;
 
 import com.ctre.phoenix6.hardware.Pigeon2;
 
 import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Transform2d;
+import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -83,6 +86,7 @@ public final class ScoringCommands
         intakeProximity = robotContainer.getIntakeProximity();
         elevatorProximity = robotContainer.getElevatorProximity();
         clawProximity = robotContainer.getClawProximity();
+        poseEstimator = robotContainer.getPoseEstimator();
 
         System.out.println("  Constructor Finished: " + fullClassName);
     }
@@ -323,27 +327,29 @@ public final class ScoringCommands
         }
     }
 
-    public static Command scoreCoralAutonomouslyReallyCoolAndAwesomeCommand(boolean isRight, TargetPosition targetPosition)
+    public static Supplier<Command> scoreCoralAutonomouslyReallyCoolAndAwesomeCommand(boolean isRight, TargetPosition targetPosition)
     {
         // TODO: YIPPEE
         if(drivetrain != null && elevator != null && pivot != null && claw != null)
         {
             Pose2d currentPose = poseEstimator.getEstimatedPose();
             Pose2d targetPose = poseEstimator.closestBranchLocation(poseEstimator.getPrimaryTagID(), isRight);
+            Pose2d testPose = new Pose2d(currentPose.getX() + 1.0, currentPose.getY(), currentPose.getRotation());
+            System.out.println("Current Pose = " + currentPose.getX() + "  " + currentPose.getY());
 
-            return
+            return () ->
             GeneralCommands.setLedCommand(ColorPattern.kBlink, Color.kBlue)
+            // .andThen(
+            //     GeneralCommands.chooseLevelCommand(targetPosition))
             .andThen(
-                GeneralCommands.chooseLevelCommand(targetPosition))
-            .andThen(
-                GeneralCommands.driveToPositionCommand(targetPose, currentPose))
-            .andThen(
-                GeneralCommands.scoreCoralOnlyCommand())
+                GeneralCommands.driveToPositionCommand(testPose, currentPose))
+            // .andThen(
+            //     GeneralCommands.scoreCoralOnlyCommand())
             .withName("Autonomous Score Command");
         }
         else
         {
-            return Commands.none();
+            return () -> Commands.none();
         }
     }
 

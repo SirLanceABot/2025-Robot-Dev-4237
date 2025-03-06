@@ -2,6 +2,8 @@ package frc.robot.sensors;
 
 import java.lang.invoke.MethodHandles;
 
+import com.ctre.phoenix6.Utils;
+
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.networktables.DoubleArrayEntry;
 import edu.wpi.first.networktables.DoubleEntry;
@@ -87,7 +89,7 @@ public class Camera extends SensorLance
     {
         if(poseEstimate != null)
         {
-            return poseEstimate.timestampSeconds;
+            return Utils.fpgaToCurrentTime(poseEstimate.timestampSeconds);
         }
         else
         {
@@ -161,7 +163,7 @@ public class Camera extends SensorLance
         {
             poseArray[0] = poseEstimate.pose.getX();
             poseArray[1] = poseEstimate.pose.getY();
-            poseArray[2] = poseEstimate.pose.getRotation().getDegrees();
+            poseArray[2] = poseEstimate.pose.getRotation().getRadians();
 
             poseEntry.set(poseArray);
         }

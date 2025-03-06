@@ -174,8 +174,8 @@ public final class IntakingCommands
 
             .andThen(
                 Commands.parallel(
-                    elevator.moveToSetPositionCommand(ElevatorPosition.kGrabCoralPosition)
-                        .until(elevator.isAtPosition(ElevatorPosition.kGrabCoralPosition)),
+                        Commands.waitSeconds(0.5).andThen(elevator.moveToSetPositionCommand(ElevatorPosition.kGrabCoralPosition)
+                            .until(elevator.isAtPosition(ElevatorPosition.kGrabCoralPosition))),
                         
                     claw.grabGamePieceCommand().until(clawProximity.isDetectedSupplier()).withTimeout(2.0)))
             // .andThen(Commands.waitSeconds(0.25))

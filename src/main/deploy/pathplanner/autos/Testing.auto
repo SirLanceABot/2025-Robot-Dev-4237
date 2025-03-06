@@ -39,6 +39,18 @@
           "data": {
             "name": "Score Coral Only"
           }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 0.5
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "S3 Left to Right Station"
+          }
         }
       ]
     }
