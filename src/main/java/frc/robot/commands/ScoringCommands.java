@@ -1,6 +1,7 @@
 package frc.robot.commands;
 
 import java.lang.invoke.MethodHandles;
+import java.util.Set;
 import java.util.function.Supplier;
 
 import javax.lang.model.util.ElementScanner14;
@@ -14,6 +15,7 @@ import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
+import edu.wpi.first.wpilibj2.command.DeferredCommand;
 import frc.robot.Constants;
 import frc.robot.RobotContainer;
 import frc.robot.commands.CommandsManager.TargetPosition;
@@ -327,29 +329,29 @@ public final class ScoringCommands
         }
     }
 
-    public static Supplier<Command> scoreCoralAutonomouslyReallyCoolAndAwesomeCommand(boolean isRight, TargetPosition targetPosition)
+    public static Command scoreCoralAutonomouslyReallyCoolAndAwesomeCommand(Supplier<Pose2d> currentPose, Supplier<Pose2d> targetPose)
     {
         // TODO: YIPPEE
         if(drivetrain != null && elevator != null && pivot != null && claw != null)
         {
-            Pose2d currentPose = poseEstimator.getEstimatedPose();
-            Pose2d targetPose = poseEstimator.closestBranchLocation(poseEstimator.getPrimaryTagID(), isRight);
-            Pose2d testPose = new Pose2d(currentPose.getX() + 1.0, currentPose.getY(), currentPose.getRotation());
-            System.out.println("Current Pose = " + currentPose.getX() + "  " + currentPose.getY());
+            // Pose2d targetPose = poseEstimator.closestBranchLocation(poseEstimator.getPrimaryTagID(), isRight);
+            // Pose2d testPose = new Pose2d(currentPose.getX() + 1.0, currentPose.getY(), currentPose.getRotation());
+            // System.out.println("Current Pose = " + currentPose.getX() + "  " + currentPose.getY());
 
-            return () ->
-            GeneralCommands.setLedCommand(ColorPattern.kBlink, Color.kBlue)
+            return
+            GeneralCommands.moveScorerToL4Command().andThen(
+            // new DeferredCommand(() -> Commands.print("Current Pose = " + currentPose.get().getX() + "  " + currentPose.get().getY()), Set.of(drivetrain))
+            new DeferredCommand(() -> GeneralCommands.driveToPositionCommand(targetPose.get(), currentPose.get()), Set.of(drivetrain)))
+            // GeneralCommands.setLedCommand(ColorPattern.kBlink, Color.kBlue)
             // .andThen(
-            //     GeneralCommands.chooseLevelCommand(targetPosition))
+                // GeneralCommands.driveToPositionCommand(testPose, currentPose))
             .andThen(
-                GeneralCommands.driveToPositionCommand(testPose, currentPose))
-            // .andThen(
-            //     GeneralCommands.scoreCoralOnlyCommand())
+                GeneralCommands.scoreCoralOnlyCommand())
             .withName("Autonomous Score Command");
         }
         else
         {
-            return () -> Commands.none();
+            return Commands.none();
         }
     }
 

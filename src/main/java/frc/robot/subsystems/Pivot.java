@@ -46,7 +46,7 @@ public class Pivot extends SubsystemLance
         kHoldAlgaePosition(16.5),
         kLowLevelCoralPosition(25.0),
         kL4(31.0),
-        kL4Place(37.0),
+        kL4Place(40.0),
         kSafeDropPosition(50.0), //TODO needs tuned
         kReefAlgaePosition(54.5),
         kScoreProcessorPosition(75.5),

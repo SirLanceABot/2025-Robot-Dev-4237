@@ -132,7 +132,7 @@ public class Robot extends TimedRobot
             {
                 ElasticLance.resetRobot(robotContainer.getDrivetrain().getPigeon2());
                 autonomousCommand = currentCommand;
-                ElasticLance.updateAutoField();
+                // ElasticLance.updateAutoField();
             }
             previousCommand = currentCommand;
             

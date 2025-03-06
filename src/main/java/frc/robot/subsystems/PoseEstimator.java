@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.function.BooleanSupplier;
+import java.util.function.Supplier;
 
 import com.ctre.phoenix6.hardware.Pigeon2;
 
@@ -217,7 +218,7 @@ public class PoseEstimator extends SubsystemLance
         leftBranchMap.put(10, new Pose2d( new Translation2d(12.227306 - 0.578104, 4.0259 - 0.164338), new Rotation2d(Math.toRadians(270)))); //S1
         leftBranchMap.put(11, new Pose2d( new Translation2d(12.643358 - 0.153035, 3.306318 - 0.53581757), new Rotation2d(Math.toRadians(-30)))); //S6
         //Blue Left
-        leftBranchMap.put(17, new Pose2d( new Translation2d(4.073906 - 0.284861, 3.306318 - 0.30748824), new Rotation2d(Math.toRadians(-30)))); //S3
+        leftBranchMap.put(17, new Pose2d( new Translation2d(3.70, 2.78), new Rotation2d(Math.toRadians(-30)))); //S3
         leftBranchMap.put(18, new Pose2d( new Translation2d(3.6576 - 0.578104, 4.0259 + 0.164338), new Rotation2d(Math.toRadians(270)))); //S4
         leftBranchMap.put(19, new Pose2d( new Translation2d(4.073906 - 0.153035, 4.745482 + 0.53581757), new Rotation2d(Math.toRadians(210)))); //S5
         leftBranchMap.put(20, new Pose2d( new Translation2d(4.90474 + 0.153035, 4.745482 + 0.53581757), new Rotation2d(Math.toRadians(150)))); //S6
@@ -233,7 +234,7 @@ public class PoseEstimator extends SubsystemLance
         rightBranchMap.put(10, new Pose2d( new Translation2d(12.227306 - 0.578104, 4.0259 + 0.164338), new Rotation2d(Math.toRadians(270)))); //S1
         rightBranchMap.put(11, new Pose2d( new Translation2d(12.643358 - 0.284861, 3.306318 - 0.30748824), new Rotation2d(Math.toRadians(-30)))); //S6
         //Blue Right
-        rightBranchMap.put(17, new Pose2d( new Translation2d(4.073906 - 0.153035, 3.306318 - 0.53581757), new Rotation2d(Math.toRadians(-30)))); //S3
+        rightBranchMap.put(17, new Pose2d( new Translation2d(3.96, 2.56), new Rotation2d(Math.toRadians(-30)))); //S3
         rightBranchMap.put(18, new Pose2d( new Translation2d(3.6576 - 0.578104, 4.0259 - 0.164338), new Rotation2d(Math.toRadians(270)))); //S4
         rightBranchMap.put(19, new Pose2d( new Translation2d(4.073906 - 0.284861, 4.745482 + 0.30748824), new Rotation2d(Math.toRadians(210)))); //S5
         rightBranchMap.put(20, new Pose2d( new Translation2d(4.90474 + 0.284861, 4.745482 + 0.30748824), new Rotation2d(Math.toRadians(150)))); //S6
@@ -255,6 +256,18 @@ public class PoseEstimator extends SubsystemLance
         else
         {
             return new Pose2d();
+        }
+    }
+
+    public Supplier<Pose2d> getEstimatedPoseSupplier()
+    {
+        if(poseEstimator != null)
+        {
+            return () -> estimatedPose;
+        }
+        else
+        {
+            return () -> new Pose2d();
         }
     }
 
@@ -369,15 +382,15 @@ public class PoseEstimator extends SubsystemLance
     //     return closestBranch;
     // }
 
-    public Pose2d closestBranchLocation(int aprilTagID, boolean isRight)
+    public Pose2d closestBranchLocation(Supplier<Integer> aprilTagID, boolean isRight)
     {
         if(isRight)
         {
-            return rightBranchMap.get(aprilTagID);
+            return rightBranchMap.getOrDefault(aprilTagID.get(), new Pose2d(2.0, 2.0, new Rotation2d(0.0)));
         }
         else
         {
-            return leftBranchMap.get(aprilTagID);
+            return leftBranchMap.getOrDefault(aprilTagID.get(), new Pose2d(2.0, 2.0, new Rotation2d(0.0)));
         }
     }
 
@@ -489,20 +502,16 @@ public class PoseEstimator extends SubsystemLance
                         rejectUpdate = true;
                     }
 
+                    primaryReefTag = tagID; // TODO: only set if a tag is in frame
                     // if any of the conditions above are true, do NOT add the mt2 pose as a vision
                     // measurement
                     if (!rejectUpdate && poseEstimator != null)
                     {
                         // System.out.println("Adding vision measurement for tag: " + tagID);
-                        primaryReefTag = tagID;
                         poseEstimator.addVisionMeasurement(
                                 visionPose,
                                 camera.getTimestamp(),
                                 visionStdDevs);
-                    }
-                    else
-                    {
-                        primaryReefTag = 0;
                     }
 
                     if (!rejectUpdate) // COMMENT OUT TO STOP DRIVETRAIN POSE FROM UPDATING

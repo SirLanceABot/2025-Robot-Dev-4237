@@ -82,8 +82,8 @@ public class ElasticLance
         drivetrain = robotContainer.getDrivetrain();
         pivot = robotContainer.getPivot();
 
-        configTeleopField();
-        createAutoField();
+        //configTeleopField();
+        //createAutoField();
         
     }
 
@@ -100,10 +100,10 @@ public class ElasticLance
         SmartDashboard.putNumber("CPU Temperature", RobotController.getCPUTemp());
         SmartDashboard.putNumber("Elevator Position", elevator.getPosition());
         SmartDashboard.putNumber("Pivot Position", pivot.getPosition());
-        updateTeleopField();
-        updateAutoField();
+        // updateTeleopField();
+        // updateAutoField();
 
-        updateAllianceColorBox();
+        // updateAllianceColorBox();
     }
 
     public static void updateAllianceColorBox()
@@ -274,63 +274,63 @@ public class ElasticLance
         }
     }
 
-    private static void createAutoField()
-    {
-        //Create and push Field2d to SmartDashboard.
-        SmartDashboard.putData("AutoField", autofield);
-        Pose2d pose = drivetrain.getPose();
-        autofield.setRobotPose(pose);
-    }
+    // private static void createAutoField()
+    // {
+    //     //Create and push Field2d to SmartDashboard.
+    //     SmartDashboard.putData("AutoField", autofield);
+    //     Pose2d pose = drivetrain.getPose();
+    //     autofield.setRobotPose(pose);
+    // }
 
-    public static void updateAutoField() 
-    {
-        List<PathPlannerPath> pathPlannerPaths = null;
-        try 
-        {
-            pathPlannerPaths = getPathPlannerPaths(autoName);
-                            } catch (IOException | ParseException | org.json.simple.parser.ParseException e) 
-                            {
-                                e.printStackTrace();
-                            }
+    // public static void updateAutoField() 
+    // {
+    //     List<PathPlannerPath> pathPlannerPaths = null;
+    //     try 
+    //     {
+    //         pathPlannerPaths = getPathPlannerPaths(autoName);
+    //                         } catch (IOException | ParseException | org.json.simple.parser.ParseException e) 
+    //                         {
+    //                             e.printStackTrace();
+    //                         }
                     
-                            if (pathPlannerPaths != null) 
-                            {
-                                List<Pose2d> poses = extractPosesFromPaths(pathPlannerPaths);
-                                autofield.getObject("path").setPoses(poses);
-                            }    
+    //                         if (pathPlannerPaths != null) 
+    //                         {
+    //                             List<Pose2d> poses = extractPosesFromPaths(pathPlannerPaths);
+    //                             autofield.getObject("path").setPoses(poses);
+    //                         }    
                     
-                        }                        
+    //                     }                        
                             
                          
-                        private static List<PathPlannerPath>getPathPlannerPaths(String autoName) throws IOException, ParseException, org.json.simple.parser.ParseException
-                        {
-                            return PathPlannerAuto.getPathGroupFromAutoFile(autoName);
-                        } 
+    //                     private static List<PathPlannerPath>getPathPlannerPaths(String autoName) throws IOException, ParseException, org.json.simple.parser.ParseException
+    //                     {
+    //                         return PathPlannerAuto.getPathGroupFromAutoFile(autoName);
+    //                     } 
     
     
 
-    private static List<Pose2d>extractPosesFromPaths(List<PathPlannerPath> pathPlannerPaths)
-    {
-    List<Pose2d> poses = new ArrayList<>();
-    for (PathPlannerPath path : pathPlannerPaths) 
-    {
-        poses.addAll(path.getAllPathPoints().stream()
-                    .map(
-                        point -> new Pose2d(point.position.getX(), point.position.getY(), new Rotation2d()))
-                    .collect(Collectors.toList()));
-    }
-    return poses;
-    }
+    // private static List<Pose2d>extractPosesFromPaths(List<PathPlannerPath> pathPlannerPaths)
+    // {
+    // List<Pose2d> poses = new ArrayList<>();
+    // for (PathPlannerPath path : pathPlannerPaths) 
+    // {
+    //     poses.addAll(path.getAllPathPoints().stream()
+    //                 .map(
+    //                     point -> new Pose2d(point.position.getX(), point.position.getY(), new Rotation2d()))
+    //                 .collect(Collectors.toList()));
+    // }
+    // return poses;
+    // }
         
-    private static void configTeleopField()
-    {
-        SmartDashboard.putData("FieldT", field);
-    }
+    // private static void configTeleopField()
+    // {
+    //     SmartDashboard.putData("FieldT", field);
+    // }
 
-    private static void updateTeleopField()
-    {
-        var robotPose = drivetrain.getPose();
-        field.setRobotPose(robotPose);
-    }
+    // private static void updateTeleopField()
+    // {
+    //     var robotPose = drivetrain.getPose();
+    //     field.setRobotPose(robotPose);
+    // }
 
 }

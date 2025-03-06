@@ -112,8 +112,8 @@ public final class OperatorBindings {
         Trigger aButton = controller.a();
 
         //Create a path on the fly and score on L1 level, (stops the path if it takes over 10 seconds - probably not needed)
-        aButton.onTrue(Commands.defer(
-            ScoringCommands.scoreCoralAutonomouslyReallyCoolAndAwesomeCommand(poseEstimator.getIsRightBranch(), TargetPosition.kL1), Set.of(drivetrain)));
+        aButton.onTrue(
+            ScoringCommands.scoreCoralAutonomouslyReallyCoolAndAwesomeCommand((() -> drivetrain.getState().Pose), (() -> poseEstimator.closestBranchLocation(() -> poseEstimator.getPrimaryTagID(), true))));
         // aButton.onTrue(GeneralCommands.moveScorerToL1Command());
     }
 
@@ -125,7 +125,9 @@ public final class OperatorBindings {
         //Create a path on the fly and score on L2 level, (stops the path if it takes over 10 seconds - probably not needed)
         // bButton.onTrue(Commands.runOnce(() -> 
         //     ScoringCommands.scoreCoralAutonomouslyReallyCoolAndAwesomeCommand(robotContainer.getPoseEstimator().getIsRightBranch(), TargetPosition.kL2)).withTimeout(10.0));
-        bButton.onTrue(GeneralCommands.moveScorerToL2Commmand());
+        bButton.onTrue(
+            ScoringCommands.scoreCoralAutonomouslyReallyCoolAndAwesomeCommand((() -> drivetrain.getState().Pose), (() -> poseEstimator.closestBranchLocation(() -> poseEstimator.getPrimaryTagID(), false))));
+        // bButton.onTrue(GeneralCommands.moveScorerToL2Commmand());
     }
 
 
