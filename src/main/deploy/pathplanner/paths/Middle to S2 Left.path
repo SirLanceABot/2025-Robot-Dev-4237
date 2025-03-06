@@ -3,43 +3,57 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 3.45,
-        "y": 5.102
+        "x": 7.176,
+        "y": 4.026
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.91525,
-        "y": 5.653250000000001
+        "x": 7.01422697368421,
+        "y": 3.418832236842105
       },
       "isLocked": false,
-      "linkedName": "S5 Right"
+      "linkedName": "Middle"
     },
     {
       "anchor": {
-        "x": 1.74525,
-        "y": 7.262
+        "x": 5.528,
+        "y": 2.888
       },
       "prevControl": {
-        "x": 2.1645,
-        "y": 6.68675
+        "x": 6.58125,
+        "y": 3.0820723684210525
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "Left Station"
+      "linkedName": "S2 Left"
     }
   ],
   "rotationTargets": [],
-  "constraintZones": [],
+  "constraintZones": [
+    {
+      "name": "Slow Zone",
+      "minWaypointRelativePos": 0.75,
+      "maxWaypointRelativePos": 1.0,
+      "constraints": {
+        "maxVelocity": 1.75,
+        "maxAcceleration": 3.0,
+        "maxAngularVelocity": 540.0,
+        "maxAngularAcceleration": 720.0,
+        "nominalVoltage": 12.0,
+        "unlimited": false
+      }
+    }
+  ],
   "pointTowardsZones": [],
   "eventMarkers": [
     {
-      "name": "Intake Coral From Station",
-      "waypointRelativePos": 0.15,
+      "name": "Move Scorer",
+      "waypointRelativePos": 0.05,
       "endWaypointRelativePos": null,
       "command": {
         "type": "named",
         "data": {
-          "name": "Intake Coral From Station"
+          "name": "Move Scorer to L4"
         }
       }
     }
@@ -54,13 +68,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 35.298
+    "rotation": 29.999999999999996
   },
   "reversed": false,
-  "folder": "Reef Starts",
+  "folder": "Middle Starts",
   "idealStartingState": {
-    "velocity": 0,
-    "rotation": -148.50839131011392
+    "velocity": 0.0,
+    "rotation": 0.0
   },
   "useDefaultConstraints": true
 }

@@ -97,6 +97,8 @@ public final class IntakingCommands
                 intake.pickupCoralCommand()
                     .until(intakeProximity.isDetectedSupplier())
                     .withTimeout(3.0)
+
+                    .andThen(Commands.waitSeconds(0.5))
                     
             .andThen(intake.stopCommand())
 
@@ -238,7 +240,9 @@ public final class IntakingCommands
 
             .andThen(
                 intake.pickupAlgaeCommand()
-                    .until(intake.isAlgaeIn()))
+                    .until(intakeProximity.isDetectedSupplier()))
+
+            .andThen(Commands.waitSeconds(0.5))
 
             .andThen(Commands.parallel(
                 intake.pulseCommand(),

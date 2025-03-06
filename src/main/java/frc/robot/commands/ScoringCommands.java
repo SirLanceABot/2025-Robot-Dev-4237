@@ -337,17 +337,64 @@ public final class ScoringCommands
             // Pose2d targetPose = poseEstimator.closestBranchLocation(poseEstimator.getPrimaryTagID(), isRight);
             // Pose2d testPose = new Pose2d(currentPose.getX() + 1.0, currentPose.getY(), currentPose.getRotation());
             // System.out.println("Current Pose = " + currentPose.getX() + "  " + currentPose.getY());
-
-            return
-            GeneralCommands.moveScorerToL4Command().andThen(
+            // if(targetPose.get().getX() != 2.0 && targetPose.get().getY() != 2.0)
+            // {
+                return
+                Commands.parallel(
+                    GeneralCommands.moveScorerToL4Command(),
+                    
+                    new DeferredCommand(() -> GeneralCommands.driveToPositionCommand(targetPose.get(), currentPose.get()), Set.of(drivetrain))
+                    )
+                // .andThen(
             // new DeferredCommand(() -> Commands.print("Current Pose = " + currentPose.get().getX() + "  " + currentPose.get().getY()), Set.of(drivetrain))
-            new DeferredCommand(() -> GeneralCommands.driveToPositionCommand(targetPose.get(), currentPose.get()), Set.of(drivetrain)))
+                // new DeferredCommand(() -> GeneralCommands.driveToPositionCommand(targetPose.get(), currentPose.get()), Set.of(drivetrain)))
             // GeneralCommands.setLedCommand(ColorPattern.kBlink, Color.kBlue)
             // .andThen(
                 // GeneralCommands.driveToPositionCommand(testPose, currentPose))
-            .andThen(
-                GeneralCommands.scoreCoralOnlyCommand())
-            .withName("Autonomous Score Command");
+                .andThen(
+                    GeneralCommands.scoreCoralOnlyCommand())
+                .withName("Autonomous Score Command");
+            // }
+            // else
+            // {
+            //     return Commands.none().andThen(Commands.print("Did not follow path"));
+            // }
+        }
+        else
+        {
+            return Commands.none();
+        }
+    }
+
+    public static Command autoAlignL3Command(Supplier<Pose2d> currentPose, Supplier<Pose2d> targetPose)
+    {
+        if(drivetrain != null && elevator != null && pivot != null && claw != null)
+        {
+            // Pose2d targetPose = poseEstimator.closestBranchLocation(poseEstimator.getPrimaryTagID(), isRight);
+            // Pose2d testPose = new Pose2d(currentPose.getX() + 1.0, currentPose.getY(), currentPose.getRotation());
+            // System.out.println("Current Pose = " + currentPose.getX() + "  " + currentPose.getY());
+            // if(targetPose.get().getX() != 2.0 && targetPose.get().getY() != 2.0)
+            // {
+                return
+                Commands.parallel(
+                    GeneralCommands.moveScorerToL3Command(),
+                    
+                    new DeferredCommand(() -> GeneralCommands.driveToPositionCommand(targetPose.get(), currentPose.get()), Set.of(drivetrain))
+                    )
+                // .andThen(
+            // new DeferredCommand(() -> Commands.print("Current Pose = " + currentPose.get().getX() + "  " + currentPose.get().getY()), Set.of(drivetrain))
+                // new DeferredCommand(() -> GeneralCommands.driveToPositionCommand(targetPose.get(), currentPose.get()), Set.of(drivetrain)))
+            // GeneralCommands.setLedCommand(ColorPattern.kBlink, Color.kBlue)
+            // .andThen(
+                // GeneralCommands.driveToPositionCommand(testPose, currentPose))
+                .andThen(
+                    GeneralCommands.scoreLowCoralOnlyCommand())
+                .withName("Autonomous Score Command");
+            // }
+            // else
+            // {
+            //     return Commands.none().andThen(Commands.print("Did not follow path"));
+            // }
         }
         else
         {

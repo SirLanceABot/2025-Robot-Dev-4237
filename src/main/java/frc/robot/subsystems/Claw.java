@@ -128,6 +128,11 @@ public class Claw extends SubsystemLance
         setKickSpeed(0.30); //0.1 was too slow
     }
 
+    public void placeLowCoral()
+    {
+        setKickSpeed(0.5);
+    }
+
     public void stop()
     {
         grabMotor.set(0.0);
@@ -165,6 +170,11 @@ public class Claw extends SubsystemLance
     public Command placeCoralCommand()
     {
         return run(() -> placeCoral()).withName("Place Coral");
+    }
+
+    public Command placeLowCoralCommand()
+    {
+        return run(() -> placeLowCoral());
     }
 
     public Command holdAlgaeCommand()

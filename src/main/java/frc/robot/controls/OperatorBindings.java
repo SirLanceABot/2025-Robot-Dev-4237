@@ -112,8 +112,8 @@ public final class OperatorBindings {
         Trigger aButton = controller.a();
 
         //Create a path on the fly and score on L1 level, (stops the path if it takes over 10 seconds - probably not needed)
-        aButton.onTrue(
-            ScoringCommands.scoreCoralAutonomouslyReallyCoolAndAwesomeCommand((() -> drivetrain.getState().Pose), (() -> poseEstimator.closestBranchLocation(() -> poseEstimator.getPrimaryTagID(), true))));
+        aButton.whileTrue(
+            ScoringCommands.scoreCoralAutonomouslyReallyCoolAndAwesomeCommand((() -> drivetrain.getState().Pose), (() -> poseEstimator.closestBranchLocation(() -> poseEstimator.getPrimaryTagID(), poseEstimator.getIsRightBranch()))));
         // aButton.onTrue(GeneralCommands.moveScorerToL1Command());
     }
 
@@ -125,8 +125,8 @@ public final class OperatorBindings {
         //Create a path on the fly and score on L2 level, (stops the path if it takes over 10 seconds - probably not needed)
         // bButton.onTrue(Commands.runOnce(() -> 
         //     ScoringCommands.scoreCoralAutonomouslyReallyCoolAndAwesomeCommand(robotContainer.getPoseEstimator().getIsRightBranch(), TargetPosition.kL2)).withTimeout(10.0));
-        bButton.onTrue(
-            ScoringCommands.scoreCoralAutonomouslyReallyCoolAndAwesomeCommand((() -> drivetrain.getState().Pose), (() -> poseEstimator.closestBranchLocation(() -> poseEstimator.getPrimaryTagID(), false))));
+        // bButton.whileTrue(
+        //     ScoringCommands.scoreCoralAutonomouslyReallyCoolAndAwesomeCommand((() -> drivetrain.getState().Pose), (() -> poseEstimator.closestBranchLocation(() -> poseEstimator.getPrimaryTagID(), false))));
         // bButton.onTrue(GeneralCommands.moveScorerToL2Commmand());
     }
 
@@ -138,7 +138,7 @@ public final class OperatorBindings {
         //Create a path on the fly and score on L3 level, (stops the path if it takes over 10 seconds - probably not needed)
         // xButton.onTrue(Commands.runOnce(() -> 
         //     ScoringCommands.scoreCoralAutonomouslyReallyCoolAndAwesomeCommand(robotContainer.getPoseEstimator().getIsRightBranch(), TargetPosition.kL3)).withTimeout(10.0));
-        xButton.onTrue(GeneralCommands.moveScorerToL3Command());
+        xButton.whileTrue(ScoringCommands.autoAlignL3Command((() -> drivetrain.getState().Pose), (() -> poseEstimator.closestBranchLocation(() -> poseEstimator.getPrimaryTagID(), poseEstimator.getIsRightBranch()))));
     }
 
 
@@ -192,8 +192,9 @@ public final class OperatorBindings {
         Trigger leftTrigger = controller.leftTrigger();
         leftTrigger
             .onTrue(poseEstimator.setPlacingSideToLeftCommand()
-            .andThen(Commands.runOnce(() -> controller.getHID().setRumble(RumbleType.kLeftRumble, 1.0))).withTimeout(0.25)
-            .andThen(Commands.runOnce(() -> controller.getHID().setRumble(RumbleType.kLeftRumble, 1.0)))
+            // .andThen(Commands.runOnce(() -> controller.getHID().setRumble(RumbleType.kLeftRumble, 1.0))).withTimeout(0.25)
+            // .andThen(Commands.waitSeconds(0.5))
+            // .andThen(Commands.runOnce(() -> controller.getHID().setRumble(RumbleType.kLeftRumble, 0.0)))
             .withTimeout(0.25));
     }
 
@@ -202,9 +203,10 @@ public final class OperatorBindings {
     {
         Trigger rightTrigger = controller.rightTrigger();
         rightTrigger
-            .onTrue(poseEstimator.setPlacingSideToLeftCommand()
-            .andThen(Commands.runOnce(() -> controller.getHID().setRumble(RumbleType.kRightRumble, 1.0))).withTimeout(0.25)
-            .andThen(Commands.runOnce(() -> controller.getHID().setRumble(RumbleType.kRightRumble, 1.0)))
+            .onTrue(poseEstimator.setPlacingSideToRightCommand()
+            // .andThen(Commands.runOnce(() -> controller.getHID().setRumble(RumbleType.kRightRumble, 1.0))).withTimeout(0.25)
+            // .andThen(Commands.waitSeconds(0.5))
+            // .andThen(Commands.runOnce(() -> controller.getHID().setRumble(RumbleType.kRightRumble, 0.0)))
             .withTimeout(0.25));
     }
 

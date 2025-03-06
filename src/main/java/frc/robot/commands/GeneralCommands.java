@@ -705,8 +705,20 @@ public final class GeneralCommands
         {
             return 
             Commands.parallel(
-                claw.placeCoralCommand().withTimeout(0.5).andThen(claw.stopCommand()),
+                Commands.waitSeconds(0.5).andThen(claw.placeCoralCommand().withTimeout(0.5).andThen(claw.stopCommand())),
                 pivot.moveToSetPositionCommand(PivotPosition.kL4Place).until(pivot.isAtPosition(PivotPosition.kL4Place)).withTimeout(1.0));
+        }
+        else
+        {
+            return Commands.none();
+        }
+    }
+
+    public static Command scoreLowCoralOnlyCommand()
+    {
+        if(claw != null)
+        {
+            return claw.placeLowCoralCommand().withTimeout(0.5).andThen(claw.stopCommand());
         }
         else
         {
@@ -802,7 +814,7 @@ public final class GeneralCommands
      */
     public static Command driveToPositionCommand(Pose2d targetPose, Pose2d currentPose)
     {
-        PathConstraints constraints = new PathConstraints(0.5, 0.5, Units.degreesToRadians(360), Units.degreesToRadians(360));
+        PathConstraints constraints = new PathConstraints(1.0, 1.0, Units.degreesToRadians(360), Units.degreesToRadians(360));
         List<Waypoint> waypoints = PathPlannerPath.waypointsFromPoses(
                                     new Pose2d(currentPose.getTranslation(), currentPose.getRotation()),
                                     new Pose2d(targetPose.getTranslation(), targetPose.getRotation()));          

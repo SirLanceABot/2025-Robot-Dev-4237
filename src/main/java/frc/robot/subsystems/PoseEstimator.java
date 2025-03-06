@@ -211,35 +211,35 @@ public class PoseEstimator extends SubsystemLance
     private void fillMaps()
     {
         //Red Left
-        leftBranchMap.put(6, new Pose2d( new Translation2d(13.474446 + 0.153035, 3.306318 - 0.53581757), new Rotation2d(Math.toRadians(30)))); //S5
-        leftBranchMap.put(7, new Pose2d( new Translation2d(13.890498 + 0.578104, 4.0259 - 0.164338), new Rotation2d(Math.toRadians(90)))); //S4
-        leftBranchMap.put(8, new Pose2d( new Translation2d(13.474446 + 0.284861, 4.745482 + 0.30748824), new Rotation2d(Math.toRadians(150)))); //S3
-        leftBranchMap.put(9, new Pose2d( new Translation2d(12.643358 - 0.284861, 4.745482 + 0.30748824), new Rotation2d(Math.toRadians(210)))); //S2
-        leftBranchMap.put(10, new Pose2d( new Translation2d(12.227306 - 0.578104, 4.0259 - 0.164338), new Rotation2d(Math.toRadians(270)))); //S1
-        leftBranchMap.put(11, new Pose2d( new Translation2d(12.643358 - 0.153035, 3.306318 - 0.53581757), new Rotation2d(Math.toRadians(-30)))); //S6
+        leftBranchMap.put(6, new Pose2d( new Translation2d(13.67, 2.73), new Rotation2d(Math.toRadians(30)))); //S5
+        leftBranchMap.put(7, new Pose2d( new Translation2d(14.61, 3.90), new Rotation2d(Math.toRadians(90)))); //S4
+        leftBranchMap.put(8, new Pose2d( new Translation2d(13.90, 5.30), new Rotation2d(Math.toRadians(150)))); //S3
+        leftBranchMap.put(9, new Pose2d( new Translation2d(12.08, 5.14), new Rotation2d(Math.toRadians(210)))); //S2
+        leftBranchMap.put(10, new Pose2d( new Translation2d(11.54, 3.76), new Rotation2d(Math.toRadians(270)))); //S1
+        leftBranchMap.put(11, new Pose2d( new Translation2d(12.53, 2.56), new Rotation2d(Math.toRadians(-30)))); //S6
         //Blue Left
-        leftBranchMap.put(17, new Pose2d( new Translation2d(3.70, 2.78), new Rotation2d(Math.toRadians(-30)))); //S3
-        leftBranchMap.put(18, new Pose2d( new Translation2d(3.6576 - 0.578104, 4.0259 + 0.164338), new Rotation2d(Math.toRadians(270)))); //S4
-        leftBranchMap.put(19, new Pose2d( new Translation2d(4.073906 - 0.153035, 4.745482 + 0.53581757), new Rotation2d(Math.toRadians(210)))); //S5
-        leftBranchMap.put(20, new Pose2d( new Translation2d(4.90474 + 0.153035, 4.745482 + 0.53581757), new Rotation2d(Math.toRadians(150)))); //S6
-        leftBranchMap.put(21, new Pose2d( new Translation2d(5.321046 + 0.578104, 4.0259 + 0.164338), new Rotation2d(Math.toRadians(90)))); //S1
-        leftBranchMap.put(22, new Pose2d( new Translation2d(4.90474 + 0.284861, 3.306318 - 0.30748824), new Rotation2d(Math.toRadians(30)))); //S2
+        leftBranchMap.put(17, new Pose2d( new Translation2d(3.70, 2.78), new Rotation2d(Math.toRadians(-30)))); //S3 4.073906, 3.306318
+        leftBranchMap.put(18, new Pose2d( new Translation2d(3.06, 4.06), new Rotation2d(Math.toRadians(270)))); //S4 3.6576, 4.0259
+        leftBranchMap.put(19, new Pose2d( new Translation2d(3.78, 5.36), new Rotation2d(Math.toRadians(210)))); //S5 4.073906, 4.745482
+        leftBranchMap.put(20, new Pose2d( new Translation2d(5.01, 5.44), new Rotation2d(Math.toRadians(150)))); //S6 4.90474, 4.745482
+        leftBranchMap.put(21, new Pose2d( new Translation2d(6.015, 4.30), new Rotation2d(Math.toRadians(90)))); //S1 5.321046, 4.0259
+        leftBranchMap.put(22, new Pose2d( new Translation2d(5.45, 2.84), new Rotation2d(Math.toRadians(30)))); //S2 4.90474, 3.306318
         
 
         //Red Right
-        rightBranchMap.put(6, new Pose2d( new Translation2d(13.474446 + 0.284861, 3.306318 - 0.30748824), new Rotation2d(Math.toRadians(30)))); //S5
-        rightBranchMap.put(7, new Pose2d( new Translation2d(13.890498 + 0.578104, 4.0259 + 0.164338), new Rotation2d(Math.toRadians(90)))); //S4
-        rightBranchMap.put(8, new Pose2d( new Translation2d(13.474446 + 0.153035, 4.745482 + 0.53581757), new Rotation2d(Math.toRadians(150)))); //S3
-        rightBranchMap.put(9, new Pose2d( new Translation2d(12.643358 - 0.153035, 4.745482 + 0.53581757), new Rotation2d(Math.toRadians(210)))); //S2
-        rightBranchMap.put(10, new Pose2d( new Translation2d(12.227306 - 0.578104, 4.0259 + 0.164338), new Rotation2d(Math.toRadians(270)))); //S1
-        rightBranchMap.put(11, new Pose2d( new Translation2d(12.643358 - 0.284861, 3.306318 - 0.30748824), new Rotation2d(Math.toRadians(-30)))); //S6
+        rightBranchMap.put(6, new Pose2d( new Translation2d(14.02, 2.84), new Rotation2d(Math.toRadians(30)))); //S5
+        rightBranchMap.put(7, new Pose2d( new Translation2d(14.58, 4.30), new Rotation2d(Math.toRadians(90)))); //S4
+        rightBranchMap.put(8, new Pose2d( new Translation2d(13.58, 5.44), new Rotation2d(Math.toRadians(150)))); //S3
+        rightBranchMap.put(9, new Pose2d( new Translation2d(12.35, 5.34), new Rotation2d(Math.toRadians(210)))); //S2
+        rightBranchMap.put(10, new Pose2d( new Translation2d(11.63, 4.06), new Rotation2d(Math.toRadians(270)))); //S1
+        rightBranchMap.put(11, new Pose2d( new Translation2d(12.27, 2.78), new Rotation2d(Math.toRadians(-30)))); //S6
         //Blue Right
-        rightBranchMap.put(17, new Pose2d( new Translation2d(3.96, 2.56), new Rotation2d(Math.toRadians(-30)))); //S3
-        rightBranchMap.put(18, new Pose2d( new Translation2d(3.6576 - 0.578104, 4.0259 - 0.164338), new Rotation2d(Math.toRadians(270)))); //S4
-        rightBranchMap.put(19, new Pose2d( new Translation2d(4.073906 - 0.284861, 4.745482 + 0.30748824), new Rotation2d(Math.toRadians(210)))); //S5
-        rightBranchMap.put(20, new Pose2d( new Translation2d(4.90474 + 0.284861, 4.745482 + 0.30748824), new Rotation2d(Math.toRadians(150)))); //S6
-        rightBranchMap.put(21, new Pose2d( new Translation2d(5.321046 + 0.578104, 4.0259 - 0.164338), new Rotation2d(Math.toRadians(90)))); //S1
-        rightBranchMap.put(22, new Pose2d( new Translation2d(4.90474 + 0.153035, 3.306318 - 0.53581757), new Rotation2d(Math.toRadians(30)))); //S2
+        rightBranchMap.put(17, new Pose2d( new Translation2d(3.96, 2.56), new Rotation2d(Math.toRadians(-30)))); //S3 4.073906, 3.306318
+        rightBranchMap.put(18, new Pose2d( new Translation2d(2.97, 3.76), new Rotation2d(Math.toRadians(270)))); //S4 3.6575, 4.0259
+        rightBranchMap.put(19, new Pose2d( new Translation2d(3.51, 5.14), new Rotation2d(Math.toRadians(210)))); //S5 4.073906, 4.745482
+        rightBranchMap.put(20, new Pose2d( new Translation2d(5.33, 5.30), new Rotation2d(Math.toRadians(150)))); //S6 4.90474, 4.745482
+        rightBranchMap.put(21, new Pose2d( new Translation2d(6.015, 3.90), new Rotation2d(Math.toRadians(90)))); //S1 5.321046, 4.0259
+        rightBranchMap.put(22, new Pose2d( new Translation2d(5.125, 2.705), new Rotation2d(Math.toRadians(30)))); //S2 4.90474, 3.306318
         
     }
 
@@ -502,7 +502,17 @@ public class PoseEstimator extends SubsystemLance
                         rejectUpdate = true;
                     }
 
-                    primaryReefTag = tagID; // TODO: only set if a tag is in frame
+                    if(isReefTag(tagID))
+                    {
+                        primaryReefTag = tagID;
+                        // System.out.println("Primary Tag: " + primaryReefTag);
+                    }
+                    else
+                    {
+                        primaryReefTag = 0;
+                    }
+                
+                         // TODO: only set if a tag is in frame
                     // if any of the conditions above are true, do NOT add the mt2 pose as a vision
                     // measurement
                     if (!rejectUpdate && poseEstimator != null)
@@ -516,7 +526,7 @@ public class PoseEstimator extends SubsystemLance
 
                     if (!rejectUpdate) // COMMENT OUT TO STOP DRIVETRAIN POSE FROM UPDATING
                     {
-                        System.out.println("Adding vision measurement for tag: " + tagID);
+                        // System.out.println("Adding vision measurement for tag: " + tagID);
                         primaryReefTag = tagID;
                         drivetrain.addVisionMeasurement(
                                 visionPose,
@@ -524,6 +534,12 @@ public class PoseEstimator extends SubsystemLance
                                 visionStdDevs);
                     }
                 }
+                else
+                {
+                    primaryReefTag = 0;
+                }
+
+                System.out.println(primaryReefTag);
             }
         }
 
