@@ -8,20 +8,20 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 5.187,
-        "y": 1.304749999999999
+        "x": 4.00725,
+        "y": 0.7977499999999993
       },
       "isLocked": false,
       "linkedName": "Right Wall"
     },
     {
       "anchor": {
-        "x": 3.96,
-        "y": 2.56
+        "x": 3.97,
+        "y": 2.52
       },
       "prevControl": {
-        "x": 4.437750000000001,
-        "y": 1.9554999999999998
+        "x": 2.457,
+        "y": 1.5094999999999994
       },
       "nextControl": null,
       "isLocked": false,
@@ -29,7 +29,21 @@
     }
   ],
   "rotationTargets": [],
-  "constraintZones": [],
+  "constraintZones": [
+    {
+      "name": "Slow Zone",
+      "minWaypointRelativePos": 0.75,
+      "maxWaypointRelativePos": 1.0,
+      "constraints": {
+        "maxVelocity": 0.75,
+        "maxAcceleration": 1.5,
+        "maxAngularVelocity": 540.0,
+        "maxAngularAcceleration": 720.0,
+        "nominalVoltage": 12.0,
+        "unlimited": false
+      }
+    }
+  ],
   "pointTowardsZones": [],
   "eventMarkers": [
     {

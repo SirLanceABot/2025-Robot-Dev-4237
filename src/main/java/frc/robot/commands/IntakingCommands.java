@@ -99,6 +99,8 @@ public final class IntakingCommands
                     .withTimeout(3.0)
 
                     .andThen(Commands.waitSeconds(0.5))
+
+                    .andThen(claw.stopCommand())    
                     
             .andThen(intake.stopCommand())
 
@@ -142,6 +144,10 @@ public final class IntakingCommands
                     .until(intakeWrist.isAtPosition(Position.kIntakeCoralPosition)),
 
                 GeneralCommands.moveScorerToIntakingPositionCommand());
+            // .andThen(
+            //     intakeWrist.moveToSetPositionCommand(Position.kRestingPosition)
+            //         .until(intakeWrist.isAtPosition(Position.kRestingPosition))
+            
         }
         else
         {
@@ -240,7 +246,7 @@ public final class IntakingCommands
 
             .andThen(
                 intake.pickupAlgaeCommand()
-                    .until(intakeProximity.isDetectedSupplier()))
+                    .until(intake.isAlgaeIn()))
 
             .andThen(Commands.waitSeconds(0.5))
 
@@ -250,6 +256,24 @@ public final class IntakingCommands
                 intakeWrist.moveToSetPositionCommand(Position.kManipAlgaePosition)
                     .until(intakeWrist.isAtPosition(Position.kManipAlgaePosition))
             ));
+        }
+        else
+        {
+            return Commands.none();
+        }
+    }
+
+    public static Command betterStationIntakeCommand()
+    {
+        if(intakeWrist != null && elevator != null && pivot != null)
+        {
+            return
+            Commands.parallel(
+                intakeWrist.moveToSetPositionCommand(Position.kManipAlgaePosition)
+                    .until(intakeWrist.isAtPosition(Position.kManipAlgaePosition))
+                    .withTimeout(2.0),
+
+                intakeCoralFromStationCommand());
         }
         else
         {

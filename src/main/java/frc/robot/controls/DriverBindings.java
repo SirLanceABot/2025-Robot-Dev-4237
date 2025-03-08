@@ -128,8 +128,8 @@ public final class DriverBindings {
         Trigger bButton = controller.b();
         // bButton.whileTrue()
         // bButton.whileTrue(drivetrain.pointCommand(leftYAxis, leftXAxis));
-        // bButton
-            // .onTrue(Commands.runOnce(() -> intakeWrist.moveToSetPositionCommand(Position.kRestingPosition).andThen(intake.stopCommand())));
+        bButton
+            .onTrue(GeneralCommands.bringBackIntakeCommand());
         // bButton.onTrue(new DeferredCommand(() -> GeneralCommands.driveToPositionCommand(new Pose2d(1.5, 1.5, new Rotation2d(Math.toRadians(-30))), currentPose.get()), Set.of(drivetrain)));
         //applyRequest(() -> 
         // drivetrain.point.withModuleDirection(new Rotation2d(-leftYAxis.getAsDouble(), -leftXAxis.getAsDouble()))));
@@ -152,7 +152,7 @@ public final class DriverBindings {
         // .onTrue( Commands.runOnce(() -> controller.getHID().setRumble(RumbleType.kBothRumble, 1.0)))
         // .onFalse( Commands.runOnce(() -> controller.getHID().setRumble(RumbleType.kBothRumble, 0.0)));
 
-        yButton.onTrue(IntakingCommands.intakeCoralFromStationCommand());
+        yButton.onTrue(IntakingCommands.betterStationIntakeCommand());
         
     }
 
@@ -264,11 +264,5 @@ public final class DriverBindings {
             // );
         }
         
-    }
-
-
-    
-
-
-    
+    }    
 }

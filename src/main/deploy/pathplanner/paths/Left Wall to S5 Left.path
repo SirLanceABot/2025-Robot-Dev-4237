@@ -8,8 +8,8 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 5.31375,
-        "y": 7.0184999999999995
+        "x": 5.079750000000001,
+        "y": 7.232749999999999
       },
       "isLocked": false,
       "linkedName": "Left Wall"
@@ -20,8 +20,8 @@
         "y": 5.3
       },
       "prevControl": {
-        "x": 4.29,
-        "y": 6.199249999999999
+        "x": 3.6660000000000004,
+        "y": 6.716
       },
       "nextControl": null,
       "isLocked": false,
@@ -31,11 +31,11 @@
   "rotationTargets": [],
   "constraintZones": [
     {
-      "name": "Constraints Zone",
-      "minWaypointRelativePos": 0.7,
+      "name": "Slow Zone",
+      "minWaypointRelativePos": 0.6,
       "maxWaypointRelativePos": 1.0,
       "constraints": {
-        "maxVelocity": 1.25,
+        "maxVelocity": 0.75,
         "maxAcceleration": 3.0,
         "maxAngularVelocity": 540.0,
         "maxAngularAcceleration": 720.0,
@@ -53,7 +53,7 @@
       "command": {
         "type": "named",
         "data": {
-          "name": "Move Scorer To L4"
+          "name": "Move Scorer to L4"
         }
       }
     },
@@ -72,8 +72,8 @@
   "globalConstraints": {
     "maxVelocity": 2.0,
     "maxAcceleration": 2.0,
-    "maxAngularVelocity": 360.0,
-    "maxAngularAcceleration": 360.0,
+    "maxAngularVelocity": 540.0,
+    "maxAngularAcceleration": 720.0,
     "nominalVoltage": 12.0,
     "unlimited": false
   },
@@ -85,7 +85,7 @@
   "folder": "Left Wall Starts",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 179.76979125660685
+    "rotation": 0.0
   },
-  "useDefaultConstraints": true
+  "useDefaultConstraints": false
 }

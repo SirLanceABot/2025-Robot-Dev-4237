@@ -127,6 +127,7 @@ public class Robot extends TimedRobot
     {
         if (!autonomousRun && robotContainer.getDrivetrain() != null)
         {
+            // robotContainer.getDrivetrain().seedFieldCentric();
             currentCommand = ElasticLance.getAutonomousCommand();
             if(currentCommand != previousCommand)
             {

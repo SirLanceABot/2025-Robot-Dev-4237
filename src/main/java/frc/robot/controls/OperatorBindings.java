@@ -14,6 +14,7 @@ import frc.robot.commands.GeneralCommands;
 import frc.robot.commands.ScoringCommands;
 import frc.robot.commands.CommandsManager.TargetPosition;
 import frc.robot.commands.IntakingCommands;
+import frc.robot.subsystems.Claw;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Elevator;
 import frc.robot.subsystems.Elevator.ElevatorPosition;
@@ -46,6 +47,7 @@ public final class OperatorBindings {
     private static Pivot pivot;
     private static Drivetrain drivetrain;
     private static PoseEstimator poseEstimator;
+    private static Claw claw;
 
     private static BooleanSupplier isTeleop;
     private static DoubleSupplier matchTime;
@@ -63,6 +65,7 @@ public final class OperatorBindings {
         poseEstimator = robotContainer.getPoseEstimator();
         controller = robotContainer.getOperatorController();
         drivetrain = robotContainer.getDrivetrain();
+        claw = robotContainer.getClaw();
 
         if(controller != null)
         {
@@ -112,8 +115,8 @@ public final class OperatorBindings {
         Trigger aButton = controller.a();
 
         //Create a path on the fly and score on L1 level, (stops the path if it takes over 10 seconds - probably not needed)
-        aButton.whileTrue(
-            ScoringCommands.scoreCoralAutonomouslyReallyCoolAndAwesomeCommand((() -> drivetrain.getState().Pose), (() -> poseEstimator.closestBranchLocation(() -> poseEstimator.getPrimaryTagID(), poseEstimator.getIsRightBranch()))));
+        // aButton.whileTrue(
+        //     ScoringCommands.scoreCoralAutonomouslyReallyCoolAndAwesomeCommand((() -> drivetrain.getState().Pose), (() -> poseEstimator.closestBranchLocation(() -> poseEstimator.getPrimaryTagID(), poseEstimator.getIsRightBranch()))));
         // aButton.onTrue(GeneralCommands.moveScorerToL1Command());
     }
 
@@ -128,6 +131,8 @@ public final class OperatorBindings {
         // bButton.whileTrue(
         //     ScoringCommands.scoreCoralAutonomouslyReallyCoolAndAwesomeCommand((() -> drivetrain.getState().Pose), (() -> poseEstimator.closestBranchLocation(() -> poseEstimator.getPrimaryTagID(), false))));
         // bButton.onTrue(GeneralCommands.moveScorerToL2Commmand());
+        bButton.whileTrue(ScoringCommands.autoAlignL2Command((() -> drivetrain.getState().Pose), (() -> poseEstimator.closestBranchLocation(() -> poseEstimator.getPrimaryTagID(), poseEstimator.getIsRightBranch()))));
+        // bButton.onTrue(GeneralCommands.moveScorerToL2Commmand());
     }
 
 
@@ -139,6 +144,7 @@ public final class OperatorBindings {
         // xButton.onTrue(Commands.runOnce(() -> 
         //     ScoringCommands.scoreCoralAutonomouslyReallyCoolAndAwesomeCommand(robotContainer.getPoseEstimator().getIsRightBranch(), TargetPosition.kL3)).withTimeout(10.0));
         xButton.whileTrue(ScoringCommands.autoAlignL3Command((() -> drivetrain.getState().Pose), (() -> poseEstimator.closestBranchLocation(() -> poseEstimator.getPrimaryTagID(), poseEstimator.getIsRightBranch()))));
+        // xButton.onTrue(GeneralCommands.moveScorerToL3Command());
     }
 
 
@@ -147,9 +153,11 @@ public final class OperatorBindings {
         Trigger yButton = controller.y();
 
         //Create a path on the fly and score on L4 level, (stops the path if it takes over 10 seconds - probably not needed)
+        yButton.whileTrue(
+            ScoringCommands.scoreCoralAutonomouslyReallyCoolAndAwesomeCommand((() -> drivetrain.getState().Pose), (() -> poseEstimator.closestBranchLocation(() -> poseEstimator.getPrimaryTagID(), poseEstimator.getIsRightBranch()))));
         // yButton.onTrue(Commands.runOnce(() -> 
-        //     ScoringCommands.scoreCoralAutonomouslyReallyCoolAndAwesomeCommand(robotContainer.getPoseEstimator().getIsRightBranch(), TargetPosition.kL4)).withTimeout(10.0));
-        yButton.onTrue(GeneralCommands.moveScorerToL4Command());
+            // ScoringCommands.scoreCoralAutonomouslyReallyCoolAndAwesomeCommand(robotContainer.getPoseEstimator().getIsRightBranch(), TargetPosition.kL4)).withTimeout(10.0));
+        // yButton.onTrue(GeneralCommands.moveScorerToL4Command());
     }
 
 
@@ -157,7 +165,7 @@ public final class OperatorBindings {
     {
         Trigger leftBumper = controller.leftBumper();
 
-        leftBumper.onTrue(GeneralCommands.scoreCoralOnlyCommand().withTimeout(2.0));
+        leftBumper.onTrue(IntakingCommands.intakeAlgaeFromReefCommand(TargetPosition.kLowerReefAlgae));
 
     }
 
@@ -174,7 +182,7 @@ public final class OperatorBindings {
     {
         Trigger backButton = controller.back();
 
-        backButton.onTrue(GeneralCommands.scoreAlgaeOnlyCommand());
+        backButton.whileTrue(claw.placeLowCoralCommand().withTimeout(1.0).andThen(claw.stopCommand()));
     }
 
 

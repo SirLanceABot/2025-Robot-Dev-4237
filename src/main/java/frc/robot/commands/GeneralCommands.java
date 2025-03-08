@@ -470,7 +470,8 @@ public final class GeneralCommands
             setLedCommand(ColorPattern.kBlink, Color.kBlue)
 
             .andThen(
-                Commands.parallel(
+                Commands.either(
+                    Commands.parallel(
 
                         elevator.moveToSetPositionCommand(ElevatorPosition.kSafeSwingPosition)
                             .until(elevator.isAtPosition(ElevatorPosition.kSafeSwingPosition))
@@ -484,7 +485,16 @@ public final class GeneralCommands
                                 .withTimeout(3.0)),
 
                         claw.grabGamePieceCommand()
-                    )).withTimeout(3.0)
+                        ).withTimeout(3.0),
+                        
+                    Commands.parallel(
+                        elevator.moveToSetPositionCommand(ElevatorPosition.kL2),
+
+                        pivot.moveToSetPositionCommand(PivotPosition.kLowLevelCoralPosition)
+                    ).withTimeout(2.0),
+                    
+                    () -> elevator.getPosition() > 5.0))
+
             .andThen(claw.stopCommand())
             .withName("Move Scorer to L2 Command");        
         }
@@ -505,7 +515,8 @@ public final class GeneralCommands
             setLedCommand(ColorPattern.kBlink, Color.kBlue)
 
             .andThen(
-                Commands.parallel(
+                Commands.either(
+                    Commands.parallel(
 
                         elevator.moveToSetPositionCommand(ElevatorPosition.kSafeSwingPosition)
                             .until(elevator.isAtPosition(ElevatorPosition.kSafeSwingPosition))
@@ -519,7 +530,15 @@ public final class GeneralCommands
                                 .withTimeout(3.0)),
 
                         claw.grabGamePieceCommand()
-                    )).withTimeout(3.0)
+                        ).withTimeout(3.0),
+                        
+                    Commands.parallel(
+                        elevator.moveToSetPositionCommand(ElevatorPosition.kL3),
+
+                        pivot.moveToSetPositionCommand(PivotPosition.kLowLevelCoralPosition)
+                    ).withTimeout(2.0),
+                    
+                    () -> elevator.getPosition() > 5.0))
             .andThen(claw.stopCommand())
             .withName("Move Scorer to L3 Command");  
         }
@@ -609,6 +628,26 @@ public final class GeneralCommands
                 () -> (elevator.getPosition() > ElevatorPosition.kSafeSwingPosition.elevatorPosition))) // Checks if elevator is higher than the designated "Safe Swing" position)
             
                 .withName("Move Scorer to Intaking Position Command");  
+        }
+        else
+        {
+            return Commands.none();
+        }
+    }
+
+    public static Command bringBackIntakeCommand()
+    {
+        if(intake != null && intakeWrist != null)
+        {
+            return
+            Commands.parallel(
+                intake.stopCommand(),
+
+                claw.stopCommand(),
+
+                intakeWrist.moveToSetPositionCommand(Position.kRestingPosition)
+                    .until(intakeWrist.isAtPosition(Position.kRestingPosition))
+                    .withTimeout(2.0));
         }
         else
         {

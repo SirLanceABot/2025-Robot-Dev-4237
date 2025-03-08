@@ -98,9 +98,8 @@ public class Claw extends SubsystemLance
         }
         else
         {
-            grabMotor.set(0.1);
+            grabMotor.set(0.3);
         }
-        System.out.println("Claw amps: " + grabMotor.getCurrentAmps());
     }
 
     /**
@@ -108,7 +107,7 @@ public class Claw extends SubsystemLance
      */
     public void grabGamePiece()
     {
-        setGrabSpeed(0.7);
+        setGrabSpeed(0.8);
     }
 
     public void ejectAlgae()

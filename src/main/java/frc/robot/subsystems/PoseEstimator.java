@@ -22,6 +22,7 @@ import edu.wpi.first.networktables.DoubleArrayEntry;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.networktables.StructPublisher;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants;
 import frc.robot.LimelightHelpers;
@@ -484,9 +485,14 @@ public class PoseEstimator extends SubsystemLance
                         rejectUpdate = true;
                     }
 
-                    if (distToTag > 1)
+                    if (distToTag > 2.5)
                     {
                         // System.out.println("Distance greater than 2.5");
+                        rejectUpdate = true;
+                    }
+
+                    if(!DriverStation.isTeleopEnabled())
+                    {
                         rejectUpdate = true;
                     }
 
