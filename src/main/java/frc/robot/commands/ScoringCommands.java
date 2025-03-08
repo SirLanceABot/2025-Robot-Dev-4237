@@ -352,7 +352,7 @@ public final class ScoringCommands
             // .andThen(
                 // GeneralCommands.driveToPositionCommand(testPose, currentPose))
                 .andThen(
-                    GeneralCommands.scoreCoralOnlyCommand())
+                    GeneralCommands.scoreLowCoralOnlyCommand())
                 .withName("Autonomous Score Command");
             // }
             // else

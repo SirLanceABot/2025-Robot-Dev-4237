@@ -86,7 +86,7 @@ public final class OperatorBindings {
             configRightTrigger();
             configLeftStick();
             configRightStick();
-            // configDpadUp();
+            configDpadUp();
             // configDpadDown();
             configDpadLeft();
             configDpadRight();
@@ -182,7 +182,7 @@ public final class OperatorBindings {
     {
         Trigger backButton = controller.back();
 
-        backButton.whileTrue(claw.placeLowCoralCommand().withTimeout(1.0).andThen(claw.stopCommand()));
+        backButton.whileTrue(GeneralCommands.scoreCoralOnlyCommand().withTimeout(1.0).andThen(claw.stopCommand()));
     }
 
 
@@ -235,7 +235,7 @@ public final class OperatorBindings {
     {
         Trigger dpadUp = controller.povUp();
 
-        dpadUp.onTrue(GeneralCommands.climbUpCageCommand());
+        dpadUp.onTrue(GeneralCommands.scoreLowCoralOnlyCommand());
     }
 
 

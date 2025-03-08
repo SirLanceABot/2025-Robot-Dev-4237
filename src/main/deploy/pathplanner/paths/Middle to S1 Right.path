@@ -8,19 +8,19 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 6.357,
-        "y": 4.015249999999999
+        "x": 6.356929452061667,
+        "y": 4.026
       },
       "isLocked": false,
       "linkedName": "Middle"
     },
     {
       "anchor": {
-        "x": 5.889,
+        "x": 5.965,
         "y": 4.0
       },
       "prevControl": {
-        "x": 6.522750000000001,
+        "x": 6.598750000000001,
         "y": 4.03475
       },
       "nextControl": null,
@@ -48,30 +48,19 @@
   "eventMarkers": [
     {
       "name": "Move Scorer To L4",
-      "waypointRelativePos": 0,
+      "waypointRelativePos": 0.05,
       "endWaypointRelativePos": null,
       "command": {
         "type": "named",
         "data": {
-          "name": "Move Scorer To L4"
-        }
-      }
-    },
-    {
-      "name": "Eject Coral On L4",
-      "waypointRelativePos": 1.0,
-      "endWaypointRelativePos": null,
-      "command": {
-        "type": "named",
-        "data": {
-          "name": "Score Coral Only"
+          "name": "Move Scorer to L4"
         }
       }
     }
   ],
   "globalConstraints": {
-    "maxVelocity": 3.0,
-    "maxAcceleration": 3.0,
+    "maxVelocity": 1.0,
+    "maxAcceleration": 1.0,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0,
     "nominalVoltage": 12.0,
@@ -85,7 +74,7 @@
   "folder": "Middle Starts",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 0.0
+    "rotation": 90.0
   },
-  "useDefaultConstraints": true
+  "useDefaultConstraints": false
 }

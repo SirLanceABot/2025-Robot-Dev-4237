@@ -99,6 +99,8 @@ public final class CommandsManager
         NamedCommands.registerCommand("Score Coral Only", GeneralCommands.scoreCoralOnlyCommand());
         NamedCommands.registerCommand("Score Algae Only", GeneralCommands.scoreAlgaeOnlyCommand());
 
+        // NamedCommands.registerCommand("Auto Align Coral", ScoringCommands.scoreCoralAutonomouslyReallyCoolAndAwesomeCommand)
+
         // Score Algae Commands
         NamedCommands.registerCommand("Score Algae in Processor", ScoringCommands.scoreProcessorWithIntakeCommand());
         NamedCommands.registerCommand("Score Algae in Barge", ScoringCommands.scoreAlgaeInBargeCommand());
