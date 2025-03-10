@@ -3,25 +3,25 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 1.7607730263157892,
-        "y": 0.8594572368421052
+        "x": 1.6741776315789472,
+        "y": 0.7151315789473688
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.7607730263157895,
-        "y": 0.8594572368421055
+        "x": 2.6741776315789476,
+        "y": 0.7151315789473691
       },
       "isLocked": false,
       "linkedName": "Right Station"
     },
     {
       "anchor": {
-        "x": 5.528,
-        "y": 2.888
+        "x": 5.1187499999999995,
+        "y": 2.822286184210526
       },
       "prevControl": {
-        "x": 5.109,
-        "y": 2.2114999999999996
+        "x": 4.69975,
+        "y": 2.1457861842105257
       },
       "nextControl": null,
       "isLocked": false,
@@ -65,7 +65,7 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 29.999999999999996
+    "rotation": -150.0
   },
   "reversed": false,
   "folder": "Right Station Starts",

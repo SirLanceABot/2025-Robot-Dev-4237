@@ -3,13 +3,13 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 5.965,
-        "y": 4.0
+        "x": 5.85,
+        "y": 3.6882401315789473
       },
       "prevControl": null,
       "nextControl": {
-        "x": 7.183750000000001,
-        "y": 3.8884999999999996
+        "x": 7.0687500000000005,
+        "y": 3.576740131578947
       },
       "isLocked": false,
       "linkedName": "S1 Right"
@@ -74,7 +74,7 @@
   "folder": "Reef Starts",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 90.0
+    "rotation": -90.0
   },
   "useDefaultConstraints": true
 }

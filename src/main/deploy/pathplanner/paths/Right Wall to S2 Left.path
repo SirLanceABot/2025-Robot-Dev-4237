@@ -16,12 +16,12 @@
     },
     {
       "anchor": {
-        "x": 5.528,
-        "y": 2.888
+        "x": 5.1187499999999995,
+        "y": 2.822286184210526
       },
       "prevControl": {
-        "x": 6.054628289473684,
-        "y": 2.28414144736842
+        "x": 5.645378289473684,
+        "y": 2.218427631578946
       },
       "nextControl": null,
       "isLocked": false,
@@ -65,7 +65,7 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 29.999999999999996
+    "rotation": -150.0
   },
   "reversed": false,
   "folder": "Right Wall Starts",
