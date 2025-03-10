@@ -1,5 +1,6 @@
 package frc.robot.commands;
 
+import java.lang.annotation.ElementType;
 import java.lang.invoke.MethodHandles;
 import java.nio.file.attribute.PosixFilePermission;
 
@@ -87,6 +88,8 @@ public final class IntakingCommands
      * Command to pickup a coral from the ground
      * @return the command to pickup coral
      * @author Logan Bellinger
+     * 
+     * NO LONGER BEING USED W/ NEW NO GROUND INTAKE DESIGN
     */
     public static Command intakeCoralCommand()
     {
@@ -118,7 +121,7 @@ public final class IntakingCommands
             // .andThen(Commands.waitSeconds(0.5))
             .andThen(
                 Commands.parallel(
-                    claw.grabGamePieceCommand()
+                    claw.intakeCoralCommand()
                         .until(clawProximity.isDetectedSupplier()),
 
                     elevator.moveToSetPositionCommand(ElevatorPosition.kGrabCoralPosition)
@@ -136,7 +139,7 @@ public final class IntakingCommands
 
     public static Command moveIntakeCommand()
     {
-        if(elevator != null && pivot != null && intakeWrist != null)
+        if(elevator != null && intakeWrist != null)
         {
             return
         Commands.parallel(
@@ -162,30 +165,23 @@ public final class IntakingCommands
      */
     public static Command intakeCoralFromStationCommand()
     {
-        if(elevator != null && pivot != null && claw != null & elevatorProximity != null && clawProximity != null)
+        if(elevator != null && claw != null & elevatorProximity != null && clawProximity != null)
         {
             return
             // GeneralCommands.moveScorerToIntakingPositionCommand()
             //     .until(() -> (elevator.isAtPosition(ElevatorPosition.kReadyToGrabCoralPosition).getAsBoolean() && pivot.isAtPosition(PivotPosition.kDownPosition).getAsBoolean()))
 
             Commands.parallel(
-                elevator.moveToSetPositionCommand(ElevatorPosition.kSafeSwingPosition)
-                    .until(elevator.isAtPosition(ElevatorPosition.kSafeSwingPosition)),
+                elevator.moveToSetPositionCommand(ElevatorPosition.kGrabCoralPosition)
+                    .until(elevator.isAtPosition(ElevatorPosition.kGrabCoralPosition))
+                    .withTimeout(2.0),
 
-                pivot.moveToSetPositionCommand(PivotPosition.kDownPosition)
-                    .until(pivot.isAtPosition(PivotPosition.kDownPosition))
+                claw.intakeCoralCommand().until(clawProximity.isDetectedSupplier())
             )
 
             // .andThen(elevator.moveToSetPositionCommand(ElevatorPosition.kSafeSwingPosition).until(elevator.isAtPosition(ElevatorPosition.kSafeSwingPosition)))
 
-            .andThen(Commands.waitUntil(elevatorProximity.isDetectedSupplier()))
-
-            .andThen(
-                Commands.parallel(
-                        Commands.waitSeconds(0.5).andThen(elevator.moveToSetPositionCommand(ElevatorPosition.kGrabCoralPosition)
-                            .until(elevator.isAtPosition(ElevatorPosition.kGrabCoralPosition))),
-                        
-                    claw.grabGamePieceCommand().until(clawProximity.isDetectedSupplier()).withTimeout(2.0)))
+            .andThen(claw.stopCommand())
             // .andThen(Commands.waitSeconds(0.25))
 
             // .andThen(
@@ -197,8 +193,8 @@ public final class IntakingCommands
             //         elevator.moveToSetPositionCommand(ElevatorPosition.kGrabCoralPosition)
             //             .until(elevator.isAtPosition(ElevatorPosition.kGrabCoralPosition))))
 
-            .andThen(Commands.waitSeconds(0.5))
-            .andThen(claw.stopCommand())
+            // .andThen(Commands.waitSeconds(0.5))
+            // .andThen(claw.stopCommand())
             .andThen(GeneralCommands.setLedCommand(ColorPattern.kSolid, Color.kRed));
         }
         else
@@ -265,7 +261,7 @@ public final class IntakingCommands
 
     public static Command betterStationIntakeCommand()
     {
-        if(intakeWrist != null && elevator != null && pivot != null)
+        if(intakeWrist != null && elevator != null)
         {
             return
             Commands.parallel(
@@ -287,38 +283,20 @@ public final class IntakingCommands
      * @return The command to intake the algae
      * @author Logan Bellinger
      */
-    public static Command intakeAlgaeFromReefCommand(TargetPosition targetPosition)
+    public static Command intakeAlgaeFromReefCommand(ElevatorPosition elevatorPosition)
     {
-        if(elevator != null && pivot != null)
+        if(elevator != null)
         {
             return
             GeneralCommands.setLedCommand(ColorPattern.kBlink, Color.kYellow)
 
-            .andThen(
-                Commands.either(
-
-                    pivot.moveToSetPositionCommand(PivotPosition.kReefAlgaePosition)
-                        .until(pivot.isAtPosition(PivotPosition.kReefAlgaePosition))
-                    .andThen(
-                        elevator.moveToSetPositionCommand(targetPosition.elevator)
-                            .until(elevator.isAtPosition(targetPosition.elevator))), 
-                    
-                    elevator.moveToSetPositionCommand(ElevatorPosition.kSafeSwingPosition)
-                        .until(elevator.isAtPosition(ElevatorPosition.kSafeSwingPosition))
-                    .andThen(
-                        pivot.moveToSetPositionCommand(PivotPosition.kReefAlgaePosition)
-                            .until(pivot.isAtPosition(PivotPosition.kReefAlgaePosition)))
-                    .andThen(
-                        elevator.moveToSetPositionCommand(targetPosition.elevator)
-                            .until(elevator.isAtPosition(targetPosition.elevator))),
-                            
-                    () -> (elevator.getPosition() >  ElevatorPosition.kSafeSwingPosition.elevatorPosition)))
+            .andThen(elevator.moveToSetPositionCommand(elevatorPosition))
             
             .andThen(
-                claw.grabGamePieceCommand()
+                claw.intakeCoralCommand()
                     .until(clawProximity.isDetectedSupplier()))
             
-            .andThen(claw.pulseCommand())
+            // .andThen(claw.pulseCommand())
             .andThen(GeneralCommands.setLedCommand(ColorPattern.kSolid, Color.kRed))
             .withName("Intake Algae From Reef");
         }

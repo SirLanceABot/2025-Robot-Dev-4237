@@ -78,8 +78,8 @@ public final class OperatorBindings {
             configBButton();
             configXButton();
             configYButton();
-            configLeftBumper();
-            configRightBumper();
+            // configLeftBumper();
+            // configRightBumper();
             configBackButton();
             configStartButton();
             configLeftTrigger();
@@ -87,9 +87,9 @@ public final class OperatorBindings {
             configLeftStick();
             configRightStick();
             configDpadUp();
-            // configDpadDown();
-            configDpadLeft();
-            configDpadRight();
+            configDpadDown();
+            // configDpadLeft();
+            // configDpadRight();
             configRumble(30);
             configDefaultCommands();
 
@@ -165,7 +165,7 @@ public final class OperatorBindings {
     {
         Trigger leftBumper = controller.leftBumper();
 
-        leftBumper.onTrue(IntakingCommands.intakeAlgaeFromReefCommand(TargetPosition.kLowerReefAlgae));
+        // leftBumper.onTrue(IntakingCommands.intakeAlgaeFromReefCommand(TargetPosition.kLowerReefAlgae));
 
     }
 
@@ -174,7 +174,7 @@ public final class OperatorBindings {
     {
         Trigger rightBumper = controller.rightBumper();
 
-        rightBumper.onTrue(IntakingCommands.intakeAlgaeFromReefCommand(TargetPosition.kUpperReefAlgae));
+        rightBumper.onTrue(GeneralCommands.scoreCoralOnlyCommand());
     }
 
 
@@ -182,7 +182,7 @@ public final class OperatorBindings {
     {
         Trigger backButton = controller.back();
 
-        backButton.whileTrue(GeneralCommands.scoreCoralOnlyCommand().withTimeout(1.0).andThen(claw.stopCommand()));
+        // backButton.onTrue(GeneralCommands.scoreCoralOnlyCommand());
     }
 
 
@@ -192,7 +192,7 @@ public final class OperatorBindings {
 
         if(elevator != null && pivot != null)
             // startButton.onTrue(Commands.either(ScoringCommands.flipScorerCommand(), GeneralCommands.moveScorerToIntakingPositionCommand(), elevator.isAtPosition(ElevatorPosition.kGrabCoralPosition)));
-        startButton.onTrue(ScoringCommands.flipScorerCommand());
+        startButton.onTrue(elevator.moveToSetPositionCommand(ElevatorPosition.kGrabCoralPosition).until(elevator.isAtPosition(ElevatorPosition.kGrabCoralPosition)).withTimeout(1.0));
     }
 
     private static void configLeftTrigger()
@@ -235,7 +235,7 @@ public final class OperatorBindings {
     {
         Trigger dpadUp = controller.povUp();
 
-        dpadUp.onTrue(GeneralCommands.scoreLowCoralOnlyCommand());
+        // dpadUp.onTrue(GeneralCommands.scoreLowCoralOnlyCommand());
     }
 
 
@@ -250,14 +250,14 @@ public final class OperatorBindings {
     {
         Trigger dpadLeft = controller.povLeft();
 
-        dpadLeft.onTrue(GeneralCommands.moveScorerToProcessorCommand());
+        // dpadLeft.onTrue(GeneralCommands.moveScorerToProcessorCommand());
     }
 
     private static void configDpadRight()
     {
         Trigger dpadRight = controller.povRight();
 
-        dpadRight.onTrue(GeneralCommands.moveScorerToBargeCommand());
+        // dpadRight.onTrue(GeneralCommands.moveScorerToBargeCommand());
     }
 
 
@@ -268,15 +268,12 @@ public final class OperatorBindings {
         
         rumble
         .onTrue( Commands.runOnce(() -> controller.getHID().setRumble(RumbleType.kBothRumble, 1.0)))
-        .onFalse( Commands.runOnce(() -> controller.getHID().setRumble(RumbleType.kBothRumble, 0.0)));    }
+        .onFalse( Commands.runOnce(() -> controller.getHID().setRumble(RumbleType.kBothRumble, 0.0)));    
+    }
 
 
     private static void configDefaultCommands()
     {
         
     }
-
-
-    
-
 }

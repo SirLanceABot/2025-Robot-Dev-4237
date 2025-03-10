@@ -119,7 +119,7 @@ public final class ScoringCommands
             .andThen(
                 Commands.waitUntil(() -> (!(clawProximity.isDetectedSupplier().getAsBoolean())))
                 .deadlineFor(
-                    claw.placeCoralCommand()))
+                    claw.shootCoralCommand()))
             .andThen(
                 Commands.waitUntil(() -> (elevator.isAtPosition(targetPosition.elevator).getAsBoolean() && pivot.isAtPosition(targetPosition.pivot).getAsBoolean()))
                 .deadlineFor(
@@ -172,34 +172,34 @@ public final class ScoringCommands
      * @return the command to score in barge
      * @author Logan Bellinger
      */
-    public static Command scoreAlgaeInBargeCommand()
-    {
-        if(elevator != null && pivot != null && claw != null && clawProximity != null)
-        {
-            return
-            Commands.waitUntil(() -> (elevator.isAtPosition(ElevatorPosition.kL4).getAsBoolean() && pivot.isAtPosition(PivotPosition.kScoreBargePosition).getAsBoolean()))
-            .deadlineFor(
-                GeneralCommands.setLedCommand(ColorPattern.kBlink, Color.kBlue),
-                elevator.moveToSetPositionCommand(ElevatorPosition.kL4),
-                pivot.moveToSetPositionCommand(PivotPosition.kScoreBargePosition))
-            .andThen(
-                Commands.waitUntil(() -> (!(clawProximity.isDetectedSupplier()).getAsBoolean()))
-                .deadlineFor(
-                    claw.ejectAlgaeCommand()))
-            .andThen(
-                Commands.waitUntil(() -> (elevator.isAtPosition(ElevatorPosition.kReadyToGrabCoralPosition).getAsBoolean() && pivot.isAtPosition(PivotPosition.kDownPosition).getAsBoolean()))
-                .deadlineFor(
-                    claw.stopCommand(),
-                    elevator.moveToSetPositionCommand(ElevatorPosition.kReadyToGrabCoralPosition),
-                    pivot.moveToSetPositionCommand(PivotPosition.kDownPosition)))
-            .andThen(GeneralCommands.setLedCommand(ColorPattern.kSolid, Color.kRed))
-            .withName("Score Algae In Barge Command");
-        }
-        else
-        {
-            return Commands.none();
-        }
-    }
+    // public static Command scoreAlgaeInBargeCommand()
+    // {
+    //     if(elevator != null && pivot != null && claw != null && clawProximity != null)
+    //     {
+    //         return
+    //         Commands.waitUntil(() -> (elevator.isAtPosition(ElevatorPosition.kL4).getAsBoolean() && pivot.isAtPosition(PivotPosition.kScoreBargePosition).getAsBoolean()))
+    //         .deadlineFor(
+    //             GeneralCommands.setLedCommand(ColorPattern.kBlink, Color.kBlue),
+    //             elevator.moveToSetPositionCommand(ElevatorPosition.kL4),
+    //             pivot.moveToSetPositionCommand(PivotPosition.kScoreBargePosition))
+    //         .andThen(
+    //             Commands.waitUntil(() -> (!(clawProximity.isDetectedSupplier()).getAsBoolean()))
+    //             .deadlineFor(
+    //                 claw.ejectAlgaeCommand()))
+    //         .andThen(
+    //             Commands.waitUntil(() -> (elevator.isAtPosition(ElevatorPosition.kReadyToGrabCoralPosition).getAsBoolean() && pivot.isAtPosition(PivotPosition.kDownPosition).getAsBoolean()))
+    //             .deadlineFor(
+    //                 claw.stopCommand(),
+    //                 elevator.moveToSetPositionCommand(ElevatorPosition.kReadyToGrabCoralPosition),
+    //                 pivot.moveToSetPositionCommand(PivotPosition.kDownPosition)))
+    //         .andThen(GeneralCommands.setLedCommand(ColorPattern.kSolid, Color.kRed))
+    //         .withName("Score Algae In Barge Command");
+    //     }
+    //     else
+    //     {
+    //         return Commands.none();
+    //     }
+    // }
 
     /**
      * Command to finish scoring coral on the reef
@@ -213,8 +213,8 @@ public final class ScoringCommands
             return
             Commands.waitUntil(() -> (!(clawProximity.isDetectedSupplier()).getAsBoolean()))
             .deadlineFor(
-                GeneralCommands.setLedCommand(ColorPattern.kBlink, Color.kBlue),
-                claw.ejectAlgaeCommand())
+                GeneralCommands.setLedCommand(ColorPattern.kBlink, Color.kBlue))
+                // claw.ejectAlgaeCommand())
             .andThen(
                 Commands.waitUntil(() -> (elevator.isAtPosition(ElevatorPosition.kReadyToGrabCoralPosition).getAsBoolean() && pivot.isAtPosition(PivotPosition.kDownPosition).getAsBoolean()))
                 .deadlineFor(
@@ -236,8 +236,8 @@ public final class ScoringCommands
             return
             Commands.waitUntil(() -> (!(clawProximity.isDetectedSupplier()).getAsBoolean()))
             .deadlineFor(
-                GeneralCommands.setLedCommand(ColorPattern.kBlink, Color.kBlue),
-                claw.ejectAlgaeCommand())
+                GeneralCommands.setLedCommand(ColorPattern.kBlink, Color.kBlue))
+                // claw.ejectAlgaeCommand())
             .andThen(
                 Commands.waitUntil(elevator.isAtPosition(ElevatorPosition.kSafeSwingPosition))
                 .deadlineFor(
@@ -273,7 +273,7 @@ public final class ScoringCommands
                     elevator.moveToSetPositionCommand(ElevatorPosition.kHoldingPosition)
                         .until(elevator.isAtPosition(ElevatorPosition.kHoldingPosition))),
 
-                claw.grabGamePieceCommand()
+                claw.intakeCoralCommand()
                             .until(pivot.isAtPosition(PivotPosition.kFlippedPosition)),
 
                     Commands.waitSeconds(0.5).andThen(pivot.moveToSetPositionCommand(PivotPosition.kFlippedPosition)
@@ -311,10 +311,10 @@ public final class ScoringCommands
                 GeneralCommands.setLedCommand(ColorPattern.kBlink, Color.kBlue),
                 elevator.moveToSetPositionCommand(ElevatorPosition.kScoreProcessorPosition),
                 pivot.moveToSetPositionCommand(PivotPosition.kScoreProcessorPosition))
-            .andThen(
-                Commands.waitUntil(() -> (!(clawProximity.isDetectedSupplier()).getAsBoolean()))
-                .deadlineFor(
-                    claw.ejectAlgaeCommand()))
+            // .andThen(
+            //     Commands.waitUntil(() -> (!(clawProximity.isDetectedSupplier()).getAsBoolean()))
+            //     .deadlineFor(
+            //         claw.ejectAlgaeCommand()))
                 .andThen(
                     Commands.waitUntil(() -> (elevator.isAtPosition(ElevatorPosition.kReadyToGrabCoralPosition).getAsBoolean() && pivot.isAtPosition(PivotPosition.kDownPosition).getAsBoolean()))
                     .deadlineFor(
@@ -332,7 +332,7 @@ public final class ScoringCommands
     public static Command scoreCoralAutonomouslyReallyCoolAndAwesomeCommand(Supplier<Pose2d> currentPose, Supplier<Pose2d> targetPose)
     {
         // TODO: YIPPEE
-        if(drivetrain != null && elevator != null && pivot != null && claw != null)
+        if(drivetrain != null && elevator != null && claw != null)
         {
             // Pose2d targetPose = poseEstimator.closestBranchLocation(poseEstimator.getPrimaryTagID(), isRight);
             // Pose2d testPose = new Pose2d(currentPose.getX() + 1.0, currentPose.getY(), currentPose.getRotation());
@@ -352,7 +352,7 @@ public final class ScoringCommands
             // .andThen(
                 // GeneralCommands.driveToPositionCommand(testPose, currentPose))
                 .andThen(
-                    GeneralCommands.scoreLowCoralOnlyCommand())
+                    GeneralCommands.scoreCoralOnlyCommand())
                 .withName("Autonomous Score Command");
             // }
             // else
@@ -368,7 +368,7 @@ public final class ScoringCommands
 
     public static Command autoAlignL3Command(Supplier<Pose2d> currentPose, Supplier<Pose2d> targetPose)
     {
-        if(drivetrain != null && elevator != null && pivot != null && claw != null)
+        if(drivetrain != null && elevator != null && claw != null)
         {
             // Pose2d targetPose = poseEstimator.closestBranchLocation(poseEstimator.getPrimaryTagID(), isRight);
             // Pose2d testPose = new Pose2d(currentPose.getX() + 1.0, currentPose.getY(), currentPose.getRotation());
@@ -388,7 +388,7 @@ public final class ScoringCommands
             // .andThen(
                 // GeneralCommands.driveToPositionCommand(testPose, currentPose))
                 .andThen(
-                    GeneralCommands.scoreLowCoralOnlyCommand())
+                    GeneralCommands.scoreCoralOnlyCommand())
                 .withName("Autonomous Score Command");
             // }
             // else
@@ -404,7 +404,7 @@ public final class ScoringCommands
 
     public static Command autoAlignL2Command(Supplier<Pose2d> currentPose, Supplier<Pose2d> targetPose)
     {
-        if(drivetrain != null && elevator != null && pivot != null && claw != null)
+        if(drivetrain != null && elevator != null && claw != null)
         {
             // Pose2d targetPose = poseEstimator.closestBranchLocation(poseEstimator.getPrimaryTagID(), isRight);
             // Pose2d testPose = new Pose2d(currentPose.getX() + 1.0, currentPose.getY(), currentPose.getRotation());
@@ -424,7 +424,7 @@ public final class ScoringCommands
             // .andThen(
                 // GeneralCommands.driveToPositionCommand(testPose, currentPose))
                 .andThen(
-                    GeneralCommands.scoreLowCoralOnlyCommand())
+                    GeneralCommands.scoreCoralOnlyCommand())
                 .withName("Autonomous Score Command");
             // }
             // else

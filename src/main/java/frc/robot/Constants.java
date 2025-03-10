@@ -99,8 +99,8 @@ public final class Constants
 
     public static class Claw
     {
-        public static final int KICK_MOTOR_PORT                         = 32;
-        public static final int GRAB_MOTOR_PORT                         = 14;
+        public static final int SHOOT_MOTOR_PORT                         = 32;
+        public static final int INDEX_MOTOR_PORT                         = 14;
         public static final String KICK_MOTOR_CAN_BUS                   = ROBORIO;
         public static final String GRAB_MOTOR_CAN_BUS                   = ROBORIO;
     }
@@ -145,6 +145,7 @@ public final class Constants
         public static final int CORAL_INTAKE_PORT                       = 3;
         public static final int ELEVATOR_PORT                           = 4;
         public static final int CLAW_PORT                               = 2;
+        public static final int FUNNEL_PORT                             = 5;
     }
 
     public static class Shuttle

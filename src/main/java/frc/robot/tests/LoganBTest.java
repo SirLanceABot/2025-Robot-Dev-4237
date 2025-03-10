@@ -126,7 +126,7 @@ public class LoganBTest implements Test
             // GeneralCommands.moveScorerToIntakingPositionCommand().schedule();
             // pivot.set(0.1);
             // GeneralCommands.moveScorerToL1Command().schedule();
-            climb.set(0.05);
+            climb.set(0.3);
             // IntakingCommands.intakeAlgaeFromReefCommand(TargetPosition.kLowerReefAlgae).schedule();
         }
         else if(joystick.getRawButton(2))
@@ -147,7 +147,7 @@ public class LoganBTest implements Test
             // elevator.set(-0.2);
             // pivot.set(-0.1);
             // GeneralCommands.moveScorerToL2Commmand().schedule();
-            climb.set(-0.05);
+            climb.set(-0.3);
         }
         else if(joystick.getRawButton(3))
         {

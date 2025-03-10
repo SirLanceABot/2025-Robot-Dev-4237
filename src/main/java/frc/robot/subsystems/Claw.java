@@ -37,8 +37,8 @@ public class Claw extends SubsystemLance
     // *** CLASS VARIABLES & INSTANCE VARIABLES ***
     // Put all class variables and instance variables here
 
-    private final SparkMaxLance kickMotor = new SparkMaxLance(Constants.Claw.KICK_MOTOR_PORT, Constants.Claw.KICK_MOTOR_CAN_BUS, "Claw Kick Motor");
-    private final TalonFXLance grabMotor = new TalonFXLance(Constants.Claw.GRAB_MOTOR_PORT, Constants.Claw.GRAB_MOTOR_CAN_BUS, "Claw Grab Motor");
+    private final SparkMaxLance shootMotor = new SparkMaxLance(Constants.Claw.SHOOT_MOTOR_PORT, Constants.Claw.KICK_MOTOR_CAN_BUS, "Claw Shoot Motor");
+    private final SparkMaxLance indexMotor = new SparkMaxLance(Constants.Claw.INDEX_MOTOR_PORT, Constants.Claw.GRAB_MOTOR_CAN_BUS, "Claw Index Motor");
     // private final SparkMaxLance backMotor = new SparkMaxLance(Constants.Grabber.BACK_MOTOR_PORT, Constants.Grabber.BACK_MOTOR_CAN_BUS, "Back Claw Motor");
 
     // *** CLASS CONSTRUCTORS ***
@@ -63,127 +63,129 @@ public class Claw extends SubsystemLance
 
     private void configMotors()
     {
-        kickMotor.setupFactoryDefaults();
-        grabMotor.setupFactoryDefaults();
-        kickMotor.setupBrakeMode();
-        grabMotor.setupBrakeMode();
-        kickMotor.setInverted(false);
-        kickMotor.setSafetyEnabled(false);
-        grabMotor.setSafetyEnabled(false);
-        grabMotor.setupCurrentLimit(30.0, 50.0, 0.5);
+        shootMotor.setupFactoryDefaults();
+        indexMotor.setupFactoryDefaults();
+        shootMotor.setupBrakeMode();
+        indexMotor.setupBrakeMode();
+        shootMotor.setInverted(false);
+        shootMotor.setSafetyEnabled(false);
+        indexMotor.setSafetyEnabled(false);
+        indexMotor.setupCurrentLimit(30.0, 50.0, 0.5);
     }
 
     /**
      *Sets the speed of the grab motor
     */
-    public void setGrabSpeed(double speed)
+    public void setIndexSpeed(double speed)
     {
-        grabMotor.set(speed);
+        indexMotor.set(speed);
         // System.out.println("Grab motor amps: " + grabMotor.getCurrentAmps());
     }
 
     /**
      *Sets the speed of the kick motor
     */
-    private void setKickSpeed(double speed)
+    private void setShootSpeed(double speed)
     {
-        kickMotor.set(speed);
+        shootMotor.set(speed);
     }
 
-    private void pulseGrab()
-    {
-        if(grabMotor.getCurrentAmps() > 20.0)
-        {
-            grabMotor.set(0.0);
-        }
-        else
-        {
-            grabMotor.set(0.3);
-        }
-    }
+    // private void pulseGrab()
+    // {
+    //     if(indexMotor.getCurrentAmps() > 20.0)
+    //     {
+    //         indexMotor.set(0.0);
+    //     }
+    //     else
+    //     {
+    //         indexMotor.set(0.3);
+    //     }
+    // }
 
     /**
      * Sets the grab motor to grab the game piece
      */
-    public void grabGamePiece()
+    public void intakeCoral()
     {
-        setGrabSpeed(0.8);
+        setIndexSpeed(0.8);
+        setShootSpeed(0.8);
     }
 
-    public void ejectAlgae()
-    {
-        setGrabSpeed(-0.1);
-    }
+    // public void ejectAlgae()
+    // {
+    //     setIndexSpeed(-0.1);
+    // }
 
-    public void holdAlgae()
-    {
-        setGrabSpeed(0.02);
-    }
+    // public void holdAlgae()
+    // {
+    //     setIndexSpeed(0.02);
+    // }
+
     /** 
      * Sets speed of the kick motor to spit out coral
     */
-    public void placeCoral()
+    public void shootCoral()
     {
-        setKickSpeed(0.30); //0.1 was too slow
+        setShootSpeed(0.30); //0.1 was too slow
     }
 
-    public void placeLowCoral()
-    {
-        setKickSpeed(0.5);
-    }
+    // public void placeLowCoral()
+    // {
+    //     setShootSpeed(0.5);
+    // }
 
     public void stop()
     {
-        grabMotor.set(0.0);
-        kickMotor.set(0.0);
+        indexMotor.set(0.0);
+        shootMotor.set(0.0);
     }
 
     /**
      * grabs the game piece
      * @return the command lol
      */
-    public Command grabGamePieceCommand()
+    public Command intakeCoralCommand()
     {
         // design pending
-        return run(() -> grabGamePiece()).withName("Grab GamePiece");
+        return run(() -> intakeCoral()).withName("Intake Coral");
     }
 
-    public Command pulseCommand()
-    {
-        return run(() -> pulseGrab());
-    }
+    // public Command pulseCommand()
+    // {
+    //     return run(() -> pulseGrab());
+    // }
 
     /**
      * ejects the algae held by the claw
      * @return the command lol
      */
-    public Command ejectAlgaeCommand()
-    {
-        return runOnce(() -> ejectAlgae()).withName("Eject Algae");
-    }
+    // public Command ejectAlgaeCommand()
+    // {
+    //     return runOnce(() -> ejectAlgae()).withName("Eject Algae");
+    // }
 
     /**
      * TODO Might have to decide which side of the robot the coral will be placed on, and depending on that invert the kickMotor speed
      * @return runs place coral method
     */
-    public Command placeCoralCommand()
+    public Command shootCoralCommand()
     {
-        return run(() -> placeCoral()).withName("Place Coral");
+        return run(() -> shootCoral()).withName("Place Coral");
     }
 
-    public Command placeLowCoralCommand()
-    {
-        return run(() -> placeLowCoral());
-    }
+    // public Command placeLowCoralCommand()
+    // {
+    //     return run(() -> placeLowCoral());
+    // }
 
-    public Command holdAlgaeCommand()
-    {
-        return runOnce(() -> holdAlgae()).withName("Hold Algae");
-    }
+    // public Command holdAlgaeCommand()
+    // {
+    //     return runOnce(() -> holdAlgae()).withName("Hold Algae");
+    // }
 
-    public Command setKickSpeedCommand(double speed)
+    public Command setShootSpeedCommand(double speed)
     {
-        return run(() ->  setKickSpeed(speed)).withName("Set Kick Speed");
+        return run(() ->  setShootSpeed(speed)).withName("Set Kick Speed");
     }
     
     /**
@@ -206,6 +208,6 @@ public class Claw extends SubsystemLance
     @Override
     public String toString()
     {
-        return "Claw Kick Motor Speed: " + kickMotor.get() + "Claw Grab Motor Speed: " + grabMotor.get();
+        return "Claw Shoot Motor Speed: " + shootMotor.get() + "Claw Index Motor Speed: " + indexMotor.get();
     }
 }

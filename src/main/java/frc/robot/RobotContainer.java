@@ -84,6 +84,7 @@ public class RobotContainer
     private final Proximity intakeProximity;
     private final Proximity elevatorProximity;
     private final Proximity clawProximity;
+    private final Proximity funnelProximity;
 
 
     // private final DriverButtonBindings driverButtonBindings;
@@ -148,6 +149,10 @@ public class RobotContainer
 
         clawProximity = (useFullRobot || useProximity)
                 ? new Proximity(Constants.Proximity.CLAW_PORT)
+                : null;
+
+        funnelProximity = (useFullRobot || useProximity)
+                ? new Proximity(Constants.Proximity.FUNNEL_PORT)
                 : null;
 
         cameraArray[0] = (useFullRobot || useScoringSideCamera)
@@ -241,6 +246,11 @@ public class RobotContainer
     public Proximity getClawProximity()
     {
         return clawProximity;
+    }
+
+    public Proximity getFunnelProximity()
+    {
+        return funnelProximity;
     }
 
     public CommandXboxController getDriverController()

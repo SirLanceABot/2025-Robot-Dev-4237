@@ -81,7 +81,7 @@ public final class DriverBindings {
 
             configSuppliers();
 
-            configAButton();
+            // configAButton();
             configBButton();
             configXButton();
             configYButton();
@@ -118,8 +118,8 @@ public final class DriverBindings {
     private static void configAButton()
     {
         Trigger aButton = controller.a();
-        aButton
-            .onTrue(IntakingCommands.intakeCoralCommand());
+        // aButton
+        //     .onTrue(IntakingCommands.intakeCoralCommand());
     }
 
 
@@ -152,7 +152,7 @@ public final class DriverBindings {
         // .onTrue( Commands.runOnce(() -> controller.getHID().setRumble(RumbleType.kBothRumble, 1.0)))
         // .onFalse( Commands.runOnce(() -> controller.getHID().setRumble(RumbleType.kBothRumble, 0.0)));
 
-        yButton.onTrue(IntakingCommands.betterStationIntakeCommand());
+        yButton.onTrue(IntakingCommands.intakeCoralFromStationCommand());
         
     }
 
@@ -171,7 +171,7 @@ public final class DriverBindings {
     {
         Trigger rightBumper = controller.rightBumper();
         rightBumper
-            .onTrue(IntakingCommands.moveIntakeCommand());
+            .onTrue(IntakingCommands.intakeCoralFromStationCommand());
             // .onTrue(IntakingCommands.intakeCoralCommand());
     }
 
