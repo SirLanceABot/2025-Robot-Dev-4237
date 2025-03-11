@@ -13,7 +13,10 @@ import com.ctre.phoenix6.swerve.SwerveDrivetrain;
 
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.Commands;
 import frc.robot.RobotContainer;
 import frc.robot.subsystems.Drivetrain;
 
@@ -35,6 +38,7 @@ public class PathPlannerLance
     private static Drivetrain drivetrain;
     private static Field2d field; // object to put on dashboards
     
+    private static SendableChooser<Command> autoChooser;
     // private static SendableChooser < Command > leftWall;
     // private static SendableChooser < Command > middle;
     // private static SendableChooser < Command > rightWall;
@@ -47,7 +51,8 @@ public class PathPlannerLance
     {
         drivetrain = robotContainer.getDrivetrain();
         // configAutoBuilder();
-        // configAutoChooser();
+        configAutoChooser();
+        getAutonomousCommand();
 
         // configPathPlannerLogging();
         
@@ -169,5 +174,32 @@ public class PathPlannerLance
         // new EventTrigger("LED BlUE").onTrue(GeneralCommands.setLEDSolid(Color.kBlue));
 
 
+    }
+
+    private static void configAutoChooser()
+    {
+        if(AutoBuilder.isConfigured())
+        {
+            autoChooser = AutoBuilder.buildAutoChooser();
+            SmartDashboard.putData("Auto Chooser", autoChooser);
+        }
+        else
+        {
+            autoChooser = new SendableChooser<Command>();
+            autoChooser.setDefaultOption("None", Commands.none());
+        }
+    }
+
+    public static Command getAutonomousCommand() 
+    {
+        if(autoChooser != null)
+        {
+            return autoChooser.getSelected();
+        }
+        else
+        {
+            return Commands.none();
+        }
+        // return new PathPlannerAuto("TEST AUTO - MOVE FORWARD 2M");
     }
 }

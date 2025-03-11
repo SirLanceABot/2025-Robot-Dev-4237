@@ -118,7 +118,7 @@ public class Robot extends TimedRobot
     {
         if (!autonomousRun)
         {
-            previousCommand = ElasticLance.getAutonomousCommand();
+            previousCommand = PathPlannerLance.getAutonomousCommand();
             
         }
     }
@@ -132,10 +132,10 @@ public class Robot extends TimedRobot
         if (!autonomousRun && robotContainer.getDrivetrain() != null)
         {
             // robotContainer.getDrivetrain().seedFieldCentric();
-            currentCommand = ElasticLance.getAutonomousCommand();
+            currentCommand = PathPlannerLance.getAutonomousCommand();
             if(currentCommand != previousCommand)
             {
-                ElasticLance.resetRobot(robotContainer.getDrivetrain().getPigeon2());
+                // ElasticLance.resetRobot(robotContainer.getDrivetrain().getPigeon2());
                 autonomousCommand = currentCommand;
                 // ElasticLance.updateAutoField();
             }
@@ -161,7 +161,7 @@ public class Robot extends TimedRobot
     public void autonomousInit() 
     {
         // DataLogManager.start();
-        //autonomousCommand = ElasticLance.getAutonomousCommand();
+        autonomousCommand = PathPlannerLance.getAutonomousCommand();
 
         // PathPlannerAuto path = new PathPlannerAuto("Testing");
         Command path = AutoBuilder.buildAuto("Straight Middle");

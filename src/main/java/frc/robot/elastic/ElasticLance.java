@@ -76,7 +76,7 @@ public class ElasticLance
     public static void configElastic(RobotContainer robotContainer)
     {
         leds = robotContainer.getLEDs();
-        configAutoChooser();
+        // configAutoChooser();
         
         elevator = robotContainer.getElevator();
         drivetrain = robotContainer.getDrivetrain();
@@ -127,152 +127,152 @@ public class ElasticLance
         /**
      * Configures the Sendable Choosers for left, middle, and right autonomous paths.
      */
-    private static void configAutoChooser()
-    {
-        boolean aBotAutoChoosers = true;
-        if (AutoBuilder.isConfigured())
-        {
-            leftWall = AutoBuilder.buildAutoChooserWithOptionsModifier(
-                (stream) -> aBotAutoChoosers ?
-                stream.filter(auto -> auto.getName().startsWith("Left")) :
-                stream
-            );
+    // private static void configAutoChooser()
+    // {
+    //     boolean aBotAutoChoosers = true;
+    //     if (AutoBuilder.isConfigured())
+    //     {
+    //         leftWall = AutoBuilder.buildAutoChooserWithOptionsModifier(
+    //             (stream) -> aBotAutoChoosers ?
+    //             stream.filter(auto -> auto.getName().startsWith("Left")) :
+    //             stream
+    //         );
 
-            middle = AutoBuilder.buildAutoChooserWithOptionsModifier(
-                (stream) -> aBotAutoChoosers ?
-                stream.filter(auto -> auto.getName().startsWith("Middle")) :
-                stream
-            );
+    //         middle = AutoBuilder.buildAutoChooserWithOptionsModifier(
+    //             (stream) -> aBotAutoChoosers ?
+    //             stream.filter(auto -> auto.getName().startsWith("Middle")) :
+    //             stream
+    //         );
 
-            rightWall = AutoBuilder.buildAutoChooserWithOptionsModifier(
-                (stream) -> aBotAutoChoosers ?
-                stream.filter(auto -> auto.getName().startsWith("Right")) :
-                stream
-            );
-        }
-        else
-        {
-            leftWall = new SendableChooser < Command > ();
-            leftWall.setDefaultOption("None", Commands.none());
+    //         rightWall = AutoBuilder.buildAutoChooserWithOptionsModifier(
+    //             (stream) -> aBotAutoChoosers ?
+    //             stream.filter(auto -> auto.getName().startsWith("Right")) :
+    //             stream
+    //         );
+    //     }
+    //     else
+    //     {
+    //         leftWall = new SendableChooser < Command > ();
+    //         leftWall.setDefaultOption("None", Commands.none());
 
-            middle = new SendableChooser < Command > ();
-            middle.setDefaultOption("None", Commands.none());
+    //         middle = new SendableChooser < Command > ();
+    //         middle.setDefaultOption("None", Commands.none());
 
-            rightWall = new SendableChooser < Command > ();
-            rightWall.setDefaultOption("None", Commands.none());
-        }
+    //         rightWall = new SendableChooser < Command > ();
+    //         rightWall.setDefaultOption("None", Commands.none());
+    //     }
 
-        SmartDashboard.putData("Left-Wall", leftWall);
-        SmartDashboard.putData("Middle", middle);
-        SmartDashboard.putData("Right-Wall", rightWall);
-    }
+    //     SmartDashboard.putData("Left-Wall", leftWall);
+    //     SmartDashboard.putData("Middle", middle);
+    //     SmartDashboard.putData("Right-Wall", rightWall);
+    // }
 
-    public static Command getLeftWall()
-    {
-        return leftWall.getSelected();
-    }
+    // public static Command getLeftWall()
+    // {
+    //     return leftWall.getSelected();
+    // }
 
-    public static Command getRightWall()
-    {
-        return rightWall.getSelected();
-    }
+    // public static Command getRightWall()
+    // {
+    //     return rightWall.getSelected();
+    // }
 
-    public static Command getMiddle()
-    {
-        return middle.getSelected();
-    }
+    // public static Command getMiddle()
+    // {
+    //     return middle.getSelected();
+    // }
     /**
      * Retrieves the selected autonomous command from the Sendable Choosers.
      *
      * @return The selected autonomous command.
      */
-    public static Command getAutonomousCommand()
-    {
-        if (leftWall != null && middle != null && rightWall != null)
-        {
-            int counter = 0;
-            Command command = null;
-            if (leftWall.getSelected().getName().contains("Left_Wall"))
-            {
-                counter++;
-                command = leftWall.getSelected();
-                //return leftWall.getSelected();
-            }
-            if (middle.getSelected().getName().contains("Middle"))
-            {
-                counter++;
-                command = middle.getSelected();
-                //return middle.getSelected();
-            }
-            if (rightWall.getSelected().getName().contains("Right_Wall"))
-            {
-                counter++;
-                command = rightWall.getSelected();
-                //return rightWall.getSelected();
-            }
-            if ( counter == 1)
-            {
-                SmartDashboard.putString("ERROR", "Valid Selection, good job");
-                autoName = command.getName();;
-                //leds.setColorSolidCommand(color.kGreen).schedule();
-                return command;
-            }
-            else
-            {
-                SmartDashboard.putString("ERROR", "Invalid Selection: Pick ONE Autonomous");
-                //leds.setColorBlinkCommand(Color.kRed).schedule();
-                return Commands.none();
-            }
-        }
-        else
-        {
-            return Commands.none();
-        }
+    // public static Command getAutonomousCommand()
+    // {
+    //     if (leftWall != null && middle != null && rightWall != null)
+    //     {
+    //         int counter = 0;
+    //         Command command = null;
+    //         if (leftWall.getSelected().getName().contains("Left_Wall"))
+    //         {
+    //             counter++;
+    //             command = leftWall.getSelected();
+    //             //return leftWall.getSelected();
+    //         }
+    //         if (middle.getSelected().getName().contains("Middle"))
+    //         {
+    //             counter++;
+    //             command = middle.getSelected();
+    //             //return middle.getSelected();
+    //         }
+    //         if (rightWall.getSelected().getName().contains("Right_Wall"))
+    //         {
+    //             counter++;
+    //             command = rightWall.getSelected();
+    //             //return rightWall.getSelected();
+    //         }
+    //         if ( counter == 1)
+    //         {
+    //             SmartDashboard.putString("ERROR", "Valid Selection, good job");
+    //             autoName = command.getName();;
+    //             //leds.setColorSolidCommand(color.kGreen).schedule();
+    //             return command;
+    //         }
+    //         else
+    //         {
+    //             SmartDashboard.putString("ERROR", "Invalid Selection: Pick ONE Autonomous");
+    //             //leds.setColorBlinkCommand(Color.kRed).schedule();
+    //             return Commands.none();
+    //         }
+    //     }
+    //     else
+    //     {
+    //         return Commands.none();
+    //     }
 
-    }
+    // }
 
-    public static void resetRobot(Pigeon2 gyro)
-    {   
-        if(gyro != null)
-        {
-            boolean isRed = DriverStation.getAlliance().isPresent() && DriverStation.getAlliance().get() == DriverStation.Alliance.Red;
+    // public static void resetRobot(Pigeon2 gyro)
+    // {   
+    //     if(gyro != null)
+    //     {
+    //         boolean isRed = DriverStation.getAlliance().isPresent() && DriverStation.getAlliance().get() == DriverStation.Alliance.Red;
         
-            Command leftWall = getLeftWall();
-            Command middle = getMiddle();
-            Command rightWall = getRightWall();
+    //         Command leftWall = getLeftWall();
+    //         Command middle = getMiddle();
+    //         Command rightWall = getRightWall();
 
-            if(isRed)
-            {
-                if(leftWall != Commands.none())
-                {
-                    gyro.setYaw(Constants.Gyro.RED_LEFT_YAW);
-                }
-                else if(middle != Commands.none())
-                {
-                    gyro.setYaw(Constants.Gyro.RED_MIDDLE_YAW);
-                }
-                else if(rightWall != Commands.none())
-                {
-                    gyro.setYaw(Constants.Gyro.RED_RIGHT_YAW);
-                }
-            }
-            else
-            {
-                if(leftWall != Commands.none())
-                {
-                    gyro.setYaw(Constants.Gyro.BLUE_LEFT_YAW);
-                }
-                else if(middle != Commands.none())
-                {
-                    gyro.setYaw(Constants.Gyro.BLUE_MIDDLE_YAW);
-                }
-                else if(rightWall != Commands.none())
-                {
-                    gyro.setYaw(Constants.Gyro.BLUE_RIGHT_YAW);
-                }
-            }
-        }
-    }
+    //         if(isRed)
+    //         {
+    //             if(leftWall != Commands.none())
+    //             {
+    //                 gyro.setYaw(Constants.Gyro.RED_LEFT_YAW);
+    //             }
+    //             else if(middle != Commands.none())
+    //             {
+    //                 gyro.setYaw(Constants.Gyro.RED_MIDDLE_YAW);
+    //             }
+    //             else if(rightWall != Commands.none())
+    //             {
+    //                 gyro.setYaw(Constants.Gyro.RED_RIGHT_YAW);
+    //             }
+    //         }
+    //         else
+    //         {
+    //             if(leftWall != Commands.none())
+    //             {
+    //                 gyro.setYaw(Constants.Gyro.BLUE_LEFT_YAW);
+    //             }
+    //             else if(middle != Commands.none())
+    //             {
+    //                 gyro.setYaw(Constants.Gyro.BLUE_MIDDLE_YAW);
+    //             }
+    //             else if(rightWall != Commands.none())
+    //             {
+    //                 gyro.setYaw(Constants.Gyro.BLUE_RIGHT_YAW);
+    //             }
+    //         }
+    //     }
+    // }
 
     // private static void createAutoField()
     // {
