@@ -137,233 +137,6 @@ public final class GeneralCommands
              
     }
 
-    public static Command intakeTestCommand()
-    {
-        if(intake != null && intakeWrist != null && intakeProximity != null)
-        {
-            return 
-            intakeWrist.moveToSetPositionCommand(Position.kIntakeCoralPosition)
-                .until(intakeWrist.isAtPosition(Position.kIntakeCoralPosition))
-                .withTimeout(1.5)
-            .andThen(
-                intake.pickupCoralCommand()
-                    .until(intakeProximity.isDetectedSupplier()))
-            .andThen(intake.stopCommand())
-            .andThen(
-                intakeWrist.moveToSetPositionCommand(Position.kRestingPosition)
-                    .until(intakeWrist.isAtPosition(Position.kRestingPosition)))
-            .andThen(
-                intake.ejectCoralCommand()
-                .withTimeout(1.0)
-            );
-        }
-        else
-        {
-            return Commands.none();
-        }
-    }
-
-    public static Command testgrabbingFromIntakeCommand()
-    {
-        if( elevator != null & pivot != null && claw != null && clawProximity != null)
-        {
-            return
-            elevator.moveToSetPositionCommand(ElevatorPosition.kSafeSwingPosition)
-                .until(elevator.isAtPosition(ElevatorPosition.kSafeSwingPosition))
-                .withTimeout(2.0)
-            .andThen(
-                pivot.moveToSetPositionCommand(PivotPosition.kDownPosition)
-                    .until(pivot.isAtPosition(PivotPosition.kDownPosition))
-                    .withTimeout(2.0)
-            )
-            .andThen(
-                elevator.moveToSetPositionCommand(ElevatorPosition.kReadyToGrabCoralPosition)
-                    .until(elevator.isAtPosition(ElevatorPosition.kReadyToGrabCoralPosition))
-                    .withTimeout(2.0)
-            )
-            .andThen(
-                Commands.parallel(
-                    claw.intakeCoralCommand()
-                        .until(clawProximity.isDetectedSupplier())
-                            .andThen(claw.stopCommand()),
-
-                    elevator.moveToSetPositionCommand(ElevatorPosition.kGrabCoralPosition)
-                        .until(elevator.isAtPosition(ElevatorPosition.kGrabCoralPosition))
-                        .withTimeout(2.0)
-                )
-            )
-            .andThen(
-                elevator.moveToSetPositionCommand(ElevatorPosition.kReadyToGrabCoralPosition)
-                    .until(elevator.isAtPosition(ElevatorPosition.kReadyToGrabCoralPosition))
-                    .withTimeout(2.0)
-               
-            );
-        }
-        else
-        {
-            return Commands.none();
-        }
-    }
-
-    public static Command testGrabAndFlipCommand()
-    {
-        if( elevator != null & pivot != null && claw != null)
-        {
-            return
-            elevator.moveToSetPositionCommand(ElevatorPosition.kSafeSwingPosition)
-                .until(elevator.isAtPosition(ElevatorPosition.kSafeSwingPosition))
-                .withTimeout(2.0)
-            .andThen(
-                pivot.moveToSetPositionCommand(PivotPosition.kDownPosition)
-                    .until(pivot.isAtPosition(PivotPosition.kDownPosition))
-                    .withTimeout(2.0)
-            )
-            .andThen(
-                elevator.moveToSetPositionCommand(ElevatorPosition.kReadyToGrabCoralPosition)
-                    .until(elevator.isAtPosition(ElevatorPosition.kReadyToGrabCoralPosition))
-                    .withTimeout(2.0)
-            )
-            .andThen(
-                Commands.parallel(
-                    claw.intakeCoralCommand()
-                        .until(clawProximity.isDetectedSupplier())
-                            .andThen(
-                            claw.stopCommand()
-                            ),
-
-                    elevator.moveToSetPositionCommand(ElevatorPosition.kGrabCoralPosition)
-                        .until(elevator.isAtPosition(ElevatorPosition.kGrabCoralPosition))
-                        .withTimeout(2.0)
-                )
-            )
-            .andThen(
-                elevator.moveToSetPositionCommand(ElevatorPosition.kSafeSwingPosition)
-                    .until(elevator.isAtPosition(ElevatorPosition.kSafeSwingPosition))
-                    .withTimeout(2.0)  
-            )
-            .andThen(
-                pivot.moveToSetPositionCommand(PivotPosition.kSafeDropPosition)
-                    .until(pivot.isAtPosition(PivotPosition.kSafeDropPosition))
-                    .withTimeout(2.0)
-            )
-            .andThen(
-                Commands.parallel(
-                    pivot.moveToSetPositionCommand(PivotPosition.kFlippedPosition)
-                        .until(pivot.isAtPosition(PivotPosition.kFlippedPosition))
-                        .withTimeout(2.0),
-
-                    elevator.moveToSetPositionCommand(ElevatorPosition.kHoldingPosition)
-                        .until(elevator.isAtPosition(ElevatorPosition.kHoldingPosition))
-                        .withTimeout(2.0)
-                )
-            );
-        }
-        else
-        {
-            return Commands.none();
-        }
-    }
-
-    public static Command testScoringAndReadyToIntakeCommand()
-    {
-        if(elevator != null && pivot != null && claw != null && clawProximity != null)
-        {
-            if(elevator.getPosition() > 30)
-            {
-                return
-                elevator.moveToSetPositionCommand(ElevatorPosition.kSafeSwingPosition)
-                    .until(elevator.isAtPosition(ElevatorPosition.kSafeSwingPosition))
-                    .withTimeout(2.0)
-                .andThen(
-                    pivot.moveToSetPositionCommand(PivotPosition.kFlippedPosition)
-                        .until(pivot.isAtPosition(PivotPosition.kFlippedPosition))
-                        .withTimeout(2.0)
-                )
-                .andThen(
-                    elevator.moveToSetPositionCommand(ElevatorPosition.kL4)
-                        .until(elevator.isAtPosition(ElevatorPosition.kL4))
-                        .withTimeout(2.0)
-                )
-                .andThen(
-                    pivot.moveToSetPositionCommand(PivotPosition.kL4)
-                        .until(pivot.isAtPosition(PivotPosition.kL4))
-                        .withTimeout(2.0)
-                )
-                .andThen(
-                    claw.shootCoralCommand()
-                        .until(() -> !(clawProximity.isDetectedSupplier().getAsBoolean()))
-                )
-                .andThen(
-                    pivot.moveToSetPositionCommand(PivotPosition.kFlippedPosition)
-                        .until(pivot.isAtPosition(PivotPosition.kFlippedPosition))
-                        .withTimeout(2.0)
-                )
-                .andThen(
-                    elevator.moveToSetPositionCommand(ElevatorPosition.kHoldingPosition)
-                        .until(elevator.isAtPosition(ElevatorPosition.kHoldingPosition))
-                        .withTimeout(2.0)
-                );
-
-            
-            }
-            else
-            {
-                return 
-                elevator.moveToSetPositionCommand(ElevatorPosition.kL4)
-                    .until(elevator.isAtPosition(ElevatorPosition.kL4))
-                    .withTimeout(2.0)
-                .andThen(
-                    pivot.moveToSetPositionCommand(PivotPosition.kL4)
-                        .until(pivot.isAtPosition(PivotPosition.kL4))
-                        .withTimeout(2.0)
-                )
-                .andThen(
-                    claw.shootCoralCommand()
-                        .until(() -> !(clawProximity.isDetectedSupplier().getAsBoolean()))
-                )
-                .andThen(
-                    pivot.moveToSetPositionCommand(PivotPosition.kFlippedPosition)
-                        .until(pivot.isAtPosition(PivotPosition.kFlippedPosition))
-                        .withTimeout(2.0)
-                )
-                .andThen(
-                    elevator.moveToSetPositionCommand(ElevatorPosition.kHoldingPosition)
-                        .until(elevator.isAtPosition(ElevatorPosition.kHoldingPosition))
-                        .withTimeout(2.0)
-                );
-            }
-        }
-        else
-        {
-            return Commands.none();
-        }
-    }
-
-
-
-    public static Command testScoringCommand()
-    {
-        if(elevator != null && pivot != null && claw != null)
-        {
-            return
-            Commands.waitUntil(elevator.isAtPosition(ElevatorPosition.kL2))
-            .deadlineFor(elevator.moveToSetPositionCommand(ElevatorPosition.kL2))
-
-            .andThen(
-                Commands.waitUntil(pivot.isAtPosition(PivotPosition.kLowLevelCoralPosition))
-                .deadlineFor(pivot.moveToSetPositionCommand(PivotPosition.kLowLevelCoralPosition)))
-        
-            .andThen(claw.shootCoralCommand());
-        }
-        else
-        {
-            return Commands.none();
-        }
-    }
-
-   
-
-
     /**
      * Moves the scorer to the position passed to the command  **USE moveScorerTo(insert position here) instead, uses logic to make sure we don't assassinate our claw on our source intake**
      * @param targetPosition position to move scorer to
@@ -395,27 +168,14 @@ public final class GeneralCommands
      */
     public static Command moveScorerToL1Command()
     {
-        if(elevator != null && pivot != null)
+        if(elevator != null)
         {
             return
             setLedCommand(ColorPattern.kBlink, Color.kBlue)
 
             .andThen(
-                Commands.parallel(
-
-                        elevator.moveToSetPositionCommand(ElevatorPosition.kSafeSwingPosition)
-                            .until(elevator.isAtPosition(ElevatorPosition.kSafeSwingPosition))
-                        .andThen(elevator.moveToSetPositionCommand(ElevatorPosition.kL1)
-                            .until(elevator.isAtPosition(ElevatorPosition.kL1))),
-
-                        Commands.waitSeconds(0.5)
-                        .andThen(
-                            pivot.moveToSetPositionCommand(PivotPosition.kLowLevelCoralPosition)
-                                .until(pivot.isAtPosition(PivotPosition.kLowLevelCoralPosition))
-                                .withTimeout(3.0)),
-
-                        claw.intakeCoralCommand())).withTimeout(3.0)
-                .andThen(claw.stopCommand())
+                elevator.moveToSetPositionCommand(ElevatorPosition.kL1)
+                    .until(elevator.isAtPosition(ElevatorPosition.kL1)))
                     // elevator.moveToSetPositionCommand(ElevatorPosition.kSafeSwingPosition)
                     //     .until(elevator.isAtPosition(ElevatorPosition.kSafeSwingPosition))
                     // .andThen(
@@ -532,11 +292,12 @@ public final class GeneralCommands
      */
     public static Command moveScorerToIntakingPositionCommand()
     {
-        if(elevator != null && pivot != null)
+        if(elevator != null)
         {
             return
             setLedCommand(ColorPattern.kBlink, Color.kYellow)
-            .andThen()
+            .andThen(elevator.moveToSetPositionCommand(ElevatorPosition.kGrabCoralPosition)
+                .until(elevator.isAtPosition(ElevatorPosition.kGrabCoralPosition)))
             // .andThen(
             //     Commands.either(
                 
@@ -605,17 +366,14 @@ public final class GeneralCommands
      */
     public static Command moveScorerToBargeCommand()
     {
-        if(elevator != null && pivot != null)
+        if(elevator != null)
         {
             return
             setLedCommand(ColorPattern.kBlink, Color.kBlue)
             
             .andThen(
                 elevator.moveToSetPositionCommand(ElevatorPosition.kL4)
-                    .until(elevator.isAtPosition(ElevatorPosition.kL4)))
-            .andThen(
-                pivot.moveToSetPositionCommand(PivotPosition.kScoreBargePosition)
-                    .until(pivot.isAtPosition(PivotPosition.kScoreBargePosition)));
+                    .until(elevator.isAtPosition(ElevatorPosition.kL4)));
         }
         else
         {
@@ -630,17 +388,11 @@ public final class GeneralCommands
      */
     public static Command moveScorerToProcessorCommand()
     {
-        if(elevator != null && pivot != null)
+        if(elevator != null)
         {
             return
             setLedCommand(ColorPattern.kBlink, Color.kBlue)
 
-            .andThen(
-                elevator.moveToSetPositionCommand(ElevatorPosition.kSafeSwingPosition)
-                    .until(elevator.isAtPosition(ElevatorPosition.kSafeSwingPosition)))
-            .andThen(
-                pivot.moveToSetPositionCommand(PivotPosition.kScoreProcessorPosition)
-                    .until(pivot.isAtPosition(PivotPosition.kScoreProcessorPosition)))
             .andThen(
                 elevator.moveToSetPositionCommand(ElevatorPosition.kScoreProcessorPosition)
                     .until(elevator.isAtPosition(ElevatorPosition.kScoreProcessorPosition)))
@@ -660,14 +412,11 @@ public final class GeneralCommands
      */
     public static Command moveScorerToHoldAlgaeCommand()
     {
-        if(elevator != null && pivot != null)
+        if(elevator != null)
         {
             return
-            pivot.moveToSetPositionCommand(PivotPosition.kHoldAlgaePosition)
-                .until(pivot.isAtPosition(PivotPosition.kHoldAlgaePosition))
-            .andThen(
                 elevator.moveToSetPositionCommand(ElevatorPosition.kHoldingPosition)
-                    .until(elevator.isAtPosition(ElevatorPosition.kHoldingPosition)))
+                    .until(elevator.isAtPosition(ElevatorPosition.kHoldingPosition))
             .withName("Move Scorer to hold algae position command");
         }
         else
@@ -731,10 +480,10 @@ public final class GeneralCommands
      */
     public static Command climbUpCageCommand()
     {
-        if(elevator != null && pivot != null && intakeWrist != null && climb != null)
+        if(elevator != null && intakeWrist != null && climb != null)
         {
             return
-            ScoringCommands.flipScorerCommand()
+            GeneralCommands.moveScorerToIntakingPositionCommand()
             .andThen(setLedCommand(ColorPattern.kRainbow))
             .andThen(
                 climb.climbToUpPositionCommand())
@@ -753,10 +502,10 @@ public final class GeneralCommands
      */
     public static Command climbDownCageCommand()
     {
-        if(elevator != null && pivot != null && intakeWrist != null && climb != null)
+        if(elevator != null && intakeWrist != null && climb != null)
         {
             return
-            ScoringCommands.flipScorerCommand()
+            GeneralCommands.moveScorerToIntakingPositionCommand()
             .andThen(setLedCommand(ColorPattern.kRainbow))
             .andThen(
                 climb.climbToUpPositionCommand())

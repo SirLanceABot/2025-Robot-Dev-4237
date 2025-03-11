@@ -22,8 +22,6 @@ import frc.robot.subsystems.Elevator.ElevatorPosition;
 import frc.robot.subsystems.Claw;
 import frc.robot.subsystems.LEDs;
 import frc.robot.subsystems.LEDs.ColorPattern;
-import frc.robot.subsystems.Pivot;
-import frc.robot.subsystems.Pivot.PivotPosition;
 
 public final class IntakingCommands
 {
@@ -48,7 +46,7 @@ public final class IntakingCommands
     // Put all class variables and instance variables here
     private static Intake intake;
     private static IntakeWrist intakeWrist;
-    private static Pivot pivot;
+    // private static Pivot pivot;
     private static Elevator elevator;
     private static Claw claw;
     // private static LEDs leds;
@@ -68,7 +66,7 @@ public final class IntakingCommands
 
         intake = robotContainer.getIntake();
         intakeWrist = robotContainer.getIntakeWrist();
-        pivot = robotContainer.getPivot();
+        // pivot = robotContainer.getPivot();
         elevator = robotContainer.getElevator();
         claw = robotContainer.getClaw();
         // leds = robotContainer.getLEDs();
