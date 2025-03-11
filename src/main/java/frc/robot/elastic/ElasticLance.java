@@ -21,6 +21,8 @@ import edu.wpi.first.math.trajectory.TrajectoryConfig;
 import edu.wpi.first.math.trajectory.TrajectoryGenerator;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.util.struct.parser.ParseException;
+import edu.wpi.first.wpilibj.Alert;
+import edu.wpi.first.wpilibj.Alert.AlertType;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.RobotController;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
@@ -77,9 +79,10 @@ public class ElasticLance
     private static Elevator elevator;
     private static Pivot pivot;
     private static Drivetrain drivetrain;
-    public static String autoName;
+    private static boolean useFullRobot;
 
-    public String newAutoName;
+    private static Alert autoAlert = new Alert("Invalid Auto", AlertType.kWarning);
+    private static Alert useFullRobotAlert = new Alert("NOT using Full Robot!", AlertType.kError);
 
     
     private ElasticLance()
@@ -95,6 +98,7 @@ public class ElasticLance
         pivot = robotContainer.getPivot();
         scoringSideCamera = robotContainer.getScoringSideCamera();
         climbSideCamera = robotContainer.getClimbSideCamera();
+        useFullRobot = robotContainer.useFullRobot();
         // poseEstimator = robotContainer.getPoseEstimator();
 
         //configTeleopField();
@@ -121,6 +125,12 @@ public class ElasticLance
         updateValidAutoBox();
 
         updateAllianceColorBox();
+
+        if(useFullRobot)
+        {
+            useFullRobotAlert.set(true);
+            leds.setColorBlinkCommand(Color.kRed).ignoringDisable(true).schedule();
+        }
     }
 
     public static void updateAllianceColorBox()
@@ -180,13 +190,17 @@ public class ElasticLance
         {
             validAutoColor = Color.kRed;
             leds.setColorSolidCommand(Color.kRed).ignoringDisable(true).schedule();
+            autoAlert.set(true);
         }
         else 
         {
             validAutoColor = Color.kGreen;
             leds.setColorSolidCommand(Color.kGreen).ignoringDisable(true).schedule();
+            autoAlert.set(false);
         }
         SmartDashboard.putString("Is Auto Valid", validAutoColor.toHexString());
+
+        // Elastic.Notification notification = new Elastic.Notification(Elastic.Notification.NotificationLevel.ERROR, "Error Notification", "This is an example error notification.");
     }
 
         /**

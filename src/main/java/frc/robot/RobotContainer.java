@@ -51,7 +51,7 @@ public class RobotContainer
     private boolean useIntakeWrist          = false;
     private boolean usePivot                = false;
     private boolean useShuttle              = false;
-    private boolean useLEDs                 = false;
+    // private boolean useLEDs                 = false;
 
     private boolean useGyro                 = false;
     private boolean usePoseEstimator        = false;
@@ -67,7 +67,7 @@ public class RobotContainer
 
     //private boolean useAutonomousTab        = false;
 
-    public final boolean fullRobot;
+    // public final boolean fullRobot;
 
     private final Claw claw;
     private final Climb climb;
@@ -101,7 +101,7 @@ public class RobotContainer
      */
     RobotContainer()
     {
-        fullRobot = useFullRobot;
+        // fullRobot = useFullRobot;
 
         claw = (useFullRobot || useClaw)
                 ? new Claw()
@@ -135,9 +135,11 @@ public class RobotContainer
                 ? new Shuttle()
                 : null;
 
-        leds = (useFullRobot || useLEDs)
-                ? new LEDs()
-                : null;
+        // leds = (useFullRobot || useLEDs)
+        //         ? new LEDs()
+        //         : null;
+
+        leds = new LEDs();
 
         intakeProximity = (useFullRobot || useProximity)
                 ? new Proximity(Constants.Proximity.CORAL_INTAKE_PORT)
@@ -186,6 +188,10 @@ public class RobotContainer
         // : null;
     }
 
+    public boolean useFullRobot()
+    {
+        return useFullRobot;
+    }
     
 
     public Claw getClaw()
