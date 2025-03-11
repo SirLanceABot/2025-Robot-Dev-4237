@@ -6,6 +6,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import javax.lang.model.util.ElementScanner14;
+
 import com.ctre.phoenix6.hardware.Pigeon2;
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.commands.PathPlannerAuto;
@@ -31,18 +33,25 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj.util.Color;
 import frc.robot.Constants;
 import frc.robot.RobotContainer;
+import frc.robot.pathplanner.PathPlannerLance;
+import frc.robot.sensors.Camera;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Elevator;
 import frc.robot.subsystems.LEDs;
 import frc.robot.subsystems.LEDs.ColorPattern;
 import frc.robot.subsystems.Pivot;
+import frc.robot.subsystems.PoseEstimator;
 
 public class ElasticLance 
 {
     // This string gets the full name of the class, including the package name
     private static final String fullClassName = MethodHandles.lookup().lookupClass().getCanonicalName();
 
-    private static Color color = new Color();
+    private static Color allianceColor = new Color();
+    private static Color validReefTagColor = new Color();
+    private static Color validAutoColor = new Color();
+ 
+    // Elastic.Notification AutoNotification = new Elastic.Notification();
     // *** STATIC INITIALIZATION BLOCK ***
     // This block of code is run first when the class is loaded
     static
@@ -52,15 +61,18 @@ public class ElasticLance
 
     // *** CLASS VARIABLES & INSTANCE VARIABLES ***
     // Put all class variables and instance variables here
-    private static SendableChooser < Command > leftWall;
-    private static SendableChooser < Command > middle;
-    private static SendableChooser < Command > rightWall;
+    // private static SendableChooser < Command > leftWall;
+    // private static SendableChooser < Command > middle;
+    // private static SendableChooser < Command > rightWall;
 
     private static Field2d autofield = new Field2d();
     private static Field2d field = new Field2d();
 
     private static Trajectory trajectory;
 
+    private static Camera scoringSideCamera;
+    private static Camera climbSideCamera;
+    private static PoseEstimator poseEstimator;
     private static LEDs leds;
     private static Elevator elevator;
     private static Pivot pivot;
@@ -81,6 +93,9 @@ public class ElasticLance
         elevator = robotContainer.getElevator();
         drivetrain = robotContainer.getDrivetrain();
         pivot = robotContainer.getPivot();
+        scoringSideCamera = robotContainer.getScoringSideCamera();
+        climbSideCamera = robotContainer.getClimbSideCamera();
+        // poseEstimator = robotContainer.getPoseEstimator();
 
         //configTeleopField();
         //createAutoField();
@@ -102,26 +117,76 @@ public class ElasticLance
         // SmartDashboard.putNumber("Pivot Position", pivot.getPosition());
         // updateTeleopField();
         // updateAutoField();
+        updateReefTagBox();
+        updateValidAutoBox();
 
-        // updateAllianceColorBox();
+        updateAllianceColorBox();
     }
 
     public static void updateAllianceColorBox()
     {
         if(DriverStation.getAlliance().isPresent() && DriverStation.getAlliance().get() == DriverStation.Alliance.Red)
         {
-            color = Color.kRed;
+            allianceColor = Color.kRed;
         }
         else if(DriverStation.getAlliance().isPresent() && DriverStation.getAlliance().get() == DriverStation.Alliance.Blue)
         {
-            color = Color.kBlue;
+            allianceColor = Color.kBlue;
         }
         else 
         {
-            color = Color.kGray;
+            allianceColor = Color.kGray;
         }
 
-        SmartDashboard.putString("Alliance Color", color.toHexString());
+        SmartDashboard.putString("Alliance Color", allianceColor.toHexString());
+    }
+
+    public static void updateReefTagBox()
+    {
+        int scoreTagID = 0;
+        int climbTagID = 0;
+
+        if(scoringSideCamera != null)
+        {
+            scoreTagID = (int) scoringSideCamera.getTagId();
+        }
+
+        if(climbSideCamera != null)
+        {
+            climbTagID = (int) climbSideCamera.getTagId();
+        }
+
+        if(scoringSideCamera == null && climbSideCamera == null)
+        {
+            validReefTagColor = Color.kGray;
+        }
+        else if((scoreTagID >= 6 && scoreTagID <= 11) || (scoreTagID >= 17 && scoreTagID <= 22) || 
+           (climbTagID >= 6 && climbTagID <= 11) || (climbTagID >= 17 && climbTagID <= 22))
+        {
+            validReefTagColor = Color.kGreen;
+        }
+        else 
+        {
+            validReefTagColor = Color.kRed;
+        }
+
+        SmartDashboard.putString("Is Reef Tag", validReefTagColor.toHexString());
+    }
+
+    public static void updateValidAutoBox()
+    {
+        System.out.println(PathPlannerLance.getAutonomousCommand().getName());
+        if(PathPlannerLance.getAutonomousCommand().getName().equalsIgnoreCase("InstantCommand"))
+        {
+            validAutoColor = Color.kRed;
+            leds.setColorSolidCommand(Color.kRed).ignoringDisable(true).schedule();
+        }
+        else 
+        {
+            validAutoColor = Color.kGreen;
+            leds.setColorSolidCommand(Color.kGreen).ignoringDisable(true).schedule();
+        }
+        SmartDashboard.putString("Is Auto Valid", validAutoColor.toHexString());
     }
 
         /**

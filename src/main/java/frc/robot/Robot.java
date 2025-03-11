@@ -160,6 +160,7 @@ public class Robot extends TimedRobot
     @Override
     public void autonomousInit() 
     {
+        leds.offCommand().schedule();
         // DataLogManager.start();
         autonomousCommand = PathPlannerLance.getAutonomousCommand();
 

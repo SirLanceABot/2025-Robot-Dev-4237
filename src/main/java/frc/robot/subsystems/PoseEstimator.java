@@ -292,6 +292,11 @@ public class PoseEstimator extends SubsystemLance
         }
     }
 
+    public boolean foundReefTag()
+    {
+        return primaryReefTag != 0;
+    }
+
     public int getPrimaryTagID()
     {
         return primaryReefTag;
