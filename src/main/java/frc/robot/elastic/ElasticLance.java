@@ -98,8 +98,8 @@ public class ElasticLance
         SmartDashboard.putNumber("Match Time", DriverStation.getMatchTime());
         SmartDashboard.putNumber("CAN Utilization %", RobotController.getCANStatus().percentBusUtilization * 100.00);
         SmartDashboard.putNumber("CPU Temperature", RobotController.getCPUTemp());
-        SmartDashboard.putNumber("Elevator Position", elevator.getPosition());
-        SmartDashboard.putNumber("Pivot Position", pivot.getPosition());
+        // SmartDashboard.putNumber("Elevator Position", elevator.getPosition());
+        // SmartDashboard.putNumber("Pivot Position", pivot.getPosition());
         // updateTeleopField();
         // updateAutoField();
 
