@@ -90,7 +90,7 @@ public final class GeneralCommands
         gyro = (robotContainer.getDrivetrain() != null ? robotContainer.getDrivetrain().getPigeon2() : null);
         intakeProximity = robotContainer.getIntakeProximity();
         elevatorProximity = robotContainer.getElevatorProximity();
-        clawProximity = robotContainer.getClawProximity();
+        clawProximity = robotContainer.getShooterProximity();
         drivetrain = robotContainer.getDrivetrain();
 
         System.out.println("  Constructor Finished: " + fullClassName);
@@ -168,11 +168,12 @@ public final class GeneralCommands
         if(elevator != null)
         {
             return
-            setLedCommand(ColorPattern.kBlink, Color.kBlue)
+            Commands.parallel(
+                GeneralCommands.setLedCommand(ColorPattern.kSolid, Color.kBlue).withTimeout(0.25),
 
-            .andThen(
                 elevator.moveToSetPositionCommand(ElevatorPosition.kL1)
-                    .until(elevator.isAtPosition(ElevatorPosition.kL1)))
+                    .until(elevator.isAtPosition(ElevatorPosition.kL1))
+            )
                     // elevator.moveToSetPositionCommand(ElevatorPosition.kSafeSwingPosition)
                     //     .until(elevator.isAtPosition(ElevatorPosition.kSafeSwingPosition))
                     // .andThen(
@@ -224,11 +225,12 @@ public final class GeneralCommands
         if(elevator != null)
         {
             return
-            setLedCommand(ColorPattern.kBlink, Color.kBlue)
+            Commands.parallel(
+                GeneralCommands.setLedCommand(ColorPattern.kSolid, Color.kBlue).withTimeout(0.25),
 
-            .andThen(
                 elevator.moveToSetPositionCommand(ElevatorPosition.kL2)
-                    .until(elevator.isAtPosition(ElevatorPosition.kL2)))
+                    .until(elevator.isAtPosition(ElevatorPosition.kL2))
+            ).withTimeout(2.0)
 
             .withName("Move Scorer to L2 Command");        
         }
@@ -246,11 +248,12 @@ public final class GeneralCommands
         if(elevator != null)
         {
             return
-            setLedCommand(ColorPattern.kBlink, Color.kBlue)
+            Commands.parallel(
+                GeneralCommands.setLedCommand(ColorPattern.kSolid, Color.kBlue).withTimeout(0.25),
 
-            .andThen(
                 elevator.moveToSetPositionCommand(ElevatorPosition.kL3)
-                    .until(elevator.isAtPosition(ElevatorPosition.kL3)))
+                    .until(elevator.isAtPosition(ElevatorPosition.kL3))
+            )
             .withName("Move Scorer to L3 Command");  
         }
         else
@@ -268,12 +271,11 @@ public final class GeneralCommands
         if(elevator != null)
         {
             return
-            setLedCommand(ColorPattern.kBlink, Color.kBlue)
+            Commands.parallel(
+                setLedCommand(ColorPattern.kSolid, Color.kBlue).withTimeout(0.25),
 
-            .andThen(
                 elevator.moveToSetPositionCommand(ElevatorPosition.kL4)
                     .until(elevator.isAtPosition(ElevatorPosition.kL4)))
-            .andThen(claw.stopCommand())
             .withName("Move Scorer to L4 Command");  
         }
         else
@@ -292,9 +294,13 @@ public final class GeneralCommands
         if(elevator != null)
         {
             return
-            setLedCommand(ColorPattern.kBlink, Color.kYellow)
-            .andThen(elevator.moveToSetPositionCommand(ElevatorPosition.kGrabCoralPosition)
-                .until(elevator.isAtPosition(ElevatorPosition.kGrabCoralPosition)))
+            Commands.parallel(
+                GeneralCommands.setLedCommand(ColorPattern.kSolid, Color.kBlue),
+
+                elevator.moveToSetPositionCommand(ElevatorPosition.kIntakingPosition)
+                    .until(elevator.isAtPosition(ElevatorPosition.kIntakingPosition))
+            )   
+            .andThen(GeneralCommands.setLedCommand(ColorPattern.kSolid, Color.kRed).withTimeout(0.1))
             // .andThen(
             //     Commands.either(
                 
@@ -383,24 +389,24 @@ public final class GeneralCommands
      * @author Logan Bellinger
      * @return
      */
-    public static Command moveScorerToProcessorCommand()
-    {
-        if(elevator != null)
-        {
-            return
-            setLedCommand(ColorPattern.kBlink, Color.kBlue)
+    // public static Command moveScorerToProcessorCommand()
+    // {
+    //     if(elevator != null)
+    //     {
+    //         return
+    //         setLedCommand(ColorPattern.kBlink, Color.kBlue)
 
-            .andThen(
-                elevator.moveToSetPositionCommand(ElevatorPosition.kScoreProcessorPosition)
-                    .until(elevator.isAtPosition(ElevatorPosition.kScoreProcessorPosition)))
+    //         .andThen(
+    //             elevator.moveToSetPositionCommand(ElevatorPosition.kScoreProcessorPosition)
+    //                 .until(elevator.isAtPosition(ElevatorPosition.kScoreProcessorPosition)))
 
-            .withName("Move Scorer To Processor");
-        }
-        else
-        {
-            return Commands.none();
-        }
-    }
+    //         .withName("Move Scorer To Processor");
+    //     }
+    //     else
+    //     {
+    //         return Commands.none();
+    //     }
+    // }
 
     /**
      * moves the scorer to the position where we hold the algae once it is intaked in the claw - different from where we hold coral due to the algae being obese
@@ -412,8 +418,8 @@ public final class GeneralCommands
         if(elevator != null)
         {
             return
-                elevator.moveToSetPositionCommand(ElevatorPosition.kHoldingPosition)
-                    .until(elevator.isAtPosition(ElevatorPosition.kHoldingPosition))
+                elevator.moveToSetPositionCommand(ElevatorPosition.kIntakingPosition)
+                    .until(elevator.isAtPosition(ElevatorPosition.kIntakingPosition))
             .withName("Move Scorer to hold algae position command");
         }
         else

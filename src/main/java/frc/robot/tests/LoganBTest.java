@@ -8,6 +8,7 @@ import javax.lang.model.util.ElementScanner14;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Transform2d;
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.util.Color;
 import frc.robot.RobotContainer;
 import frc.robot.commands.GeneralCommands;
 import frc.robot.commands.IntakingCommands;
@@ -24,6 +25,7 @@ import frc.robot.subsystems.Pivot;
 import frc.robot.subsystems.PoseEstimator;
 import frc.robot.subsystems.Elevator.ElevatorPosition;
 import frc.robot.subsystems.IntakeWrist.Position;
+import frc.robot.subsystems.LEDs.ColorPattern;
 import frc.robot.subsystems.Pivot.PivotPosition;
 
 @SuppressWarnings("unused")
@@ -112,6 +114,9 @@ public class LoganBTest implements Test
     {
         if(joystick.getRawButton(1))
         {
+            IntakingCommands.intakeCoralFromStationCommand().schedule();
+            // elevator.moveToSetPositionCommand(ElevatorPosition.kIntakingPosition).schedule();
+            // claw.shootCoral();
             // intake.set(0.5);
             // IntakingCommands.intakeCoralCommand().schedule();
             // elevator.moveToSetPositionCommand(ElevatorPosition.kL4).schedule();
@@ -126,11 +131,14 @@ public class LoganBTest implements Test
             // GeneralCommands.moveScorerToIntakingPositionCommand().schedule();
             // pivot.set(0.1);
             // GeneralCommands.moveScorerToL1Command().schedule();
-            climb.set(0.3);
+            // climb.set(0.3);
             // IntakingCommands.intakeAlgaeFromReefCommand(TargetPosition.kLowerReefAlgae).schedule();
         }
         else if(joystick.getRawButton(2))
         {
+            GeneralCommands.moveScorerToL4Command().schedule();
+            // elevator.moveToSetPositionCommand(ElevatorPosition.kL2).schedule();
+            // elevator.set(0.2);
             // intake.set(-0.5);
             // ScoringCommands.flipScorerCommand().schedule();
             // IntakingCommands.intakeAlgaeFromReefCommand(TargetPosition.kUpperReefAlgae).schedule();
@@ -147,13 +155,15 @@ public class LoganBTest implements Test
             // elevator.set(-0.2);
             // pivot.set(-0.1);
             // GeneralCommands.moveScorerToL2Commmand().schedule();
-            climb.set(-0.3);
+            // climb.set(-0.3);
         }
         else if(joystick.getRawButton(3))
         {
+            GeneralCommands.scoreCoralOnlyCommand().schedule();
+            // elevator.moveToSetPositionCommand(ElevatorPosition.kL3).schedule();
             // GeneralCommands.moveScorerToBargeCommand().schedule();
             // pivot.moveToSetPositionCommand(PivotPosition.kFlippedPosition).schedule();
-
+            // elevator.set(-0.2);
             // elevator.set(0.2);
             // pivot.set(0.1);
             // intake.pickupCoral();
@@ -163,6 +173,7 @@ public class LoganBTest implements Test
         }
         else if(joystick.getRawButton(4))
         {
+            elevator.moveToSetPositionCommand(ElevatorPosition.kIntakingPosition).until(elevator.isAtPosition(ElevatorPosition.kIntakingPosition)).withTimeout(1.0).schedule();            // elevator.moveToSetPositionCommand(ElevatorPosition.kL4).schedule();
             // ScoringCommands.testHoldAlgaeCommand().schedule();
             // GeneralCommands.moveScorerToProcessorCommand().schedule();
             // pivot.moveToSetPositionCommand(PivotPosition.kHoldAlgaePosition).schedule();
@@ -173,6 +184,7 @@ public class LoganBTest implements Test
         }
         else if(joystick.getRawButton(5))
         {
+            // claw.shootCoralCommand().schedule();
             // elevator.moveToSetPositionCommand(ElevatorPosition.kScoreProcessorPosition).schedule();
             // claw.placeCoral();
             // GeneralCommands.moveScorerToIntakingPositionCommand().schedule();
@@ -188,13 +200,14 @@ public class LoganBTest implements Test
             // pivot.stopCommand().schedule();
             // claw.stopCommand().schedule();
             // pivot.stop();
-            climb.stop();
+            // climb.stop();
+            // claw.stop();
             // pivot.stop();
             // elevator.stop();
             // intake.stop();
             // claw.stopCommand().schedule();
         }
-        System.out.println("Position: " + climb.getPosition());
+        System.out.println("Elevator Pos: " + elevator.getPosition());
 
 
 

@@ -38,16 +38,16 @@ public final class CommandsManager
     {
         kScoreBargePosition(PivotPosition.kScoreBargePosition, ElevatorPosition.kL4),
         kL4(PivotPosition.kL4, ElevatorPosition.kL4),
-        kUpperReefAlgae(PivotPosition.kReefAlgaePosition, ElevatorPosition.kUpperReefAlgae),
+        // kUpperReefAlgae(PivotPosition.kReefAlgaePosition, ElevatorPosition.kUpperReefAlgae),
         kL3(PivotPosition.kLowLevelCoralPosition, ElevatorPosition.kL3),
-        kLowerReefAlgae(PivotPosition.kReefAlgaePosition, ElevatorPosition.kLowerReefAlgae),
+        // kLowerReefAlgae(PivotPosition.kReefAlgaePosition, ElevatorPosition.kLowerReefAlgae),
         kL2(PivotPosition.kLowLevelCoralPosition, ElevatorPosition.kL2),
         kL1(PivotPosition.kLowLevelCoralPosition, ElevatorPosition.kL1),
-        kScoreProcessorWithClawPosition(PivotPosition.kScoreProcessorPosition, ElevatorPosition.kScoreProcessorPosition),
-        kHoldAlgaePosition(PivotPosition.kHoldAlgaePosition, ElevatorPosition.kHoldingPosition),
-        kReadyToGrabCoralPosition(PivotPosition.kDownPosition, ElevatorPosition.kReadyToGrabCoralPosition),
-        kGrabCoralPosition(PivotPosition.kDownPosition, ElevatorPosition.kGrabCoralPosition),
-        kRestingPosition(PivotPosition.kFlippedPosition, ElevatorPosition.kHoldingPosition);
+        // kScoreProcessorWithClawPosition(PivotPosition.kScoreProcessorPosition, ElevatorPosition.kScoreProcessorPosition),
+        kHoldAlgaePosition(PivotPosition.kHoldAlgaePosition, ElevatorPosition.kIntakingPosition),
+        // kReadyToGrabCoralPosition(PivotPosition.kDownPosition, ElevatorPosition.kReadyToGrabCoralPosition),
+        // kGrabCoralPosition(PivotPosition.kDownPosition, ElevatorPosition.kGrabCoralPosition),
+        kRestingPosition(PivotPosition.kFlippedPosition, ElevatorPosition.kIntakingPosition);
 
         public final PivotPosition pivot;
         public final ElevatorPosition elevator;
@@ -85,15 +85,15 @@ public final class CommandsManager
         NamedCommands.registerCommand("Intake Coral From Floor", IntakingCommands.intakeCoralCommand());
         NamedCommands.registerCommand("Intake Coral From Station", IntakingCommands.intakeCoralFromStationCommand());
         NamedCommands.registerCommand("Intake Algae From Floor", IntakingCommands.intakeAlgaeCommand());
-        NamedCommands.registerCommand("Intake Upper Level Algae", IntakingCommands.intakeAlgaeFromReefCommand(ElevatorPosition.kUpperReefAlgae));
-        NamedCommands.registerCommand("Intake Lower Level Algae", IntakingCommands.intakeAlgaeFromReefCommand(ElevatorPosition.kLowerReefAlgae));
+        // NamedCommands.registerCommand("Intake Upper Level Algae", IntakingCommands.intakeAlgaeFromReefCommand(ElevatorPosition.kUpperReefAlgae));
+        // NamedCommands.registerCommand("Intake Lower Level Algae", IntakingCommands.intakeAlgaeFromReefCommand(ElevatorPosition.kLowerReefAlgae));
 
         // NamedCommands.registerCommand("Flip Scorer", ScoringCommands.flipScorerCommand());
         
         // Score Coral Commands
         NamedCommands.registerCommand("Move Scorer to L4", GeneralCommands.moveScorerToL4Command());
         NamedCommands.registerCommand("Move Scorer to Barge", GeneralCommands.moveScorerToBargeCommand());
-        NamedCommands.registerCommand("Move Scorer to Processor", GeneralCommands.moveScorerToProcessorCommand());
+        // NamedCommands.registerCommand("Move Scorer to Processor", GeneralCommands.moveScorerToProcessorCommand());
 
         NamedCommands.registerCommand("Finish Scoring Coral", ScoringCommands.finishScoringCoralCommand());
         NamedCommands.registerCommand("Score Coral Only", GeneralCommands.scoreCoralOnlyCommand());

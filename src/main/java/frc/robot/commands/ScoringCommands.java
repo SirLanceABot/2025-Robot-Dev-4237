@@ -1,5 +1,6 @@
 package frc.robot.commands;
 
+import java.lang.annotation.ElementType;
 import java.lang.invoke.MethodHandles;
 import java.util.Set;
 import java.util.function.Supplier;
@@ -87,7 +88,7 @@ public final class ScoringCommands
         gyro = (robotContainer.getDrivetrain() != null ? robotContainer.getDrivetrain().getPigeon2() : null);
         intakeProximity = robotContainer.getIntakeProximity();
         elevatorProximity = robotContainer.getElevatorProximity();
-        clawProximity = robotContainer.getClawProximity();
+        clawProximity = robotContainer.getShooterProximity();
         poseEstimator = robotContainer.getPoseEstimator();
 
         System.out.println("  Constructor Finished: " + fullClassName);
@@ -123,7 +124,7 @@ public final class ScoringCommands
                 Commands.waitUntil(elevator.isAtPosition(targetPosition.elevator))
                 .deadlineFor(
                     claw.stopCommand(),
-                    elevator.moveToSetPositionCommand(ElevatorPosition.kReadyToGrabCoralPosition)))
+                    elevator.moveToSetPositionCommand(ElevatorPosition.kIntakingPosition)))
             .andThen(GeneralCommands.setLedCommand(ColorPattern.kSolid, Color.kRed))
             .withName("Score Coral on Reef Command");
         }
@@ -214,9 +215,9 @@ public final class ScoringCommands
                 GeneralCommands.setLedCommand(ColorPattern.kBlink, Color.kBlue))
                 // claw.ejectAlgaeCommand())
             .andThen(
-                Commands.waitUntil(elevator.isAtPosition(ElevatorPosition.kReadyToGrabCoralPosition))
+                Commands.waitUntil(elevator.isAtPosition(ElevatorPosition.kIntakingPosition))
                 .deadlineFor(
-                    elevator.moveToSetPositionCommand(ElevatorPosition.kReadyToGrabCoralPosition)))
+                    elevator.moveToSetPositionCommand(ElevatorPosition.kIntakingPosition)))
             .andThen(GeneralCommands.setLedCommand(ColorPattern.kSolid, Color.kRed))
             .withName("Finish Scoring Coral Command");
         }
@@ -226,45 +227,40 @@ public final class ScoringCommands
         }
     }
 
-    public static Command finishScoringAlgaeCommand()
-    {
-        if(elevator != null && claw != null && clawProximity != null)
-        {
-            return
-            Commands.waitUntil(() -> (!(clawProximity.isDetectedSupplier()).getAsBoolean()))
-            .deadlineFor(
-                GeneralCommands.setLedCommand(ColorPattern.kBlink, Color.kBlue))
-                // claw.ejectAlgaeCommand())
-            .andThen(
-                Commands.waitUntil(elevator.isAtPosition(ElevatorPosition.kSafeSwingPosition))
-                .deadlineFor(
-                    elevator.moveToSetPositionCommand(ElevatorPosition.kSafeSwingPosition)))
-            .andThen(
-                Commands.waitUntil(elevator.isAtPosition(ElevatorPosition.kReadyToGrabCoralPosition))
-                .deadlineFor(
-                    elevator.moveToSetPositionCommand(ElevatorPosition.kReadyToGrabCoralPosition)))
-            .andThen(
-                GeneralCommands.setLedCommand(ColorPattern.kSolid, Color.kRed))
-            .withName("Finish Scoring Algae Command");
-        }
-        else
-        {
-            return Commands.none();
-        }
-    }
+    // public static Command finishScoringAlgaeCommand()
+    // {
+    //     if(elevator != null && claw != null && clawProximity != null)
+    //     {
+    //         return
+    //         Commands.waitUntil(() -> (!(clawProximity.isDetectedSupplier()).getAsBoolean()))
+    //         .deadlineFor(
+    //             GeneralCommands.setLedCommand(ColorPattern.kBlink, Color.kBlue))
+    //             // claw.ejectAlgaeCommand())
+    //         .andThen(
+    //             Commands.waitUntil(elevator.isAtPosition(ElevatorPosition.kSafeSwingPosition))
+    //             .deadlineFor(
+    //                 elevator.moveToSetPositionCommand(ElevatorPosition.kSafeSwingPosition)))
+    //         .andThen(
+    //             Commands.waitUntil(elevator.isAtPosition(ElevatorPosition.kReadyToGrabCoralPosition))
+    //             .deadlineFor(
+    //                 elevator.moveToSetPositionCommand(ElevatorPosition.kReadyToGrabCoralPosition)))
+    //         .andThen(
+    //             GeneralCommands.setLedCommand(ColorPattern.kSolid, Color.kRed))
+    //         .withName("Finish Scoring Algae Command");
+    //     }
+    //     else
+    //     {
+    //         return Commands.none();
+    //     }
+    // }
 
     public static Command flipScorerCommand()
     {
         if(elevator != null)
         {
             return
-            Commands.parallel(
-
-                elevator.moveToSetPositionCommand(ElevatorPosition.kSafeSwingPosition)
-                    .until(elevator.isAtPosition(ElevatorPosition.kSafeSwingPosition))
-                .andThen(
-                    elevator.moveToSetPositionCommand(ElevatorPosition.kHoldingPosition)
-                        .until(elevator.isAtPosition(ElevatorPosition.kHoldingPosition))))
+            elevator.moveToSetPositionCommand(ElevatorPosition.kIntakingPosition)
+                .until(elevator.isAtPosition(ElevatorPosition.kIntakingPosition))
 
                 // claw.intakeCoralCommand()
                 //             .until(pivot.isAtPosition(PivotPosition.kFlippedPosition)),
@@ -293,31 +289,31 @@ public final class ScoringCommands
      * @return the command to move elevator and pivot and release algae
      * @author Logan Bellinger
      */
-    public static Command scoreProcessorWithClawCommand()
-    {
-        if(elevator != null && claw != null && clawProximity != null)
-        {
-            return
-            Commands.waitUntil(elevator.isAtPosition(ElevatorPosition.kScoreProcessorPosition))
-            .deadlineFor(
-                GeneralCommands.setLedCommand(ColorPattern.kBlink, Color.kBlue),
-                elevator.moveToSetPositionCommand(ElevatorPosition.kScoreProcessorPosition))
-            // .andThen(
-            //     Commands.waitUntil(() -> (!(clawProximity.isDetectedSupplier()).getAsBoolean()))
-            //     .deadlineFor(
-            //         claw.ejectAlgaeCommand()))
-                .andThen(
-                    Commands.waitUntil(elevator.isAtPosition(ElevatorPosition.kReadyToGrabCoralPosition))
-                    .deadlineFor(
-                        elevator.moveToSetPositionCommand(ElevatorPosition.kReadyToGrabCoralPosition)))
-                .andThen(GeneralCommands.setLedCommand(ColorPattern.kSolid, Color.kRed))
-            .withName("Finish Scoring in Processor with Claw Command");
-        }
-        else
-        {
-            return Commands.none();
-        }
-    }
+    // public static Command scoreProcessorWithClawCommand()
+    // {
+    //     if(elevator != null && claw != null && clawProximity != null)
+    //     {
+    //         return
+    //         Commands.waitUntil(elevator.isAtPosition(ElevatorPosition.kScoreProcessorPosition))
+    //         .deadlineFor(
+    //             GeneralCommands.setLedCommand(ColorPattern.kBlink, Color.kBlue),
+    //             elevator.moveToSetPositionCommand(ElevatorPosition.kScoreProcessorPosition))
+    //         // .andThen(
+    //         //     Commands.waitUntil(() -> (!(clawProximity.isDetectedSupplier()).getAsBoolean()))
+    //         //     .deadlineFor(
+    //         //         claw.ejectAlgaeCommand()))
+    //             .andThen(
+    //                 Commands.waitUntil(elevator.isAtPosition(ElevatorPosition.kReadyToGrabCoralPosition))
+    //                 .deadlineFor(
+    //                     elevator.moveToSetPositionCommand(ElevatorPosition.kReadyToGrabCoralPosition)))
+    //             .andThen(GeneralCommands.setLedCommand(ColorPattern.kSolid, Color.kRed))
+    //         .withName("Finish Scoring in Processor with Claw Command");
+    //     }
+    //     else
+    //     {
+    //         return Commands.none();
+    //     }
+    // }
 
     public static Command scoreCoralAutonomouslyReallyCoolAndAwesomeCommand(Supplier<Pose2d> currentPose, Supplier<Pose2d> targetPose)
     {

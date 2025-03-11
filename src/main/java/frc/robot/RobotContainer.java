@@ -63,7 +63,7 @@ public class RobotContainer
     // private boolean useDriverBindings       = false;
     // private boolean useOperatorBindings     = false;
     private boolean useDriverController     = false;
-    private boolean useOperatorController   = false;
+    private boolean useOperatorController   = true;
 
     //private boolean useAutonomousTab        = false;
 
@@ -83,7 +83,7 @@ public class RobotContainer
     private final PoseEstimator poseEstimator;
     private final Proximity intakeProximity;
     private final Proximity elevatorProximity;
-    private final Proximity clawProximity;
+    private final Proximity shooterProximity;
     private final Proximity funnelProximity;
 
 
@@ -147,8 +147,8 @@ public class RobotContainer
                 ? new Proximity(Constants.Proximity.ELEVATOR_PORT)
                 : null;
 
-        clawProximity = (useFullRobot || useProximity)
-                ? new Proximity(Constants.Proximity.CLAW_PORT)
+        shooterProximity = (useFullRobot || useProximity)
+                ? new Proximity(Constants.Proximity.SHOOTER_PORT)
                 : null;
 
         funnelProximity = (useFullRobot || useProximity)
@@ -243,9 +243,9 @@ public class RobotContainer
         return elevatorProximity;
     }
 
-    public Proximity getClawProximity()
+    public Proximity getShooterProximity()
     {
-        return clawProximity;
+        return shooterProximity;
     }
 
     public Proximity getFunnelProximity()

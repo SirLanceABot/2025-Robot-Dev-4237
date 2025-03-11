@@ -72,7 +72,7 @@ public final class IntakingCommands
         // leds = robotContainer.getLEDs();
         intakeProximity = robotContainer.getIntakeProximity();
         elevatorProximity = robotContainer.getElevatorProximity();
-        clawProximity = robotContainer.getClawProximity();
+        clawProximity = robotContainer.getShooterProximity();
 
         System.out.println("  Constructor Finished: " + fullClassName);
     }
@@ -122,8 +122,8 @@ public final class IntakingCommands
                     claw.intakeCoralCommand()
                         .until(clawProximity.isDetectedSupplier()),
 
-                    elevator.moveToSetPositionCommand(ElevatorPosition.kGrabCoralPosition)
-                        .until(elevator.isAtPosition(ElevatorPosition.kGrabCoralPosition))))
+                    elevator.moveToSetPositionCommand(ElevatorPosition.kIntakingPosition)
+                        .until(elevator.isAtPosition(ElevatorPosition.kIntakingPosition))))
 
             .andThen(Commands.waitSeconds(0.5))
             .andThen(claw.stopCommand())
@@ -170,11 +170,13 @@ public final class IntakingCommands
             //     .until(() -> (elevator.isAtPosition(ElevatorPosition.kReadyToGrabCoralPosition).getAsBoolean() && pivot.isAtPosition(PivotPosition.kDownPosition).getAsBoolean()))
 
             Commands.parallel(
-                elevator.moveToSetPositionCommand(ElevatorPosition.kGrabCoralPosition)
-                    .until(elevator.isAtPosition(ElevatorPosition.kGrabCoralPosition))
+                GeneralCommands.setLedCommand(ColorPattern.kSolid, Color.kYellow).withTimeout(0.25),
+
+                elevator.moveToSetPositionCommand(ElevatorPosition.kIntakingPosition)
+                    .until(elevator.isAtPosition(ElevatorPosition.kIntakingPosition))
                     .withTimeout(2.0),
 
-                claw.intakeCoralCommand().until(clawProximity.isDetectedSupplier())
+                claw.shootCoralCommand().until(clawProximity.isDetectedSupplier())
             )
 
             // .andThen(elevator.moveToSetPositionCommand(ElevatorPosition.kSafeSwingPosition).until(elevator.isAtPosition(ElevatorPosition.kSafeSwingPosition)))

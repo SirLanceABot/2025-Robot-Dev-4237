@@ -3,13 +3,13 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 3.8871710526315786,
-        "y": 5.227713815789473
+        "x": 3.5685000000000002,
+        "y": 5.0584999999999996
       },
       "prevControl": null,
       "nextControl": {
-        "x": 3.3524210526315783,
-        "y": 5.778963815789473
+        "x": 3.03375,
+        "y": 5.60975
       },
       "isLocked": false,
       "linkedName": "S5 Right"
@@ -54,7 +54,7 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 35.298
+    "rotation": 35.0
   },
   "reversed": false,
   "folder": "Reef Starts",

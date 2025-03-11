@@ -51,6 +51,12 @@
           "data": {
             "name": "Intake Coral From Station"
           }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Left Station to S4 Left"
+          }
         }
       ]
     }
