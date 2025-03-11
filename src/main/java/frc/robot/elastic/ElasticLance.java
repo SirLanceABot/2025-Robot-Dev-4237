@@ -126,10 +126,10 @@ public class ElasticLance
 
         updateAllianceColorBox();
 
-        if(useFullRobot)
+        if(!useFullRobot)
         {
             useFullRobotAlert.set(true);
-            leds.setColorBlinkCommand(Color.kRed).ignoringDisable(true).schedule();
+            leds.setColorSolidCommand(Color.kTurquoise).ignoringDisable(true).schedule();
         }
     }
 
