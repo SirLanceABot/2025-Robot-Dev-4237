@@ -15,6 +15,7 @@ import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.RobotController;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.Commands;
@@ -26,6 +27,7 @@ import frc.robot.elastic.ElasticLance;
 import frc.robot.loggers.DataLogFile;
 import frc.robot.motors.MotorControllerLance;
 import frc.robot.pathplanner.PathPlannerLance;
+import frc.robot.subsystems.LEDs;
 
 
 public class Robot extends TimedRobot 
@@ -41,6 +43,7 @@ public class Robot extends TimedRobot
     }
 
     private final RobotContainer robotContainer;
+    private final LEDs leds;
     private Command autonomousCommand = null;
     private TestMode testMode = null;
     private boolean isRedAlliance;
@@ -61,6 +64,7 @@ public class Robot extends TimedRobot
 
         //Configure RobotContainer
         robotContainer = new RobotContainer();
+        leds = robotContainer.getLEDs();
         // drivetrain = robotContainer.getDrivetrain();
         //Configure commands
         CommandsManager.createCommands(robotContainer);
@@ -137,6 +141,8 @@ public class Robot extends TimedRobot
             }
             previousCommand = currentCommand;
             
+            // leds.setColorSolidCommand(Color.kBlue);
+
             // System.out.println(currentCommand.getName());
         }    
     }
@@ -219,6 +225,8 @@ public class Robot extends TimedRobot
     public void teleopPeriodic() 
     {
         // System.out.print("Axis : " + robotContainer.getDriverController().getRawAxis(1) + "      ");
+
+        // leds.setColorBlinkCommand(Color.kRed);
     }
 
     /**
