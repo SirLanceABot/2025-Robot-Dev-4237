@@ -7,10 +7,7 @@ import java.util.List;
 import com.ctre.phoenix6.hardware.Pigeon2;
 import com.fasterxml.jackson.databind.ser.std.StdKeySerializers.EnumKeySerializer;
 import com.pathplanner.lib.auto.AutoBuilder;
-import com.pathplanner.lib.path.GoalEndState;
-import com.pathplanner.lib.path.PathConstraints;
-import com.pathplanner.lib.path.PathPlannerPath;
-import com.pathplanner.lib.path.Waypoint;
+import com.pathplanner.lib.path.*;
 
 import edu.wpi.first.math.estimator.PoseEstimator;
 import edu.wpi.first.math.geometry.Pose2d;
@@ -548,11 +545,19 @@ public final class GeneralCommands
                                     new Pose2d(currentPose.getTranslation(), currentPose.getRotation()),
                                     new Pose2d(targetPose.getTranslation(), targetPose.getRotation()));          
 
+        double vxMetersPerSecond = drivetrain.getState().Speeds.vxMetersPerSecond;
+        double vyMetersPerSecond = drivetrain.getState().Speeds.vyMetersPerSecond;
+
+        double velocity = Math.sqrt(vxMetersPerSecond * vxMetersPerSecond + vyMetersPerSecond * vyMetersPerSecond);
+
+        Rotation2d rotation = drivetrain.getPose().getRotation();
+
+        IdealStartingState idealStartingState = new IdealStartingState(velocity, rotation);
 
         PathPlannerPath path = new PathPlannerPath(
                                     waypoints,
                                     constraints,
-                                    null,
+                                    idealStartingState, // set this to null if not working
                                     new GoalEndState(0.0, targetPose.getRotation()));
         path.preventFlipping = true;
 
