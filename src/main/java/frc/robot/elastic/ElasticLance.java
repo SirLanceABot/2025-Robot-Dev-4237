@@ -185,7 +185,7 @@ public class ElasticLance
 
     public static void updateValidAutoBox()
     {
-        System.out.println(PathPlannerLance.getAutonomousCommand().getName());
+        // System.out.println(PathPlannerLance.getAutonomousCommand().getName());
         if(PathPlannerLance.getAutonomousCommand().getName().equalsIgnoreCase("InstantCommand"))
         {
             validAutoColor = Color.kRed;

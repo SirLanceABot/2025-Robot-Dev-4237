@@ -85,7 +85,7 @@ public class Robot extends TimedRobot
     {
         // Run periodic tasks
         PeriodicTask.runAllPeriodicTasks();
-        ElasticLance.sendDataToSmartDashboard();
+        // ElasticLance.sendDataToSmartDashboard();
 
         // // SmartDashboard.putNumber("Speed", drivetrain.getState().Speeds.getVelocity());
         // if(robotContainer.getDrivetrain() != null)
@@ -162,7 +162,7 @@ public class Robot extends TimedRobot
     {
         leds.offCommand().schedule();
         // DataLogManager.start();
-        autonomousCommand = PathPlannerLance.getAutonomousCommand();
+        // autonomousCommand = PathPlannerLance.getAutonomousCommand();
 
         // PathPlannerAuto path = new PathPlannerAuto("Testing");
         Command path = AutoBuilder.buildAuto("Right");
