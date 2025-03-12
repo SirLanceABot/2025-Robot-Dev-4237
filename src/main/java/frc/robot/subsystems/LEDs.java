@@ -262,6 +262,7 @@ public class LEDs extends SubsystemLance
     @Override
     public void periodic()
     {
+        
         led.setData(ledBuffer);
         // This method will be called once per scheduler run
         // Use this for sensors that need to be read periodically.

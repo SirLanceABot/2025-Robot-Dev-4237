@@ -109,7 +109,7 @@ public class Robot extends TimedRobot
         if (!autonomousRun)
         {
             previousCommand = PathPlannerLance.getAutonomousCommand();
-            updateRobotPoseFromSelectedAuto();
+            // updateRobotPoseFromSelectedAuto();
         }
     }
 

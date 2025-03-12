@@ -176,7 +176,7 @@ public final class IntakingCommands
                     .until(elevator.isAtPosition(ElevatorPosition.kIntakingPosition))
                     .withTimeout(2.0),
 
-                claw.shootCoralCommand().until(clawProximity.isDetectedSupplier())
+                claw.intakeCoralCommand().until(clawProximity.isDetectedSupplier())
             )
 
             // .andThen(elevator.moveToSetPositionCommand(ElevatorPosition.kSafeSwingPosition).until(elevator.isAtPosition(ElevatorPosition.kSafeSwingPosition)))

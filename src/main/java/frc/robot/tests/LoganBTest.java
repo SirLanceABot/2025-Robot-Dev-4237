@@ -114,7 +114,7 @@ public class LoganBTest implements Test
     {
         if(joystick.getRawButton(1))
         {
-            IntakingCommands.intakeCoralFromStationCommand().schedule();
+            // IntakingCommands.intakeCoralFromStationCommand().schedule();
             // elevator.moveToSetPositionCommand(ElevatorPosition.kIntakingPosition).schedule();
             // claw.shootCoral();
             // intake.set(0.5);
@@ -136,7 +136,7 @@ public class LoganBTest implements Test
         }
         else if(joystick.getRawButton(2))
         {
-            GeneralCommands.moveScorerToL4Command().schedule();
+            // GeneralCommands.moveScorerToL4Command().schedule();
             // elevator.moveToSetPositionCommand(ElevatorPosition.kL2).schedule();
             // elevator.set(0.2);
             // intake.set(-0.5);
@@ -159,7 +159,7 @@ public class LoganBTest implements Test
         }
         else if(joystick.getRawButton(3))
         {
-            GeneralCommands.scoreCoralOnlyCommand().schedule();
+            // GeneralCommands.scoreCoralOnlyCommand().schedule();
             // elevator.moveToSetPositionCommand(ElevatorPosition.kL3).schedule();
             // GeneralCommands.moveScorerToBargeCommand().schedule();
             // pivot.moveToSetPositionCommand(PivotPosition.kFlippedPosition).schedule();
@@ -173,7 +173,7 @@ public class LoganBTest implements Test
         }
         else if(joystick.getRawButton(4))
         {
-            elevator.moveToSetPositionCommand(ElevatorPosition.kIntakingPosition).until(elevator.isAtPosition(ElevatorPosition.kIntakingPosition)).withTimeout(1.0).schedule();            // elevator.moveToSetPositionCommand(ElevatorPosition.kL4).schedule();
+            // elevator.moveToSetPositionCommand(ElevatorPosition.kIntakingPosition).until(elevator.isAtPosition(ElevatorPosition.kIntakingPosition)).withTimeout(1.0).schedule();            // elevator.moveToSetPositionCommand(ElevatorPosition.kL4).schedule();
             // ScoringCommands.testHoldAlgaeCommand().schedule();
             // GeneralCommands.moveScorerToProcessorCommand().schedule();
             // pivot.moveToSetPositionCommand(PivotPosition.kHoldAlgaePosition).schedule();
@@ -201,13 +201,13 @@ public class LoganBTest implements Test
             // claw.stopCommand().schedule();
             // pivot.stop();
             // climb.stop();
-            // claw.stop();
+            claw.stop();
             // pivot.stop();
             // elevator.stop();
             // intake.stop();
             // claw.stopCommand().schedule();
         }
-        System.out.println("Elevator Pos: " + elevator.getPosition());
+        // System.out.println("Elevator Pos: " + elevator.getPosition());
 
 
 

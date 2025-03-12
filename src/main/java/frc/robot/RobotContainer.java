@@ -57,13 +57,13 @@ public class RobotContainer
     private boolean usePoseEstimator        = false;
     private boolean useProximity            = false;
 
-    private boolean useScoringSideCamera    = false; // 10.42.37.12
-    private boolean useClimbSideCamera      = false; // 10.42.37.11
+    private boolean useScoringSideCamera    = false; // 10.42.37.12 // BLUE CASE
+    private boolean useClimbSideCamera      = false; // 10.42.37.11 // CLEAR CASE
 
     // private boolean useDriverBindings       = false;
     // private boolean useOperatorBindings     = false;
-    private boolean useDriverController     = false;
-    private boolean useOperatorController   = false;
+    private boolean useDriverController     = true;
+    private boolean useOperatorController   = true;
 
     //private boolean useAutonomousTab        = false;
 
@@ -107,7 +107,7 @@ public class RobotContainer
                 ? new Claw()
                 : null;
 
-        climb = (useFullRobot || useClimb)
+        climb = (useClimb)
                 ? new Climb()
                 : null;
 
@@ -131,7 +131,7 @@ public class RobotContainer
                 ? new Pivot()
                 : null;
 
-        shuttle = (useFullRobot || useShuttle)
+        shuttle = (useShuttle)
                 ? new Shuttle()
                 : null;
 

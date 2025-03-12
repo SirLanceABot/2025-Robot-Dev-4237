@@ -67,10 +67,11 @@ public class Claw extends SubsystemLance
         indexMotor.setupFactoryDefaults();
         shootMotor.setupBrakeMode();
         indexMotor.setupBrakeMode();
-        shootMotor.setInverted(true);
+        shootMotor.setupInverted(true);
+        indexMotor.setupInverted(true);
         shootMotor.setSafetyEnabled(false);
         indexMotor.setSafetyEnabled(false);
-        indexMotor.setupCurrentLimit(30.0, 50.0, 0.5);
+        // indexMotor.setupCurrentLimit(30.0, 50.0, 0.5);
     }
 
     /**
@@ -107,8 +108,8 @@ public class Claw extends SubsystemLance
      */
     public void intakeCoral()
     {
-        setIndexSpeed(0.8);
-        setShootSpeed(0.8);
+        setIndexSpeed(1);
+        setShootSpeed(1);
     }
 
     // public void ejectAlgae()
