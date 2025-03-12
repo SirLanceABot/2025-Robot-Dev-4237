@@ -43,6 +43,7 @@ public class Robot extends TimedRobot
     private Command currentCommand = null;
     private Command previousCommand = null;
     private boolean autonomousRun = false;
+    private final String autoName = "Right";
 
     /** 
      * Uses the default access modifier so that the Robot object can only be constructed in this same package.
@@ -151,7 +152,6 @@ public class Robot extends TimedRobot
 
         // Only update if we have a valid auto name and it's different from what we last processed
         // CHANGE AUTO HERE
-        String autoName = "Right"; // CHANGE AUTO NAME HERE
         try {
             // Try to load the path from the name
             PathPlannerPath ppPath = PathPlannerPath.fromPathFile(autoName);
@@ -202,11 +202,9 @@ public class Robot extends TimedRobot
         // autonomousCommand = PathPlannerLance.getAutonomousCommand();
 
         // PathPlannerAuto path = new PathPlannerAuto("Testing");
-        String autoname = "Right";
-
-        Command path = AutoBuilder.buildAuto(autoname);
+        Command path = AutoBuilder.buildAuto(autoName);
         try {
-            PathPlannerPath ppPath = PathPlannerPath.fromPathFile(autoname);
+            PathPlannerPath ppPath = PathPlannerPath.fromPathFile(autoName);
             Pose2d initialPose = ppPath.getStartingHolonomicPose().orElse(new Pose2d());
             robotContainer.getPoseEstimator().resetPose(initialPose);
         }
