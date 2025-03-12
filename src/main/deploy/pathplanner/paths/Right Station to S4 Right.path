@@ -3,25 +3,25 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 1.6741776315789472,
+        "x": 1.674,
         "y": 0.7151315789473688
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.785677631578948,
-        "y": 2.2261315789473692
+        "x": 2.7855000000000008,
+        "y": 2.226131578947369
       },
       "isLocked": false,
       "linkedName": "Right Station"
     },
     {
       "anchor": {
-        "x": 3.052,
-        "y": 3.65
+        "x": 3.15,
+        "y": 3.98
       },
       "prevControl": {
-        "x": 2.4375,
-        "y": 2.972
+        "x": 2.5355,
+        "y": 3.302
       },
       "nextControl": null,
       "isLocked": false,
@@ -39,7 +39,7 @@
       "command": {
         "type": "named",
         "data": {
-          "name": "Move Scorer To L4"
+          "name": "Move Scorer to L4"
         }
       }
     },
@@ -50,14 +50,14 @@
       "command": {
         "type": "named",
         "data": {
-          "name": "Eject Coral On L4"
+          "name": "Score Coral Only"
         }
       }
     }
   ],
   "globalConstraints": {
-    "maxVelocity": 3.0,
-    "maxAcceleration": 3.0,
+    "maxVelocity": 2.0,
+    "maxAcceleration": 2.0,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0,
     "nominalVoltage": 12.0,
@@ -65,7 +65,7 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -90.0
+    "rotation": 90.0
   },
   "reversed": false,
   "folder": "Right Station Starts",
@@ -73,5 +73,5 @@
     "velocity": 0,
     "rotation": 140.768
   },
-  "useDefaultConstraints": true
+  "useDefaultConstraints": false
 }

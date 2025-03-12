@@ -63,7 +63,7 @@ public class RobotContainer
     // private boolean useDriverBindings       = false;
     // private boolean useOperatorBindings     = false;
     private boolean useDriverController     = false;
-    private boolean useOperatorController   = true;
+    private boolean useOperatorController   = false;
 
     //private boolean useAutonomousTab        = false;
 
@@ -127,7 +127,7 @@ public class RobotContainer
                 ? new IntakeWrist()
                 : null;
 
-        pivot = (useFullRobot || usePivot)
+        pivot = (usePivot)
                 ? new Pivot()
                 : null;
 

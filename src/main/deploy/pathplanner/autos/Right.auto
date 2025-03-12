@@ -41,15 +41,21 @@
           }
         },
         {
-          "type": "wait",
+          "type": "path",
           "data": {
-            "waitTime": 0.5
+            "pathName": "S3 Left to Right Station"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Intake Coral From Station"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "S3 Left to Right Station"
+            "pathName": "Right Station to S4 Right"
           }
         }
       ]

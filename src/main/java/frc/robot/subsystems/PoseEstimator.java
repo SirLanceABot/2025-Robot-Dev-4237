@@ -493,16 +493,16 @@ public class PoseEstimator extends SubsystemLance
                         rejectUpdate = true;
                     }
 
-                    if (distToTag > 2.5)
+                    if (distToTag > 1.5)
                     {
                         // System.out.println("Distance greater than 2.5");
                         rejectUpdate = true;
                     }
 
-                    if(!DriverStation.isTeleopEnabled())
-                    {
-                        rejectUpdate = true;
-                    }
+                    // if(!DriverStation.isTeleopEnabled())
+                    // {
+                    //     rejectUpdate = true;
+                    // }
 
                     if(robotVelo > 2.5)
                     {
@@ -563,7 +563,7 @@ public class PoseEstimator extends SubsystemLance
                     primaryReefTag = 0;
                 }
 
-                System.out.println(primaryReefTag);
+                // System.out.println(primaryReefTag);
             }
         }
 

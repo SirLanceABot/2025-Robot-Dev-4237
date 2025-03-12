@@ -3,24 +3,24 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 3.052,
-        "y": 3.65
+        "x": 3.15,
+        "y": 3.98
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.6129999999999995,
-        "y": 3.186499999999999
+        "x": 2.7109999999999994,
+        "y": 3.5164999999999993
       },
       "isLocked": false,
       "linkedName": "S4 Right"
     },
     {
       "anchor": {
-        "x": 1.6741776315789472,
+        "x": 1.674,
         "y": 0.7151315789473688
       },
       "prevControl": {
-        "x": 2.249427631578947,
+        "x": 2.24925,
         "y": 1.2608815789473677
       },
       "nextControl": null,
@@ -60,7 +60,7 @@
   "folder": "Reef Starts",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": -90.0
+    "rotation": 90.0
   },
   "useDefaultConstraints": true
 }

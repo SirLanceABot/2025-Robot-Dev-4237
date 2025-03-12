@@ -16,12 +16,12 @@
     },
     {
       "anchor": {
-        "x": 3.052,
-        "y": 3.65
+        "x": 3.15,
+        "y": 3.98
       },
       "prevControl": {
-        "x": 2.1255,
-        "y": 5.88725
+        "x": 2.2235,
+        "y": 6.21725
       },
       "nextControl": null,
       "isLocked": false,
@@ -65,7 +65,7 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -90.0
+    "rotation": 90.0
   },
   "reversed": false,
   "folder": "Left Wall Starts",

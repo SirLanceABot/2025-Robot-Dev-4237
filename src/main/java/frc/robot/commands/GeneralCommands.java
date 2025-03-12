@@ -438,7 +438,7 @@ public final class GeneralCommands
         if(claw != null)
         {
             return 
-            claw.shootCoralCommand().withTimeout(1.0).andThen(claw.stopCommand());
+            claw.shootCoralCommand().withTimeout(0.5).andThen(claw.stopCommand());
         }
         else
         {

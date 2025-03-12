@@ -165,9 +165,9 @@ public class Robot extends TimedRobot
         autonomousCommand = PathPlannerLance.getAutonomousCommand();
 
         // PathPlannerAuto path = new PathPlannerAuto("Testing");
-        Command path = AutoBuilder.buildAuto("Straight Middle");
+        Command path = AutoBuilder.buildAuto("Right");
         try {
-            PathPlannerPath ppPath = PathPlannerPath.fromPathFile("Straight Middle");
+            PathPlannerPath ppPath = PathPlannerPath.fromPathFile("Right");
             Pose2d initialPose = ppPath.getStartingHolonomicPose().orElse(new Pose2d());
             robotContainer.getPoseEstimator().resetPose(initialPose);
         }

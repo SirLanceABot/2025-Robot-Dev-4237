@@ -3,24 +3,24 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 3.5696546052631577,
-        "y": 2.9954769736842106
+        "x": 3.59,
+        "y": 3.02
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.955654605263158,
-        "y": 2.41047697368421
+        "x": 2.976,
+        "y": 2.4349999999999996
       },
       "isLocked": false,
       "linkedName": "S3 Left"
     },
     {
       "anchor": {
-        "x": 1.6741776315789472,
+        "x": 1.674,
         "y": 0.7151315789473688
       },
       "prevControl": {
-        "x": 2.200677631578947,
+        "x": 2.2005,
         "y": 1.2706315789473681
       },
       "nextControl": null,
@@ -62,5 +62,5 @@
     "velocity": 0,
     "rotation": 150.0
   },
-  "useDefaultConstraints": true
+  "useDefaultConstraints": false
 }
