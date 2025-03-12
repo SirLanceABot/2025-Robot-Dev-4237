@@ -4,21 +4,14 @@ import java.lang.invoke.MethodHandles;
 
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.commands.FollowPathCommand;
-import com.pathplanner.lib.commands.PathPlannerAuto;
 import com.pathplanner.lib.commands.PathfindingCommand;
 import com.pathplanner.lib.path.PathPlannerPath;
 
 import edu.wpi.first.math.geometry.Pose2d;
-import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.DataLogManager;
-import edu.wpi.first.wpilibj.DriverStation;
-import edu.wpi.first.wpilibj.RobotController;
 import edu.wpi.first.wpilibj.TimedRobot;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
-import edu.wpi.first.wpilibj2.command.Commands;
 import frc.robot.commands.CommandsManager;
 import frc.robot.controls.DriverBindings;
 import frc.robot.controls.OperatorBindings;
@@ -50,9 +43,6 @@ public class Robot extends TimedRobot
     private Command currentCommand = null;
     private Command previousCommand = null;
     private boolean autonomousRun = false;
-    // private Drivetrain drivetrain;
-
-
 
     /** 
      * Uses the default access modifier so that the Robot object can only be constructed in this same package.
@@ -75,7 +65,6 @@ public class Robot extends TimedRobot
 
         PathPlannerLance.configPathPlanner(robotContainer);
         ElasticLance.configElastic(robotContainer);
-        // TODO - Add these PathPlanner warmup commands
         FollowPathCommand.warmupCommand().schedule();
         PathfindingCommand.warmupCommand().schedule();
     }
@@ -119,7 +108,7 @@ public class Robot extends TimedRobot
         if (!autonomousRun)
         {
             previousCommand = PathPlannerLance.getAutonomousCommand();
-            
+            updateRobotPoseFromSelectedAuto();
         }
     }
 
@@ -155,6 +144,54 @@ public class Robot extends TimedRobot
     {}
 
     /**
+     * Updates the robot's pose estimator with the starting pose from the selected autonomous path
+     */
+    private void updateRobotPoseFromSelectedAuto() {
+        // Get the currently selected auto name from PathPlannerLance
+
+        // Only update if we have a valid auto name and it's different from what we last processed
+        // CHANGE AUTO HERE
+        String autoName = "Right"; // CHANGE AUTO NAME HERE
+        try {
+            // Try to load the path from the name
+            PathPlannerPath ppPath = PathPlannerPath.fromPathFile(autoName);
+
+            // Get starting pose from the path
+            Pose2d initialPose = ppPath.getStartingHolonomicPose().orElse(null);
+
+            // If we got a valid pose, update the pose estimator
+            if (    initialPose != null &&
+                    robotContainer.getPoseEstimator() != null &&
+                    robotContainer.getDrivetrain() != null) {
+
+                robotContainer.getPoseEstimator().resetPose(initialPose);
+                robotContainer.getDrivetrain().resetPose(initialPose);
+                System.out.println("Updated robot pose from auto path: " + autoName);
+                System.out.println("Initial pose: X=" + initialPose.getX() +
+                        ", Y=" + initialPose.getY() +
+                        ", Heading=" + initialPose.getRotation().getDegrees());
+            }
+            else {
+                System.out.println("Initial pose or the pose estimator is null");
+                if (initialPose == null) {
+                    System.out.println("Initial pose is null from path: " + autoName);
+                }
+                if (robotContainer.getPoseEstimator() == null) {
+                    System.out.println("Pose estimator is null");
+                }
+                if (robotContainer.getDrivetrain() == null) {
+                    System.out.println("Drivetrain is null");
+                }
+            }
+        } catch (Exception e) {
+            System.out.println("Error loading path file: " + autoName);
+            e.printStackTrace();
+        }
+    }
+
+
+
+    /**
      * This method runs one time when the robot enters autonomous mode.
      */
     @Override
@@ -165,9 +202,11 @@ public class Robot extends TimedRobot
         // autonomousCommand = PathPlannerLance.getAutonomousCommand();
 
         // PathPlannerAuto path = new PathPlannerAuto("Testing");
-        Command path = AutoBuilder.buildAuto("Right");
+        String autoname = "Right";
+
+        Command path = AutoBuilder.buildAuto(autoname);
         try {
-            PathPlannerPath ppPath = PathPlannerPath.fromPathFile("Right");
+            PathPlannerPath ppPath = PathPlannerPath.fromPathFile(autoname);
             Pose2d initialPose = ppPath.getStartingHolonomicPose().orElse(new Pose2d());
             robotContainer.getPoseEstimator().resetPose(initialPose);
         }
