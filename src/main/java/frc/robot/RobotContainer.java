@@ -41,7 +41,7 @@ public class RobotContainer
         System.out.println("Loading: " + fullClassName);
     }
 
-    private boolean useFullRobot            = true;
+    private boolean useFullRobot            = false;
 
     private boolean useClaw                 = false;
     private boolean useClimb                = false;
@@ -62,8 +62,8 @@ public class RobotContainer
 
     // private boolean useDriverBindings       = false;
     // private boolean useOperatorBindings     = false;
-    private boolean useDriverController     = true;
-    private boolean useOperatorController   = true;
+    private boolean useDriverController     = false;
+    private boolean useOperatorController   = false;
 
     //private boolean useAutonomousTab        = false;
 
