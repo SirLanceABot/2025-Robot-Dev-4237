@@ -121,15 +121,16 @@ public class ElasticLance
         // SmartDashboard.putNumber("Pivot Position", pivot.getPosition());
         // updateTeleopField();
         // updateAutoField();
+
+
         updateReefTagBox();
         updateValidAutoBox();
-
         updateAllianceColorBox();
 
-        if(!useFullRobot)
+        if(!useFullRobot && DriverStation.isDisabled())
         {
             useFullRobotAlert.set(true);
-            leds.setColorSolidCommand(Color.kTurquoise).ignoringDisable(true).schedule();
+            leds.setColorSolidCommand(Color.kRed).ignoringDisable(true).schedule();
         }
     }
 
@@ -186,19 +187,23 @@ public class ElasticLance
     public static void updateValidAutoBox()
     {
         // System.out.println(PathPlannerLance.getAutonomousCommand().getName());
-        if(PathPlannerLance.getAutonomousCommand().getName().equalsIgnoreCase("InstantCommand"))
+        if(DriverStation.isDisabled())
         {
-            validAutoColor = Color.kRed;
-            leds.setColorSolidCommand(Color.kRed).ignoringDisable(true).schedule();
-            autoAlert.set(true);
+            if(PathPlannerLance.getAutonomousCommand().getName().equalsIgnoreCase("InstantCommand"))
+            {
+                validAutoColor = Color.kYellow;
+                leds.setColorSolidCommand(validAutoColor).ignoringDisable(true).schedule();
+                autoAlert.set(true);
+            }
+            else 
+            {
+                validAutoColor = Color.kGreen;
+                leds.setColorSolidCommand(validAutoColor).ignoringDisable(true).schedule();
+                autoAlert.set(false);
+            }
+            SmartDashboard.putString("Is Auto Valid", validAutoColor.toHexString());
         }
-        else 
-        {
-            validAutoColor = Color.kGreen;
-            leds.setColorSolidCommand(Color.kGreen).ignoringDisable(true).schedule();
-            autoAlert.set(false);
-        }
-        SmartDashboard.putString("Is Auto Valid", validAutoColor.toHexString());
+        
 
         // Elastic.Notification notification = new Elastic.Notification(Elastic.Notification.NotificationLevel.ERROR, "Error Notification", "This is an example error notification.");
     }

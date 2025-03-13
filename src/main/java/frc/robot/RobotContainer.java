@@ -41,7 +41,7 @@ public class RobotContainer
         System.out.println("Loading: " + fullClassName);
     }
 
-    private boolean useFullRobot            = false;
+    private boolean useFullRobot            = true;
 
     private boolean useClaw                 = false;
     private boolean useClimb                = false;
@@ -157,7 +157,7 @@ public class RobotContainer
                 ? new Proximity(Constants.Proximity.FUNNEL_PORT)
                 : null;
 
-        cameraArray[0] = (useFullRobot || useScoringSideCamera)
+        cameraArray[0] = (useScoringSideCamera)
                 ? new Camera("limelight-scoring")
                 : null;
 
