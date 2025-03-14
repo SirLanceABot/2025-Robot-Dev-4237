@@ -113,8 +113,11 @@ public class Robot extends TimedRobot
             autonomousCommand = PathPlannerLance.getAutonomousCommand();
             autoName = autonomousCommand.getName();
             // updateRobotPoseFromSelectedAuto();
-            path = AutoBuilder.buildAuto(autoName);
-            initializePose();
+            if(AutoBuilder.isConfigured())
+            {
+                path = AutoBuilder.buildAuto(autoName);
+                initializePose();
+            }
         }
     }
 
@@ -136,8 +139,11 @@ public class Robot extends TimedRobot
                 autoName = autonomousCommand.getName();
                 System.out.println("Auto name: " + autonomousCommand.getName());
                 // updateRobotPoseFromSelectedAuto();
-                path = AutoBuilder.buildAuto(autoName);
-                initializePose();
+                if(AutoBuilder.isConfigured())
+                {
+                    path = AutoBuilder.buildAuto(autoName);
+                    initializePose();
+                }
                 // ElasticLance.updateAutoField();
             }
             // previousCommand = selectedCommand;
