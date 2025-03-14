@@ -9,15 +9,19 @@ import java.util.function.Supplier;
 
 import com.ctre.phoenix6.hardware.Pigeon2;
 
+import edu.wpi.first.apriltag.AprilTagFieldLayout;
+import edu.wpi.first.apriltag.AprilTagFields;
 import edu.wpi.first.math.Matrix;
 import edu.wpi.first.math.Nat;
 import edu.wpi.first.math.estimator.SwerveDrivePoseEstimator;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.geometry.Transform2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.numbers.N1;
 import edu.wpi.first.math.numbers.N3;
+import edu.wpi.first.math.util.Units;
 import edu.wpi.first.networktables.DoubleArrayEntry;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableInstance;
@@ -62,6 +66,7 @@ public class PoseEstimator extends SubsystemLance
     private final double fieldXDimension = 17.5482504;
     private final double fieldYDimension = 8.0519016;
     private final double[] defaultPosition = {0.0, 0.0, 0.0};
+    private final AprilTagFieldLayout aprilTagFieldLayout = AprilTagFieldLayout.loadField(AprilTagFields.k2025ReefscapeWelded);
 
     // Kalman filter, experiment later
     private Matrix<N3, N1> visionStdDevs;
@@ -393,14 +398,62 @@ public class PoseEstimator extends SubsystemLance
 
     public Pose2d closestBranchLocation(Supplier<Integer> aprilTagID, boolean isRight)
     {
-        if(isRight)
+        // if(isRight)
+        // {
+            // return rightBranchMap.getOrDefault(aprilTagID.get(), new Pose2d(2.0, 2.0, new Rotation2d(0.0)));
+        // }
+        // else
+        // {
+        //     return leftBranchMap.getOrDefault(aprilTagID.get(), new Pose2d(2.0, 2.0, new Rotation2d(0.0)));
+        // }
+
+        Translation2d cwPostTranslation = new Translation2d(0.49, -0.33);
+        Translation2d ccwPostTranslation = new Translation2d(0.49, -0.03);
+        Rotation2d robotRotation = new Rotation2d(Units.degreesToRadians(-90.0));
+        int tag = aprilTagID.get();
+        Transform2d leftPostTransform, rightPostTransform;
+        Pose2d aprilTagPose, desiredRobotPose;
+
+        if(isReefTag(tag))
         {
-            return rightBranchMap.getOrDefault(aprilTagID.get(), new Pose2d(2.0, 2.0, new Rotation2d(0.0)));
+            aprilTagPose = aprilTagFieldLayout.getTagPose(tag).get().toPose2d();
+
+            if(tag >= 9 && tag <= 11 || tag >= 20 && tag <= 22)
+            {
+                if(isRight)
+                {
+                    rightPostTransform = new Transform2d(cwPostTranslation, robotRotation);
+                    desiredRobotPose = aprilTagPose.transformBy(rightPostTransform);
+                    return desiredRobotPose;
+                }
+                else
+                {
+                    leftPostTransform = new Transform2d(ccwPostTranslation, robotRotation);
+                    desiredRobotPose = aprilTagPose.transformBy(leftPostTransform);
+                    return desiredRobotPose;
+                }
+            }
+            else
+            {
+                if(isRight)
+                {
+                    rightPostTransform = new Transform2d(ccwPostTranslation, robotRotation);
+                    desiredRobotPose = aprilTagPose.transformBy(rightPostTransform);
+                    return desiredRobotPose;
+                }
+                else
+                {
+                    leftPostTransform = new Transform2d(cwPostTranslation, robotRotation);
+                    desiredRobotPose = aprilTagPose.transformBy(leftPostTransform);
+                    return desiredRobotPose;
+                }
+            }
         }
         else
         {
-            return leftBranchMap.getOrDefault(aprilTagID.get(), new Pose2d(2.0, 2.0, new Rotation2d(0.0)));
+            return new Pose2d(2.0, 2.0, new Rotation2d(0.0));
         }
+        
     }
 
     public boolean getIsRightBranch()

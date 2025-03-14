@@ -47,7 +47,7 @@ public class Elevator extends SubsystemLance
         // kReadyToGrabCoralPosition(45.0),
         // kSafeSwingPosition(60.0),
         // kUpperReefAlgae(59.0),
-        kL4(63.5);
+        kL4(65.0);
 
         public final double elevatorPosition;
 
