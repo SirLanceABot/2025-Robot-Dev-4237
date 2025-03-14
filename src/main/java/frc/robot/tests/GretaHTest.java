@@ -75,10 +75,10 @@ public class GretaHTest implements Test
     public void periodic()
     {
 
-        // if(joystick.getRawButton(1))
-        // {
-        //     leds.setColorSolidCommand(LEDs.Color.kRed).schedule();
-        // }
+        if(joystick.getRawButton(1))
+        {
+            leds.setEpilepticAttackCommand().schedule();
+        }
         // else if(joystick.getRawButton(2))
         // {
         //     leds.setColorSolidCommand(LEDs.Color.kBlue).schedule();

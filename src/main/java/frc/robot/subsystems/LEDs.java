@@ -1,8 +1,10 @@
 package frc.robot.subsystems;
 
 import static edu.wpi.first.units.Units.Percent;
+import static edu.wpi.first.units.Units.Second;
 
 import java.lang.invoke.MethodHandles;
+import java.util.Map;
 import java.util.function.DoubleSupplier;
 
 import edu.wpi.first.math.MathUtil;
@@ -93,6 +95,11 @@ public class LEDs extends SubsystemLance
     private LEDPattern base;
     private LEDPattern breathePattern;
     private LEDPattern blinkPattern;
+
+    private LEDPattern base2 =  LEDPattern.rainbow(255, 255);
+    private Map<Double, Color> maskSteps = Map.of(0.25, Color.kWhite, 0.5, Color.kBlack);
+    private LEDPattern mask ;
+    private LEDPattern awesomePattern;
 
     // *** CLASS CONSTRUCTORS ***
     // Put all class constructors here
@@ -259,6 +266,13 @@ public class LEDs extends SubsystemLance
         blinkPattern.applyTo(ledBuffer);
     }
 
+    private void setEpilepticAttack()
+    {
+        mask = LEDPattern.steps(maskSteps).scrollAtRelativeSpeed(Percent.per(Second).of(250));
+        awesomePattern = base2.mask(mask);
+        awesomePattern.applyTo(ledBuffer);
+    }
+
     //COMMANDS
 
     public Command offCommand()
@@ -311,11 +325,11 @@ public class LEDs extends SubsystemLance
         return run(() -> setColorBlink(brightness, colors)).withName("Set LED Blink");
     }
 
+    public Command setEpilepticAttackCommand()
+    {
+        return run(() -> setEpilepticAttack()).withName("Sets LEDs to give someone an Epileptic Attack");
+    }
     
-
-    
-
-
     // Use a method reference instead of this method
     // public Command stopCommand()
     // {
