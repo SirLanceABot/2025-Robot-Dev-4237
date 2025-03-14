@@ -78,7 +78,7 @@ public final class OperatorBindings {
             configBButton();
             configXButton();
             configYButton();
-            // configLeftBumper();
+            configLeftBumper();
             configRightBumper();
             configBackButton();
             configStartButton();

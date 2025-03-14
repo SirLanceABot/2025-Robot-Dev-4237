@@ -127,7 +127,7 @@ public class Intake extends SubsystemLance
 
     public BooleanSupplier isAlgaeIn()
     {
-        return () -> motor.getCurrentAmps() >= 60;
+        return () -> motor.getCurrentAmps() >= 45;
     }
 
     public void pulse()

@@ -234,11 +234,12 @@ public final class IntakingCommands
         if(intake != null && intakeWrist != null && intakeProximity != null)
         {
             return
-            GeneralCommands.setLedCommand(ColorPattern.kBlink, Color.kYellow)
-            
-            .andThen(
+            Commands.parallel(
+                GeneralCommands.setLedCommand(ColorPattern.kBlink, Color.kYellow)
+                    .withTimeout(0.1), 
+
                 intakeWrist.moveToSetPositionCommand(Position.kIntakeCoralPosition)
-                    .until(intakeWrist.isAtPosition(Position.kIntakeCoralPosition)))
+                    .until(intakeWrist.isAtPosition(Position.kIntakeCoralPosition))
 
             .andThen(
                 intake.pickupAlgaeCommand()
@@ -250,7 +251,7 @@ public final class IntakingCommands
                 intake.pulseCommand(),
 
                 intakeWrist.moveToSetPositionCommand(Position.kManipAlgaePosition)
-                    .until(intakeWrist.isAtPosition(Position.kManipAlgaePosition))
+                    .until(intakeWrist.isAtPosition(Position.kManipAlgaePosition)))
             ));
         }
         else
