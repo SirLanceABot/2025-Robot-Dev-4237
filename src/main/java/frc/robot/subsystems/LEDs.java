@@ -150,7 +150,18 @@ public class LEDs extends SubsystemLance
      */
     private void setColorSolid(Color color)
     {
-        solid = LEDPattern.solid(color).atBrightness(Percent.of(25));
+        solid = LEDPattern.solid(color);
+        solid.applyTo(ledBuffer);
+    }
+
+    /**
+     * Makes LEDs a solid color
+     * @param color
+     * @param brightness (int)
+     */
+    private void setColorSolid(int brightness, Color color)
+    {
+        solid = LEDPattern.solid(color).atBrightness(Percent.of(brightness));
         solid.applyTo(ledBuffer);
     }
 
@@ -190,6 +201,17 @@ public class LEDs extends SubsystemLance
     }
 
     /**
+     * Creates gradient with specified colors
+     * @param colors
+     * @param brightness (int)
+     */
+    private void setColorGradient(int brightness, Color ... colors)
+    {
+        gradient = LEDPattern.gradient(LEDPattern.GradientType.kContinuous, colors);
+        gradient.applyTo(ledBuffer);
+    }
+
+    /**
      * Creates a gradient or solid color
      * Blinks slowly - like breathing
      * @param colors
@@ -202,10 +224,35 @@ public class LEDs extends SubsystemLance
     }
 
     /**
+     * Creates a gradient or solid color
+     * Blinks slowly - like breathing
+     * @param colors
+     * @param brightness (int)
+     */
+    private void setColorBreathe(int brightness, Color ... colors)
+    {
+        base = LEDPattern.gradient(LEDPattern.GradientType.kDiscontinuous, colors);
+        breathePattern = base.breathe(Units.Seconds.of(2));
+        breathePattern.applyTo(ledBuffer);
+    }
+
+    /**
      * Creates a gradient or solid blink pattern
      * @param colors
      */
     private void setColorBlink(Color... colors)
+    {
+        base = LEDPattern.gradient(LEDPattern.GradientType.kDiscontinuous, colors);
+        blinkPattern = base.breathe(Units.Seconds.of(0.5));
+        blinkPattern.applyTo(ledBuffer);
+    }
+
+    /**
+     * Creates a gradient or solid blink pattern
+     * @param colors
+     * @param brightness
+     */
+    private void setColorBlink(int brightness, Color ... colors)
     {
         base = LEDPattern.gradient(LEDPattern.GradientType.kDiscontinuous, colors);
         blinkPattern = base.breathe(Units.Seconds.of(0.5));
@@ -224,9 +271,19 @@ public class LEDs extends SubsystemLance
         return runOnce(() -> setColorSolid(color)).withName("Set LED Solid");
     }
 
+    public Command setColorSolidCommand(int brightness, Color color)
+    {
+        return runOnce(() -> setColorSolid(brightness, color)).withName("Set LED Solid");
+    }
+
     public Command setColorGradientCommand(Color... colors)
     {
         return runOnce(() -> setColorGradient(colors)).withName("Set LED Gradient");
+    }
+
+    public Command setColorGradientCommand(int brightness, Color colors)
+    {
+        return runOnce(() -> setColorGradient(brightness, colors)).withName("Set LED Gradient");
     }
 
     public Command setColorRainbowCommand()
@@ -239,9 +296,19 @@ public class LEDs extends SubsystemLance
         return run(() -> setColorBreathe(colors)).withName("Set LED Breathe");
     }
 
+    public Command setColorBreatheCommand(int brightness, Color ... colors)
+    {
+        return run(() -> setColorBreathe(brightness, colors)).withName("Set LED Breathe");
+    }
+
     public Command setColorBlinkCommand(Color... colors)
     {
         return run(() -> setColorBlink(colors)).withName("Set LED Blink");
+    }
+
+    public Command setColorBlinkCommand(int brightness, Color... colors)
+    {
+        return run(() -> setColorBlink(brightness, colors)).withName("Set LED Blink");
     }
 
     

@@ -74,6 +74,7 @@ public class GretaHTest implements Test
      */
     public void periodic()
     {
+
         // if(joystick.getRawButton(1))
         // {
         //     leds.setColorSolidCommand(LEDs.Color.kRed).schedule();
@@ -95,30 +96,30 @@ public class GretaHTest implements Test
         //     leds.stopCommand();
         // }
 
-        if(joystick.getRawButton(1))
-        {
-            leds.setColorGradientCommand(Color.kFuchsia, Color.kGold).schedule();
-        }
-        else if(joystick.getRawButton(2))
-        {
-            leds.offCommand().schedule();
-        }
-        else if(joystick.getRawButton(3))
-        {
-            leds.setColorRainbowCommand().schedule();
-        }
-        else if(joystick.getRawButton(4))
-        {
-            leds.setColorSolidCommand(Color.kMediumOrchid).schedule();
-        }
-        else if(joystick.getRawButton(5))
-        {
-            leds.setColorBlinkCommand(Color.kRed, Color.kFuchsia).schedule();
-        }
-        else if(joystick.getRawButton(6))
-        {
-            leds.setColorBreatheCommand(Color.kOrange, Color.kAliceBlue).schedule();
-        }
+        // if(joystick.getRawButton(1))
+        // {
+        //     leds.setColorGradientCommand(Color.kFuchsia, Color.kGold).schedule();
+        // }
+        // else if(joystick.getRawButton(2))
+        // {
+        //     leds.offCommand().schedule();
+        // }
+        // else if(joystick.getRawButton(3))
+        // {
+        //     leds.setColorRainbowCommand().schedule();
+        // }
+        // else if(joystick.getRawButton(4))
+        // {
+        //     leds.setColorSolidCommand(Color.kMediumOrchid).schedule();
+        // }
+        // else if(joystick.getRawButton(5))
+        // {
+        //     leds.setColorBlinkCommand(Color.kRed, Color.kFuchsia).schedule();
+        // }
+        // else if(joystick.getRawButton(6))
+        // {
+        //     leds.setColorBreatheCommand(Color.kOrange, Color.kAliceBlue).schedule();
+        // }
         // if(joystick.getRawButton(1))
         // {
         //     leds.setColorBlinkCommand(LEDs.Color.kRed).schedule();

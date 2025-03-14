@@ -130,7 +130,7 @@ public class ElasticLance
         if(!useFullRobot && DriverStation.isDisabled())
         {
             useFullRobotAlert.set(true);
-            leds.setColorSolidCommand(Color.kRed).ignoringDisable(true).schedule();
+            leds.setColorSolidCommand(100, Color.kRed).ignoringDisable(true).schedule();
         }
     }
 
@@ -198,7 +198,7 @@ public class ElasticLance
             else 
             {
                 validAutoColor = Color.kGreen;
-                leds.setColorSolidCommand(validAutoColor).ignoringDisable(true).schedule();
+                leds.setColorSolidCommand(50, validAutoColor).ignoringDisable(true).schedule();
                 autoAlert.set(false);
             }
             SmartDashboard.putString("Is Auto Valid", validAutoColor.toHexString());
