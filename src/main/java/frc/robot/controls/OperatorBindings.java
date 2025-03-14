@@ -167,6 +167,7 @@ public final class OperatorBindings {
         Trigger leftBumper = controller.leftBumper();
 
         // leftBumper.onTrue(IntakingCommands.intakeAlgaeFromReefCommand(TargetPosition.kLowerReefAlgae));
+        leftBumper.onTrue(GeneralCommands.burpCoralCommand());
 
     }
 

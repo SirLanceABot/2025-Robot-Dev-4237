@@ -112,6 +112,12 @@ public class Claw extends SubsystemLance
         setShootSpeed(1);
     }
 
+    public void burpCoral()
+    {
+        setIndexSpeed(-1);
+        setShootSpeed(-1);
+    }
+
     // public void ejectAlgae()
     // {
     //     setIndexSpeed(-0.1);
@@ -149,6 +155,11 @@ public class Claw extends SubsystemLance
     {
         // design pending
         return run(() -> intakeCoral()).withName("Intake Coral");
+    }
+
+    public Command burpCoralCommand()
+    {
+        return run(() -> burpCoral());
     }
 
     // public Command pulseCommand()

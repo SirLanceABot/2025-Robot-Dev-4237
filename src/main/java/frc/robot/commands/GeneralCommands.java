@@ -298,7 +298,9 @@ public final class GeneralCommands
                 GeneralCommands.setLedCommand(ColorPattern.kSolid, Color.kBlue),
 
                 elevator.moveToSetPositionCommand(ElevatorPosition.kIntakingPosition)
-                    .until(elevator.isAtPosition(ElevatorPosition.kIntakingPosition))
+                    .until(elevator.isAtPosition(ElevatorPosition.kIntakingPosition)),
+
+                claw.stopCommand()
             )   
             .andThen(GeneralCommands.setLedCommand(ColorPattern.kSolid, Color.kRed).withTimeout(0.1))
             // .andThen(
@@ -439,6 +441,18 @@ public final class GeneralCommands
         {
             return 
             claw.shootCoralCommand().withTimeout(0.5).andThen(claw.stopCommand());
+        }
+        else
+        {
+            return Commands.none();
+        }
+    }
+
+    public static Command burpCoralCommand()
+    {
+        if(claw != null)
+        {
+            return claw.burpCoralCommand().withTimeout(1.0).andThen(claw.stopCommand());
         }
         else
         {
