@@ -515,7 +515,7 @@ public class PoseEstimator extends SubsystemLance
 
         for (Camera camera : cameraArray) 
         {
-            if (camera != null)
+            if (camera != null && drivetrain != null)
             {
                 if(gyro != null)
                 {
@@ -578,10 +578,9 @@ public class PoseEstimator extends SubsystemLance
                     {
                         primaryReefTag = 0;
                     }
-                
-                         // TODO: only set if a tag is in frame
-                    // if any of the conditions above are true, do NOT add the mt2 pose as a vision
-                    // measurement
+
+
+                    /*
                     if (!rejectUpdate && poseEstimator != null)
                     {
                         // System.out.println("Adding vision measurement for tag: " + tagID);
@@ -592,7 +591,7 @@ public class PoseEstimator extends SubsystemLance
 
                         // GeneralCommands.setLedCommand(ColorPattern.kSolid, Color.kGreen);
                     }
-                    else if(rejectUpdate && poseEstimator != null)
+                    if(rejectUpdate && poseEstimator != null)
                     {
                         // GeneralCommands.setLedCommand(ColorPattern.kSolid, Color.kRed);
                     }
@@ -600,10 +599,12 @@ public class PoseEstimator extends SubsystemLance
                     {
                         // GeneralCommands.setLedCommand(ColorPattern.kBlink, Color.kOrange);
                     }
+                    */
 
-                    if (!rejectUpdate) // COMMENT OUT TO STOP DRIVETRAIN POSE FROM UPDATING
+                    // if any of the conditions above are true, do NOT add the mt2 pose as a vision
+                    // measurement
+                    if (!rejectUpdate)
                     {
-                        // System.out.println("Adding vision measurement for tag: " + tagID);
                         primaryReefTag = tagID;
                         drivetrain.addVisionMeasurement(
                                 visionPose,
@@ -624,9 +625,8 @@ public class PoseEstimator extends SubsystemLance
         if(drivetrain != null && gyro != null && poseEstimator != null)
         {
             // grabs the newest estimated pose
-            estimatedPose = poseEstimator.getEstimatedPosition();
             estimatedPose = drivetrain.getPose();
-
+            // sets it for advantagescope
             poseEstimatorEntry.set(estimatedPose);
         }
     }
