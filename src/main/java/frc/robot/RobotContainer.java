@@ -41,7 +41,7 @@ public class RobotContainer
         System.out.println("Loading: " + fullClassName);
     }
 
-    private boolean useFullRobot            = false;
+    private boolean useFullRobot            = true;
 
     private boolean useClaw                 = false;
     private boolean useClimb                = false;
