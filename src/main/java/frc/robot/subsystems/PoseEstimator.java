@@ -504,6 +504,7 @@ public class PoseEstimator extends SubsystemLance
     @Override
     public void periodic()
     {
+        /*
         if (drivetrain != null && gyro != null && poseEstimator != null) 
         {
             gyroRotation = gyro.getRotation2d();
@@ -512,6 +513,7 @@ public class PoseEstimator extends SubsystemLance
             // Updates odometry
             poseEstimator.update(gyroRotation, swerveModulePositions);
         }
+        */
 
         for (Camera camera : cameraArray) 
         {
