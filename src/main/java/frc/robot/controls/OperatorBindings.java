@@ -15,6 +15,7 @@ import frc.robot.commands.ScoringCommands;
 import frc.robot.commands.CommandsManager.TargetPosition;
 import frc.robot.commands.IntakingCommands;
 import frc.robot.subsystems.Claw;
+import frc.robot.subsystems.Climb;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Elevator;
 import frc.robot.subsystems.Elevator.ElevatorPosition;
@@ -48,6 +49,7 @@ public final class OperatorBindings {
     private static Drivetrain drivetrain;
     private static PoseEstimator poseEstimator;
     private static Claw claw;
+    private static Climb climb;
 
     private static BooleanSupplier isTeleop;
     private static DoubleSupplier matchTime;
@@ -66,6 +68,7 @@ public final class OperatorBindings {
         controller = robotContainer.getOperatorController();
         drivetrain = robotContainer.getDrivetrain();
         claw = robotContainer.getClaw();
+        climb = robotContainer.getClimb();
 
         if(controller != null)
         {
@@ -84,6 +87,7 @@ public final class OperatorBindings {
             configStartButton();
             configLeftTrigger();
             configRightTrigger();
+            configPOV();
             // configLeftStick();
             // configRightStick();
             // configDpadUp();
@@ -186,6 +190,7 @@ public final class OperatorBindings {
 
         // backButton.onTrue(IntakingCommands.intakeCoralFromStationCommand());
         // backButton.onTrue(GeneralCommands.scoreCoralOnlyCommand());
+        backButton.onTrue(GeneralCommands.getReadyToClimbCommand());
     }
 
 
@@ -244,7 +249,7 @@ public final class OperatorBindings {
     {
         Trigger dpadDown = controller.povDown();
 
-        dpadDown.onTrue(GeneralCommands.climbDownCageCommand());
+        // dpadDown.whileTrue(climb.climbDownCommand());
     }
 
     private static void configDpadLeft()
@@ -259,6 +264,23 @@ public final class OperatorBindings {
         Trigger dpadRight = controller.povRight();
 
         // dpadRight.onTrue(GeneralCommands.moveScorerToBargeCommand());
+    }
+
+    private static void configPOV()
+    {
+        if(climb != null)
+        {
+            Trigger upPOV = controller.povUp();
+            upPOV.onTrue(
+                climb.climbUpCommand());
+
+            Trigger downPOV = controller.povDown();
+            downPOV.onTrue(
+                climb.climbDownCommand());
+
+            upPOV.negate().and(downPOV.negate())
+                .onTrue(climb.stopCommand());
+        }
     }
 
 

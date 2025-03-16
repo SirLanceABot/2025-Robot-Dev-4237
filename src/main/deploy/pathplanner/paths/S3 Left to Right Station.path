@@ -16,12 +16,12 @@
     },
     {
       "anchor": {
-        "x": 1.31,
-        "y": 0.81
+        "x": 1.2467213114754097,
+        "y": 0.734375
       },
       "prevControl": {
-        "x": 1.8365000000000002,
-        "y": 1.3654999999999995
+        "x": 1.77322131147541,
+        "y": 1.2898749999999994
       },
       "nextControl": null,
       "isLocked": false,
@@ -45,8 +45,8 @@
     }
   ],
   "globalConstraints": {
-    "maxVelocity": 3.0,
-    "maxAcceleration": 3.0,
+    "maxVelocity": 3.5,
+    "maxAcceleration": 3.5,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0,
     "nominalVoltage": 12.0,
@@ -54,7 +54,7 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 140.768
+    "rotation": 144.32359177813808
   },
   "reversed": false,
   "folder": "Reef Starts",

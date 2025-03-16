@@ -364,6 +364,26 @@ public final class GeneralCommands
         }
     }
 
+    public static Command getReadyToClimbCommand()
+    {
+        if(intakeWrist != null && elevator != null)
+        {
+            return 
+            Commands.parallel(
+                intakeWrist.moveToSetPositionCommand(Position.kClimb)
+                .until(intakeWrist.isAtPosition(Position.kClimb)),
+
+                elevator.moveToSetPositionCommand(ElevatorPosition.kClimb)
+                .until(elevator.isAtPosition(ElevatorPosition.kClimb))
+            );
+            
+        }
+        else
+        {
+            return Commands.none();
+        }
+    }
+
     /**
      * Moves the scorer to the Barge heights
      * @author Logan Belliner

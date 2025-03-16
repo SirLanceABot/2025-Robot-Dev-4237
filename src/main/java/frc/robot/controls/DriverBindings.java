@@ -120,6 +120,11 @@ public final class DriverBindings {
         Trigger aButton = controller.a();
         // aButton
         //     .onTrue(IntakingCommands.intakeCoralCommand());
+
+        // if(intakeWrist != null)
+        // {
+        //     aButton.onTrue(GeneralCommands.moveIntakeForClimbCommand());
+        // }
     }
 
 
@@ -226,6 +231,7 @@ public final class DriverBindings {
     private static void configDpadUp()
     {
         Trigger dpadUp = controller.povUp();
+        // dpadUp.onTrue(intakeWrist.moveToSetPositionCommand(Position.kManipAlgaePosition));
     }
 
 

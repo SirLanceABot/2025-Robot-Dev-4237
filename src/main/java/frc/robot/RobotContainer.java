@@ -107,7 +107,7 @@ public class RobotContainer
                 ? new Claw()
                 : null;
 
-        climb = (useClimb)
+        climb = (useFullRobot || useClimb)
                 ? new Climb()
                 : null;
 

@@ -127,7 +127,7 @@ public class Climb extends SubsystemLance
      */
     public void climbUpCage()
     {
-        set(0.1);
+        set(0.75);
     }
 
     /**
@@ -135,7 +135,7 @@ public class Climb extends SubsystemLance
      */
     public void climbDownCage()
     {
-        set(-0.1);
+        set(-0.75);
     }
 
     /**
