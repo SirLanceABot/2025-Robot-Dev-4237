@@ -102,6 +102,9 @@ public class Climb extends SubsystemLance
         // leadMotor.setupReverseSoftLimit(REVERSE_SOFT_LIMIT, true);
         // motor.setupForwardHardLimitSwitch(true, true);
         // motor.setupReverseHardLimitSwitch(true, true);
+        leadMotor.setupForwardHardLimitSwitch(true, true);
+        leadMotor.setupReverseHardLimitSwitch(true, true);
+
     }
 
     /**
@@ -127,7 +130,7 @@ public class Climb extends SubsystemLance
      */
     public void climbUpCage()
     {
-        set(0.75);
+        set(1.0);
     }
 
     /**
@@ -135,7 +138,7 @@ public class Climb extends SubsystemLance
      */
     public void climbDownCage()
     {
-        set(-0.75);
+        set(-1.0);
     }
 
     /**
