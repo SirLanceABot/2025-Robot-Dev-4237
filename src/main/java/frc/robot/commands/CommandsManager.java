@@ -9,10 +9,15 @@ import java.lang.invoke.MethodHandles;
 import com.pathplanner.lib.auto.NamedCommands;
 import com.pathplanner.lib.path.GoalEndState;
 import com.pathplanner.lib.path.PathPlannerPath;
+
+import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.Robot;
 import frc.robot.RobotContainer;
+import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Elevator.ElevatorPosition;
 import frc.robot.subsystems.Pivot.PivotPosition;
 
@@ -59,6 +64,7 @@ public final class CommandsManager
         }
     }
 
+    private static Drivetrain drivetrain;
 
     /**
      * Creates a new ExampleCommand.
@@ -75,6 +81,11 @@ public final class CommandsManager
         ScoringCommands.createCommands(robotContainer);
 
         createNamedCommands();
+
+        if(robotContainer.getDrivetrain() != null)
+        {
+            drivetrain = robotContainer.getDrivetrain();
+        }
 
         System.out.println("  Constructor Finished: " + fullClassName);
     }
@@ -97,6 +108,8 @@ public final class CommandsManager
 
         NamedCommands.registerCommand("Finish Scoring Coral", ScoringCommands.finishScoringCoralCommand());
         NamedCommands.registerCommand("Score Coral Only", GeneralCommands.scoreCoralOnlyCommand());
+
+        NamedCommands.registerCommand("Score Coral S2 Right", ScoringCommands.scoreCoralAutonomouslyReallyCoolAndAwesomeCommand(() -> drivetrain.getState().Pose, () -> new Pose2d(new Translation2d(5.18, 2.91), new Rotation2d(Math.toRadians(-150)))));
         // NamedCommands.registerCommand("Score Algae Only", GeneralCommands.scoreAlgaeOnlyCommand());
 
         // NamedCommands.registerCommand("Auto Align Coral", ScoringCommands.scoreCoralAutonomouslyReallyCoolAndAwesomeCommand)

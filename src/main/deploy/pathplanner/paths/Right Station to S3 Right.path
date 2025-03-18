@@ -8,8 +8,8 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.58644828515962,
-        "y": 0.5751677631578946
+        "x": 2.21325,
+        "y": 1.4314999999999998
       },
       "isLocked": false,
       "linkedName": "Right Station"
@@ -20,8 +20,8 @@
         "y": 2.87
       },
       "prevControl": {
-        "x": 3.4685,
-        "y": 1.8887500000000002
+        "x": 2.93475,
+        "y": 2.075
       },
       "nextControl": null,
       "isLocked": false,
@@ -32,7 +32,7 @@
   "constraintZones": [
     {
       "name": "Slow Zone",
-      "minWaypointRelativePos": 0.6,
+      "minWaypointRelativePos": 0.85,
       "maxWaypointRelativePos": 1.0,
       "constraints": {
         "maxVelocity": 0.75,
@@ -54,17 +54,6 @@
         "type": "named",
         "data": {
           "name": "Move Scorer to L4"
-        }
-      }
-    },
-    {
-      "name": "Eject Coral On L4",
-      "waypointRelativePos": 1.0,
-      "endWaypointRelativePos": null,
-      "command": {
-        "type": "named",
-        "data": {
-          "name": "Eject Coral On L4"
         }
       }
     }

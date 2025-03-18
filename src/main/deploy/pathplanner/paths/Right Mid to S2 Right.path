@@ -3,16 +3,16 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 1.2467213114754097,
-        "y": 0.734375
+        "x": 7.13,
+        "y": 2.0
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.246721311475409,
-        "y": 0.7343749999999998
+        "x": 6.113250000000001,
+        "y": 2.34125
       },
       "isLocked": false,
-      "linkedName": "Right Station"
+      "linkedName": "Right Mid"
     },
     {
       "anchor": {
@@ -20,8 +20,8 @@
         "y": 2.669749999999999
       },
       "prevControl": {
-        "x": 4.022730263157894,
-        "y": 2.1869769736842097
+        "x": 5.612750000000001,
+        "y": 2.4072499999999986
       },
       "nextControl": null,
       "isLocked": false,
@@ -29,25 +29,38 @@
     }
   ],
   "rotationTargets": [],
-  "constraintZones": [],
+  "constraintZones": [
+    {
+      "name": "Slow Zone",
+      "minWaypointRelativePos": 0.85,
+      "maxWaypointRelativePos": 1.0,
+      "constraints": {
+        "maxVelocity": 1.25,
+        "maxAcceleration": 1.25,
+        "maxAngularVelocity": 540.0,
+        "maxAngularAcceleration": 720.0,
+        "nominalVoltage": 12.0,
+        "unlimited": false
+      }
+    }
+  ],
   "pointTowardsZones": [],
   "eventMarkers": [
     {
       "name": "Move Scorer to L4",
       "waypointRelativePos": 0.05,
       "endWaypointRelativePos": null,
-      "command": null
-    },
-    {
-      "name": "Score Coral Only",
-      "waypointRelativePos": 1.0,
-      "endWaypointRelativePos": null,
-      "command": null
+      "command": {
+        "type": "named",
+        "data": {
+          "name": "Move Scorer to L4"
+        }
+      }
     }
   ],
   "globalConstraints": {
-    "maxVelocity": 1.0,
-    "maxAcceleration": 3.0,
+    "maxVelocity": 2.0,
+    "maxAcceleration": 2.0,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0,
     "nominalVoltage": 12.0,
@@ -58,10 +71,10 @@
     "rotation": -150.0
   },
   "reversed": false,
-  "folder": "Right Station Starts",
+  "folder": "Right Wall Starts",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 144.32359177813808
+    "rotation": -90.0
   },
   "useDefaultConstraints": false
 }
