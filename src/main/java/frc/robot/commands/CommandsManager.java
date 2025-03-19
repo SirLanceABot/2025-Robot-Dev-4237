@@ -18,6 +18,7 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.Robot;
 import frc.robot.RobotContainer;
 import frc.robot.subsystems.Drivetrain;
+import frc.robot.subsystems.PoseEstimator;
 import frc.robot.subsystems.Elevator.ElevatorPosition;
 import frc.robot.subsystems.Pivot.PivotPosition;
 
@@ -65,6 +66,7 @@ public final class CommandsManager
     }
 
     private static Drivetrain drivetrain;
+    private static PoseEstimator poseEstimator;
 
     /**
      * Creates a new ExampleCommand.
@@ -85,6 +87,11 @@ public final class CommandsManager
         if(robotContainer.getDrivetrain() != null)
         {
             drivetrain = robotContainer.getDrivetrain();
+        }
+
+        if(robotContainer.getPoseEstimator() != null)
+        {
+            poseEstimator = robotContainer.getPoseEstimator();
         }
 
         System.out.println("  Constructor Finished: " + fullClassName);
@@ -109,7 +116,8 @@ public final class CommandsManager
         NamedCommands.registerCommand("Finish Scoring Coral", ScoringCommands.finishScoringCoralCommand());
         NamedCommands.registerCommand("Score Coral Only", GeneralCommands.scoreCoralOnlyCommand());
 
-        NamedCommands.registerCommand("Score Coral S2 Right", ScoringCommands.scoreCoralAutonomouslyReallyCoolAndAwesomeCommand(() -> drivetrain.getState().Pose, () -> new Pose2d(new Translation2d(5.18, 2.91), new Rotation2d(Math.toRadians(-150)))));
+        NamedCommands.registerCommand("Score Coral Right", ScoringCommands.scoreCoralAutonomouslyReallyCoolAndAwesomeCommand(() -> drivetrain.getState().Pose, (() -> poseEstimator.closestBranchLocation(() -> poseEstimator.getPrimaryTagID(), true))));
+        NamedCommands.registerCommand("Score Coral Left", ScoringCommands.scoreCoralAutonomouslyReallyCoolAndAwesomeCommand(() -> drivetrain.getState().Pose, (() -> poseEstimator.closestBranchLocation(() -> poseEstimator.getPrimaryTagID(), false))));
         // NamedCommands.registerCommand("Score Algae Only", GeneralCommands.scoreAlgaeOnlyCommand());
 
         // NamedCommands.registerCommand("Auto Align Coral", ScoringCommands.scoreCoralAutonomouslyReallyCoolAndAwesomeCommand)

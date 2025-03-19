@@ -1,0 +1,66 @@
+{
+  "version": "2025.0",
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 1.2467213114754097,
+        "y": 0.734375
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 2.09625,
+        "y": 1.499749999999999
+      },
+      "isLocked": false,
+      "linkedName": "Right Station"
+    },
+    {
+      "anchor": {
+        "x": 3.63675,
+        "y": 2.6502499999999998
+      },
+      "prevControl": {
+        "x": 2.83725,
+        "y": 2.2114999999999996
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": null
+    }
+  ],
+  "rotationTargets": [],
+  "constraintZones": [],
+  "pointTowardsZones": [],
+  "eventMarkers": [
+    {
+      "name": "Move Scorer",
+      "waypointRelativePos": 0.25,
+      "endWaypointRelativePos": null,
+      "command": {
+        "type": "named",
+        "data": {
+          "name": "Move Scorer to L4"
+        }
+      }
+    }
+  ],
+  "globalConstraints": {
+    "maxVelocity": 3.0,
+    "maxAcceleration": 3.0,
+    "maxAngularVelocity": 540.0,
+    "maxAngularAcceleration": 720.0,
+    "nominalVoltage": 12.0,
+    "unlimited": false
+  },
+  "goalEndState": {
+    "velocity": 0.0,
+    "rotation": 150.0
+  },
+  "reversed": false,
+  "folder": "Right Station Starts",
+  "idealStartingState": {
+    "velocity": 0,
+    "rotation": 144.32359177813808
+  },
+  "useDefaultConstraints": true
+}
