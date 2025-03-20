@@ -3,25 +3,25 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 1.6741776315789472,
-        "y": 7.325246710526316
+        "x": 1.64775,
+        "y": 7.38875
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.366427631578947,
-        "y": 6.740246710526316
+        "x": 2.34,
+        "y": 6.80375
       },
       "isLocked": false,
       "linkedName": "Left Station"
     },
     {
       "anchor": {
-        "x": 3.8,
-        "y": 5.2
+        "x": 4.163250000000001,
+        "y": 5.350999999999999
       },
       "prevControl": {
-        "x": 2.6825,
-        "y": 6.2357499999999995
+        "x": 3.045750000000001,
+        "y": 6.386749999999998
       },
       "nextControl": null,
       "isLocked": false,
@@ -29,7 +29,21 @@
     }
   ],
   "rotationTargets": [],
-  "constraintZones": [],
+  "constraintZones": [
+    {
+      "name": "Slow Zone",
+      "minWaypointRelativePos": 0.8,
+      "maxWaypointRelativePos": 1.0,
+      "constraints": {
+        "maxVelocity": 1.25,
+        "maxAcceleration": 1.25,
+        "maxAngularVelocity": 540.0,
+        "maxAngularAcceleration": 720.0,
+        "nominalVoltage": 12.0,
+        "unlimited": false
+      }
+    }
+  ],
   "pointTowardsZones": [],
   "eventMarkers": [
     {
@@ -39,18 +53,7 @@
       "command": {
         "type": "named",
         "data": {
-          "name": "Move Scorer To L4"
-        }
-      }
-    },
-    {
-      "name": "Eject Coral On L4",
-      "waypointRelativePos": 1.0,
-      "endWaypointRelativePos": null,
-      "command": {
-        "type": "named",
-        "data": {
-          "name": "Score Coral Only"
+          "name": "Move Scorer to L4"
         }
       }
     }
@@ -71,7 +74,7 @@
   "folder": "Left Station Starts",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 35.0
+    "rotation": 36.11934084947967
   },
   "useDefaultConstraints": true
 }

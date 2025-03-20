@@ -16,12 +16,12 @@
     },
     {
       "anchor": {
-        "x": 1.6741776315789472,
-        "y": 7.325246710526316
+        "x": 1.64775,
+        "y": 7.38875
       },
       "prevControl": {
-        "x": 2.093427631578947,
-        "y": 6.896246710526316
+        "x": 2.067,
+        "y": 6.95975
       },
       "nextControl": null,
       "isLocked": false,
@@ -54,7 +54,7 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 35.0
+    "rotation": 36.11934084947967
   },
   "reversed": false,
   "folder": "Reef Starts",

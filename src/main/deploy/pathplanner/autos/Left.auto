@@ -7,7 +7,31 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Left Wall to S5 Left"
+            "pathName": "Left Wall to S6 Left"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Score Coral Only"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "S6 Left to Left Station"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Intake Coral From Station"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Left Station to S5 Left"
           }
         },
         {
@@ -38,24 +62,6 @@
           "type": "named",
           "data": {
             "name": "Score Coral Only"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "S5 Right to Left Station"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "Intake Coral From Station"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "Left Station to S4 Left"
           }
         }
       ]

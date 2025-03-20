@@ -3,13 +3,13 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 7.176,
-        "y": 7.428
+        "x": 7.16625,
+        "y": 7.466875
       },
       "prevControl": null,
       "nextControl": {
-        "x": 6.318,
-        "y": 6.716
+        "x": 6.308249999999999,
+        "y": 6.754875
       },
       "isLocked": false,
       "linkedName": "Left Wall"

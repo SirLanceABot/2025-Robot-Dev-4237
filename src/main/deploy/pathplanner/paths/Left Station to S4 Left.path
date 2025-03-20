@@ -3,13 +3,13 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 1.6741776315789472,
-        "y": 7.325246710526316
+        "x": 1.64775,
+        "y": 7.38875
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.8831776315789472,
-        "y": 6.564746710526316
+        "x": 2.85675,
+        "y": 6.62825
       },
       "isLocked": false,
       "linkedName": "Left Station"
@@ -85,7 +85,7 @@
   "folder": "Left Station Starts",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 35.0
+    "rotation": 36.11934084947967
   },
   "useDefaultConstraints": false
 }
