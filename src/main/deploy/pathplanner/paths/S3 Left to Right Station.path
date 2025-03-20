@@ -3,13 +3,13 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 3.59,
-        "y": 3.02
+        "x": 3.54,
+        "y": 3.05
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.976,
-        "y": 2.4349999999999996
+        "x": 2.926,
+        "y": 2.4649999999999994
       },
       "isLocked": false,
       "linkedName": "S3 Left"

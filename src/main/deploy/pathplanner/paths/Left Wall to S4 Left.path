@@ -4,12 +4,12 @@
     {
       "anchor": {
         "x": 7.16625,
-        "y": 7.466875
+        "y": 5.7
       },
       "prevControl": null,
       "nextControl": {
-        "x": 3.4125000000000028,
-        "y": 7.7688749999999995
+        "x": 3.412500000000003,
+        "y": 6.002
       },
       "isLocked": false,
       "linkedName": "Left Wall"
@@ -85,7 +85,7 @@
   "folder": "Left Wall Starts",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 0.0
+    "rotation": -90.0
   },
   "useDefaultConstraints": true
 }
