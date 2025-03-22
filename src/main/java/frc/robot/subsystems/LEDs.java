@@ -97,7 +97,7 @@ public class LEDs extends SubsystemLance
     private LEDPattern blinkPattern;
 
     private LEDPattern base2 =  LEDPattern.rainbow(255, 255);
-    private Map<Double, Color> maskSteps = Map.of(0.25, Color.kWhite, 0.5, Color.kBlack);
+    private Map<Double, Color> maskSteps = Map.of(0.5, Color.kWhite, 0.8, Color.kBlack);
     private LEDPattern mask ;
     private LEDPattern awesomePattern;
 
@@ -268,7 +268,7 @@ public class LEDs extends SubsystemLance
 
     private void setEpilepticAttack()
     {
-        mask = LEDPattern.steps(maskSteps).scrollAtRelativeSpeed(Percent.per(Second).of(250));
+        mask = LEDPattern.steps(maskSteps).scrollAtRelativeSpeed(Percent.per(Second).of(300));
         awesomePattern = base2.mask(mask);
         awesomePattern.applyTo(ledBuffer);
     }
