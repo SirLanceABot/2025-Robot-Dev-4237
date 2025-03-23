@@ -325,12 +325,15 @@ public final class ScoringCommands
             // System.out.println("Current Pose = " + currentPose.getX() + "  " + currentPose.getY());
             // if(targetPose.get().getX() != 2.0 && targetPose.get().getY() != 2.0)
             // {
+
+
                 return
                 Commands.parallel(
                     GeneralCommands.moveScorerToL4Command().withTimeout(3.0),
                     
                     new DeferredCommand(() -> GeneralCommands.driveToPositionCommand(targetPose.get(), currentPose.get()), Set.of(drivetrain))
                     )
+
                 // .andThen(
             // new DeferredCommand(() -> Commands.print("Current Pose = " + currentPose.get().getX() + "  " + currentPose.get().getY()), Set.of(drivetrain))
                 // new DeferredCommand(() -> GeneralCommands.driveToPositionCommand(targetPose.get(), currentPose.get()), Set.of(drivetrain)))

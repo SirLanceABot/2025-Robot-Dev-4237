@@ -122,7 +122,7 @@ public class Climb extends SubsystemLance
      */
     public void set(double speed)
     {
-        leadMotor.set(MathUtil.clamp(speed, -0.5, 0.5));
+        leadMotor.set(MathUtil.clamp(speed, -1, 1));
     }
 
     /**

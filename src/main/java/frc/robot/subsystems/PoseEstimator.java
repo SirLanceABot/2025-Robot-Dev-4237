@@ -407,8 +407,8 @@ public class PoseEstimator extends SubsystemLance
         //     return leftBranchMap.getOrDefault(aprilTagID.get(), new Pose2d(2.0, 2.0, new Rotation2d(0.0)));
         // }
 
-        Translation2d cwPostTranslation = new Translation2d(0.49, -0.33);
-        Translation2d ccwPostTranslation = new Translation2d(0.49, -0.03);
+        Translation2d cwPostTranslation = new Translation2d(0.47, -0.33);
+        Translation2d ccwPostTranslation = new Translation2d(0.47, -0.03);
         Rotation2d robotRotation = new Rotation2d(Units.degreesToRadians(-90.0));
         int tag = aprilTagID.get();
         Transform2d leftPostTransform, rightPostTransform;
