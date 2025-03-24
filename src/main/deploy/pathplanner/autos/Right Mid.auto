@@ -63,6 +63,12 @@
           "data": {
             "name": "Score Coral Only"
           }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "S3 Left to Right Station"
+          }
         }
       ]
     }

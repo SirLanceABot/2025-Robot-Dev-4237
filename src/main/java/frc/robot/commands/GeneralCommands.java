@@ -374,7 +374,9 @@ public final class GeneralCommands
                 .until(intakeWrist.isAtPosition(Position.kClimb)),
 
                 elevator.moveToSetPositionCommand(ElevatorPosition.kClimb)
-                .until(elevator.isAtPosition(ElevatorPosition.kClimb))
+                .until(elevator.isAtPosition(ElevatorPosition.kClimb)),
+
+                setLedCommand(ColorPattern.kRainbow)
             );
             
         }
