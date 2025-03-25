@@ -1,0 +1,79 @@
+{
+  "version": "2025.0",
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Right Mid to S2 Right"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Score Coral Only"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "S2 Right to Right Station"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Right Station to S3 Right (Intake)"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Score Coral Only"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "S3 Right to Right Station"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Right Station to S3 Left (Intake)"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Score Coral Only"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "S3 Left to Right Station"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Right Station to S4 Right (Intake)"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Score Coral Only"
+          }
+        }
+      ]
+    }
+  },
+  "resetOdom": true,
+  "folder": null,
+  "choreoAuto": false
+}
