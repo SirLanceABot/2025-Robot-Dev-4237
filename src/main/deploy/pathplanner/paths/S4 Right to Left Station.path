@@ -4,12 +4,12 @@
     {
       "anchor": {
         "x": 3.17,
-        "y": 4.06
+        "y": 4.0
       },
       "prevControl": null,
       "nextControl": {
         "x": 2.62375,
-        "y": 4.8542499999999995
+        "y": 4.79425
       },
       "isLocked": false,
       "linkedName": "S4 Right"

@@ -271,11 +271,13 @@ public final class GeneralCommands
         if(elevator != null)
         {
             return
-            Commands.parallel(
-                setLedCommand(ColorPattern.kSolid, Color.kBlue).withTimeout(0.25),
+            Commands.waitUntil(clawProximity.isDetectedSupplier())
+            .andThen(
+                Commands.parallel(
+                    setLedCommand(ColorPattern.kSolid, Color.kBlue).withTimeout(0.25),
 
-                elevator.moveToSetPositionCommand(ElevatorPosition.kL4)
-                    .until(elevator.isAtPosition(ElevatorPosition.kL4)))
+                    elevator.moveToSetPositionCommand(ElevatorPosition.kL4)
+                        .until(elevator.isAtPosition(ElevatorPosition.kL4))))
             .withName("Move Scorer to L4 Command");  
         }
         else
