@@ -265,7 +265,6 @@ public class Elevator extends SubsystemLance
             resetPosition();
             // System.out.println("Reset to 0: " + getPosition());
         }
-        // System.out.println("Position: " + getPosition());
         // This method will be called once per scheduler run
     }
 

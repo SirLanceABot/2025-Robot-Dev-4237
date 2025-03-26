@@ -163,7 +163,7 @@ public final class IntakingCommands
      */
     public static Command intakeCoralFromStationCommand()
     {
-        if(elevator != null && claw != null & elevatorProximity != null && clawProximity != null)
+        if(elevator != null && claw != null && clawProximity != null)
         {
             return
             // GeneralCommands.moveScorerToIntakingPositionCommand()
@@ -176,12 +176,12 @@ public final class IntakingCommands
                     .until(elevator.isAtPosition(ElevatorPosition.kIntakingPosition))
                     .withTimeout(2.0),
 
-                claw.intakeCoralCommand().until(clawProximity.isDetectedSupplier())
+                claw.intakeCoralCommand().until(clawProximity.isDetectedSupplier()).andThen(claw.stopCommand())
             )
 
             // .andThen(elevator.moveToSetPositionCommand(ElevatorPosition.kSafeSwingPosition).until(elevator.isAtPosition(ElevatorPosition.kSafeSwingPosition)))
 
-            .andThen(claw.stopCommand())
+            
             // .andThen(Commands.waitSeconds(0.25))
 
             // .andThen(

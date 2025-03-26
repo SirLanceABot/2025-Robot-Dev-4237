@@ -56,7 +56,7 @@ public final class DriverBindings {
     private static BooleanSupplier isTeleop;
     private static DoubleSupplier matchTime;
 
-    private static final double CRAWL_SPEED = 0.25;
+    private static final double CRAWL_SPEED = 0.15;
     private static final double WALK_SPEED = 0.55;
     private static final double RUN_SPEED = 1.0;
     private static Intake intake;
@@ -167,7 +167,7 @@ public final class DriverBindings {
     {
         Trigger leftBumper = controller.leftBumper();
 
-        leftBumper.onTrue(Commands.runOnce(() -> scaleFactor = (scaleFactor > (CRAWL_SPEED + WALK_SPEED) / 2.0) ? CRAWL_SPEED : RUN_SPEED));
+        leftBumper.onTrue(Commands.runOnce(() -> scaleFactor = (scaleFactor > (CRAWL_SPEED + WALK_SPEED) / 2.0) ? CRAWL_SPEED : WALK_SPEED));
 
     }
 
