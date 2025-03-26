@@ -4,12 +4,12 @@
     {
       "anchor": {
         "x": 7.16625,
-        "y": 5.7
+        "y": 5.48
       },
       "prevControl": null,
       "nextControl": {
         "x": 6.308249999999999,
-        "y": 4.988
+        "y": 4.768000000000001
       },
       "isLocked": false,
       "linkedName": "Left Wall"

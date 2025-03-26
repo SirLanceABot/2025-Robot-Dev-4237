@@ -1,0 +1,61 @@
+{
+  "version": "2025.0",
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Right Mid to S2 Right"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Score Coral Only"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "S2 Right to S3 Right"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Score Coral Only"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "S3 Right to S3 Left"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Score Coral Only"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "S3 Left to S4 Right"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Score Coral Only"
+          }
+        }
+      ]
+    }
+  },
+  "resetOdom": true,
+  "folder": null,
+  "choreoAuto": false
+}
