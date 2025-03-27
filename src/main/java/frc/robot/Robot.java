@@ -232,6 +232,8 @@ public class Robot extends TimedRobot
         // PathPlannerAuto path = new PathPlannerAuto("Testing");
         // path = AutoBuilder.buildAuto(autoName);
 
+        initializePose();
+
         if(path != null)
         {
             path.schedule();

@@ -78,21 +78,14 @@ public final class CommandsManager
     {
         System.out.println("  Constructor Started:  " + fullClassName);
 
+        drivetrain = robotContainer.getDrivetrain();
+        poseEstimator = robotContainer.getPoseEstimator();
+
         GeneralCommands.createCommands(robotContainer);
         IntakingCommands.createCommands(robotContainer);
         ScoringCommands.createCommands(robotContainer);
 
         createNamedCommands();
-
-        if(robotContainer.getDrivetrain() != null)
-        {
-            drivetrain = robotContainer.getDrivetrain();
-        }
-
-        if(robotContainer.getPoseEstimator() != null)
-        {
-            poseEstimator = robotContainer.getPoseEstimator();
-        }
 
         System.out.println("  Constructor Finished: " + fullClassName);
     }
