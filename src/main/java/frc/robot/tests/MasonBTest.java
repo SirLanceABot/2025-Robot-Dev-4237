@@ -40,7 +40,7 @@ public class MasonBTest implements Test
     private final RobotContainer robotContainer;
     private final TalonFXS motor = new TalonFXS(52, Constants.ROBORIO);
     private final TalonFXSConfiguration talonFXSConfiguration = new TalonFXSConfiguration();
-    private final TalonFXSConfigurator talonFXSConfigurator = motor.getConfigurator();
+    // private final TalonFXSConfigurator talonFXSConfigurator = motor.getConfigurator();
     private final MotorOutputConfigs motorOutputConfigs = new MotorOutputConfigs();
     private final Joystick joystick = new Joystick(0);
 

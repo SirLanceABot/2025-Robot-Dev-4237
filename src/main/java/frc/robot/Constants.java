@@ -101,6 +101,7 @@ public final class Constants
     {
         public static final int SHOOT_MOTOR_PORT                         = 32;
         public static final int INDEX_MOTOR_PORT                         = 14;
+        public static final int STICK_MOTOR_PORT                         = 52;
         public static final String KICK_MOTOR_CAN_BUS                   = ROBORIO;
         public static final String GRAB_MOTOR_CAN_BUS                   = ROBORIO;
     }

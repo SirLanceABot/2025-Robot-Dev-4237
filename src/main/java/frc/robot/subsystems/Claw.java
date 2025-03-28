@@ -2,6 +2,15 @@ package frc.robot.subsystems;
 
 import java.lang.invoke.MethodHandles;
 
+import com.ctre.phoenix6.configs.MotorOutputConfigs;
+import com.ctre.phoenix6.configs.Slot0Configs;
+import com.ctre.phoenix6.configs.SlotConfigs;
+import com.ctre.phoenix6.configs.TalonFXSConfiguration;
+import com.ctre.phoenix6.controls.PositionVoltage;
+import com.ctre.phoenix6.hardware.TalonFXS;
+import com.ctre.phoenix6.signals.MotorArrangementValue;
+import com.ctre.phoenix6.signals.NeutralModeValue;
+
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import frc.robot.Constants;
@@ -39,6 +48,11 @@ public class Claw extends SubsystemLance
 
     private final SparkMaxLance shootMotor = new SparkMaxLance(Constants.Claw.SHOOT_MOTOR_PORT, Constants.Claw.KICK_MOTOR_CAN_BUS, "Claw Shoot Motor");
     private final SparkMaxLance indexMotor = new SparkMaxLance(Constants.Claw.INDEX_MOTOR_PORT, Constants.Claw.GRAB_MOTOR_CAN_BUS, "Claw Index Motor");
+    private final TalonFXS stickMotor = new TalonFXS(Constants.Claw.STICK_MOTOR_PORT, Constants.ROBORIO);
+    private final MotorOutputConfigs motorOutputConfigs = new MotorOutputConfigs();
+    private final TalonFXSConfiguration talonFXSConfiguration = new TalonFXSConfiguration();
+    private final PositionVoltage positionVoltage = new PositionVoltage(0.0);
+
     // private final SparkMaxLance backMotor = new SparkMaxLance(Constants.Grabber.BACK_MOTOR_PORT, Constants.Grabber.BACK_MOTOR_CAN_BUS, "Back Claw Motor");
 
     // *** CLASS CONSTRUCTORS ***
@@ -71,6 +85,20 @@ public class Claw extends SubsystemLance
         indexMotor.setupInverted(true);
         shootMotor.setSafetyEnabled(false);
         indexMotor.setSafetyEnabled(false);
+
+        stickMotor.getConfigurator().apply(talonFXSConfiguration);
+        talonFXSConfiguration.Commutation.MotorArrangement = MotorArrangementValue.Minion_JST;
+        talonFXSConfiguration.MotorOutput.NeutralMode = NeutralModeValue.Brake;
+        stickMotor.getConfigurator().apply(talonFXSConfiguration);
+
+        SlotConfigs slotConfigs = new SlotConfigs();
+        slotConfigs.SlotNumber = 0;
+        slotConfigs.kP = 3;
+        stickMotor.getConfigurator().apply(slotConfigs);
+        // FINISHED CONFIGURING STICK MOTOR
+
+        stickMotor.setPosition(0.0);
+        
         // indexMotor.setupCurrentLimit(30.0, 50.0, 0.5);
     }
 
@@ -89,6 +117,21 @@ public class Claw extends SubsystemLance
     private void setShootSpeed(double speed)
     {
         shootMotor.set(speed);
+    }
+
+    public void setStickSpeed(double speed)
+    {
+        stickMotor.set(speed);
+    }
+
+    public void setStickPosition(double value)
+    {
+        stickMotor.setPosition(value);
+    }
+
+    public void moveStickToSetPosition(double position)
+    {
+        stickMotor.setControl(positionVoltage.withPosition(position).withSlot(0));
     }
 
     // private void pulseGrab()
@@ -118,6 +161,11 @@ public class Claw extends SubsystemLance
         setShootSpeed(-1);
     }
 
+    public double getStickPosition()
+    {
+        return stickMotor.getPosition().getValueAsDouble();
+    }
+
     // public void ejectAlgae()
     // {
     //     setIndexSpeed(-0.1);
@@ -145,6 +193,11 @@ public class Claw extends SubsystemLance
     {
         indexMotor.set(0.0);
         shootMotor.set(0.0);
+    }
+
+    public void stopStick()
+    {
+        stickMotor.set(0.0);
     }
 
     /**
@@ -198,6 +251,11 @@ public class Claw extends SubsystemLance
     public Command setShootSpeedCommand(double speed)
     {
         return run(() ->  setShootSpeed(speed)).withName("Set Kick Speed");
+    }
+
+    public Command moveSticktoSetPositionCommand(double position)
+    {
+        return run(() -> moveStickToSetPosition(position));
     }
     
     /**
