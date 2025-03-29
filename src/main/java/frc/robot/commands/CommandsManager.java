@@ -100,6 +100,9 @@ public final class CommandsManager
         // NamedCommands.registerCommand("Intake Lower Level Algae", IntakingCommands.intakeAlgaeFromReefCommand(ElevatorPosition.kLowerReefAlgae));
 
         // NamedCommands.registerCommand("Flip Scorer", ScoringCommands.flipScorerCommand());
+
+        NamedCommands.registerCommand("Remove Upper Algae", GeneralCommands.deleteUpperAlgaeCommand());
+        NamedCommands.registerCommand("Remove Lower Algae", GeneralCommands.deleteLowerAlgaeCommand());
         
         // Score Coral Commands
         NamedCommands.registerCommand("Move Scorer to L4", GeneralCommands.moveScorerToL4Command());

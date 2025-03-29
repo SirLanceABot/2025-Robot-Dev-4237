@@ -20,13 +20,16 @@ import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.IntakeWrist;
+import frc.robot.subsystems.Elevator.ElevatorPosition;
 import frc.robot.subsystems.IntakeWrist.Position;
 import frc.robot.RobotContainer;
+import frc.robot.subsystems.Elevator;
 import frc.robot.commands.GeneralCommands;
 import frc.robot.commands.IntakingCommands;
 import frc.robot.commands.ScoringCommands;
 import frc.robot.controls.Xbox.RumbleEvent;
 import frc.robot.generated.TunerConstants;
+import frc.robot.subsystems.Claw;
 import frc.robot.subsystems.Drivetrain;
 
 public final class DriverBindings {
@@ -57,10 +60,12 @@ public final class DriverBindings {
     private static DoubleSupplier matchTime;
 
     private static final double CRAWL_SPEED = 0.15;
-    private static final double WALK_SPEED = 0.55;
+    private static final double WALK_SPEED = 0.625;
     private static final double RUN_SPEED = 1.0;
     private static Intake intake;
     private static IntakeWrist intakeWrist;
+    private static Claw claw;
+    private static Elevator elevator;
 
 
     // *** CLASS CONSTRUCTOR ***
@@ -71,6 +76,7 @@ public final class DriverBindings {
     {
         controller = robotContainer.getDriverController();
         intake = robotContainer.getIntake();
+        elevator = robotContainer.getElevator();
         
 
         if(controller != null)
@@ -78,10 +84,11 @@ public final class DriverBindings {
             System.out.println("  Constructor Started:  " + fullClassName);
 
             drivetrain = robotContainer.getDrivetrain();
+            claw = robotContainer.getClaw();
 
             configSuppliers();
 
-            // configAButton();
+            configAButton();
             configBButton();
             configXButton();
             configYButton();
@@ -118,8 +125,9 @@ public final class DriverBindings {
     private static void configAButton()
     {
         Trigger aButton = controller.a();
-        // aButton
-        //     .onTrue(IntakingCommands.intakeCoralCommand());
+        // aButton.onTrue(claw.moveSticktoSetPositionCommand(1.9));
+        aButton
+            .onTrue(GeneralCommands.deleteLowerAlgaeCommand());
 
         // if(intakeWrist != null)
         // {
@@ -134,7 +142,8 @@ public final class DriverBindings {
         // bButton.whileTrue()
         // bButton.whileTrue(drivetrain.pointCommand(leftYAxis, leftXAxis));
         bButton
-            .onTrue(GeneralCommands.bringBackIntakeCommand());
+            .onTrue(GeneralCommands.deleteUpperAlgaeCommand());
+        // bButton.onTrue(claw.moveSticktoSetPositionCommand(0.0));
         // bButton.onTrue(new DeferredCommand(() -> GeneralCommands.driveToPositionCommand(new Pose2d(1.5, 1.5, new Rotation2d(Math.toRadians(-30))), currentPose.get()), Set.of(drivetrain)));
         //applyRequest(() -> 
         // drivetrain.point.withModuleDirection(new Rotation2d(-leftYAxis.getAsDouble(), -leftXAxis.getAsDouble()))));
@@ -146,6 +155,7 @@ public final class DriverBindings {
         Trigger xButton = controller.x();
         // xButton.onTrue(IntakingCommands.testCommand3());
         xButton.onTrue(intake.ejectAlgaeCommand().withTimeout(3.0));
+        // xButton.onTrue(elevator.moveToSetPositionCommand(ElevatorPosition.kClimb));
     }
 
 
@@ -176,7 +186,7 @@ public final class DriverBindings {
     {
         Trigger rightBumper = controller.rightBumper();
         rightBumper
-            .onTrue(IntakingCommands.intakeCoralFromStationCommand());
+            .onTrue(GeneralCommands.bringBackIntakeCommand());
             // .onTrue(IntakingCommands.intakeCoralCommand());
     }
 

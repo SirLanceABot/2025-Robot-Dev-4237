@@ -3,37 +3,37 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 5.148,
-        "y": 2.8939999999999997
+        "x": 7.13,
+        "y": 2.65
       },
       "prevControl": null,
       "nextControl": {
-        "x": 6.19125,
-        "y": 1.5972499999999992
+        "x": 5.791500000000001,
+        "y": 2.80625
       },
       "isLocked": false,
-      "linkedName": "S2 Left"
+      "linkedName": "Right Mid"
     },
     {
       "anchor": {
-        "x": 1.27,
-        "y": 0.76
+        "x": 5.148,
+        "y": 2.8939999999999997
       },
       "prevControl": {
-        "x": 2.245,
-        "y": 1.2764999999999997
+        "x": 5.967000000000001,
+        "y": 2.9267138157894736
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "Right Station"
+      "linkedName": "S2 Left"
     }
   ],
   "rotationTargets": [],
   "constraintZones": [
     {
-      "name": "Algae Zone",
-      "minWaypointRelativePos": 0.0,
-      "maxWaypointRelativePos": 0.1,
+      "name": "Slow Zone",
+      "minWaypointRelativePos": 0.85,
+      "maxWaypointRelativePos": 1.0,
       "constraints": {
         "maxVelocity": 1.25,
         "maxAcceleration": 1.25,
@@ -47,13 +47,13 @@
   "pointTowardsZones": [],
   "eventMarkers": [
     {
-      "name": "Intake Coral From Station",
-      "waypointRelativePos": 0.15,
+      "name": "Move Scorer to L4",
+      "waypointRelativePos": 0.01,
       "endWaypointRelativePos": null,
       "command": {
         "type": "named",
         "data": {
-          "name": "Intake Coral From Station"
+          "name": "Move Scorer to L4"
         }
       }
     }
@@ -68,13 +68,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 144.32359177813808
+    "rotation": -150.0
   },
   "reversed": false,
-  "folder": "Reef Starts",
+  "folder": "Right Wall Starts",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": -150.0
+    "rotation": -90.0
   },
   "useDefaultConstraints": true
 }

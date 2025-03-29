@@ -168,16 +168,19 @@ public final class IntakingCommands
             return
             // GeneralCommands.moveScorerToIntakingPositionCommand()
             //     .until(() -> (elevator.isAtPosition(ElevatorPosition.kReadyToGrabCoralPosition).getAsBoolean() && pivot.isAtPosition(PivotPosition.kDownPosition).getAsBoolean()))
+            claw.moveSticktoSetPositionCommand(0.0)
+                .until(claw.isAtPosition(0.0))
 
-            Commands.parallel(
-                GeneralCommands.setLedCommand(ColorPattern.kSolid, Color.kYellow).withTimeout(0.25),
+            .andThen(
+                Commands.parallel(
+                    GeneralCommands.setLedCommand(ColorPattern.kSolid, Color.kYellow).withTimeout(0.25),
 
-                elevator.moveToSetPositionCommand(ElevatorPosition.kIntakingPosition)
-                    .until(elevator.isAtPosition(ElevatorPosition.kIntakingPosition))
-                    .withTimeout(2.0),
+                    elevator.moveToSetPositionCommand(ElevatorPosition.kIntakingPosition)
+                        .until(elevator.isAtPosition(ElevatorPosition.kIntakingPosition))
+                        .withTimeout(2.0),
 
-                claw.intakeCoralCommand().until(clawProximity.isDetectedSupplier()).andThen(claw.stopCommand())
-            )
+                    claw.intakeCoralCommand().until(clawProximity.isDetectedSupplier()).andThen(claw.stopCommand())
+                ))
 
             // .andThen(elevator.moveToSetPositionCommand(ElevatorPosition.kSafeSwingPosition).until(elevator.isAtPosition(ElevatorPosition.kSafeSwingPosition)))
 

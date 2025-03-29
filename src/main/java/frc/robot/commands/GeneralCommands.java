@@ -296,49 +296,74 @@ public final class GeneralCommands
         if(elevator != null)
         {
             return
+            claw.moveSticktoSetPositionCommand(0.0)
+                .until(claw.isAtPosition(0.0))
+            .andThen(
+                Commands.parallel(
+                    GeneralCommands.setLedCommand(ColorPattern.kSolid, Color.kBlue),
+
+                    elevator.moveToSetPositionCommand(ElevatorPosition.kIntakingPosition)
+                        .until(elevator.isAtPosition(ElevatorPosition.kIntakingPosition)),
+
+                    claw.stopCommand()
+                )) 
+            .andThen(GeneralCommands.setLedCommand(ColorPattern.kSolid, Color.kRed).withTimeout(0.1))
+            .withName("Move Scorer to Intaking Position Command");  
+        }
+        else
+        {
+            return Commands.none();
+        }
+    }
+
+    public static Command deleteLowerAlgaeCommand()
+    {
+        if(elevator != null)
+        {
+            return
             Commands.parallel(
                 GeneralCommands.setLedCommand(ColorPattern.kSolid, Color.kBlue),
 
-                elevator.moveToSetPositionCommand(ElevatorPosition.kIntakingPosition)
-                    .until(elevator.isAtPosition(ElevatorPosition.kIntakingPosition)),
-
-                claw.stopCommand()
+                claw.moveSticktoSetPositionCommand(1.9)
+                    .until(claw.isAtPosition(1.9))
             )   
+            .andThen(
+                claw.stopCommand()
+            )
+
+            .andThen(
+                elevator.moveToSetPositionCommand(ElevatorPosition.kClimb)
+                    .until(elevator.isAtPosition(ElevatorPosition.kClimb))
+            )
             .andThen(GeneralCommands.setLedCommand(ColorPattern.kSolid, Color.kRed).withTimeout(0.1))
-            // .andThen(
-            //     Commands.either(
-                
-            //         // IF SCORER IS ABOVE THE SAFE SWING POSITION
-            //         pivot.moveToSetPositionCommand(PivotPosition.kDownPosition)
-            //             .until(pivot.isAtPosition(PivotPosition.kDownPosition))
-            //             .withTimeout(3.0)
+            .withName("Move Scorer to Intaking Position Command");  
+        }
+        else
+        {
+            return Commands.none();
+        }
+    }
 
-            //         .andThen(
-            //             elevator.moveToSetPositionCommand(ElevatorPosition.kReadyToGrabCoralPosition)
-            //                 .until(elevator.isAtPosition(ElevatorPosition.kReadyToGrabCoralPosition))
-            //                 .withTimeout(3.0)),
+    public static Command deleteUpperAlgaeCommand()
+    {
+        if(elevator != null)
+        {
+            return
+            Commands.parallel(
+                GeneralCommands.setLedCommand(ColorPattern.kSolid, Color.kBlue),
 
-            //         // IF SCORER IS NOT ABOVE THE SAFE SWING POSITION
-            //         elevator.moveToSetPositionCommand(ElevatorPosition.kSafeSwingPosition)
-            //             .until(elevator.isAtPosition(ElevatorPosition.kSafeSwingPosition))
-
-            //         .andThen(
-            //             Commands.parallel(
-            //                 pivot.moveToSetPositionCommand(PivotPosition.kDownPosition)
-            //                     .until(pivot.isAtPosition(PivotPosition.kDownPosition))
-            //                     .withTimeout(3.0),
-                            
-            //                 claw.intakeCoralCommand().until(pivot.isAtPosition(PivotPosition.kDownPosition))))
-
-            //         .andThen(claw.stopCommand())
-
-            //         .andThen(
-            //             elevator.moveToSetPositionCommand(ElevatorPosition.kReadyToGrabCoralPosition)
-            //                 .until(elevator.isAtPosition(ElevatorPosition.kReadyToGrabCoralPosition))),
-
-            //     () -> (elevator.getPosition() > ElevatorPosition.kSafeSwingPosition.elevatorPosition))) // Checks if elevator is higher than the designated "Safe Swing" position)
-            
-                .withName("Move Scorer to Intaking Position Command");  
+                claw.moveSticktoSetPositionCommand(1.9)
+                    .until(claw.isAtPosition(1.9))
+            )
+            .andThen(
+                claw.stopCommand()
+            )
+            .andThen(
+                elevator.moveToSetPositionCommand(ElevatorPosition.kHighAlgae)
+                    .until(elevator.isAtPosition(ElevatorPosition.kHighAlgae))
+            )
+            .andThen(GeneralCommands.setLedCommand(ColorPattern.kSolid, Color.kRed).withTimeout(0.1))
+            .withName("Move Scorer to Intaking Position Command");  
         }
         else
         {
@@ -584,7 +609,7 @@ public final class GeneralCommands
      */
     public static Command driveToPositionCommand(Pose2d targetPose, Pose2d currentPose)
     {
-        PathConstraints constraints = new PathConstraints(1.0, 1.0, Units.degreesToRadians(360), Units.degreesToRadians(360));
+        PathConstraints constraints = new PathConstraints(1.25, 1.25, Units.degreesToRadians(360), Units.degreesToRadians(360));
         List<Waypoint> waypoints = PathPlannerPath.waypointsFromPoses(
                                     new Pose2d(currentPose.getTranslation(), currentPose.getRotation()),
                                     new Pose2d(targetPose.getTranslation(), targetPose.getRotation()));          

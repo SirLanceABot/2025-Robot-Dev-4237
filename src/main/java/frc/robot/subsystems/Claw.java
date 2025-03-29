@@ -1,6 +1,7 @@
 package frc.robot.subsystems;
 
 import java.lang.invoke.MethodHandles;
+import java.util.function.BooleanSupplier;
 
 import com.ctre.phoenix6.configs.MotorOutputConfigs;
 import com.ctre.phoenix6.configs.Slot0Configs;
@@ -16,6 +17,7 @@ import edu.wpi.first.wpilibj2.command.Commands;
 import frc.robot.Constants;
 import frc.robot.motors.SparkMaxLance;
 import frc.robot.motors.TalonFXLance;
+import frc.robot.subsystems.Elevator.ElevatorPosition;
 
 /**
  * This class creates the claw subsystem and setsup related practice commands
@@ -132,6 +134,11 @@ public class Claw extends SubsystemLance
     public void moveStickToSetPosition(double position)
     {
         stickMotor.setControl(positionVoltage.withPosition(position).withSlot(0));
+    }
+
+    public BooleanSupplier isAtPosition(double position)
+    {
+        return () -> Math.abs(getStickPosition() - position) < 1.0;
     }
 
     // private void pulseGrab()
