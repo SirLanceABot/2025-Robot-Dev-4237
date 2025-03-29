@@ -296,8 +296,8 @@ public final class GeneralCommands
         if(elevator != null)
         {
             return
-            claw.moveSticktoSetPositionCommand(0.0)
-                .until(claw.isAtPosition(0.0))
+            claw.moveSticktoSetPositionCommand(-0.2)
+                .until(claw.isAtPosition(-0.2))
             .andThen(
                 Commands.parallel(
                     GeneralCommands.setLedCommand(ColorPattern.kSolid, Color.kBlue),
