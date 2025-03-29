@@ -609,7 +609,7 @@ public final class GeneralCommands
      */
     public static Command driveToPositionCommand(Pose2d targetPose, Pose2d currentPose)
     {
-        PathConstraints constraints = new PathConstraints(1.25, 1.25, Units.degreesToRadians(360), Units.degreesToRadians(360));
+        PathConstraints constraints = new PathConstraints(1.0, 1.0, Units.degreesToRadians(360), Units.degreesToRadians(360));
         List<Waypoint> waypoints = PathPlannerPath.waypointsFromPoses(
                                     new Pose2d(currentPose.getTranslation(), currentPose.getRotation()),
                                     new Pose2d(targetPose.getTranslation(), targetPose.getRotation()));          
