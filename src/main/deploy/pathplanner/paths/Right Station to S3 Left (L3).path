@@ -8,24 +8,24 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 3.040460526315789,
-        "y": 1.6388157894736843
+        "x": 2.65577868852459,
+        "y": 1.583874999999999
       },
       "isLocked": false,
       "linkedName": "Right Station"
     },
     {
       "anchor": {
-        "x": 3.83,
-        "y": 2.88
+        "x": 3.54,
+        "y": 3.05
       },
       "prevControl": {
-        "x": 3.330246710526316,
-        "y": 1.8016282894736844
+        "x": 3.1492500000000003,
+        "y": 1.9969999999999992
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "S3 Right"
+      "linkedName": "S3 Left"
     }
   ],
   "rotationTargets": [],
@@ -35,7 +35,7 @@
       "minWaypointRelativePos": 0.85,
       "maxWaypointRelativePos": 1.0,
       "constraints": {
-        "maxVelocity": 1.5,
+        "maxVelocity": 1.25,
         "maxAcceleration": 2.0,
         "maxAngularVelocity": 540.0,
         "maxAngularAcceleration": 720.0,
@@ -64,25 +64,14 @@
       "command": {
         "type": "named",
         "data": {
-          "name": "Move Scorer to L4"
-        }
-      }
-    },
-    {
-      "name": "Score Coral Prox",
-      "waypointRelativePos": 0.99,
-      "endWaypointRelativePos": null,
-      "command": {
-        "type": "named",
-        "data": {
-          "name": "Score Coral Prox"
+          "name": "Move Scorer to L3"
         }
       }
     }
   ],
   "globalConstraints": {
-    "maxVelocity": 5.0,
-    "maxAcceleration": 5.0,
+    "maxVelocity": 6.0,
+    "maxAcceleration": 6.0,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0,
     "nominalVoltage": 12.0,

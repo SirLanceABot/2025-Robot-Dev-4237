@@ -226,7 +226,7 @@ public final class GeneralCommands
         {
             return
             Commands.parallel(
-                GeneralCommands.setLedCommand(ColorPattern.kSolid, Color.kBlue).withTimeout(0.25),
+                GeneralCommands.setLedCommand(ColorPattern.kRainbow).withTimeout(0.25),
 
                 elevator.moveToSetPositionCommand(ElevatorPosition.kL2)
                     .until(elevator.isAtPosition(ElevatorPosition.kL2))
@@ -249,7 +249,7 @@ public final class GeneralCommands
         {
             return
             Commands.parallel(
-                GeneralCommands.setLedCommand(ColorPattern.kSolid, Color.kBlue).withTimeout(0.25),
+                GeneralCommands.setLedCommand(ColorPattern.kRainbow).withTimeout(0.25),
 
                 elevator.moveToSetPositionCommand(ElevatorPosition.kL3)
                     .until(elevator.isAtPosition(ElevatorPosition.kL3))
@@ -274,7 +274,30 @@ public final class GeneralCommands
             Commands.waitUntil(clawProximity.isDetectedSupplier())
             .andThen(
                 Commands.parallel(
-                    setLedCommand(ColorPattern.kSolid, Color.kBlue).withTimeout(0.25),
+                    setLedCommand(ColorPattern.kRainbow).withTimeout(0.25),
+
+                    elevator.moveToSetPositionCommand(ElevatorPosition.kL4)
+                        .until(elevator.isAtPosition(ElevatorPosition.kL4))))
+            .withName("Move Scorer to L4 Command");  
+        }
+        else
+        {
+            return Commands.none();
+        }
+    }
+
+    public static Command moveScorerToL4WithAlgaeCommand()
+    {
+        if(elevator != null)
+        {
+            return
+            Commands.waitUntil(clawProximity.isDetectedSupplier())
+            .andThen(
+                Commands.parallel(
+                    setLedCommand(ColorPattern.kRainbow).withTimeout(0.25),
+
+                    claw.moveSticktoSetPositionCommand(1.9)
+                        .until(claw.isAtPosition(1.9)),
 
                     elevator.moveToSetPositionCommand(ElevatorPosition.kL4)
                         .until(elevator.isAtPosition(ElevatorPosition.kL4))))
@@ -490,6 +513,19 @@ public final class GeneralCommands
         {
             return 
             claw.shootCoralCommand().withTimeout(0.5).andThen(claw.stopCommand());
+        }
+        else
+        {
+            return Commands.none();
+        }
+    }
+
+    public static Command scoreCoralProxCommand()
+    {
+        if(claw != null)
+        {
+            return 
+            claw.shootCoralCommand().until(() -> (!clawProximity.isDetectedSupplier().getAsBoolean())).andThen(claw.stopCommand());
         }
         else
         {

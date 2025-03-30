@@ -106,11 +106,14 @@ public final class CommandsManager
         
         // Score Coral Commands
         NamedCommands.registerCommand("Move Scorer to L4", GeneralCommands.moveScorerToL4Command());
+        NamedCommands.registerCommand("Move Scorer to L3", GeneralCommands.moveScorerToL3Command());
+        NamedCommands.registerCommand("Move Scorer to L4 with Algae", GeneralCommands.moveScorerToL4WithAlgaeCommand());
         NamedCommands.registerCommand("Move Scorer to Barge", GeneralCommands.moveScorerToBargeCommand());
         // NamedCommands.registerCommand("Move Scorer to Processor", GeneralCommands.moveScorerToProcessorCommand());
 
         NamedCommands.registerCommand("Finish Scoring Coral", ScoringCommands.finishScoringCoralCommand());
         NamedCommands.registerCommand("Score Coral Only", GeneralCommands.scoreCoralOnlyCommand());
+        NamedCommands.registerCommand("Score Coral Prox", GeneralCommands.scoreCoralProxCommand());
 
         NamedCommands.registerCommand("Score Coral Right", ScoringCommands.scoreCoralAutonomouslyReallyCoolAndAwesomeCommand(() -> drivetrain.getState().Pose, (() -> poseEstimator.closestBranchLocation(() -> poseEstimator.getPrimaryTagID(), true))));
         NamedCommands.registerCommand("Score Coral Left", ScoringCommands.scoreCoralAutonomouslyReallyCoolAndAwesomeCommand(() -> drivetrain.getState().Pose, (() -> poseEstimator.closestBranchLocation(() -> poseEstimator.getPrimaryTagID(), false))));

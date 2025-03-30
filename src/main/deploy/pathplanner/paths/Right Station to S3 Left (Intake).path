@@ -9,7 +9,7 @@
       "prevControl": null,
       "nextControl": {
         "x": 2.65577868852459,
-        "y": 1.5838749999999993
+        "y": 1.583874999999999
       },
       "isLocked": false,
       "linkedName": "Right Station"
@@ -32,10 +32,10 @@
   "constraintZones": [
     {
       "name": "Slow Zone",
-      "minWaypointRelativePos": 0.85,
+      "minWaypointRelativePos": 0.88,
       "maxWaypointRelativePos": 1.0,
       "constraints": {
-        "maxVelocity": 1.25,
+        "maxVelocity": 1.5,
         "maxAcceleration": 2.0,
         "maxAngularVelocity": 540.0,
         "maxAngularAcceleration": 720.0,
@@ -65,6 +65,17 @@
         "type": "named",
         "data": {
           "name": "Move Scorer to L4"
+        }
+      }
+    },
+    {
+      "name": "Score Coral Prox",
+      "waypointRelativePos": 0.99,
+      "endWaypointRelativePos": null,
+      "command": {
+        "type": "named",
+        "data": {
+          "name": "Score Coral Prox"
         }
       }
     }
