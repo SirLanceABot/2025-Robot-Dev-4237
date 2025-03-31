@@ -8,8 +8,8 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 3.040460526315789,
-        "y": 1.6388157894736843
+        "x": 2.7495000000000003,
+        "y": 1.7825
       },
       "isLocked": false,
       "linkedName": "Right Station"
@@ -20,8 +20,8 @@
         "y": 2.88
       },
       "prevControl": {
-        "x": 3.330246710526316,
-        "y": 1.8016282894736844
+        "x": 3.1882500000000005,
+        "y": 1.840999999999999
       },
       "nextControl": null,
       "isLocked": false,

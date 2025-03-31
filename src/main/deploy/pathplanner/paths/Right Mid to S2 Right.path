@@ -56,6 +56,17 @@
           "name": "Move Scorer to L4"
         }
       }
+    },
+    {
+      "name": "Score Coral Prox",
+      "waypointRelativePos": 0.99,
+      "endWaypointRelativePos": null,
+      "command": {
+        "type": "named",
+        "data": {
+          "name": "Score Coral Prox"
+        }
+      }
     }
   ],
   "globalConstraints": {

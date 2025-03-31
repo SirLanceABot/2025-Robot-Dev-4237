@@ -8,8 +8,8 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 1.983028688524591,
-        "y": 2.7148749999999993
+        "x": 2.9250000000000007,
+        "y": 3.4400000000000004
       },
       "isLocked": false,
       "linkedName": "Right Station"
@@ -59,7 +59,7 @@
     },
     {
       "name": "Move Scorer to L4",
-      "waypointRelativePos": 0.2,
+      "waypointRelativePos": 0.25,
       "endWaypointRelativePos": null,
       "command": {
         "type": "named",
