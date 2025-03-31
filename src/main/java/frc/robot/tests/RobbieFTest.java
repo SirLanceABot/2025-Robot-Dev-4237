@@ -9,7 +9,6 @@ import edu.wpi.first.wpilibj2.command.Commands;
 import frc.robot.subsystems.Elevator;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Claw;
-import frc.robot.subsystems.Shuttle;
 import frc.robot.subsystems.IntakeWrist;
 import frc.robot.subsystems.LEDs.ColorPattern;
 import frc.robot.subsystems.Pivot;
@@ -42,7 +41,6 @@ public class RobbieFTest implements Test
     // Put all class and instance variables here.
     private final RobotContainer robotContainer;
     private final Claw claw;
-    private final Shuttle shuttle;
     private final Intake intake;
     private final IntakeWrist intakeWrist;
     private final Elevator elevator;
@@ -64,7 +62,6 @@ public class RobbieFTest implements Test
 
         this.robotContainer = robotContainer;
         claw = robotContainer.getClaw();
-        shuttle = robotContainer.getShuttle();
         intakeWrist = robotContainer.getIntakeWrist();
         elevator = robotContainer.getElevator();
         intake = robotContainer.getIntake();

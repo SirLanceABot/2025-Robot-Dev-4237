@@ -5,7 +5,6 @@ import java.util.function.BooleanSupplier;
 
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.Commands;
 import frc.robot.Constants;
 import frc.robot.motors.TalonFXLance;
 
@@ -49,9 +48,6 @@ public class Climb extends SubsystemLance
     private final TalonFXLance leadMotor = new TalonFXLance(Constants.Climb.LEAD_MOTOR_PORT, Constants.Climb.MOTOR_CAN_BUS, "Climb Lead Motor");
     private final TalonFXLance followMotor = new TalonFXLance(Constants.Climb.FOLLOW_MOTOR_PORT, Constants.Climb.MOTOR_CAN_BUS, "Climb Follow Motor");
 
-
-    private final double FORWARD_SOFT_LIMIT = 1000.0;
-    private final double REVERSE_SOFT_LIMIT = 0.0;
     private final double POSITION_TOLERANCE = 1.0;
 
     // *** CLASS CONSTRUCTORS ***
@@ -197,16 +193,6 @@ public class Climb extends SubsystemLance
     {
         set(0.0);
     }
-
-     /**
-     * gets the encoder position of the motor
-     * @param speed the speed of the motor from -1.0 to 1.0
-     */
-    private Command setCommand(double speed)
-    {
-        return runOnce(() -> set(speed)).withName("Set Climb Speed");
-    }
-
     /**
      * Moves the climb so the robot will climb up the cage
      */

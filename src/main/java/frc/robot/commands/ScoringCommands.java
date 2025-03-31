@@ -1,39 +1,29 @@
 package frc.robot.commands;
 
-import java.lang.annotation.ElementType;
 import java.lang.invoke.MethodHandles;
 import java.util.Set;
 import java.util.function.Supplier;
 
-import javax.lang.model.util.ElementScanner14;
-
 import com.ctre.phoenix6.hardware.Pigeon2;
 
 import edu.wpi.first.math.geometry.Pose2d;
-import edu.wpi.first.math.geometry.Transform2d;
-import edu.wpi.first.math.geometry.Translation2d;
-import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.DeferredCommand;
-import frc.robot.Constants;
 import frc.robot.RobotContainer;
 import frc.robot.commands.CommandsManager.TargetPosition;
 import frc.robot.sensors.Proximity;
+import frc.robot.subsystems.Claw;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Elevator;
-import frc.robot.subsystems.Claw;
+import frc.robot.subsystems.Elevator.ElevatorPosition;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.IntakeWrist;
 import frc.robot.subsystems.IntakeWrist.Position;
-import frc.robot.subsystems.LEDs;
-import frc.robot.subsystems.LEDs;
 import frc.robot.subsystems.LEDs.ColorPattern;
-import frc.robot.subsystems.Pivot.PivotPosition;
 import frc.robot.subsystems.Pivot;
 import frc.robot.subsystems.PoseEstimator;
-import frc.robot.subsystems.Elevator.ElevatorPosition;
 
 public final class ScoringCommands
 {
@@ -87,7 +77,6 @@ public final class ScoringCommands
         // leds = robotContainer.getLEDs();
         gyro = (robotContainer.getDrivetrain() != null ? robotContainer.getDrivetrain().getPigeon2() : null);
         intakeProximity = robotContainer.getIntakeProximity();
-        elevatorProximity = robotContainer.getElevatorProximity();
         clawProximity = robotContainer.getShooterProximity();
         poseEstimator = robotContainer.getPoseEstimator();
 

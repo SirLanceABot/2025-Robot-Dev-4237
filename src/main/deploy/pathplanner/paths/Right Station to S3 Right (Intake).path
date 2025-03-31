@@ -59,23 +59,12 @@
     },
     {
       "name": "Move Scorer to L4",
-      "waypointRelativePos": 0.3,
+      "waypointRelativePos": 0.2,
       "endWaypointRelativePos": null,
       "command": {
         "type": "named",
         "data": {
           "name": "Move Scorer to L4"
-        }
-      }
-    },
-    {
-      "name": "Score Coral Prox",
-      "waypointRelativePos": 0.99,
-      "endWaypointRelativePos": null,
-      "command": {
-        "type": "named",
-        "data": {
-          "name": "Score Coral Prox"
         }
       }
     }

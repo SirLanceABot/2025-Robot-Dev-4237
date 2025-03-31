@@ -1,36 +1,23 @@
 package frc.robot.controls;
 
 import java.lang.invoke.MethodHandles;
-import java.util.Set;
 import java.util.function.BooleanSupplier;
 import java.util.function.DoubleSupplier;
-import java.util.function.IntSupplier;
 
-import javax.lang.model.util.ElementScanner14;
-
-import edu.wpi.first.math.geometry.Pose2d;
-import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.GenericHID.RumbleType;
-import edu.wpi.first.wpilibj.event.EventLoop;
-import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.Commands;
-import edu.wpi.first.wpilibj2.command.DeferredCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
-import frc.robot.subsystems.Intake;
-import frc.robot.subsystems.IntakeWrist;
-import frc.robot.subsystems.Elevator.ElevatorPosition;
-import frc.robot.subsystems.IntakeWrist.Position;
 import frc.robot.RobotContainer;
-import frc.robot.subsystems.Elevator;
 import frc.robot.commands.GeneralCommands;
 import frc.robot.commands.IntakingCommands;
-import frc.robot.commands.ScoringCommands;
-import frc.robot.controls.Xbox.RumbleEvent;
-import frc.robot.generated.TunerConstants;
 import frc.robot.subsystems.Claw;
 import frc.robot.subsystems.Drivetrain;
+import frc.robot.subsystems.Elevator;
+import frc.robot.subsystems.Intake;
+import frc.robot.subsystems.IntakeWrist;
+import frc.robot.subsystems.IntakeWrist.Position;
 
 public final class DriverBindings {
 
@@ -59,8 +46,8 @@ public final class DriverBindings {
     private static BooleanSupplier isTeleop;
     private static DoubleSupplier matchTime;
 
-    private static final double CRAWL_SPEED = 0.15;
-    private static final double WALK_SPEED = 0.625;
+    private static final double CRAWL_SPEED = 0.225;
+    private static final double WALK_SPEED = 0.675;
     private static final double RUN_SPEED = 1.0;
     private static Intake intake;
     private static IntakeWrist intakeWrist;

@@ -4,12 +4,8 @@ import java.lang.invoke.MethodHandles;
 import java.util.Optional;
 import java.util.function.BooleanSupplier;
 
-import com.ctre.phoenix6.swerve.SwerveRequest;
 import com.pathplanner.lib.auto.AutoBuilder;
-import com.pathplanner.lib.config.RobotConfig;
-import com.pathplanner.lib.controllers.PPLTVController;
 import com.pathplanner.lib.util.PathPlannerLogging;
-import com.ctre.phoenix6.swerve.SwerveDrivetrain;
 
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;

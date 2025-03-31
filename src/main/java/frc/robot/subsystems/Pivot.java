@@ -3,21 +3,10 @@ package frc.robot.subsystems;
 import java.lang.invoke.MethodHandles;
 import java.util.function.BooleanSupplier;
 
-import javax.lang.model.util.ElementScanner14;
-
-import com.revrobotics.RelativeEncoder;
-import com.revrobotics.spark.SparkLimitSwitch;
-
 import edu.wpi.first.math.MathUtil;
-import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.Commands;
 import frc.robot.Constants;
 import frc.robot.motors.SparkMaxLance;
-// import frc.robot.Constants.TargetPosition;
-// import frc.robot.motors.SparkMaxLance;
-import frc.robot.motors.TalonFXLance;
-// import frc.robot.commands.
 
 /**
  * This is the Pivot. It allows the robot to move it's arm.

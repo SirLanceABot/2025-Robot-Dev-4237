@@ -4,18 +4,10 @@ package frc.robot.subsystems;
 import java.lang.invoke.MethodHandles;
 import java.util.function.BooleanSupplier;
 
-import com.revrobotics.RelativeEncoder;
-import com.revrobotics.spark.SparkLimitSwitch;
-import com.revrobotics.spark.config.LimitSwitchConfig.Type;
-
 import edu.wpi.first.math.MathUtil;
-import edu.wpi.first.util.datalog.DoubleLogEntry;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.Commands;
 import frc.robot.Constants;
 import frc.robot.motors.SparkMaxLance;
-// import frc.robot.Constants.TargetPosition;
-import frc.robot.motors.TalonFXLance;
 
 /**
  * Two big motors (probably falcons), one on either side
@@ -40,9 +32,9 @@ public class Elevator extends SubsystemLance
         kIntakingPosition(0.0),
         kL1(0.0),
         kL2(14.25), // 12.5
-        kClimb(20.0),
+        kClimb(19.0),
         kL3(33.0),
-        kHighAlgae(44.0),
+        kHighAlgae(43.0),
         // kLowerReefAlgae(37.0),
         // kGrabCoralPosition(36.0),
         // kScoreProcessorPosition(36.0),
@@ -67,18 +59,12 @@ public class Elevator extends SubsystemLance
     // Put all class variables and instance variables here
     private final SparkMaxLance motor = new SparkMaxLance(Constants.Elevator.LEFT_MOTOR_PORT, Constants.Elevator.LEFT_MOTOR_CAN_BUS, "Motor");
     // private final SparkMaxLance rightMotor = new SparkMaxLance(Constants.Elevator.RIGHT_MOTOR_PORT, Constants.Elevator.RIGHT_MOTOR_CAN_BUS, "Right Motor");
-    private SparkLimitSwitch forwardLimitSwitch;
-    private SparkLimitSwitch reverseLimitSwitch;
     // private RelativeEncoder encoder;
     // private Constants.TargetPosition targetPosition = Constants.TargetPosition.kOverride;
     private final double threshold = 2.0;
     private final double MAX_OUTPUT = 0.5;
     private final double MIN_OUTPUT = -0.5;
 
-    private double leftMotorEncoderPosition = 0.0;
-    private double rightMotorEncoderPosition = 0.0;
-    private double speed = 0.0;
-    private DoubleLogEntry elevatorPositionEntry;
 
     // PID Values
     private final double kP = 0.07;

@@ -1,26 +1,19 @@
 package frc.robot.commands;
 
-import java.lang.annotation.ElementType;
 import java.lang.invoke.MethodHandles;
-import java.nio.file.attribute.PosixFilePermission;
 
 import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
-import frc.robot.Constants;
 import frc.robot.RobotContainer;
-import frc.robot.commands.CommandsManager.TargetPosition;
 import frc.robot.sensors.Proximity;
-// import frc.robot.Constants.TargetPosition;
-import frc.robot.subsystems.IntakeWrist.Position;
+import frc.robot.subsystems.Claw;
 import frc.robot.subsystems.Elevator;
+import frc.robot.subsystems.Elevator.ElevatorPosition;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.IntakeWrist;
-import frc.robot.subsystems.LEDs;
-import frc.robot.subsystems.LEDs.ColorPattern;
-import frc.robot.subsystems.Elevator.ElevatorPosition;
-import frc.robot.subsystems.Claw;
-import frc.robot.subsystems.LEDs;
+// import frc.robot.Constants.TargetPosition;
+import frc.robot.subsystems.IntakeWrist.Position;
 import frc.robot.subsystems.LEDs.ColorPattern;
 
 public final class IntakingCommands
@@ -71,7 +64,6 @@ public final class IntakingCommands
         claw = robotContainer.getClaw();
         // leds = robotContainer.getLEDs();
         intakeProximity = robotContainer.getIntakeProximity();
-        elevatorProximity = robotContainer.getElevatorProximity();
         clawProximity = robotContainer.getShooterProximity();
 
         System.out.println("  Constructor Finished: " + fullClassName);

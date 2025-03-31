@@ -1,12 +1,11 @@
 package frc.robot.subsystems;
 
-import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.Commands;
-import frc.robot.Constants;
-import frc.robot.motors.SparkMaxLance;
-import frc.robot.motors.TalonFXLance;
 import java.lang.invoke.MethodHandles;
 import java.util.function.BooleanSupplier;
+
+import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.Constants;
+import frc.robot.motors.SparkMaxLance;
 
 /**
  * This is the Intake subsystem
@@ -36,16 +35,10 @@ public class Intake extends SubsystemLance
     private final SparkMaxLance motor = new SparkMaxLance(Constants.Intake.MOTOR_PORT, Constants.Intake.MOTOR_CAN_BUS, "Intake Motor");
     //private final TalonFXLance bottomMotor = new TalonFXLance(12, Constants.ROBORIO, "Bottom Motor");
 
-    private final double GEAR_RATIO = 1.0 / 5.0; // previously 1.0 / 25.0
-    private final double WHEEL_DIAMETER_FEET = 2.25 / 12.0;
-    private final double MINUTES_TO_SECONDS = 1.0 / 60.0;
-    private final double RPM_TO_FPS = GEAR_RATIO * MINUTES_TO_SECONDS * Math.PI * WHEEL_DIAMETER_FEET;
     // private final double PERCENT_VOLTAGE = 0.9;
     // private final double VOLTAGE = PERCENT_VOLTAGE * Constants.END_OF_MATCH_BATTERY_VOLTAGE;
-    private final double DEFAULT_SPEED = 0.9;
 
     private double rollerPosition = 0.0;
-    private double rollerVelocity;
 
     // *** CLASS CONSTRUCTORS ***
     // Put all class constructors here

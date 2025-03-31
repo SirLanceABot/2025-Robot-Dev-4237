@@ -1,21 +1,11 @@
 package frc.robot;
 
 import java.lang.invoke.MethodHandles;
-import java.util.function.BooleanSupplier;
-import javax.lang.model.util.ElementScanner14;
 
-import com.ctre.phoenix6.hardware.Pigeon2;
-import com.pathplanner.lib.auto.AutoBuilder;
-
-import edu.wpi.first.wpilibj.DriverStation;
-import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
-//import frc.robot.elastic.AutonomousTab;
-import frc.robot.elastic.ElasticLance;
 import frc.robot.generated.TunerConstants;
-import frc.robot.pathplanner.PathPlannerLance;
 import frc.robot.sensors.Camera;
 import frc.robot.sensors.Proximity;
 import frc.robot.subsystems.Claw;
@@ -27,7 +17,6 @@ import frc.robot.subsystems.IntakeWrist;
 import frc.robot.subsystems.LEDs;
 import frc.robot.subsystems.Pivot;
 import frc.robot.subsystems.PoseEstimator;
-import frc.robot.subsystems.Shuttle;
 
 public class RobotContainer 
 {
@@ -76,15 +65,13 @@ public class RobotContainer
     private final Intake intake;
     private final IntakeWrist intakeWrist;
     private final Pivot pivot;
-    private final Shuttle shuttle;
     private final LEDs leds;
 
     private final Camera[] cameraArray = new Camera[2];
     private final PoseEstimator poseEstimator;
     private final Proximity intakeProximity;
-    private final Proximity elevatorProximity;
     private final Proximity shooterProximity;
-    private final Proximity funnelProximity;
+    private final Proximity backupShooterProximity;
 
 
     // private final DriverButtonBindings driverButtonBindings;
@@ -131,10 +118,6 @@ public class RobotContainer
                 ? new Pivot()
                 : null;
 
-        shuttle = (useShuttle)
-                ? new Shuttle()
-                : null;
-
         // leds = (useFullRobot || useLEDs)
         //         ? new LEDs()
         //         : null;
@@ -145,16 +128,12 @@ public class RobotContainer
                 ? new Proximity(Constants.Proximity.CORAL_INTAKE_PORT)
                 : null;
 
-        elevatorProximity = (useFullRobot || useProximity)
-                ? new Proximity(Constants.Proximity.ELEVATOR_PORT)
-                : null;
-
         shooterProximity = (useFullRobot || useProximity)
                 ? new Proximity(Constants.Proximity.SHOOTER_PORT)
                 : null;
 
-        funnelProximity = (useFullRobot || useProximity)
-                ? new Proximity(Constants.Proximity.FUNNEL_PORT)
+        backupShooterProximity = (useFullRobot || useProximity)
+                ? new Proximity(Constants.Proximity.BACKUP_SHOOTER_PORT)
                 : null;
 
         cameraArray[0] = (useScoringSideCamera)
@@ -229,11 +208,6 @@ public class RobotContainer
         return pivot;
     }
 
-    public Shuttle getShuttle()
-    {
-        return shuttle;
-    }
-
     public PoseEstimator getPoseEstimator()
     {
         return poseEstimator;
@@ -244,19 +218,14 @@ public class RobotContainer
         return intakeProximity;
     }
 
-    public Proximity getElevatorProximity()
-    {
-        return elevatorProximity;
-    }
-
     public Proximity getShooterProximity()
     {
         return shooterProximity;
     }
 
-    public Proximity getFunnelProximity()
+    public Proximity getBackupShooterProximity()
     {
-        return funnelProximity;
+        return backupShooterProximity;
     }
 
     public CommandXboxController getDriverController()

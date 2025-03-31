@@ -8,8 +8,8 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.9250000000000007,
-        "y": 3.4400000000000004
+        "x": 2.2611019736842106,
+        "y": 3.207154605263158
       },
       "isLocked": false,
       "linkedName": "Right Station"
@@ -32,7 +32,7 @@
   "constraintZones": [
     {
       "name": "Slow Zone",
-      "minWaypointRelativePos": 0.95,
+      "minWaypointRelativePos": 0.85,
       "maxWaypointRelativePos": 1.0,
       "constraints": {
         "maxVelocity": 1.25,
@@ -70,7 +70,7 @@
     },
     {
       "name": "Score Coral Prox",
-      "waypointRelativePos": 0.99,
+      "waypointRelativePos": 0.95,
       "endWaypointRelativePos": null,
       "command": {
         "type": "named",

@@ -11,6 +11,12 @@
           }
         },
         {
+          "type": "named",
+          "data": {
+            "name": "Score Coral Prox"
+          }
+        },
+        {
           "type": "path",
           "data": {
             "pathName": "S2 Right to Right Station"
@@ -29,6 +35,12 @@
           }
         },
         {
+          "type": "named",
+          "data": {
+            "name": "Score Coral Prox"
+          }
+        },
+        {
           "type": "path",
           "data": {
             "pathName": "S3 Right to Right Station"
@@ -44,6 +56,12 @@
           "type": "path",
           "data": {
             "pathName": "Right Station to S3 Left (Intake)"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Score Coral Prox"
           }
         },
         {

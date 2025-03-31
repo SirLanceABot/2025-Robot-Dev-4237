@@ -1,39 +1,37 @@
 package frc.robot.commands;
 
-import java.lang.annotation.ElementType;
 import java.lang.invoke.MethodHandles;
 import java.util.List;
 
 import com.ctre.phoenix6.hardware.Pigeon2;
-import com.fasterxml.jackson.databind.ser.std.StdKeySerializers.EnumKeySerializer;
 import com.pathplanner.lib.auto.AutoBuilder;
-import com.pathplanner.lib.path.*;
+import com.pathplanner.lib.path.GoalEndState;
+import com.pathplanner.lib.path.IdealStartingState;
+import com.pathplanner.lib.path.PathConstraints;
+import com.pathplanner.lib.path.PathPlannerPath;
+import com.pathplanner.lib.path.Waypoint;
 
 import edu.wpi.first.math.estimator.PoseEstimator;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.util.Units;
-import edu.wpi.first.wpilibj.AddressableLED.ColorOrder;
-import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
-import frc.robot.Constants;
 import frc.robot.RobotContainer;
 import frc.robot.commands.CommandsManager.TargetPosition;
 import frc.robot.sensors.Proximity;
+import frc.robot.subsystems.Claw;
 import frc.robot.subsystems.Climb;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Elevator;
 import frc.robot.subsystems.Elevator.ElevatorPosition;
-import frc.robot.subsystems.IntakeWrist.Position;
-import frc.robot.subsystems.Claw;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.IntakeWrist;
+import frc.robot.subsystems.IntakeWrist.Position;
 import frc.robot.subsystems.LEDs;
 import frc.robot.subsystems.LEDs.ColorPattern;
 import frc.robot.subsystems.Pivot;
-import frc.robot.subsystems.Pivot.PivotPosition;
 
 public final class GeneralCommands
 {
@@ -65,7 +63,8 @@ public final class GeneralCommands
     private static Pigeon2 gyro;
     private static Proximity intakeProximity;
     private static Proximity elevatorProximity;
-    private static Proximity clawProximity;
+    private static Proximity shooterProximity;
+    private static Proximity shooterBackupProximity;
     private static PoseEstimator poseEstimate;
     private static Drivetrain drivetrain;
    
@@ -89,8 +88,8 @@ public final class GeneralCommands
         leds = robotContainer.getLEDs();
         gyro = (robotContainer.getDrivetrain() != null ? robotContainer.getDrivetrain().getPigeon2() : null);
         intakeProximity = robotContainer.getIntakeProximity();
-        elevatorProximity = robotContainer.getElevatorProximity();
-        clawProximity = robotContainer.getShooterProximity();
+        shooterProximity = robotContainer.getShooterProximity();
+        shooterBackupProximity = robotContainer.getBackupShooterProximity();
         drivetrain = robotContainer.getDrivetrain();
 
         System.out.println("  Constructor Finished: " + fullClassName);
@@ -133,6 +132,11 @@ public final class GeneralCommands
         }
              
     }
+
+    // public static C checkMailBoxProxiesCommand()
+    // {
+
+    // }
 
     /**
      * Moves the scorer to the position passed to the command  **USE moveScorerTo(insert position here) instead, uses logic to make sure we don't assassinate our claw on our source intake**
@@ -271,10 +275,12 @@ public final class GeneralCommands
         if(elevator != null)
         {
             return
-            Commands.waitUntil(clawProximity.isDetectedSupplier())
+            Commands.waitUntil(shooterProximity.isDetectedSupplier())
             .andThen(
                 Commands.parallel(
                     setLedCommand(ColorPattern.kRainbow).withTimeout(0.25),
+
+                    claw.stopCommand(),
 
                     elevator.moveToSetPositionCommand(ElevatorPosition.kL4)
                         .until(elevator.isAtPosition(ElevatorPosition.kL4))))
@@ -291,7 +297,7 @@ public final class GeneralCommands
         if(elevator != null)
         {
             return
-            Commands.waitUntil(clawProximity.isDetectedSupplier())
+            Commands.waitUntil(shooterProximity.isDetectedSupplier())
             .andThen(
                 Commands.parallel(
                     setLedCommand(ColorPattern.kRainbow).withTimeout(0.25),
@@ -525,7 +531,11 @@ public final class GeneralCommands
         if(claw != null)
         {
             return 
-            claw.shootCoralCommand().until(() -> (!clawProximity.isDetectedSupplier().getAsBoolean())).andThen(claw.stopCommand());
+            claw.shootCoralCommand()
+                .until(() -> (!shooterProximity.isDetectedSupplier().getAsBoolean()))
+                .withTimeout(0.5)
+                
+            .andThen(claw.stopCommand());
         }
         else
         {

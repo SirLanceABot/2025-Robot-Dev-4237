@@ -5,10 +5,7 @@ import java.util.function.BooleanSupplier;
 
 import com.ctre.phoenix6.signals.GravityTypeValue;
 
-import edu.wpi.first.math.MathUtil;
-import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.Commands;
 import frc.robot.Constants;
 import frc.robot.motors.TalonFXLance;
 
@@ -52,16 +49,10 @@ public class IntakeWrist extends SubsystemLance
     private final TalonFXLance motor = new TalonFXLance(Constants.IntakeWrist.MOTOR_PORT, Constants.IntakeWrist.MOTOR_CAN_BUS, "Intake Wrist Motor");
     // private final DigitalInput forwardLimitSwitch = new DigitalInput(1);
     // private final DigitalInput reverseLimitSwitch = new DigitalInput(0);
-    private double speed;
 
     private static final double kP = 0.45;
     private static final double kI = 0.0;
     private static final double kD = 0.0;
-    private static final double kS = 0.0;
-    private static final double kV = 0.0;
-    private static final double kA = 0.0;
-    private static final double kG = 0.0;
-    private static final GravityTypeValue gravType = GravityTypeValue.Arm_Cosine;
 
     private final double tolerance = 0.25;
 
