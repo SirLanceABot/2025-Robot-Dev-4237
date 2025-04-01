@@ -20,8 +20,8 @@
         "y": 4.0
       },
       "prevControl": {
-        "x": 2.2425,
-        "y": 3.60425
+        "x": 2.3861842105263156,
+        "y": 3.380345394736842
       },
       "nextControl": null,
       "isLocked": false,
@@ -59,7 +59,7 @@
     },
     {
       "name": "Move Scorer to L4",
-      "waypointRelativePos": 0.25,
+      "waypointRelativePos": 0.15,
       "endWaypointRelativePos": null,
       "command": {
         "type": "named",
@@ -70,7 +70,7 @@
     },
     {
       "name": "Score Coral Prox",
-      "waypointRelativePos": 0.95,
+      "waypointRelativePos": 0.92,
       "endWaypointRelativePos": null,
       "command": {
         "type": "named",

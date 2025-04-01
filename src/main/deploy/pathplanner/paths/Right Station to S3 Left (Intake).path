@@ -8,8 +8,8 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.3844166364307435,
-        "y": 2.02565318818009
+        "x": 2.597861842105263,
+        "y": 1.7735197368421052
       },
       "isLocked": false,
       "linkedName": "Right Station"
@@ -20,8 +20,8 @@
         "y": 3.05
       },
       "prevControl": {
-        "x": 3.329111842105263,
-        "y": 2.5528782894736843
+        "x": 3.290625,
+        "y": 2.0044407894736844
       },
       "nextControl": null,
       "isLocked": false,
@@ -32,11 +32,11 @@
   "constraintZones": [
     {
       "name": "Slow Zone",
-      "minWaypointRelativePos": 0.8,
+      "minWaypointRelativePos": 0.88,
       "maxWaypointRelativePos": 1.0,
       "constraints": {
-        "maxVelocity": 0.5,
-        "maxAcceleration": 0.5,
+        "maxVelocity": 1.25,
+        "maxAcceleration": 1.25,
         "maxAngularVelocity": 540.0,
         "maxAngularAcceleration": 720.0,
         "nominalVoltage": 12.0,
@@ -59,7 +59,7 @@
     },
     {
       "name": "Move Scorer to L4",
-      "waypointRelativePos": 0.2,
+      "waypointRelativePos": 0.1,
       "endWaypointRelativePos": null,
       "command": {
         "type": "named",
