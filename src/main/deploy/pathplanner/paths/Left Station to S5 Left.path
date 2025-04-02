@@ -20,8 +20,8 @@
         "y": 5.335
       },
       "prevControl": {
-        "x": 2.9975000000000005,
-        "y": 6.370749999999999
+        "x": 2.9054999999999995,
+        "y": 5.86775
       },
       "nextControl": null,
       "isLocked": false,
@@ -47,8 +47,19 @@
   "pointTowardsZones": [],
   "eventMarkers": [
     {
+      "name": "Intake Coral From Station",
+      "waypointRelativePos": 0.01,
+      "endWaypointRelativePos": null,
+      "command": {
+        "type": "named",
+        "data": {
+          "name": "Intake Coral From Station"
+        }
+      }
+    },
+    {
       "name": "Move Scorer To L4",
-      "waypointRelativePos": 0.15,
+      "waypointRelativePos": 0.25,
       "endWaypointRelativePos": null,
       "command": {
         "type": "named",
@@ -59,8 +70,8 @@
     }
   ],
   "globalConstraints": {
-    "maxVelocity": 3.0,
-    "maxAcceleration": 3.0,
+    "maxVelocity": 6.0,
+    "maxAcceleration": 6.0,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0,
     "nominalVoltage": 12.0,
@@ -76,5 +87,5 @@
     "velocity": 0,
     "rotation": 36.11934084947967
   },
-  "useDefaultConstraints": true
+  "useDefaultConstraints": false
 }
