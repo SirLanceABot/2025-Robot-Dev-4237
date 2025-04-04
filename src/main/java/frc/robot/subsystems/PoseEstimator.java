@@ -622,7 +622,7 @@ public class PoseEstimator extends SubsystemLance
         if(drivetrain != null && gyro != null && poseEstimator != null)
         {
             // grabs the newest estimated pose
-            estimatedPose = drivetrain.getPose();
+            estimatedPose = drivetrain.getState().Pose; // used to be drivetrain.getPose() <---- CHANGE TOMORROW IF ITS FRICKED UP
             // sets it for advantagescope
             poseEstimatorEntry.set(estimatedPose);
         }
