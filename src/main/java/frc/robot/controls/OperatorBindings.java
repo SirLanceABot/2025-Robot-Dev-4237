@@ -117,7 +117,7 @@ public final class OperatorBindings {
         // aButton.whileTrue(
         //     ScoringCommands.scoreCoralAutonomouslyReallyCoolAndAwesomeCommand((() -> drivetrain.getState().Pose), (() -> poseEstimator.closestBranchLocation(() -> poseEstimator.getPrimaryTagID(), poseEstimator.getIsRightBranch()))));
         // aButton.onTrue(GeneralCommands.moveScorerToL1Command());
-        aButton.onTrue(GeneralCommands.moveScorerToL1Command());
+        // aButton.onTrue(GeneralCommands.moveScorerToL1Command());
     }
 
 
@@ -259,6 +259,54 @@ public final class OperatorBindings {
         Trigger dpadRight = controller.povRight();
 
         // dpadRight.onTrue(GeneralCommands.moveScorerToBargeCommand());
+    }
+
+    private static void configS1()
+    {
+        Trigger aButton = controller.a();
+        Trigger rightTrigger = controller.rightTrigger();
+
+        aButton.and(rightTrigger).onTrue(poseEstimator.setPlacingFaceToS1Command());
+    }
+
+    private static void configS2()
+    {
+        Trigger aButton = controller.a();
+        Trigger rightBumper = controller.rightBumper();
+
+        aButton.and(rightBumper).onTrue(poseEstimator.setPlacingFaceToS2Command());
+    }
+
+    private static void configS3()
+    {
+        Trigger aButton = controller.a();
+        Trigger yButton = controller.y();
+
+        aButton.and(yButton).onTrue(poseEstimator.setPlacingFaceToS3Command());
+    }
+
+    private static void configS4()
+    {
+        Trigger aButton = controller.a();
+        Trigger backButton = controller.back();
+
+        aButton.and(backButton).onTrue(poseEstimator.setPlacingFaceToS4Command());
+    }
+
+    private static void configS5()
+    {
+        Trigger aButton = controller.a();
+        Trigger leftBumper = controller.leftBumper();
+
+        aButton.and(leftBumper).onTrue(poseEstimator.setPlacingFaceToS5Command());
+    }
+
+    private static void configS6()
+    {
+        Trigger aButton = controller.a();
+        Trigger leftTrigger = controller.leftTrigger();
+
+        aButton.and(leftTrigger).onTrue(poseEstimator.setPlacingFaceToS6Command());
     }
 
     private static void configPOV()

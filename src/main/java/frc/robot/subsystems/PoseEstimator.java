@@ -7,6 +7,8 @@ import java.util.List;
 import java.util.function.BooleanSupplier;
 import java.util.function.Supplier;
 
+import javax.lang.model.util.ElementScanner14;
+
 import com.ctre.phoenix6.hardware.Pigeon2;
 
 import edu.wpi.first.apriltag.AprilTagFieldLayout;
@@ -78,6 +80,7 @@ public class PoseEstimator extends SubsystemLance
     private StructPublisher<Pose2d> poseEstimatorEntry;
 
     private boolean isRightBranch = false;
+    private int primaryFace = 1;
     private int primaryReefTag = 0;
 
     // private final double[][] blueLeftBranchLocationArray = 
@@ -391,6 +394,40 @@ public class PoseEstimator extends SubsystemLance
     //     return closestBranch;
     // }
 
+    public int getTagIdFromSide()
+    {
+        if(drivetrain.isRedAllianceSupplier().getAsBoolean())
+        {
+            if(primaryFace == 1)
+                return 10;
+            else if(primaryFace == 2)
+                return 9;
+            else if(primaryFace == 3)
+                return 8;
+            else if(primaryFace == 4)
+                return 7;
+            else if(primaryFace == 5)
+                return 6;
+            else
+                return 11;
+        }
+        else
+        {
+            if(primaryFace == 1)
+                return 21;
+            else if(primaryFace == 2)
+                return 22;
+            else if(primaryFace == 3)
+                return 17;
+            else if(primaryFace == 4)
+                return 18;
+            else if(primaryFace == 5)
+                return 19;
+            else
+                return 20;
+        }
+    }
+
     public Pose2d closestBranchLocation(Supplier<Integer> aprilTagID, boolean isRight)
     {
         // if(isRight)
@@ -465,6 +502,41 @@ public class PoseEstimator extends SubsystemLance
     {
         isRightBranch = true;
     }
+
+    private int getPlacingFace()
+    {
+        return primaryFace;
+    }
+
+    private void setPlacingFaceToS1()
+    {
+        primaryFace = 1;
+    }
+
+    private void setPlacingFaceToS2()
+    {
+        primaryFace = 2;
+    }
+
+    private void setPlacingFaceToS3()
+    {
+        primaryFace = 3;
+    }
+
+    private void setPlacingFaceToS4()
+    {
+        primaryFace = 4;
+    }
+
+    private void setPlacingFaceToS5()
+    {
+        primaryFace = 5;
+    }
+
+    private void setPlacingFaceToS6()
+    {
+        primaryFace = 6;
+    }
        
     public Command setPlacingSideToLeftCommand()
     {
@@ -474,6 +546,36 @@ public class PoseEstimator extends SubsystemLance
     public Command setPlacingSideToRightCommand()
     {
         return runOnce(() -> setPlacingSideToRight()).withName("Set Placing Side To Right");
+    }
+
+    public Command setPlacingFaceToS1Command()
+    {
+        return runOnce(() -> setPlacingFaceToS1());
+    }
+
+    public Command setPlacingFaceToS2Command()
+    {
+        return runOnce(() -> setPlacingFaceToS2());
+    }
+
+    public Command setPlacingFaceToS3Command()
+    {
+        return runOnce(() -> setPlacingFaceToS3());
+    }
+
+    public Command setPlacingFaceToS4Command()
+    {
+        return runOnce(() -> setPlacingFaceToS4());
+    }
+
+    public Command setPlacingFaceToS5Command()
+    {
+        return runOnce(() -> setPlacingFaceToS5());
+    }
+
+    public Command setPlacingFaceToS6Command()
+    {
+        return runOnce(() -> setPlacingFaceToS6());
     }
         
     
