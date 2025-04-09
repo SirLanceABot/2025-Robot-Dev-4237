@@ -330,7 +330,7 @@ public final class ScoringCommands
             // .andThen(
                 // GeneralCommands.driveToPositionCommand(testPose, currentPose))
                 .andThen(
-                    GeneralCommands.scoreCoralOnlyCommand())
+                    GeneralCommands.scoreCoralProxCommand())
                 .andThen(
                     GeneralCommands.moveScorerToIntakingPositionCommand()
                 )
@@ -369,7 +369,7 @@ public final class ScoringCommands
             // .andThen(
                 // GeneralCommands.driveToPositionCommand(testPose, currentPose))
                 .andThen(
-                    GeneralCommands.scoreCoralOnlyCommand())
+                    GeneralCommands.scoreCoralProxCommand())
                 .withName("Autonomous Score Command");
             // }
             // else
@@ -405,7 +405,7 @@ public final class ScoringCommands
             // .andThen(
                 // GeneralCommands.driveToPositionCommand(testPose, currentPose))
                 .andThen(
-                    GeneralCommands.scoreCoralOnlyCommand())
+                    GeneralCommands.scoreCoralProxCommand())
                 .withName("Autonomous Score Command");
             // }
             // else

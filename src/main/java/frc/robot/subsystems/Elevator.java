@@ -31,6 +31,7 @@ public class Elevator extends SubsystemLance
     {
         kIntakingPosition(0.0),
         kL1(0.0),
+        kBottom(10.0),
         kL2(14.25), // 12.5
         kClimb(19.0),
         kL3(33.0),

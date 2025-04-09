@@ -335,9 +335,9 @@ public final class GeneralCommands
                         .until(elevator.isAtPosition(ElevatorPosition.kIntakingPosition)),
 
                     claw.stopCommand()
-                )) 
+                ))
             .andThen(GeneralCommands.setLedCommand(ColorPattern.kSolid, Color.kRed).withTimeout(0.1))
-            .withName("Move Scorer to Intaking Position Command");  
+            .withName("Move Scorer to Intaking Position Command");
         }
         else
         {

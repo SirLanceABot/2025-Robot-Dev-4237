@@ -83,6 +83,7 @@ public final class OperatorBindings {
             configLeftTrigger();
             configRightTrigger();
             configPOV();
+            configS2();
             // configLeftStick();
             // configRightStick();
             // configDpadUp();
@@ -151,10 +152,10 @@ public final class OperatorBindings {
     private static void configYButton()
     {
         Trigger yButton = controller.y();
+        Trigger aButton = controller.a();
 
         //Create a path on the fly and score on L4 level, (stops the path if it takes over 10 seconds - probably not needed)
-        yButton.whileTrue(
-            ScoringCommands.scoreCoralAutonomouslyReallyCoolAndAwesomeCommand((() -> drivetrain.getState().Pose), (() -> poseEstimator.closestBranchLocation(() -> poseEstimator.getPrimaryTagID(), poseEstimator.getIsRightBranch()))));
+        yButton.and(aButton.negate()).whileTrue(ScoringCommands.scoreCoralAutonomouslyReallyCoolAndAwesomeCommand((() -> drivetrain.getState().Pose), (() -> poseEstimator.closestBranchLocation(() -> poseEstimator.getPrimaryTagID(), poseEstimator.getIsRightBranch()))));
         // yButton.onTrue(Commands.runOnce(() -> 
             // ScoringCommands.scoreCoralAutonomouslyReallyCoolAndAwesomeCommand(robotContainer.getPoseEstimator().getIsRightBranch(), TargetPosition.kL4)).withTimeout(10.0));
         // yButton.onTrue(GeneralCommands.moveScorerToL4Command());
@@ -164,9 +165,10 @@ public final class OperatorBindings {
     private static void configLeftBumper()
     {
         Trigger leftBumper = controller.leftBumper();
+        Trigger aButton = controller.a();
 
         // leftBumper.onTrue(IntakingCommands.intakeAlgaeFromReefCommand(TargetPosition.kLowerReefAlgae));
-        leftBumper.onTrue(GeneralCommands.burpCoralCommand());
+        leftBumper.and(aButton.negate()).onTrue(GeneralCommands.burpCoralCommand());
 
     }
 
@@ -174,18 +176,20 @@ public final class OperatorBindings {
     private static void configRightBumper()
     {
         Trigger rightBumper = controller.rightBumper();
+        Trigger aButton = controller.a();
 
-        rightBumper.onTrue(GeneralCommands.scoreCoralOnlyCommand());
+        rightBumper.and(aButton.negate()).onTrue(GeneralCommands.scoreCoralOnlyCommand());
     }
 
 
     private static void configBackButton()
     {
         Trigger backButton = controller.back();
+        Trigger aButton = controller.a();
 
         // backButton.onTrue(IntakingCommands.intakeCoralFromStationCommand());
         // backButton.onTrue(GeneralCommands.scoreCoralOnlyCommand());
-        backButton.onTrue(GeneralCommands.getReadyToClimbCommand());
+        backButton.and(aButton.negate()).onTrue(GeneralCommands.getReadyToClimbCommand());
     }
 
 
@@ -199,8 +203,8 @@ public final class OperatorBindings {
     private static void configLeftTrigger()
     {
         Trigger leftTrigger = controller.leftTrigger();
-        leftTrigger
-            .onTrue(poseEstimator.setPlacingSideToLeftCommand()
+        Trigger aButton = controller.a();
+        leftTrigger.and(aButton.negate()).onTrue(poseEstimator.setPlacingSideToLeftCommand()
             // .andThen(Commands.runOnce(() -> controller.getHID().setRumble(RumbleType.kLeftRumble, 1.0))).withTimeout(0.25)
             // .andThen(Commands.waitSeconds(0.5))
             // .andThen(Commands.runOnce(() -> controller.getHID().setRumble(RumbleType.kLeftRumble, 0.0)))
@@ -211,8 +215,9 @@ public final class OperatorBindings {
     private static void configRightTrigger()
     {
         Trigger rightTrigger = controller.rightTrigger();
-        rightTrigger
-            .onTrue(poseEstimator.setPlacingSideToRightCommand()
+        Trigger aButton = controller.a();
+
+        rightTrigger.and(aButton.negate()).onTrue(poseEstimator.setPlacingSideToRightCommand()
             // .andThen(Commands.runOnce(() -> controller.getHID().setRumble(RumbleType.kRightRumble, 1.0))).withTimeout(0.25)
             // .andThen(Commands.waitSeconds(0.5))
             // .andThen(Commands.runOnce(() -> controller.getHID().setRumble(RumbleType.kRightRumble, 0.0)))
@@ -266,7 +271,7 @@ public final class OperatorBindings {
         Trigger aButton = controller.a();
         Trigger rightTrigger = controller.rightTrigger();
 
-        aButton.and(rightTrigger).onTrue(poseEstimator.setPlacingFaceToS1Command());
+        rightTrigger.and(aButton).onTrue(poseEstimator.setPlacingFaceToS1Command());
     }
 
     private static void configS2()
@@ -274,7 +279,8 @@ public final class OperatorBindings {
         Trigger aButton = controller.a();
         Trigger rightBumper = controller.rightBumper();
 
-        aButton.and(rightBumper).onTrue(poseEstimator.setPlacingFaceToS2Command());
+        // aButton.and(rightBumper).onTrue(poseEstimator.setPlacingFaceToS2Command());
+        aButton.and(rightBumper).onTrue(GeneralCommands.moveScorerToL2Commmand());
     }
 
     private static void configS3()

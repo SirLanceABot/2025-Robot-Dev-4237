@@ -488,6 +488,49 @@ public class PoseEstimator extends SubsystemLance
         
     }
 
+    public Pose2d closestBranchLocationSides(boolean isRight)
+    {
+        Translation2d cwPostTranslation = new Translation2d(0.47, -0.33);
+        Translation2d ccwPostTranslation = new Translation2d(0.47, -0.03);
+        Rotation2d robotRotation = new Rotation2d(Units.degreesToRadians(-90.0));
+        int tag = getTagIdFromSide();
+        Transform2d leftPostTransform, rightPostTransform;
+        Pose2d aprilTagPose, desiredRobotPose;
+
+        aprilTagPose = aprilTagFieldLayout.getTagPose(tag).get().toPose2d();
+
+        if(tag >= 9 && tag <= 11 || tag >= 20 && tag <= 22)
+        {
+            if(isRight)
+            {
+                rightPostTransform = new Transform2d(cwPostTranslation, robotRotation);
+                desiredRobotPose = aprilTagPose.transformBy(rightPostTransform);
+                return desiredRobotPose;
+            }
+            else
+            {
+                leftPostTransform = new Transform2d(ccwPostTranslation, robotRotation);
+                desiredRobotPose = aprilTagPose.transformBy(leftPostTransform);
+                return desiredRobotPose;
+            }
+        }
+        else
+        {
+            if(isRight)
+            {
+                rightPostTransform = new Transform2d(ccwPostTranslation, robotRotation);
+                desiredRobotPose = aprilTagPose.transformBy(rightPostTransform);
+                return desiredRobotPose;
+            }
+            else
+            {
+                leftPostTransform = new Transform2d(cwPostTranslation, robotRotation);
+                desiredRobotPose = aprilTagPose.transformBy(leftPostTransform);
+                return desiredRobotPose;
+            }
+        }
+    }
+
     public boolean getIsRightBranch()
     {
         return isRightBranch;
