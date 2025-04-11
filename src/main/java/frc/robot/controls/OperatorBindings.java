@@ -83,7 +83,12 @@ public final class OperatorBindings {
             configLeftTrigger();
             configRightTrigger();
             configPOV();
+            configS1();
             configS2();
+            configS3();
+            configS4();
+            configS5();
+            configS6();
             // configLeftStick();
             // configRightStick();
             // configDpadUp();
@@ -140,11 +145,16 @@ public final class OperatorBindings {
     private static void configXButton()
     {
         Trigger xButton = controller.x();
+        Trigger aButton = controller.a();
 
         //Create a path on the fly and score on L3 level, (stops the path if it takes over 10 seconds - probably not needed)
         // xButton.onTrue(Commands.runOnce(() -> 
         //     ScoringCommands.scoreCoralAutonomouslyReallyCoolAndAwesomeCommand(robotContainer.getPoseEstimator().getIsRightBranch(), TargetPosition.kL3)).withTimeout(10.0));
-        xButton.whileTrue(ScoringCommands.autoAlignL3Command((() -> drivetrain.getState().Pose), (() -> poseEstimator.closestBranchLocation(() -> poseEstimator.getPrimaryTagID(), poseEstimator.getIsRightBranch()))));
+        
+        // THIS ONE WORKS
+        // xButton.whileTrue(ScoringCommands.autoAlignL3Command((() -> drivetrain.getState().Pose), (() -> poseEstimator.closestBranchLocation(() -> poseEstimator.getPrimaryTagID(), poseEstimator.getIsRightBranch()))));
+        
+        xButton.and(aButton.negate()).whileTrue(ScoringCommands.autoAlignL3Command((() -> drivetrain.getState().Pose), (() -> poseEstimator.closestBranchLocationSides(poseEstimator.getIsRightBranch()))));
         // xButton.onTrue(GeneralCommands.moveScorerToL3Command());
     }
 
@@ -155,10 +165,15 @@ public final class OperatorBindings {
         Trigger aButton = controller.a();
 
         //Create a path on the fly and score on L4 level, (stops the path if it takes over 10 seconds - probably not needed)
-        yButton.and(aButton.negate()).whileTrue(ScoringCommands.scoreCoralAutonomouslyReallyCoolAndAwesomeCommand((() -> drivetrain.getState().Pose), (() -> poseEstimator.closestBranchLocation(() -> poseEstimator.getPrimaryTagID(), poseEstimator.getIsRightBranch()))));
+
+        // THIS TEH GOOD ONE RIGHT HERE
+        // yButton.and(aButton.negate()).whileTrue(ScoringCommands.scoreCoralAutonomouslyReallyCoolAndAwesomeCommand((() -> drivetrain.getState().Pose), (() -> poseEstimator.closestBranchLocation(() -> poseEstimator.getPrimaryTagID(), poseEstimator.getIsRightBranch()))));
+        
+        
         // yButton.onTrue(Commands.runOnce(() -> 
             // ScoringCommands.scoreCoralAutonomouslyReallyCoolAndAwesomeCommand(robotContainer.getPoseEstimator().getIsRightBranch(), TargetPosition.kL4)).withTimeout(10.0));
         // yButton.onTrue(GeneralCommands.moveScorerToL4Command());
+        yButton.and(aButton.negate()).whileTrue(ScoringCommands.scoreCoralAutonomouslyReallyCoolAndAwesomeCommand((() -> drivetrain.getState().Pose), (() -> poseEstimator.closestBranchLocationSides(poseEstimator.getIsRightBranch()))));
     }
 
 
@@ -279,8 +294,8 @@ public final class OperatorBindings {
         Trigger aButton = controller.a();
         Trigger rightBumper = controller.rightBumper();
 
-        // aButton.and(rightBumper).onTrue(poseEstimator.setPlacingFaceToS2Command());
-        aButton.and(rightBumper).onTrue(GeneralCommands.moveScorerToL2Commmand());
+        aButton.and(rightBumper).onTrue(poseEstimator.setPlacingFaceToS2Command());
+        // aButton.and(rightBumper).onTrue(GeneralCommands.moveScorerToL2Commmand());
     }
 
     private static void configS3()

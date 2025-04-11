@@ -12,12 +12,14 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.RobotContainer;
 import frc.robot.commands.GeneralCommands;
 import frc.robot.commands.IntakingCommands;
+import frc.robot.commands.ScoringCommands;
 import frc.robot.subsystems.Claw;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Elevator;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.IntakeWrist;
 import frc.robot.subsystems.IntakeWrist.Position;
+import frc.robot.subsystems.PoseEstimator;
 
 public final class DriverBindings {
 
@@ -53,6 +55,7 @@ public final class DriverBindings {
     private static IntakeWrist intakeWrist;
     private static Claw claw;
     private static Elevator elevator;
+    private static PoseEstimator poseEstimator;
 
 
     // *** CLASS CONSTRUCTOR ***
@@ -64,6 +67,7 @@ public final class DriverBindings {
         controller = robotContainer.getDriverController();
         intake = robotContainer.getIntake();
         elevator = robotContainer.getElevator();
+        poseEstimator = robotContainer.getPoseEstimator();
         
 
         if(controller != null)
@@ -113,9 +117,7 @@ public final class DriverBindings {
     {
         Trigger aButton = controller.a();
         // aButton.onTrue(claw.moveSticktoSetPositionCommand(1.9));
-        aButton
-            .onTrue(GeneralCommands.deleteLowerAlgaeCommand());
-
+        aButton.whileTrue(ScoringCommands.autoRemoveAlgaeCommand((() -> drivetrain.getState().Pose), (() -> poseEstimator.closestBranchLocation(() -> poseEstimator.getPrimaryTagID(), poseEstimator.getIsRightBranch()))));
         // if(intakeWrist != null)
         // {
         //     aButton.onTrue(GeneralCommands.moveIntakeForClimbCommand());

@@ -28,6 +28,7 @@ import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.networktables.StructPublisher;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.Commands;
 import frc.robot.Constants;
 import frc.robot.LimelightHelpers;
 import frc.robot.sensors.Camera;
@@ -210,9 +211,9 @@ public class PoseEstimator extends SubsystemLance
         stateStdDevs.set(1, 0, 0.1); // y in meters
         stateStdDevs.set(2, 0, 0.05); // heading in radians
 
-        visionStdDevs.set(0, 0, 0.2); // x in meters // 0.2
-        visionStdDevs.set(1, 0, 0.2); // y in meters // 0.2
-        visionStdDevs.set(2, 0, 0.25); // heading in radians // 0.25
+        visionStdDevs.set(0, 0, 0.15); // x in meters // 0.2
+        visionStdDevs.set(1, 0, 0.15); // y in meters // 0.2
+        visionStdDevs.set(2, 0, 0.2); // heading in radians // 0.25
     }
 
     private void fillMaps()
@@ -494,6 +495,7 @@ public class PoseEstimator extends SubsystemLance
         Translation2d ccwPostTranslation = new Translation2d(0.47, -0.03);
         Rotation2d robotRotation = new Rotation2d(Units.degreesToRadians(-90.0));
         int tag = getTagIdFromSide();
+        System.out.println("Target Tag = " + tag);
         Transform2d leftPostTransform, rightPostTransform;
         Pose2d aprilTagPose, desiredRobotPose;
 

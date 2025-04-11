@@ -267,6 +267,16 @@ public class Drivetrain extends TunerSwerveDrivetrain implements Subsystem
         }
     }
 
+    public Command removeAlgaeCommand()
+    {
+        return runOnce(() -> setControl(new SwerveRequest.ApplyRobotSpeeds().withSpeeds(new ChassisSpeeds(0.0, 1.0, 0.0))));
+    }
+
+    public Command stopCommand()
+    {
+        return runOnce(() -> setControl(new SwerveRequest.ApplyRobotSpeeds().withSpeeds(new ChassisSpeeds(0.0, 0.0, 0.0))));
+    }
+
     // private Rotation2d angleToNearestBranch()
     // {
     //     double[] nearestBranch = poseEstimator.chooseClosestBranch();
@@ -488,6 +498,11 @@ public class Drivetrain extends TunerSwerveDrivetrain implements Subsystem
     {
         return m_sysIdRoutineToApply.dynamic(direction);
     }
+
+    // public Command driveBackToRemoveAlgaeCommand()
+    // {
+
+    // }
 
     @Override
     public void periodic() 

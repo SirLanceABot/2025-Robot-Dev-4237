@@ -13,6 +13,7 @@ import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.DeferredCommand;
 import frc.robot.RobotContainer;
 import frc.robot.commands.CommandsManager.TargetPosition;
+import frc.robot.sensors.Camera;
 import frc.robot.sensors.Proximity;
 import frc.robot.subsystems.Claw;
 import frc.robot.subsystems.Drivetrain;
@@ -50,6 +51,7 @@ public final class ScoringCommands
     private static Pivot pivot;
     private static Elevator elevator;
     private static Claw claw;
+    private static Camera camera;
     // private static LEDs leds;
     private static Pigeon2 gyro;
     private static PoseEstimator poseEstimator;
@@ -74,6 +76,7 @@ public final class ScoringCommands
         pivot = robotContainer.getPivot();
         elevator = robotContainer.getElevator();
         claw = robotContainer.getClaw();
+        camera = robotContainer.getClimbSideCamera();
         // leds = robotContainer.getLEDs();
         gyro = (robotContainer.getDrivetrain() != null ? robotContainer.getDrivetrain().getPigeon2() : null);
         intakeProximity = robotContainer.getIntakeProximity();
@@ -318,10 +321,9 @@ public final class ScoringCommands
 
                 return
                 Commands.parallel(
-                    GeneralCommands.moveScorerToL4Command().withTimeout(3.0),
-                    
-                    new DeferredCommand(() -> GeneralCommands.driveToPositionCommand(targetPose.get(), currentPose.get()), Set.of(drivetrain))
-                    )
+                    new DeferredCommand(() -> GeneralCommands.driveToPositionCommand(targetPose.get(), currentPose.get()), Set.of(drivetrain)),
+
+                    Commands.waitUntil(() -> (camera.avgTagDistance() < 1.0 && camera.avgTagDistance() != 0.0)).andThen(GeneralCommands.moveScorerToL4Command()))
 
                 // .andThen(
             // new DeferredCommand(() -> Commands.print("Current Pose = " + currentPose.get().getX() + "  " + currentPose.get().getY()), Set.of(drivetrain))
@@ -358,8 +360,8 @@ public final class ScoringCommands
             // {
                 return
                 Commands.parallel(
-                    GeneralCommands.moveScorerToL3Command().withTimeout(3.0),
-                    
+                    Commands.waitUntil(() -> (camera.avgTagDistance() < 1.0 && camera.avgTagDistance() != 0.0)).andThen(GeneralCommands.moveScorerToL3Command()),
+
                     new DeferredCommand(() -> GeneralCommands.driveToPositionCommand(targetPose.get(), currentPose.get()), Set.of(drivetrain))
                     )
                 // .andThen(
@@ -394,7 +396,7 @@ public final class ScoringCommands
             // {
                 return
                 Commands.parallel(
-                    GeneralCommands.moveScorerToL2Commmand().withTimeout(3.0),
+                    Commands.waitUntil(() -> (camera.avgTagDistance() < 1.0 && camera.avgTagDistance() != 0.0)).andThen(GeneralCommands.moveScorerToL2Commmand()),
                     
                     new DeferredCommand(() -> GeneralCommands.driveToPositionCommand(targetPose.get(), currentPose.get()), Set.of(drivetrain))
                     )
@@ -406,6 +408,48 @@ public final class ScoringCommands
                 // GeneralCommands.driveToPositionCommand(testPose, currentPose))
                 .andThen(
                     GeneralCommands.scoreCoralProxCommand())
+                .withName("Autonomous Score Command");
+            // }
+            // else
+            // {
+            //     return Commands.none().andThen(Commands.print("Did not follow path"));
+            // }
+        }
+        else
+        {
+            return Commands.none();
+        }
+    }
+
+    public static Command autoRemoveAlgaeCommand(Supplier<Pose2d> currentPose, Supplier<Pose2d> targetPose)
+    {
+        if(drivetrain != null && elevator != null && claw != null)
+        {
+            // Pose2d targetPose = poseEstimator.closestBranchLocation(poseEstimator.getPrimaryTagID(), isRight);
+            // Pose2d testPose = new Pose2d(currentPose.getX() + 1.0, currentPose.getY(), currentPose.getRotation());
+            // System.out.println("Current Pose = " + currentPose.getX() + "  " + currentPose.getY());
+            // if(targetPose.get().getX() != 2.0 && targetPose.get().getY() != 2.0)
+            // {
+                return
+                Commands.parallel(
+                    Commands.waitUntil(() -> (camera.avgTagDistance() < 1.0 && camera.avgTagDistance() != 0.0)).andThen(GeneralCommands.moveScorerToL4Command()),
+                    
+                    new DeferredCommand(() -> GeneralCommands.driveToPositionCommand(targetPose.get(), currentPose.get()), Set.of(drivetrain))
+                    )
+                // .andThen(
+            // new DeferredCommand(() -> Commands.print("Current Pose = " + currentPose.get().getX() + "  " + currentPose.get().getY()), Set.of(drivetrain))
+                // new DeferredCommand(() -> GeneralCommands.driveToPositionCommand(targetPose.get(), currentPose.get()), Set.of(drivetrain)))
+            // GeneralCommands.setLedCommand(ColorPattern.kBlink, Color.kBlue)
+            // .andThen(
+                // GeneralCommands.driveToPositionCommand(testPose, currentPose))
+                .andThen(
+                    GeneralCommands.scoreCoralProxCommand())
+                
+                .andThen(
+                    GeneralCommands.deleteLowerAlgaeCommand())
+                .andThen(drivetrain.removeAlgaeCommand())
+                .andThen(Commands.waitSeconds(1.5))
+                .andThen(drivetrain.stopCommand())
                 .withName("Autonomous Score Command");
             // }
             // else
