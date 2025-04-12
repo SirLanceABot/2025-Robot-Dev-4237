@@ -321,6 +321,8 @@ public final class ScoringCommands
 
                 return
                 Commands.parallel(
+                    GeneralCommands.setLedCommand(ColorPattern.kRainbow).withTimeout(0.25), // DELETE IF UNHAPPY
+
                     new DeferredCommand(() -> GeneralCommands.driveToPositionCommand(targetPose.get(), currentPose.get()), Set.of(drivetrain)),
 
                     Commands.waitUntil(() -> (camera.avgTagDistance() < 1.0 && camera.avgTagDistance() != 0.0)).andThen(GeneralCommands.moveScorerToL4Command()))
@@ -360,6 +362,8 @@ public final class ScoringCommands
             // {
                 return
                 Commands.parallel(
+                    GeneralCommands.setLedCommand(ColorPattern.kRainbow).withTimeout(0.25), // DELETE IF UNHAPPY
+
                     Commands.waitUntil(() -> (camera.avgTagDistance() < 1.0 && camera.avgTagDistance() != 0.0)).andThen(GeneralCommands.moveScorerToL3Command()),
 
                     new DeferredCommand(() -> GeneralCommands.driveToPositionCommand(targetPose.get(), currentPose.get()), Set.of(drivetrain))
@@ -396,6 +400,8 @@ public final class ScoringCommands
             // {
                 return
                 Commands.parallel(
+                    GeneralCommands.setLedCommand(ColorPattern.kRainbow).withTimeout(0.25), // DELETE IF UNHAPPY
+
                     Commands.waitUntil(() -> (camera.avgTagDistance() < 1.0 && camera.avgTagDistance() != 0.0)).andThen(GeneralCommands.moveScorerToL2Commmand()),
                     
                     new DeferredCommand(() -> GeneralCommands.driveToPositionCommand(targetPose.get(), currentPose.get()), Set.of(drivetrain))
