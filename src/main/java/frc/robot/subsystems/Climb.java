@@ -240,6 +240,8 @@ public class Climb extends SubsystemLance
     public void periodic()
     {
         // This method will be called once per scheduler run
+        // System.out.print("Lead amps = : " + leadMotor.getCurrentAmps());
+        // System.out.println("\t\tFollow amps = " + followMotor.getCurrentAmps());
     }
 
     @Override

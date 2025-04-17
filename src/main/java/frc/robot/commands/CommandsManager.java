@@ -101,6 +101,7 @@ public final class CommandsManager
         // Score Coral Commands
         NamedCommands.registerCommand("Move Scorer to L4", GeneralCommands.moveScorerToL4Command());
         NamedCommands.registerCommand("Move Scorer to L3", GeneralCommands.moveScorerToL3Command());
+        NamedCommands.registerCommand("Move Scorer to L2", GeneralCommands.moveScorerToL2Commmand());
         NamedCommands.registerCommand("Move Scorer to L4 with Algae", GeneralCommands.moveScorerToL4WithAlgaeCommand());
         NamedCommands.registerCommand("Move Scorer to Barge", GeneralCommands.moveScorerToBargeCommand());
         // NamedCommands.registerCommand("Move Scorer to Processor", GeneralCommands.moveScorerToProcessorCommand());

@@ -7,43 +7,19 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Right Mid to S2 Left"
+            "pathName": "Right Wall to S4 Right"
           }
         },
         {
           "type": "named",
           "data": {
-            "name": "Score Coral Only"
+            "name": "Score Coral Prox"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "S2 Left to Right Station"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "Intake Coral From Station"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "Right Station to S3 Right"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "Score Coral Only"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "S3 Right to Right Station"
+            "pathName": "S4 Right to Inside Right Station"
           }
         },
         {
@@ -55,19 +31,37 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Right Station to S3 Left"
+            "pathName": "Inside Right Station to S4 Left"
           }
         },
         {
           "type": "named",
           "data": {
-            "name": "Score Coral Only"
+            "name": "Score Coral Prox"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "S3 Left to Right Station"
+            "pathName": "S4 Left to Inside Right Station"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Intake Coral From Station"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Inside Right Station to S4 Right"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Score Coral Prox"
           }
         }
       ]

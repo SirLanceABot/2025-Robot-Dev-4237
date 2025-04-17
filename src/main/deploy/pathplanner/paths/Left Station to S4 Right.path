@@ -4,12 +4,12 @@
     {
       "anchor": {
         "x": 1.52,
-        "y": 7.5
+        "y": 7.49
       },
       "prevControl": null,
       "nextControl": {
         "x": 2.582749999999999,
-        "y": 6.378750000000001
+        "y": 6.368750000000001
       },
       "isLocked": false,
       "linkedName": "Left Station"

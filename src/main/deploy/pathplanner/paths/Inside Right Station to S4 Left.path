@@ -3,25 +3,25 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 1.52,
-        "y": 7.49
+        "x": 0.6044999999999999,
+        "y": 1.2364999999999997
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.728999999999999,
-        "y": 6.729500000000001
+        "x": 1.5015,
+        "y": 1.6654999999999993
       },
       "isLocked": false,
-      "linkedName": "Left Station"
+      "linkedName": "Inside Right Station"
     },
     {
       "anchor": {
-        "x": 3.16,
+        "x": 3.17,
         "y": 4.346749999999999
       },
       "prevControl": {
-        "x": 1.9412499999999995,
-        "y": 4.561249999999999
+        "x": 2.6629999999999994,
+        "y": 3.5277499999999993
       },
       "nextControl": null,
       "isLocked": false,
@@ -32,11 +32,11 @@
   "constraintZones": [
     {
       "name": "Slow Zone",
-      "minWaypointRelativePos": 0.75,
+      "minWaypointRelativePos": 0.8,
       "maxWaypointRelativePos": 1.0,
       "constraints": {
-        "maxVelocity": 1.0,
-        "maxAcceleration": 1.0,
+        "maxVelocity": 0.75,
+        "maxAcceleration": 0.75,
         "maxAngularVelocity": 540.0,
         "maxAngularAcceleration": 720.0,
         "nominalVoltage": 12.0,
@@ -47,24 +47,13 @@
   "pointTowardsZones": [],
   "eventMarkers": [
     {
-      "name": "Move Scorer To L4",
-      "waypointRelativePos": 0.15,
+      "name": "Move Scorer to L4",
+      "waypointRelativePos": 0.7,
       "endWaypointRelativePos": null,
       "command": {
         "type": "named",
         "data": {
           "name": "Move Scorer to L4"
-        }
-      }
-    },
-    {
-      "name": "Eject Coral On L4",
-      "waypointRelativePos": 1.0,
-      "endWaypointRelativePos": null,
-      "command": {
-        "type": "named",
-        "data": {
-          "name": "Score Coral Only"
         }
       }
     }
@@ -82,10 +71,10 @@
     "rotation": 90.0
   },
   "reversed": false,
-  "folder": "Left Station Starts",
+  "folder": "Right Station Starts",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 36.11934084947967
+    "rotation": 144.32
   },
-  "useDefaultConstraints": false
+  "useDefaultConstraints": true
 }

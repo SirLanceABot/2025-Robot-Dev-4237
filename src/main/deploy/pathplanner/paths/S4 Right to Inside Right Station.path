@@ -3,36 +3,36 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 1.52,
-        "y": 7.49
+        "x": 3.17,
+        "y": 4.0
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.728999999999999,
-        "y": 6.729500000000001
+        "x": 2.5171665264851155,
+        "y": 3.341876673441288
       },
       "isLocked": false,
-      "linkedName": "Left Station"
+      "linkedName": "S4 Right"
     },
     {
       "anchor": {
-        "x": 3.16,
-        "y": 4.346749999999999
+        "x": 0.6044999999999999,
+        "y": 1.2364999999999997
       },
       "prevControl": {
-        "x": 1.9412499999999995,
-        "y": 4.561249999999999
+        "x": 1.131000000004604,
+        "y": 1.8312500000057048
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "S4 Left"
+      "linkedName": "Inside Right Station"
     }
   ],
   "rotationTargets": [],
   "constraintZones": [
     {
       "name": "Slow Zone",
-      "minWaypointRelativePos": 0.75,
+      "minWaypointRelativePos": 0.9,
       "maxWaypointRelativePos": 1.0,
       "constraints": {
         "maxVelocity": 1.0,
@@ -47,24 +47,13 @@
   "pointTowardsZones": [],
   "eventMarkers": [
     {
-      "name": "Move Scorer To L4",
-      "waypointRelativePos": 0.15,
+      "name": "Intake Coral From Station",
+      "waypointRelativePos": 0.05,
       "endWaypointRelativePos": null,
       "command": {
         "type": "named",
         "data": {
-          "name": "Move Scorer to L4"
-        }
-      }
-    },
-    {
-      "name": "Eject Coral On L4",
-      "waypointRelativePos": 1.0,
-      "endWaypointRelativePos": null,
-      "command": {
-        "type": "named",
-        "data": {
-          "name": "Score Coral Only"
+          "name": "Intake Coral From Station"
         }
       }
     }
@@ -79,13 +68,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 90.0
+    "rotation": 144.32
   },
   "reversed": false,
-  "folder": "Left Station Starts",
+  "folder": "Reef Starts",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 36.11934084947967
+    "rotation": 90.0
   },
-  "useDefaultConstraints": false
+  "useDefaultConstraints": true
 }
