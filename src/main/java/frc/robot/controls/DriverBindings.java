@@ -183,7 +183,8 @@ public final class DriverBindings {
     private static void configBackButton()
     {
         Trigger backButton = controller.back();
-        backButton.onTrue(Commands.runOnce(() -> intakeWrist.moveToSetPositionCommand(Position.kRestingPosition).andThen(intake.stopCommand())));
+        // backButton.onTrue(Commands.runOnce(() -> intakeWrist.moveToSetPositionCommand(Position.kRestingPosition).andThen(intake.stopCommand())));
+        backButton.whileTrue(elevator.setCommand(-0.1));
     }
 
 

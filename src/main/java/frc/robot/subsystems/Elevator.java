@@ -224,7 +224,7 @@ public class Elevator extends SubsystemLance
 
     public Command setCommand(double speed)
     {
-        return run(() -> set(speed)).withName("Set Command");
+        return runEnd(() -> set(speed), () -> set(0.0)).withName("Set Command");
     }
 
     public Command stopCommand()

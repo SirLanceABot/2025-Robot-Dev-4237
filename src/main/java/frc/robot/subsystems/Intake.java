@@ -139,7 +139,6 @@ public class Intake extends SubsystemLance
 
     public void pickupAlgae()
     {
-        motor.setupBrakeMode();
         set(-0.5);
     }
 
